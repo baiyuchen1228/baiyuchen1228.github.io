@@ -1,5 +1,7 @@
-let peer;
-let cacheStream;
+const { answer } = require("../../event");
+
+let peer;  // RTCPeerConnection
+let cacheStream;  // MediaStreamTrack
 let socket;
 let dataChannel;
 
@@ -7,9 +9,10 @@ const offerOptions = {
   offerToReceiveAudio: 1,
   offerToReceiveVideo: 1,
 };
+
 // Media config
 const mediaConstraints = {
-  audio: false,
+  audio: True,
   video: {
     aspectRatio: {
       ideal: 1.333333, // 3:2 aspect is preferred
@@ -21,6 +24,7 @@ const mediaConstraints = {
 function connection() {
   socket = io.connect("/");
 
+  // Listening for joining a room (joinRoom event)
   socket.emit("joinRoom", { username: "test" });
   
   // Socket events
@@ -40,22 +44,25 @@ function connection() {
     console.log("you have been disconnected");
   });
 
-  socket.on("offer", handleSDPOffer);
-  socket.on("answer", handleSDPAnswer);
-  socket.on("icecandidate", handleNewIceCandidate);
+  // for peer to peer communicate
+  socket.on("offer", handleSDPOffer);  // SDP offer
+  socket.on("answer", handleSDPAnswer);  // SDP answer
+  socket.on("icecandidate", handleNewIceCandidate);  //ICE
   return socket;
 }
 function closeDataChannels(channel) {
   channel.close()
 }
+
+// 開啟 WebRTC 連線
 async function calling() {
   try {
     if (peer) {
       alert("你已經建立連線!");
     } else {
-      createPeerConnection();
+      createPeerConnection();  // 建立 RTCPeerConnection
 
-      await addStreamProcess();
+      await addStreamProcess();  // 加入多媒體數據到 RTCPeerConnection instanc
     }
   } catch (error) {
     console.log(`Error ${error.name}: ${error.message}`);
@@ -67,7 +74,8 @@ function closing() {
   // to interfere with the hangup while it's ongoing.
   console.log("Closing connection call");
   if (!peer) return;
-
+  
+  // 1. 移除事件監聽
   peer.onicecandidate = null;
   peer.ontrack = null;
   peer.onnegotiationneeded = null;
@@ -76,14 +84,12 @@ function closing() {
   peer.onicegatheringstatechange = null;
   peer.onsignalingstatechange = null;
 
-  // Stop all tracks on the connection
+  // 2. 停止所有在connection中的多媒體信息
   peer.getSenders().forEach((sender) => {
     peer.removeTrack(sender);
   });
 
-  // Stop the webcam preview as well by pausing the <video>
-  // element, then stopping each of the getUserMedia() tracks
-  // on it.
+  // 3. 暫停video播放，並將儲存在src裡的 MediaStreamTracks 依序停止
   const localVideo = document.getElementById("localVideo");
   if (localVideo.srcObject) {
     localVideo.pause();
@@ -92,8 +98,7 @@ function closing() {
     });
   }
 
-  // Close the peer connection
-
+  // 4. cleanup： 關閉RTCPeerConnection連線並釋放記憶體
   peer.close();
   peer = null;
   cacheStream = null;
@@ -104,33 +109,17 @@ function closing() {
 // utils
 function createPeerConnection() {
   peer = new RTCPeerConnection();
-  peer.onicecandidate = handleIceCandidate;
-  peer.ontrack = handleRemoteStream;
-  peer.onnegotiationneeded = handleNegotiationNeeded;
-  peer.onconnectionstatechange = handleConnectionStateChange;
+  peer.onicecandidate = handleIceCandidate;  // 有新的 ICE candidate 時觸發
+  peer.ontrack = handleRemoteStream;  // connection中發現新的 MediaStreamTrack 時觸發，處理接收
+  peer.onnegotiationneeded = handleNegotiationNeeded;  // 每當 RTCPeerConnection 要進行會話溝通(連線)時觸發，處理create Offer
+  peer.onconnectionstatechange = handleConnectionStateChange;  
   peer.oniceconnectionstatechange = handleICEConnectionStateChange;
-  peer.onicegatheringstatechange = handleICEGatheringStateChange;
-  peer.onsignalingstatechange = handleSignalingStateChange;
+  peer.onicegatheringstatechange = handleICEGatheringStateChange;  // gatherinh:搜尋中;complete:結束搜尋
+  peer.onsignalingstatechange = handleSignalingStateChange;  // signaling 的狀態管理 stable:可以連線;have-local-offer;have-remote-offer
 
-  peer.ondatachannel = handleDataChannel;
-  dataChannel = peer.createDataChannel("my local channel");
 }
 
-function handleDataChannel (event) {
-  console.log("Receive Data Channel Callback", event);
-  const receiveChannel = event.channel;
-  
-  receiveChannel.onopen = onChannelStageChange(receiveChannel);
-  receiveChannel.onclose = onChannelStageChange(receiveChannel);
-}
-
-function onChannelStageChange(channel) {
-  const readyState = channel.readyState;
-  console.log('Channel Stage Change ==> ', channel)
-  console.log(`channel state is: ${readyState}`);
-}
-
-
+// local 創建和傳遞 Offer
 async function handleNegotiationNeeded() {
   console.log("*** handleNegotiationNeeded fired!");
   try {
@@ -177,10 +166,12 @@ function handleICEGatheringStateChange() {
   console.log("*** ICE gathering state changed to: " + peer.iceGatheringState);
 }
 
+// 傳送 icecandidate
 function handleIceCandidate(event) {
   socket.emit("icecandidate", event.candidate);
 }
 
+// 獲取新的多媒體數據
 function handleRemoteStream(event) {
   const remoteVideo = document.getElementById("remoteVideo");
   if (remoteVideo.srcObject !== event.streams[0]) {
@@ -199,6 +190,7 @@ async function getUserStream() {
   }
 }
 
+// 加入多媒體數據到 RTCPeerConnection instance
 async function addStreamProcess() {
   let errMsg = "";
   try {
@@ -209,6 +201,7 @@ async function addStreamProcess() {
   }
 
   try {
+    // RTCPeerConnection.addTrack => 加入MediaStreamTrack
     cacheStream
       .getTracks()
       .forEach((track) => peer.addTrack(track, cacheStream));
@@ -218,18 +211,19 @@ async function addStreamProcess() {
   }
 }
 
+// 接收 SDP Offer
 async function handleSDPOffer(desc) {
   console.log("*** 收到遠端送來的offer");
   try {
     if (!peer) {
-      createPeerConnection();
+      createPeerConnection();  // create RTCPeerConnection instance
     }
 
     console.log("setRemoteDescription ...");
     await peer.setRemoteDescription(desc);
 
     if (!cacheStream) {
-      await addStreamProcess();
+      await addStreamProcess();  // getUserMedia & addTrack
     }
 
     await createAnswer();
@@ -239,6 +233,7 @@ async function handleSDPOffer(desc) {
   }
 }
 
+// 接收 SDP answer
 async function handleSDPAnswer(desc) {
   console.log("*** 遠端接受我們的offer並發送answer回來");
   try {
@@ -262,6 +257,7 @@ async function createAnswer() {
   }
 }
 
+//接收 ICE candidate
 async function handleNewIceCandidate(candidate) {
   console.log(`*** 加入新取得的 ICE candidate: ${JSON.stringify(candidate)}`);
   try {
