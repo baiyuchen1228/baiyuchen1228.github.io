@@ -131,13 +131,16 @@ function onChannelStageChange(channel) {
   console.log(`channel state is: ${readyState}`);
 }
 
+/*
 function onReceiveMessageCallback(event) {
   const type = event.target.label
 
   if (type === 'FileChannel') onReceiveFile(event)
   else console.log("Received Message ==> ", event.data);
 }
+*/
 
+/*
 let receiveBuffer = [];
 let receivedSize = 0;
 function onReceiveFile(event) {
@@ -196,6 +199,7 @@ function sendFileData() {
 
   fileChannel.onclose = () => console.log('closing File Channel')
 }
+*/
 
 async function handleNegotiationNeeded() {
   console.log("*** handleNegotiationNeeded fired!");

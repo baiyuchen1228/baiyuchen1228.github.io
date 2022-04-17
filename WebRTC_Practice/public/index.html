@@ -32,37 +32,6 @@
       <button onclick="calling()">Call</button>
       <button onclick="closing()">Hang Up</button>
     </div>
-
-    <section>
-      <h2>訊息</h2>
-      <textarea id="dataChannelSend" placeholder="enter some text, then press Send."></textarea>
-  
-      <div id="buttons">
-        <button onclick="sendMessage()">Send</button>
-      </div>
-    </section>
-
-    <section>
-      <h2>檔案傳送</h2>
-      <div >
-        <form id="fileInfo">
-          <input type="file" id="fileInput" name="files"/>
-        </form>
-        <button onclick="sendFileData()">Send File</button>
-      </div>
-
-      <div class="progress">
-        <div class="label">Send progress: </div>
-        <progress id="sendProgress" max="0" value="0"></progress>
-      </div>
-
-      <div class="progress">
-        <div class="label">Receive progress: </div>
-        <progress id="receiveProgress" max="0" value="0"></progress>
-      </div>
-
-      <div id="bitrate"></div>
-    </section>
   </div>
 </body>
 
