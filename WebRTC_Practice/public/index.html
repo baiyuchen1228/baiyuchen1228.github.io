@@ -6,16 +6,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Video Chat With WebRTC</title>
-  <link rel="stylesheet" href="css/main.css" />
 
+
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script defer src="./js/main.js"></script>
 </head>
 
 <body>
 
   <h1>Video Chat With WebRTC</h1>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/main.js"></script>
+  <div id="container">
+    <section>
+      <h1>Local Tracker</h1>
+      <video id="localVideo" autoplay></video>
+    </section>
+    <section>
+      <h1>Remote Receiver</h1>
+      <video id="remoteVideo" autoplay></video>
+    </section>
+
+    <div class="box">
+      <button onclick="connection()">Connection</button>
+      <button onclick="calling()">Call</button>
+      <button onclick="closing()">Hang Up</button>
+    </div>
+
+    <section>
+      <h2>訊息</h2>
+      <textarea id="dataChannelSend" placeholder="enter some text, then press Send."></textarea>
+  
+      <div id="buttons">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>檔案傳送</h2>
+      <div >
+        <form id="fileInfo">
+          <input type="file" id="fileInput" name="files"/>
+        </form>
+        <button onclick="sendFileData()">Send File</button>
+      </div>
+
+      <div class="progress">
+        <div class="label">Send progress: </div>
+        <progress id="sendProgress" max="0" value="0"></progress>
+      </div>
+
+      <div class="progress">
+        <div class="label">Receive progress: </div>
+        <progress id="receiveProgress" max="0" value="0"></progress>
+      </div>
+
+      <div id="bitrate"></div>
+    </section>
+  </div>
 </body>
 
 </html>
