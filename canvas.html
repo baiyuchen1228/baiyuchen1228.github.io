@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas pratice</title>
+    <link rel="stylesheet" href="mycss.css">
+</head>
+<body>
+    <img id="apple" src="images/apple.png" alt="" width="300" style="position:absolute;"><br>
+    <img id="banana" src="images/banana.png" alt=""width="300" style="position:absolute; top:300px;"><br>
+    <script type="text/javascript">
+    function move (target,e) {
+        var intX = e.pageX;
+        var intY = e.pageY;
+        target.style.left = intX - (target.width)/2 + "px";
+        target.style.top = intY - (target.height)/2 + "px";
+    }
+    document.getElementById("apple").onclick = function (e){
+        console.log(e)
+        if(document.onmousemove == null)
+            document.onmousemove = move(e.target,e);
+        else
+            document.onmousemove = null;
+    }
+    document.getElementById("banana").onclick = function (e){
+        if(document.onmousemove == null)
+            document.onmousemove = move(e.target,e);
+        else
+            document.onmousemove = null;
+    }
+    </script>
+
+</body>
+</html>
