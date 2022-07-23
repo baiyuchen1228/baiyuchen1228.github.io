@@ -5,11 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>canvas pratice</title>
-    <link rel="stylesheet" href="mycss.css">
+    <link rel="stylesheet" href="canvas.css">
 </head>
 <body>
-    <img id="apple" src="images/apple.png" alt="" width="300" style="position:absolute;"><br>
-    <img id="banana" src="images/banana.png" alt=""width="300" style="position:absolute; top:300px;"><br>
+    <span class="main-menu" onmouseover="switchMenu( this, 'SubMenu1', 'MouseOver' )" onmouseout="hideMenu()">Menu1(Hover) <span style="font-size:9px;">&#9660;</span>
+        <ul id="SubMenu1" class="sub-menu" style="display:none;">
+            <li><a href="http://www.vixual.net/" target="_blank">Vixual</a></li>
+            <li><a href="http://www.google.com.tw/" target="_blank">Google</a></li>
+            <li><a href="http://tw.yahoo.com/" target="_blank">Yahoo!奇摩</a></li>
+        </ul>
+    </span>
+
+    <!--選單2 (Click)-->
+    <span class="main-menu" onclick="switchMenu( this, 'SubMenu2' )">Menu2(Click) <span style="font-size:9px;">&#9660;</span>
+        <ul id="SubMenu2" class="sub-menu" style="display:none;">
+            <li><a href="http://www.vixual.net/" target="_blank">Vixual</a></li>
+            <li><a href="http://www.google.com.tw/" target="_blank">Google</a></li>
+            <li><a href="http://tw.yahoo.com/" target="_blank">Yahoo!奇摩</a></li>
+        </ul>
+    </span>
+
+    <script type="text/javascript">
+        var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
+
+    // 顯示或隱藏子選單
+    function switchMenu( theMainMenu, theSubMenu, theEvent ){
+        var SubMenu = document.getElementById( theSubMenu );
+        if( SubMenu.style.display == 'none' ){ // 顯示子選單
+            SubMenu.style.minWidth = theMainMenu.clientWidth; // 讓子選單的最小寬度與主選單相同 (僅為了美觀)
+            SubMenu.style.display = 'block';
+            hideMenu(); // 隱藏子選單
+            VisibleMenu = theSubMenu;
+        }
+        else{ // 隱藏子選單
+            if( theEvent != 'MouseOver' || VisibleMenu != theSubMenu ){
+                SubMenu.style.display = 'none';
+                VisibleMenu = '';
+            }
+        }
+    }
+
+    // 隱藏子選單
+    function hideMenu(){
+        if( VisibleMenu != '' ){
+            document.getElementById( VisibleMenu ).style.display = 'none';
+        }
+        VisibleMenu = '';
+    }
+    </script>
+    <img id="apple" src="images/apple.png" alt="" width="300" style="position:absolute; top:200px"><br>
+    <img id="banana" src="images/banana.png" alt=""width="300" style="position:absolute; top:500px;"><br>
     <script type="text/javascript">
     function move (target) {
         function moveTarget (e) {
