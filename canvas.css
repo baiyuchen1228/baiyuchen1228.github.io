@@ -1,7 +1,10 @@
-.main-menu { color:#FFFFFF; background-color:#666666; padding:5px; margin:0px; cursor:pointer; display:inline-block; } /* 主選單的樣式 */
-.main-menu:hover { background-color:#0000FF; }
-.sub-menu { color:#0000FF; background-color:#CCCCCC; margin:5px -5px; padding:0px; list-style-type:none; position:absolute; } /* 下拉清單的樣式 */
+body {background-color: #FFF5EB; padding: 0 10% 10% 10%;}
+h1 {background-color:#EBDABF; padding: 5px 10px; color: #000000; font-size: 18px;}
+h2 {background-color:#EBDABF; padding: 5px 10px;color: #000000; font-size: 16px;}
+.main-menu { color:#000000; background-color:#EBDABF; padding:5px 15px; margin:0px; cursor:pointer; display:inline-block; } /* 主選單的樣式 */
+.main-menu:hover { background-color:#EBDABF; }
+.sub-menu { color:#e7dc8f; background-color:#CCCCCC; margin:5px -5px; padding:0px; list-style-type:none; position:absolute; } /* 下拉清單的樣式 */
 .sub-menu li { padding: 3px 5px; text-align:left; } /* 下拉清單每一列的樣式 */
-.sub-menu li:hover { color:#FFFFFF; background-color:#0000FF; }
-.sub-menu a { text-align:left; display:block; text-decoration:none; color:#0000FF; }
-.sub-menu a:hover { color:#FFFFFF; background-color:#0000FF; text-decoration:none; }
+.sub-menu li:hover { color:#000000; background-color:#e7dc8f; }
+.sub-menu a { text-align:left; display:block; text-decoration:none; color:#000000; }
+.sub-menu a:hover { color:#000000; background-color:#e7dc8f; text-decoration:none; }
