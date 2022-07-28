@@ -54,8 +54,10 @@
         VisibleMenu = '';
     }
     </script>
-    <img id="apple" src="images/apple.png" alt="" width="300" style="position:absolute; top:200px; background-color:transparent"><br>
-    <img id="banana" src="images/banana.png" alt=""width="300" style="position:absolute; top:500px; background-color:transparent"><br>
+    <div id="toolbox" >
+        <img id="apple" class="apple-icon" title="apple" src="images/apple.png" alt="" width="150" style="position:absolute; top:200px;">
+        <img id="banana" class="banana-icon" title="banana" src="images/banana.png" alt=""width="150" style="position:absolute; top:400px;">
+    </div>
     <script type="text/javascript">
     function move (target) {
         function moveTarget (e) {
@@ -66,6 +68,7 @@
         }
         return moveTarget;
     }
+    
     document.getElementById("apple").onclick = function (e){
         if(!document.onmousemove)
             document.onmousemove = move(e.target);
