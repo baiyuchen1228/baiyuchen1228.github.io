@@ -61,53 +61,69 @@ document.getElementById("powersupply14").onclick = function () {
 }
 
 addcurrent1.onclick = function () {
-    current1 += 0.01;
-    cur1.innerHTML = current1.toFixed(2);
+    if (power == 1) {
+        current1 += 0.01;
+        cur1.innerHTML = current1.toFixed(2);
+    }
 }
 
 addvoltage1.onclick = function () {
-    voltage1 += 0.1;
-    vol1.innerHTML = voltage1.toFixed(1);
+    if (power == 1) {
+        voltage1 += 0.1;
+        vol1.innerHTML = voltage1.toFixed(1);
+    }
 }
 
 addcurrent2.onclick = function () {
-    current2 += 0.01;
-    cur2.innerHTML = current2.toFixed(2);
+    if (power == 1) {
+        current2 += 0.01;
+        cur2.innerHTML = current2.toFixed(2);
+    }
 }
 
 addvoltage2.onclick = function () {
-    voltage2 += 0.1;
-    vol2.innerHTML = voltage2.toFixed(1);
+    if (power == 1) {
+        voltage2 += 0.1;
+        vol2.innerHTML = voltage2.toFixed(1);
+    }
 }
 
 deccurrent1.onclick = function () {
-    current1 -= 0.01;
-    if (current1 < 0) {
-        current1 = 0;
+    if (power == 1) {
+        current1 -= 0.01;
+        if (current1 < 0) {
+            current1 = 0;
+        }
+        cur1.innerHTML = current1.toFixed(2);
     }
-    cur1.innerHTML = current1.toFixed(2);
 }
 
 decvoltage1.onclick = function () {
-    voltage1 -= 0.1;
-    if (voltage1 < 0) {
-        voltage1 = 0;
+    if (power == 1) {
+        voltage1 -= 0.1;
+        if (voltage1 < 0) {
+            voltage1 = 0;
+        }
+        vol1.innerHTML = voltage1.toFixed(1);
     }
-    vol1.innerHTML = voltage1.toFixed(1);
 }
 
 deccurrent2.onclick = function () {
-    current2 -= 0.01;
-    if (current2 < 0) {
-        current2 = 0;
+    if (power == 1) {
+        current2 -= 0.01;
+        if (current2 < 0) {
+            current2 = 0;
+        }
+        cur2.innerHTML = current2.toFixed(2);
     }
-    cur2.innerHTML = current2.toFixed(2);
 }
 
 decvoltage2.onclick = function () {
-    voltage2 -= 0.1;
-    if (voltage2 < 0) {
-        voltage2 = 0;
+    if (power == 1) {
+        voltage2 -= 0.1;
+        if (voltage2 < 0) {
+            voltage2 = 0;
+        }
+        vol2.innerHTML = voltage2.toFixed(1);
     }
-    vol2.innerHTML = voltage2.toFixed(1);
 }
