@@ -56,7 +56,7 @@ h2 {
     background-color:#e7dc8f; 
     text-decoration:none; 
 }
-div#toolbox{
+/* div#toolbox{
     display: flex;
     flex-direction: column;
     height: 500px;
@@ -68,4 +68,68 @@ div#toolbox{
     background-color: #EBDABF;  
     padding: 3px;
     border-radius: 9px;
+} */
+div#powersupply{
+    position: absolute;
+    left: 1100px;
+    top: 300px;
+    width: 400px;
+    border: 3px solid #73AD21;
+    background-image:url('images/powersupply.jpg');
+    background-size: 400px ;
+    background-repeat: no-repeat;
+    height: 300px;
+}
+.powersupply-text{
+    float: left;
+    position: absolute;
+    color: white;
+    top: 50px;
+}
+#powersupply1{
+    left: 70px;
+}
+#powersupply2{
+    left: 150px;
+}
+#powersupply3{
+    left: 230px;
+}
+#powersupply4{
+    left: 310px;
+}
+.powersupply-button{
+    float: left;
+    position:absolute;
+    color: #000000;
+    top: 170px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#powersupply5{
+    left: 70px;
+}
+#powersupply6{
+    left: 95px;
+}
+#powersupply7{
+    left: 145px;
+}
+#powersupply8{
+    left: 170px;
+}
+#powersupply9{
+    left: 250px;
+}
+#powersupply10{
+    left: 275px;
+}
+#powersupply11{
+    left: 320px;
+}
+#powersupply12{
+    left: 345px;
 }

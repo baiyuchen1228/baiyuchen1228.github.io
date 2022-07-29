@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>實驗三：等電位實驗</title>
+    <title>實驗五: 歐姆定律及電容實驗</title>
     <link rel="stylesheet" href="../canvas.css">
+    <script  type="text/javascript" src="js/demo.js"></script>
 </head>
 <body>
     <h1>
         <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-        <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span style="font-size:9px;">&#9660;</span>
+        <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗 <span style="font-size:9px;">&#9660;</span>
             <ul id="SubMenu1" class="sub-menu" style="display:none;">
                 <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
                 <li><a href="exp5.html" target="_self">實驗五: 歐姆定律及電容實驗</a></li>
@@ -24,7 +25,7 @@
         </span>
     </h1>
     <h2>
-        我的課程 / 普通物理實驗 / 實驗三：等電位實驗
+        我的課程 / 普通物理實驗 / 實驗五: 歐姆定律及電容實驗
     </h2>
     <script type="text/javascript">
         var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
@@ -54,9 +55,24 @@
         VisibleMenu = '';
     }
     </script>
-    <img id="apple" src="../images/apple.png" alt="" width="300" style="position:absolute; top:200px"><br>
-    <img id="banana" src="../images/banana.png" alt=""width="300" style="position:absolute; top:500px;"><br>
-    <script type="text/javascript">
+    <img id="breadboard" class="breadboard-icon" title="breadboard" src="../images/breadboard.png" alt=""width="500px" style="position:absolute; top:300px; left: 500px;">
+    <img id="resistance" class="resistance-icon" title="20k-resistance" src="../images/resistance.png" alt=""width="130px" style="position:absolute; top:469px; left: 560px;">
+    <div id="powersupply">
+        <p id="powersupply1" class="powersupply-text">12.3</p>
+        <p id="powersupply2" class="powersupply-text">12.3</p>
+        <p id="powersupply3" class="powersupply-text">12.3</p>
+        <p id="powersupply4" class="powersupply-text">12.3</p>
+        <button id="powersupply5"  class="powersupply-button">＋</button>
+        <button id="powersupply6" class="powersupply-button">－</button>
+        <button id="powersupply7" class="powersupply-button">＋</button>
+        <button id="powersupply8" class="powersupply-button">－</button>
+        <button id="powersupply9" class="powersupply-button">＋</button>
+        <button id="powersupply10" class="powersupply-button">－</button>
+        <button id="powersupply11" class="powersupply-button">＋</button>
+        <button id="powersupply12" class="powersupply-button">－</button>
+    </div>
+
+    <!-- <script type="text/javascript">
     function move (target) {
         function moveTarget (e) {
             var intX = e.pageX;
@@ -78,7 +94,7 @@
         else
             document.onmousemove = null;
     }
-    </script>
+    </script> -->
 
 </body>
 </html>
