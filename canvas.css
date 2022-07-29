@@ -1,0 +1,135 @@
+body {
+    background-color: #FFF5EB;
+    padding: 0 10% 10% 10%;
+}
+h1 {
+    text-indent: 1em;
+    background-color:#EBDABF; 
+    padding: 5px 10px; 
+    color: #000000; 
+    font-size: 18px;
+    border-radius: 9px;
+}
+h2 {
+    text-indent: 1em;
+    background-color:#EBDABF; 
+    padding: 5px 10px;
+    color: #000000; 
+    font-size: 16px;
+    border-radius: 9px;
+}
+.main-menu { 
+    color:#000000; 
+    background-color:#EBDABF; 
+    padding:5px 15px; 
+    margin:0px; 
+    cursor:pointer; 
+    display:inline-block; 
+} /* 主選單的樣式 */
+.main-menu:hover { 
+    background-color:#EBDABF; 
+}
+.sub-menu { 
+    color:#e7dc8f;
+    background-color:#CCCCCC; 
+    margin:5px -5px; 
+    padding:0px; 
+    list-style-type:none; 
+    position:absolute; 
+} /* 下拉清單的樣式 */
+.sub-menu li {
+    padding: 3px 5px;
+    text-align:left; 
+} /* 下拉清單每一列的樣式 */
+.sub-menu li:hover { 
+    color:#000000; 
+    background-color:#e7dc8f; 
+}
+.sub-menu a { 
+    text-align:left; 
+    display:block; 
+    text-decoration:none; 
+    color:#000000; 
+}
+.sub-menu a:hover { 
+    color:#000000; 
+    background-color:#e7dc8f; 
+    text-decoration:none; 
+}
+/* div#toolbox{
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 200px;
+    bottom: 48px;
+    left: 8px;
+    margin: 0;
+    overflow: hidden;
+    background-color: #EBDABF;  
+    padding: 3px;
+    border-radius: 9px;
+} */
+div#powersupply{
+    position: absolute;
+    left: 1100px;
+    top: 300px;
+    width: 400px;
+    border: 3px solid #73AD21;
+    background-image:url('images/powersupply.jpg');
+    background-size: 400px ;
+    background-repeat: no-repeat;
+    height: 300px;
+}
+.powersupply-text{
+    float: left;
+    position: absolute;
+    color: white;
+    top: 50px;
+}
+#powersupply1{
+    left: 70px;
+}
+#powersupply2{
+    left: 150px;
+}
+#powersupply3{
+    left: 230px;
+}
+#powersupply4{
+    left: 310px;
+}
+.powersupply-button{
+    float: left;
+    position:absolute;
+    color: #000000;
+    top: 170px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#powersupply5{
+    left: 70px;
+}
+#powersupply6{
+    left: 95px;
+}
+#powersupply7{
+    left: 145px;
+}
+#powersupply8{
+    left: 170px;
+}
+#powersupply9{
+    left: 250px;
+}
+#powersupply10{
+    left: 275px;
+}
+#powersupply11{
+    left: 320px;
+}
+#powersupply12{
+    left: 345px;
+}

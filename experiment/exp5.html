@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>實驗五: 歐姆定律及電容實驗</title>
+    <link rel="stylesheet" href="css\exp5.css">
+    <script  type="text/javascript" src="js\exp5.js"></script>
+</head>
+<body>
+    <h1>
+        <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
+        <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗 <span style="font-size:9px;">&#9660;</span>
+            <ul id="SubMenu1" class="sub-menu" style="display:none;">
+                <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
+                <li><a href="exp5.html" target="_self">實驗五: 歐姆定律及電容實驗</a></li>
+                <li><a href="exp6.html" target="_self">實驗六: 克希荷夫</a></li>
+                <li><a href="exp2.html" target="_self">實驗二: 示波器與波形產生器教學</a></li>
+                <li><a href="exp7.html" target="_self">實驗七: RC直流電路</a></li>
+                <li><a href="exp8.html" target="_self">實驗八: 磁力實驗</a></li>
+                <li><a href="exp10.html" target="_self">實驗十: RLC直流電路</a></li>
+                <li><a href="exp11.html" target="_self">實驗十一: RLC交流電路</a></li>
+            </ul>
+        </span>
+    </h1>
+    <h2>
+        我的課程 / 普通物理實驗 / 實驗五: 歐姆定律及電容實驗
+    </h2>
+    <img id="breadboard" class="breadboard-icon" title="breadboard" src="../images/breadboard.png" alt=""width="500px" style="position:absolute; top:300px; left: 550px;">
+    <img id="resistance" class="resistance-icon" title="20k-resistance" src="../images/resistance.png" alt=""width="130px" style="position:absolute; top:469px; left: 610px;">
+    <div id="powersupply">
+        <p id="powersupply1" class="powersupply-text">12.3</p>
+        <p id="powersupply2" class="powersupply-text">12.3</p>
+        <p id="powersupply3" class="powersupply-text">12.3</p>
+        <p id="powersupply4" class="powersupply-text">12.3</p>
+        <button id="powersupply5" class="powersupply-button">＋</button>
+        <button id="powersupply6" class="powersupply-button">－</button>
+        <button id="powersupply7" class="powersupply-button">＋</button>
+        <button id="powersupply8" class="powersupply-button">－</button>
+        <button id="powersupply9" class="powersupply-button">＋</button>
+        <button id="powersupply10" class="powersupply-button">－</button>
+        <button id="powersupply11" class="powersupply-button">＋</button>
+        <button id="powersupply12" class="powersupply-button">－</button>
+        <button id="powersupply13" class="powersupply-button">output</button>
+        <button id="powersupply14" class="powersupply-button">power</button>
+    </div>
+    <div id="multimeter1">
+
+    </div>
+    <div id="multimeter2">
+
+    </div>
+    <!-- <script type="text/javascript">
+    function move (target) {
+        function moveTarget (e) {
+            var intX = e.pageX;
+            var intY = e.pageY;
+            target.style.left = intX - (target.width)/2 + "px";
+            target.style.top = intY - (target.height)/2 + "px";
+        }
+        return moveTarget;
+    }
+    document.getElementById("apple").onclick = function (e){
+        if(!document.onmousemove)
+            document.onmousemove = move(e.target);
+        else
+            document.onmousemove = null;
+    }
+    document.getElementById("banana").onclick = function (e){
+        if(!document.onmousemove)
+            document.onmousemove = move(e.target);
+        else
+            document.onmousemove = null;
+    }
+    </script> -->
+
+</body>
+</html>
