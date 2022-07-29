@@ -24,3 +24,4 @@ function hideMenu(){
     }
     VisibleMenu = '';
 }
+

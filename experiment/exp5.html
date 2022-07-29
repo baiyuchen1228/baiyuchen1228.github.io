@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>實驗五: 歐姆定律及電容實驗</title>
     <link rel="stylesheet" href="../canvas.css">
-    <script  type="text/javascript" src="js/demo.js"></script>
+    <script  type="text/javascript" src="js\exp5.js"></script>
 </head>
 <body>
     <h1>
@@ -27,34 +27,6 @@
     <h2>
         我的課程 / 普通物理實驗 / 實驗五: 歐姆定律及電容實驗
     </h2>
-    <script type="text/javascript">
-        var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
-
-    // 顯示或隱藏子選單
-    function switchMenu( theMainMenu, theSubMenu, theEvent ){
-        var SubMenu = document.getElementById( theSubMenu );
-        if( SubMenu.style.display == 'none' ){ // 顯示子選單
-            SubMenu.style.minWidth = theMainMenu.clientWidth; // 讓子選單的最小寬度與主選單相同 (僅為了美觀)
-            SubMenu.style.display = 'block';
-            hideMenu(); // 隱藏子選單
-            VisibleMenu = theSubMenu;
-        }
-        else{ // 隱藏子選單
-            if( theEvent != 'MouseOver' || VisibleMenu != theSubMenu ){
-                SubMenu.style.display = 'none';
-                VisibleMenu = '';
-            }
-        }
-    }
-
-    // 隱藏子選單
-    function hideMenu(){
-        if( VisibleMenu != '' ){
-            document.getElementById( VisibleMenu ).style.display = 'none';
-        }
-        VisibleMenu = '';
-    }
-    </script>
     <img id="breadboard" class="breadboard-icon" title="breadboard" src="../images/breadboard.png" alt=""width="500px" style="position:absolute; top:300px; left: 500px;">
     <img id="resistance" class="resistance-icon" title="20k-resistance" src="../images/resistance.png" alt=""width="130px" style="position:absolute; top:469px; left: 560px;">
     <div id="powersupply">
