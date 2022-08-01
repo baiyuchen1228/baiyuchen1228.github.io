@@ -152,3 +152,7 @@ div#powersupply{
     left: 15px;
     width: 50px;
 }
+.buttonInactive
+{
+    background-color: white;
+}
