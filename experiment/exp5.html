@@ -134,7 +134,6 @@
                 y2=approx_x(wireFinal.pageY);
                 y1-=150;
                 y2-=150;
-
                 if(x1==x2 && y1==y2)
                 {
                     alert("It is meaningless to insert both the ends of wire to the same point.");
@@ -152,8 +151,8 @@
                 y1=approx_x(resistanceInitial.pageY);
                 x2=approx_x(resistanceFinal.pageX);
                 y2=approx_x(resistanceFinal.pageY);
-                y1+=150;
-                y2+=150;
+                y1-=150;
+                y2-=150;
                 if(x1==x2 && y1==y2)
                 {
                     alert("Can't insert both the legs of resistor to the same point.");
@@ -190,8 +189,8 @@
                 y1=approx_x(inductanceInitial.pageY);
                 x2=approx_x(inductanceFinal.pageX);
                 y2=approx_x(inductanceFinal.pageY);
-                y1+=150;
-                y2+=150;
+                y1-=150;
+                y2-=150;
                 if(x1==x2 && y1==y2)
                 {
                     alert("Can't insert both the legs of inductor to the same point.");
@@ -230,8 +229,8 @@
                 y1=approx_x(delIni.pageY);
                 x2=approx_x(delFin.pageX);
                 y2=approx_x(delFin.pageY);
-                y1+=150;
-                y2+=150;
+                y1-=150;
+                y2-=150;
                 var id;
                 Things=$("line");
                 for (var i = Things.length - 1; i >= 0; i--) {
@@ -395,132 +394,132 @@
 
         });
         function toggleDelButton(){
-                    $this=$("#del");
-                    if(drawInductance==1 || drawResistance==1 || drawWire==1 || drawLED==1)
-                    {
-                        alert("First Deactivate the Add Mode");
-                        return;   
-                    }
-                    if(deletemode==1)
-                    {
-                        $this.css('background-color','white');
-                        deletemode=0;
-
-                    }else
-                    {
-                        $this.css('background-color','red');
-                        deletemode=1;
-                    }
-                }
-                
-        function toggleWireButton(){
-            $this=$("#addWire");
+            if(drawInductance==1)
+            {
+                $this=$("#addInductance");
+                $this.css('background-color','white');
+                drawInductance=0;
+            }
+            else if(drawResistance==1)
+            {
+                $this=$("#addResistance");
+                $this.css('background-color','white');
+                drawResistance=0;
+            }
+            else if(drawWire==1)
+            {
+                $this=$("#addWire");
+                $this.css('background-color','white');
+                drawWire=0;
+            }
+            $this=$("#del");
             if(deletemode==1)
             {
-                alert("First Deactivate the Delete Mode");
-                return;
+                $this.css('background-color','white');
+                deletemode=0;
+
+            }else
+            {
+                $this.css('background-color','red');
+                deletemode=1;
             }
+        }
+                
+        function toggleWireButton(){
+            if(drawInductance==1)
+            {
+                $this=$("#addInductance");
+                $this.css('background-color','white');
+                drawInductance=0;
+            }
+            else if(drawResistance==1)
+            {
+                $this=$("#addResistance");
+                $this.css('background-color','white');
+                drawResistance=0;
+            }
+            else if(deletemode==1)
+            {
+                $this=$("#del");
+                $this.css('background-color','white');
+                deletemode=0;
+            }
+            $this=$("#addWire");
             if(drawWire==1)
             {
                 $this.css('background-color','white');
                 drawWire=0;
             }
-            else 
-                if(drawResistance==1)
-                {
-                    alert("First turn off the Add Resistor Button");
-                    return;
-                }
-                else
-                    if(drawLED==1)
-                    {
-                        alert("First turn off the Add LED Button");
-                        return;
-                    }
-                    else 
-                    {
-                        if(drawInductance==1)
-                        {
-                            alert("First turn off the Add Inductance Button");
-                            return;
-                        }
-                        $this.css('background-color','red');
-                        drawWire=1;
-                    }
+            else
+            {
+                $this.css('background-color','red');
+                drawWire=1;
+            }
         };
 
         function toggleResistanceButton(){
-            $this=$("#addResistance");
-            if(deletemode==1)
+            if(drawInductance==1)
             {
-                alert("First Deactivate the Delete Mode");
-                return;
+                $this=$("#addInductance");
+                $this.css('background-color','white');
+                drawInductance=0;
             }
+            else if(deletemode==1)
+            {
+                $this=$("#del");
+                $this.css('background-color','white');
+                deletemode=0;
+            }
+            else if(drawWire==1)
+            {
+                $this=$("#addWire");
+                $this.css('background-color','white');
+                drawWire=0;
+            }
+            $this=$("#addResistance");
             if(drawResistance==1)
             {
                 $this.css('background-color','white');
                 drawResistance=0;
             }
             else
-                if(drawWire==1)
-                {
-                    alert("First turn off the Add Wire Button");
-                    return;
-                }
-                else
-                    if(drawLED==1)
-                    {
-                        alert("First turn off the Add LED Button");
-                        return;
-                    }
-                    else
-                    {
-                        if(drawInductance==1)
-                        {
-                            alert("First turn off the Add Inductance Button");
-                            return;
-                        }
-                        $this.css('background-color','red');
-                        drawResistance=1;
-                    }          
+            {
+                $this.css('background-color','red');
+                drawResistance=1;
+            }          
         };
 
         function toggleInductanceButton(){
-            $this=$("#addInductance");
-            if(deletemode==1)
+            if(drawResistance==1)
             {
-                alert("First Deactivate the Delete Mode");
-                return;
+                $this=$("#addResistance");
+                $this.css('background-color','white');
+                drawResistance=0;
             }
+            else if(deletemode==1)
+            {
+                $this=$("#del");
+                $this.css('background-color','white');
+                deletemode=0;
+            }
+            else if(drawWire==1)
+            {
+                $this=$("#addWire");
+                $this.css('background-color','white');
+                drawWire=0;
+            }
+            $this=$("#addInductance");
             if(drawInductance==1)
             {
                 $this.css('background-color','white');
                 drawInductance=0;
             }
             else
-                if(drawWire==1)
-                {
-                    alert("First turn off the Add Wire Button");
-                    return;
-                }
-                else
+            {                
+                $this.css('background-color','red');
+                drawInductance=1;
+            }
                 
-                    if(drawLED==1)
-                    {
-                        alert("First turn off the Add LED Button");
-                        return;
-                    }
-                    else
-                    {
-                        if(drawResistance==1)
-                        {
-                            alert("First turn off the Add Resistor Button");
-                            return;
-                        }
-                        $this.css('background-color','red');
-                        drawInductance=1;
-                    }
-                        
                     
         };
         
