@@ -35,8 +35,8 @@
     
     <!-- <img id="breadboard" class="breadboard-icon" title="breadboard" src="../images/breadboard.png" alt="" width="500px"
         style="position:absolute; top:300px; left: 550px;"> -->
-    <img id="resistance" class="resistance-icon" title="20k-resistance" src="../images/resistance.png" alt=""
-        width="130px" style="position:absolute; top:469px; left: 610px;">
+    <!-- <img id="resistance" class="resistance-icon" title="20k-resistance" src="../images/resistance.png" alt=""
+        width="140px" style="position:absolute; top:446px; left: 610px;z-index: 2;"> -->
     <div id="powersupply">
         <p id="powersupply1" class="powersupply-text"></p>
         <p id="powersupply2" class="powersupply-text"></p>
@@ -63,6 +63,9 @@
     
     </div>
     <button class="buttonInactive" id="addWire" href="#" style="" onclick="toggleWireButton()">Add Wire</button>
+    <button class="buttonInactive" id="addResistance" href="#" style="" onclick="toggleResistanceButton()">Add Resistor</button>
+    <button class="buttonInactive" id="addInductance" href="#" style="" onclick="toggleInductanceButton()">Add Inductor</button>
+    <button class="buttonInactive" id="del" href="#" style="" onclick="toggleDelButton()">Delete Mode</button>
     <script type="text/javascript">
         var finalOutput;
         var drawWire=0;
@@ -128,6 +131,10 @@
                 y1=approx_x(wireInitial.pageY);
                 x2=approx_x(wireFinal.pageX);
                 y2=approx_x(wireFinal.pageY);
+                x1-=450;
+                x2-=450;
+                y1-=300;
+                y2-=300;
 
                 if(x1==x2 && y1==y2)
                 {
@@ -146,6 +153,10 @@
                 y1=approx_x(resistanceInitial.pageY);
                 x2=approx_x(resistanceFinal.pageX);
                 y2=approx_x(resistanceFinal.pageY);
+                x1-=450;
+                x2-=450;
+                y1-=300;
+                y2-=300;
                 if(x1==x2 && y1==y2)
                 {
                     alert("Can't insert both the legs of resistor to the same point.");
@@ -182,6 +193,10 @@
                 y1=approx_x(inductanceInitial.pageY);
                 x2=approx_x(inductanceFinal.pageX);
                 y2=approx_x(inductanceFinal.pageY);
+                x1-=450;
+                x2-=450;
+                y1-=300;
+                y2-=300;
                 if(x1==x2 && y1==y2)
                 {
                     alert("Can't insert both the legs of inductor to the same point.");
@@ -210,27 +225,6 @@
                 document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox'+inductanceNo+' points="'+rectX1+','+rectY1+' '+rectX2+','+rectY2+' '+rectX3+','+rectY3+' '+rectX4+','+rectY4+'" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"/>'));    
                 inductanceNo++;
             }
-            if(drawLED==1)
-            {
-                var LEDFinal=e;
-                x1=approx_x(LEDInitial.pageX);
-                y1=approx_x(LEDInitial.pageY);
-                x2=approx_x(LEDFinal.pageX);
-                y2=approx_x(LEDFinal.pageY);
-
-                if(x1==x2 && y1==y2)
-                {
-                    alert("Can't insert both the legs of LED to the same point.");
-                    return;
-                }
-                document.getElementById('svgline').appendChild(parseSVG('<line id=LED'+LEDNo+' x1='+x1+' y1='+y1+' x2='+x2+' y2='+y2+' style="stroke:rgb(0,0,255);stroke-width:2"/>'));
-                //to draw the circular LED
-                var centerX=x1-(x1-x2)/2;
-                var centerY=y1-(y1-y2)/2;
-                document.getElementById('svgline').appendChild(parseSVG('<circle id=LEdcircle'+LEDNo+' cx="'+centerX+'" cy="'+centerY+'" r="5" stroke="black"  stroke-width="1" fill="red"/>'));    
-                LEDNo++;
-
-            }
             if(deletemode==1)
             {
                 console.log(delIni);
@@ -241,6 +235,10 @@
                 y1=approx_x(delIni.pageY);
                 x2=approx_x(delFin.pageX);
                 y2=approx_x(delFin.pageY);
+                x1-=450;
+                x2-=450;
+                y1-=300;
+                y2-=300;
                 var id;
                 Things=$("line");
                 for (var i = Things.length - 1; i >= 0; i--) {
@@ -403,6 +401,25 @@
             
 
         });
+        function toggleDelButton(){
+                    $this=$("#del");
+                    if(drawInductance==1 || drawResistance==1 || drawWire==1 || drawLED==1)
+                    {
+                        alert("First Deactivate the Add Mode");
+                        return;   
+                    }
+                    if(deletemode==1)
+                    {
+                        $this.css('background-color','white');
+                        deletemode=0;
+
+                    }else
+                    {
+                        $this.css('background-color','red');
+                        deletemode=1;
+                    }
+                }
+                
         function toggleWireButton(){
             $this=$("#addWire");
             if(deletemode==1)
@@ -438,6 +455,82 @@
                         drawWire=1;
                     }
         };
+
+        function toggleResistanceButton(){
+            $this=$("#addResistance");
+            if(deletemode==1)
+            {
+                alert("First Deactivate the Delete Mode");
+                return;
+            }
+            if(drawResistance==1)
+            {
+                $this.css('background-color','white');
+                drawResistance=0;
+            }
+            else
+                if(drawWire==1)
+                {
+                    alert("First turn off the Add Wire Button");
+                    return;
+                }
+                else
+                    if(drawLED==1)
+                    {
+                        alert("First turn off the Add LED Button");
+                        return;
+                    }
+                    else
+                    {
+                        if(drawInductance==1)
+                        {
+                            alert("First turn off the Add Inductance Button");
+                            return;
+                        }
+                        $this.css('background-color','red');
+                        drawResistance=1;
+                    }          
+        };
+
+        function toggleInductanceButton(){
+            $this=$("#addInductance");
+            if(deletemode==1)
+            {
+                alert("First Deactivate the Delete Mode");
+                return;
+            }
+            if(drawInductance==1)
+            {
+                $this.css('background-color','white');
+                drawInductance=0;
+            }
+            else
+                if(drawWire==1)
+                {
+                    alert("First turn off the Add Wire Button");
+                    return;
+                }
+                else
+                
+                    if(drawLED==1)
+                    {
+                        alert("First turn off the Add LED Button");
+                        return;
+                    }
+                    else
+                    {
+                        if(drawResistance==1)
+                        {
+                            alert("First turn off the Add Resistor Button");
+                            return;
+                        }
+                        $this.css('background-color','red');
+                        drawInductance=1;
+                    }
+                        
+                    
+        };
+        
     </script>
     <!-- <script type="text/javascript">
     function move (target) {
