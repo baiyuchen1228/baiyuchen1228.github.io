@@ -37,35 +37,36 @@
         style="position:absolute; top:300px; left: 550px;"> -->
     <!-- <img id="resistance" class="resistance-icon" title="20k-resistance" src="../images/resistance.png" alt=""
         width="140px" style="position:absolute; top:446px; left: 610px;z-index: 2;"> -->
-    <div id="powersupply">
-        <p id="powersupply1" class="powersupply-text"></p>
-        <p id="powersupply2" class="powersupply-text"></p>
-        <p id="powersupply3" class="powersupply-text"></p>
-        <p id="powersupply4" class="powersupply-text"></p>
-        <button type="button" id="powersupply5" class="powersupply-button">＋</button>
-        <button id="powersupply6" class="powersupply-button">－</button>
-        <button id="powersupply7" class="powersupply-button">＋</button>
-        <button id="powersupply8" class="powersupply-button">－</button>
-        <button id="powersupply9" class="powersupply-button">＋</button>
-        <button id="powersupply10" class="powersupply-button">－</button>
-        <button id="powersupply11" class="powersupply-button">＋</button>
-        <button id="powersupply12" class="powersupply-button">－</button>
-        <button id="powersupply13" class="powersupply-button">output</button>
-        <button id="powersupply14" class="powersupply-button">power</button>
-    </div>
-    <div id="multimeter1">
-    </div>
-    <div id="multimeter2">
-    </div>
-    <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0;">
+    
+    <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0; height: 600px;">
+        <div id="powersupply">
+            <p id="powersupply1" class="powersupply-text"></p>
+            <p id="powersupply2" class="powersupply-text"></p>
+            <p id="powersupply3" class="powersupply-text"></p>
+            <p id="powersupply4" class="powersupply-text"></p>
+            <button type="button" id="powersupply5" class="powersupply-button">＋</button>
+            <button id="powersupply6" class="powersupply-button">－</button>
+            <button id="powersupply7" class="powersupply-button">＋</button>
+            <button id="powersupply8" class="powersupply-button">－</button>
+            <button id="powersupply9" class="powersupply-button">＋</button>
+            <button id="powersupply10" class="powersupply-button">－</button>
+            <button id="powersupply11" class="powersupply-button">＋</button>
+            <button id="powersupply12" class="powersupply-button">－</button>
+            <button id="powersupply13" class="powersupply-button">output</button>
+            <button id="powersupply14" class="powersupply-button">power</button>
+        </div>
+        <div id="multimeter1">
+        </div>
+        <div id="multimeter2">
+        </div>
         <canvas id="myCanvas" width="1100" height="360" style="position: relative; left: 450px; top: 150px; z-index: 0; float: left;" ></canvas>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1300px" height="360px" style="left: 450px; top: -210px; z-index:0; position:relative" id="svgline"></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1300px" height="600px" style="left: 0px; top: 0px; z-index:0; position:absolute" id="svgline"></svg>
     
     </div>
-    <button class="buttonInactive" id="addWire" href="#" style="" onclick="toggleWireButton()">Add Wire</button>
-    <button class="buttonInactive" id="addResistance" href="#" style="" onclick="toggleResistanceButton()">Add Resistor</button>
-    <button class="buttonInactive" id="addInductance" href="#" style="" onclick="toggleInductanceButton()">Add Inductor</button>
-    <button class="buttonInactive" id="del" href="#" style="" onclick="toggleDelButton()">Delete Mode</button>
+    <button class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add Wire</button>
+    <button class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add Resistor</button>
+    <button class="buttonInactive" id="addInductance" href="#" onclick="toggleInductanceButton()">Add Inductor</button>
+    <button class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode</button>
     <script type="text/javascript">
         var finalOutput;
         var drawWire=0;
@@ -131,10 +132,8 @@
                 y1=approx_x(wireInitial.pageY);
                 x2=approx_x(wireFinal.pageX);
                 y2=approx_x(wireFinal.pageY);
-                x1-=450;
-                x2-=450;
-                y1-=300;
-                y2-=300;
+                y1-=150;
+                y2-=150;
 
                 if(x1==x2 && y1==y2)
                 {
@@ -153,10 +152,8 @@
                 y1=approx_x(resistanceInitial.pageY);
                 x2=approx_x(resistanceFinal.pageX);
                 y2=approx_x(resistanceFinal.pageY);
-                x1-=450;
-                x2-=450;
-                y1-=300;
-                y2-=300;
+                y1+=150;
+                y2+=150;
                 if(x1==x2 && y1==y2)
                 {
                     alert("Can't insert both the legs of resistor to the same point.");
@@ -193,10 +190,8 @@
                 y1=approx_x(inductanceInitial.pageY);
                 x2=approx_x(inductanceFinal.pageX);
                 y2=approx_x(inductanceFinal.pageY);
-                x1-=450;
-                x2-=450;
-                y1-=300;
-                y2-=300;
+                y1+=150;
+                y2+=150;
                 if(x1==x2 && y1==y2)
                 {
                     alert("Can't insert both the legs of inductor to the same point.");
@@ -235,10 +230,8 @@
                 y1=approx_x(delIni.pageY);
                 x2=approx_x(delFin.pageX);
                 y2=approx_x(delFin.pageY);
-                x1-=450;
-                x2-=450;
-                y1-=300;
-                y2-=300;
+                y1+=150;
+                y2+=150;
                 var id;
                 Things=$("line");
                 for (var i = Things.length - 1; i >= 0; i--) {
@@ -353,51 +346,51 @@
 
             };
 
-            context.lineWidth=5;
-            context.beginPath(); // Start the path
-            context.moveTo(90, 195); // Set the path origin
-            context.lineTo(50*11-5, 195); // Set the path destination
-            context.closePath(); // Close the path
-            context.stroke(); // Outline the path
+            // context.lineWidth=5;
+            // context.beginPath(); // Start the path
+            // context.moveTo(90, 195); // Set the path origin
+            // context.lineTo(50*11-5, 195); // Set the path destination
+            // context.closePath(); // Close the path
+            // context.stroke(); // Outline the path
 
             
-            context.fillStyle="rgb(88,88,88)";
-            for (var j = 0; j <5; j++) {
+            // context.fillStyle="rgb(88,88,88)";
+            // for (var j = 0; j <5; j++) {
                 
-                for (var i = 0; i < 23; i++) {
-                        current_x= current_x+20;
-                        context.fillRect(current_x,210+20*j, 10, 10);
-                    }; 
-                current_x=70;
+            //     for (var i = 0; i < 23; i++) {
+            //             current_x= current_x+20;
+            //             context.fillRect(current_x,210+20*j, 10, 10);
+            //         }; 
+            //     current_x=70;
 
-            };
-            current_x=70;
-            context.lineWidth=3;
-            context.beginPath(); // Start the path
-            context.moveTo(90, 310); // Set the path origin
-            context.lineTo(50*11-5, 310); // Set the path destination
-            context.closePath(); // Close the path
-            context.stroke(); // Outline the path
+            // };
+            // current_x=70;
+            // context.lineWidth=3;
+            // context.beginPath(); // Start the path
+            // context.moveTo(90, 310); // Set the path origin
+            // context.lineTo(50*11-5, 310); // Set the path destination
+            // context.closePath(); // Close the path
+            // context.stroke(); // Outline the path
             
-            current_x=70;
-            for (var j = 0; j < 4; j++) {
+            // current_x=70;
+            // for (var j = 0; j < 4; j++) {
                 
-                for (var i = 0; i < 5; i++) {
-                    current_x= current_x+20;
-                    context.fillRect(current_x,320, 10, 10);
-                };
-                current_x=current_x + 20;
-            };
-            current_x=70;
+            //     for (var i = 0; i < 5; i++) {
+            //         current_x= current_x+20;
+            //         context.fillRect(current_x,320, 10, 10);
+            //     };
+            //     current_x=current_x + 20;
+            // };
+            // current_x=70;
             
-            for (var j = 0; j < 4; j++) {
+            // for (var j = 0; j < 4; j++) {
                 
-                for (var i = 0; i < 5; i++) {
-                    current_x= current_x+20;
-                    context.fillRect(current_x,340, 10, 10);
-                };
-                current_x=current_x + 20;
-            };
+            //     for (var i = 0; i < 5; i++) {
+            //         current_x= current_x+20;
+            //         context.fillRect(current_x,340, 10, 10);
+            //     };
+            //     current_x=current_x + 20;
+            // };
             
 
         });

@@ -59,7 +59,7 @@ h2 {
 div#multimeter1{
     position: absolute;
     left: 50px;
-    top: 300px;
+    top: 150px;
     width: 200px;
     border: 5px solid black;
     background-image:url('../../images/multimeter.jpg');
@@ -70,7 +70,7 @@ div#multimeter1{
 div#multimeter2{
     position: absolute;
     left: 300px;
-    top: 150px;
+    top: 0px;
     width: 200px;
     border: 5px solid black;
     background-image:url('../../images/multimeter.jpg');
@@ -81,7 +81,7 @@ div#multimeter2{
 div#powersupply{
     position: absolute;
     left: 1100px;
-    top: 300px;
+    top: 150px;
     width: 400px;
     border: 5px solid black;
     background-image:url('../../images/powersupply.jpg');
