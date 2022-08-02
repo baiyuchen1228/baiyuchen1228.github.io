@@ -152,6 +152,37 @@ div#powersupply{
     left: 15px;
     width: 50px;
 }
+.multimeter-button{
+    position:absolute;
+    float: left;
+    color: #000000;
+    top: 80px;
+    text-indent: 0px;
+    font-size: 1px;
+    width: 40px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.multimeter-title{
+    float: left;
+    position: absolute;
+    color: black;
+    top: 10px;
+    left: 80px;
+    font-size: 30px;
+}
+#multimeter1_1{
+    left :100px;
+}
+#multimeter1_2{
+    left: 50px;
+}
+#multimeter2_1{
+    left :100px;
+}
+#multimeter2_2{
+    left: 50px;
+}
 .buttonInactive
 {
     background-color: white;
