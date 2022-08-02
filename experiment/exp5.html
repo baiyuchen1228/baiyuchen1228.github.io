@@ -94,7 +94,7 @@
         
 
         function approx_x(x){
-            return (Math.floor(x/10)*10+5) ;
+            return (Math.floor(x/20)*20+5) ;
         }
 
         $("#container").mousedown(function(e){
@@ -138,8 +138,8 @@
                 y1=approx_x(wireInitial.pageY);
                 x2=approx_x(wireFinal.pageX);
                 y2=approx_x(wireFinal.pageY);
-                x1-=550;
-                x2-=550;
+                x1-=540;
+                x2-=540;
                 y1-=300;
                 y2-=300;
                 if(x1==x2 && y1==y2)
@@ -159,8 +159,8 @@
                 y1=approx_x(resistanceInitial.pageY);
                 x2=approx_x(resistanceFinal.pageX);
                 y2=approx_x(resistanceFinal.pageY);
-                x1-=550;
-                x2-=550;
+                x1-=540;
+                x2-=540;
                 y1-=300;
                 y2-=300;
                 if(x1==x2 && y1==y2)
@@ -199,8 +199,8 @@
                 y1=approx_x(inductanceInitial.pageY);
                 x2=approx_x(inductanceFinal.pageX);
                 y2=approx_x(inductanceFinal.pageY);
-                x1-=550;
-                x2-=550;
+                x1-=540;
+                x2-=540;
                 y1-=300;
                 y2-=300;
                 if(x1==x2 && y1==y2)
@@ -241,8 +241,8 @@
                 y1=approx_x(delIni.pageY);
                 x2=approx_x(delFin.pageX);
                 y2=approx_x(delFin.pageY);
-                x1-=550;
-                x2-=550;
+                x1-=540;
+                x2-=540;
                 y1-=300;
                 y2-=300;
                 var id;
@@ -343,9 +343,17 @@
             };
             current_x=0;
             context.lineWidth=3;
+            context.strokeStyle = "red";
             context.beginPath(); // Start the path
-            context.moveTo(0, 80); // Set the path origin
-            context.lineTo(50*11-5, 80); // Set the path destination
+            context.moveTo(0, 35); // Set the path origin
+            context.lineTo(50*11-5, 35); // Set the path destination
+            context.closePath(); // Close the path
+            context.stroke(); // Outline the path
+
+            context.strokeStyle = "black";
+            context.beginPath(); // Start the path
+            context.moveTo(0, 75); // Set the path origin
+            context.lineTo(50*11-5, 75); // Set the path destination
             context.closePath(); // Close the path
             context.stroke(); // Outline the path
 
@@ -353,7 +361,7 @@
                 
                 for (var i = 0; i < 23; i++) {
                         current_x= current_x+20;
-                        context.fillRect(current_x,90+20*j, 10, 10);
+                        context.fillRect(current_x,80+20*j, 10, 10);
                     }; 
                 current_x=0;
 
