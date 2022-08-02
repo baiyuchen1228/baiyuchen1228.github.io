@@ -62,7 +62,7 @@ div#multimeter1{
     top: 150px;
     width: 200px;
     border: 5px solid black;
-    background-image:url('../../images/multimeter.jpg');
+    /* background-image:url('../../images/multimeter/multimeter0.jpg'); */
     background-size: 200px ;
     background-repeat: no-repeat;
     height: 350px;
@@ -73,10 +73,58 @@ div#multimeter2{
     top: 0px;
     width: 200px;
     border: 5px solid black;
-    background-image:url('../../images/multimeter.jpg');
+    /* background-image:url('../../images/multimeter/multimeter0.jpg'); */
     background-size: 200px ;
     background-repeat: no-repeat;
     height: 350px;
+}
+.multimeter-bg0{
+    background-image: url('../../images/multimeter/multimeter0.jpg');
+}
+.multimeter-bg1{
+    background-image: url('../../images/multimeter/multimeter1.jpg');
+}
+.multimeter-bg2{
+    background-image: url('../../images/multimeter/multimeter2.jpg');
+}
+.multimeter-bg3{
+    background-image: url('../../images/multimeter/multimeter3.jpg');
+}
+.multimeter-bg4{
+    background-image: url('../../images/multimeter/multimeter4.jpg');
+}
+.multimeter-bg5{
+    background-image: url('../../images/multimeter/multimeter5.jpg');
+}
+.multimeter-bg6{
+    background-image: url('../../images/multimeter/multimeter6.jpg');
+}
+.multimeter-bg7{
+    background-image: url('../../images/multimeter/multimeter7.jpg');
+}
+.multimeter-bg8{
+    background-image: url('../../images/multimeter/multimeter8.jpg');
+}
+.multimeter-bg9{
+    background-image: url('../../images/multimeter/multimeter9.jpg');
+}
+.multimeter-bg-1{
+    background-image: url('../../images/multimeter/multimeter-1.jpg');
+}
+.multimeter-bg-2{
+    background-image: url('../../images/multimeter/multimeter-2.jpg');
+}
+.multimeter-bg-3{
+    background-image: url('../../images/multimeter/multimeter-3.jpg');
+}
+.multimeter-bg-4{
+    background-image: url('../../images/multimeter/multimeter-4.jpg');
+}
+.multimeter-bg-5{
+    background-image: url('../../images/multimeter/multimeter-5.jpg');
+}
+.multimeter-bg-6{
+    background-image: url('../../images/multimeter/multimeter-6.jpg');
 }
 div#powersupply{
     position: absolute;

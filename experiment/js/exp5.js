@@ -1,19 +1,28 @@
 var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
+var meter1_mode = 0;
+var meter2_mode = 0;
+var meter_mode = [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9];
 
 const cur1 = document.querySelector("#powersupply1");
 const vol1 = document.querySelector("#powersupply2");
 const cur2 = document.querySelector("#powersupply3");
 const vol2 = document.querySelector("#powersupply4");
+const meter1_value = document.querySelector("#multimeter1_3");
+const meter2_value = document.querySelector("#multimeter2_3");
 
 const addcurrent1 = document.querySelector("#powersupply5");
 const addvoltage1 = document.querySelector("#powersupply7");
 const addcurrent2 = document.querySelector("#powersupply9");
 const addvoltage2 = document.querySelector("#powersupply11");
+const meter1_clockwise = document.querySelector("#multimeter1_1");
+const meter2_clockwise = document.querySelector("#multimeter2_1");
 
 const deccurrent1 = document.querySelector("#powersupply6");
 const decvoltage1 = document.querySelector("#powersupply8");
 const deccurrent2 = document.querySelector("#powersupply10");
 const decvoltage2 = document.querySelector("#powersupply12");
+const meter1_counterclockwise = document.querySelector("#multimeter1_2");
+const meter2_counterclockwise = document.querySelector("#multimeter2_2");
 
 var current1 = 0, voltage1 = 0, current2 = 0, voltage2 = 0, power = 0;
 
@@ -126,4 +135,28 @@ decvoltage2.onclick = function () {
         }
         vol2.innerHTML = voltage2.toFixed(1);
     }
+}
+
+meter1_clockwise.onclick = function () {
+    var last_mode = meter1_mode;
+    meter1_mode = (meter1_mode + 1 + 6) % 16 - 6;
+    $("#multimeter1").removeClass('multimeter-bg'+last_mode).addClass('multimeter-bg'+meter1_mode);
+}
+
+meter1_counterclockwise.onclick = function () {
+    var last_mode = meter1_mode;
+    meter1_mode = (meter1_mode - 1 + 6 + 16) % 16 - 6;
+    $("#multimeter1").removeClass('multimeter-bg'+last_mode).addClass('multimeter-bg'+meter1_mode);
+}
+
+meter2_clockwise.onclick = function () {
+    var last_mode = meter2_mode;
+    meter2_mode = (meter2_mode + 1 + 6) % 16 - 6;
+    $("#multimeter2").removeClass('multimeter-bg'+last_mode).addClass('multimeter-bg'+meter2_mode);
+}
+
+meter2_counterclockwise.onclick = function () {
+    var last_mode = meter2_mode;
+    meter2_mode = (meter2_mode - 1 + 6 + 16) % 16 - 6;
+    $("#multimeter2").removeClass('multimeter-bg'+last_mode).addClass('multimeter-bg'+meter2_mode);
 }
