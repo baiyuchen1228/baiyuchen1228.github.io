@@ -18,6 +18,10 @@ h2 {
     font-size: 16px;
     border-radius: 9px;
 }
+#svgline2{
+    z-index: 1;
+    pointer-events: none;
+}
 .main-menu { 
     color:#000000; 
     background-color:#EBDABF; 
@@ -58,11 +62,10 @@ h2 {
 }
 div#multimeter1{
     position: absolute;
-    left: 50px;
+    left: 40px;
     top: 150px;
     width: 200px;
     border: 5px solid black;
-    /* background-image:url('../../images/multimeter/multimeter0.jpg'); */
     background-size: 200px ;
     background-repeat: no-repeat;
     height: 350px;
@@ -70,10 +73,9 @@ div#multimeter1{
 div#multimeter2{
     position: absolute;
     left: 300px;
-    top: 0px;
+    top: 10px;
     width: 200px;
     border: 5px solid black;
-    /* background-image:url('../../images/multimeter/multimeter0.jpg'); */
     background-size: 200px ;
     background-repeat: no-repeat;
     height: 350px;
@@ -128,7 +130,7 @@ div#multimeter2{
 }
 div#powersupply{
     position: absolute;
-    left: 1100px;
+    left: 1090px;
     top: 150px;
     width: 400px;
     border: 5px solid black;
@@ -200,6 +202,22 @@ div#powersupply{
     left: 15px;
     width: 50px;
 }
+#powersupply15{
+    top: 230px;
+    left: 180px;
+}
+#powersupply16{
+    top: 230px;
+    left: 145px;
+}
+#powersupply17{
+    top: 230px;
+    left: 280px;
+}
+#powersupply18{
+    top: 230px;
+    left: 245px;
+}
 .multimeter-button{
     position:absolute;
     float: left;
@@ -225,12 +243,55 @@ div#powersupply{
 #multimeter1_2{
     left: 50px;
 }
+#multimeter1_4{
+    top: 250px;
+    left: 30px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+}
+#multimeter1_5{
+    top: 250px;
+    left: 90px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+}
+#multimeter1_6{
+    top: 250px;
+    left: 150px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+}
 #multimeter2_1{
     left :100px;
 }
 #multimeter2_2{
     left: 50px;
 }
+#multimeter2_4{
+    top: 250px;
+    left: 30px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+}
+#multimeter2_5{
+    top: 250px;
+    left: 90px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+}
+#multimeter2_6{
+    top: 250px;
+    left: 150px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+}
+#mu
 .buttonInactive
 {
     background-color: white;
