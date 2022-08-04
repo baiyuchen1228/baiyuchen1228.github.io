@@ -826,22 +826,32 @@ function findPotential() {
     }
 }
 
+var vis = [];
+
 function dfs(graph, node, color) {
     if (vis[node] != 0) return;
     vis[node] = color;
-    for (u in graph[node]) {
+    //console.log(node, graph[node]);
+    for (let i = 0; i < graph[node].length; i++) {
+        var u = graph[node][i];
         dfs(graph, u, color);
     }
 }
 
 function findConnected(graph) {
-    var vis = [0] * MaxNodeNum;
+
     var color = 1;
+    vis = [];
+    for (let i = 0; i < MaxNodeNum; i++) {
+        vis.push(0);
+    }
+    //console.log(vis, color);
     for (let i = 0; i < MaxNodeNum; i++) {
         if (vis[i] == 0) {
             dfs(graph, i, color++);
         }
     }
+    //console.log(vis, color);
 }
 
 
@@ -853,12 +863,16 @@ function check() {
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
     }
+    console.log(graph);
+    wires = getWires();
     for (let i = 0; i < wires.length; i++) {
-        var wire = wireOut[i];
+        var wire = wires[i];
         graph[wire.node1].push(wire.node2);
         graph[wire.node2].push(wire.node1);
     }
-    vis = findConnected(graph);
+    findConnected(graph);
+    //console.log(vis);
+
     // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
     let powerUseStatus = 0;
     if (vis[0] == vis[1] && vis[2] == vis[3]) {
