@@ -715,19 +715,36 @@ function toggleAlligatorButton() {
 };
 
 
+const MaxNodeNum = 50;
+
 function findNodeNum(x, y) {
-    if (y >= 40 && y <= 50) {
+    //multimeter 點還沒做
+    //node 0~19 保留做特殊用途
+    if (x == 1245) {
         return 0;
-    } else if (y >= 60 && y <= 70) {
+    }
+    if (x == 1285) {
         return 1;
+    }
+    if (x == 1345) {
+        return 2;
+    }
+    if (x == 1385) {
+        return 3;
+    }
+    if (y >= 40 && y <= 50) {
+        return 20;
+    } else if (y >= 60 && y <= 70) {
+        return 21;
     } else {
         x -= x % 20;
-        return x / 20 + 1
+        return x / 20 + 21
     }
 }
 
-var wireList = [];
-function getWire() {
+
+function getWires() {
+    //find all wires in the html
     var wires = $("[id^='wire']");
     var wiresOut = $.map(wires, function (wire) {
         return {
@@ -735,11 +752,123 @@ function getWire() {
             x1: wire.x1.baseVal.value,
             y1: wire.y1.baseVal.value,
             x2: wire.x2.baseVal.value,
-            y2: wire.y2.baseVal.value
+            y2: wire.y2.baseVal.value,
+            node1: findNodeNum(wire.x1.baseVal.value, wire.y1.baseVal.value),
+            node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
     for (let i = 0; i < wiresOut.length; i++) {
         var wire = wiresOut[i];
         console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
     }
+    return wiresOut;
+}
+
+function getResitance() {
+    //find all resitance in the html
+    var resistances = $("line[id^='resistance']");
+    var resistanceOut = $.map(resistances, function (resistance) {
+        var rval = $("#" + resistance.id).attr("dataohm");
+        return {
+
+            id: resistance.id,
+            val: rval,
+            x1: resistance.x1.baseVal.value,
+            y1: resistance.y1.baseVal.value,
+            x2: resistance.x2.baseVal.value,
+            y2: resistance.y2.baseVal.value,
+            node1: findNodeNum(resistance.x1.baseVal.value, resistance.y1.baseVal.value),
+            node2: findNodeNum(resistance.x2.baseVal.value, resistance.y2.baseVal.value),
+        };
+    });
+
+    for (let i = 0; i < resistanceOut.length; i++) {
+        var resistance = resistanceOut[i];
+        console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
+    }
+    return resistanceOut;
+}
+
+
+function findPotential() {
+    //check short or not --> unfinished
+    let INF = 100;
+    var potential = [INF] * MaxNodeNum;
+    wires = getWires();
+    let change = true;
+    while (change) {
+        change = false;
+        for (let i = 0; i < wires.length; i++) {
+            var wire = wireOut[i];
+            var node1 = wire.node1;
+            var node2 = wire.node2;
+            if ((node1 == -1 && node2 == 0) || (node2 == -1 && node1 == 0)) {
+                //linking powersupplyer
+                alert("short");
+            }
+            if (node1 == node2) {
+                // safe, but do nothing
+            } else if (potential[node1] != INF && potential[node2] != INF && potential[node1] != potential[node2]) {
+                //short
+                alert("short");
+            } else if ((potential[node1] == potential[node2]) || (potential[node1] == INF && potential[node2] == INF)) {
+                //do nothing
+            } else {
+                // connect it, only one side is INF
+                if (potential[node1] == INF) {
+                    potential[node1] = potential[node2];
+                } else {
+                    potential[node2] = potential[node1];
+                }
+                change = true;
+            }
+        }
+    }
+}
+
+function dfs(graph, node, color) {
+    if (vis[node] != 0) return;
+    vis[node] = color;
+    for (u in graph[node]) {
+        dfs(graph, u, color);
+    }
+}
+
+function findConnected(graph) {
+    var vis = [0] * MaxNodeNum;
+    var color = 1;
+    for (let i = 0; i < MaxNodeNum; i++) {
+        if (vis[i] == 0) {
+            dfs(graph, i, color++);
+        }
+    }
+}
+
+
+function check() {
+    // 檢查電路連通而且沒有 short --> unfinished
+    // check the positive and negative are connected(resitance, multimeter should also be concerned)
+    // make it to a graph and run dfs
+    var graph = [];
+    for (let i = 0; i <= MaxNodeNum; i++) {
+        graph[i] = [];
+    }
+    for (let i = 0; i < wires.length; i++) {
+        var wire = wireOut[i];
+        graph[wire.node1].push(wire.node2);
+        graph[wire.node2].push(wire.node1);
+    }
+    vis = findConnected(graph);
+    // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
+    let powerUseStatus = 0;
+    if (vis[0] == vis[1] && vis[2] == vis[3]) {
+        powerUseStatus = 3;
+        alert("you don't need to use two powersupply in this experiment");
+        return;
+    } else if (vis[0] == vis[1]) {
+        powerUseStatus = 1;
+    } else if (vis[2] == vis[3]) {
+        powerUseStatus = 2;
+    }
+    // check there is no short condition 
 }
