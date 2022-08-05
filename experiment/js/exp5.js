@@ -190,7 +190,6 @@ var wireNo = 1;
 var resistanceNo = 1;
 var inductanceNo = 1;
 var AlligatorNo = 1;
-var wireNo2 = 1;
 var deletemode = 0;
 var delIni;
 
@@ -378,8 +377,9 @@ $("#container").mouseup(function (e) {
             alert("It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
-        document.getElementById('svgline2').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(255,0,0);stroke-width:2"/>'));
-        wireNo2++;
+        document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + AlligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(255,0,0);stroke-width:2"/>'));
+        AlligatorNo++;
+        AlligatorInitial = null;
         toggleAlligatorButton();
     }
     if (deletemode == 1) {
