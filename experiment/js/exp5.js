@@ -287,7 +287,7 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(255,0,0);stroke-width:2"/>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(255,0,0);stroke-width:2"><title></title></line>'));
         wireNo++;
 
     }
@@ -312,7 +312,7 @@ $("#container").mouseup(function (e) {
             alert("Invalid value of resistance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(0,255,0);stroke-width:2"/>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(0,255,0);stroke-width:2"><title>'+ohms +'ohms</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -325,7 +325,7 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"/>'));
+        document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>'+ohms +'ohms</title></polygon>'));
         resistanceNo++;
     }
     if (drawInductance == 1) {
@@ -349,7 +349,7 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of inductance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(139,0,139);stroke-width:2"/>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(139,0,139);stroke-width:2"><title>'+mhos +'mhos</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -362,7 +362,7 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"/>'));
+        document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>'+mhos +'mhos</title></polygon>'));
         inductanceNo++;
     }
     if (drawAlligator == 1) {
@@ -508,6 +508,7 @@ $(document).ready(function () {
     };
 
     context.lineWidth=3;
+    context.strokeStyle = "blue";
     context.beginPath(); // Start the path
     context.moveTo(0, 175); // Set the path origin
     context.lineTo(50*11-5, 175); // Set the path destination
@@ -527,6 +528,7 @@ $(document).ready(function () {
     };
     current_x=0;
     context.lineWidth=3;
+    context.strokeStyle = "black";
     context.beginPath(); // Start the path
     context.moveTo(0, 275); // Set the path origin
     context.lineTo(50*11-5, 275); // Set the path destination
