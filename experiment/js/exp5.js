@@ -284,7 +284,7 @@ $("#container").mouseup(function (e) {
         y1 -= 300;
         y2 -= 300;
         if (x1 == x2 && y1 == y2) {
-            alert("It is meaningless to insert both the ends of wire to the same point.");
+            alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
         document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(255,0,0);stroke-width:2"/>'));
@@ -303,10 +303,10 @@ $("#container").mouseup(function (e) {
         y1 -= 300;
         y2 -= 300;
         if (x1 == x2 && y1 == y2) {
-            alert("Can't insert both the legs of resistor to the same point.");
+            alert("(不能在同一點畫線)Can't insert both the legs of resistor to the same point.");
             return;
         }
-        var ohms = prompt("Enter the value of Resistance in ohms", "Resistance in Ohms");
+        var ohms = prompt("(輸入電阻)Enter the value of Resistance in ohms", "Resistance in Ohms");
         ohms = parseFloat(ohms);
         if (isNaN(ohms) || ohms == '' || ohms <= 0) {
             alert("Invalid value of resistance!");
@@ -340,13 +340,13 @@ $("#container").mouseup(function (e) {
         y1 -= 300;
         y2 -= 300;
         if (x1 == x2 && y1 == y2) {
-            alert("Can't insert both the legs of inductor to the same point.");
+            alert("(不能在同一點畫線)Can't insert both the legs of inductor to the same point.");
             return;
         }
-        var mhos = prompt("Enter the value of Inductance in mhos", "Inductance in Ohms");
+        var mhos = prompt("(輸入電感單位)Enter the value of Inductance in mhos", "Inductance in mhos");
         mhos = parseFloat(mhos);
         if (isNaN(mhos) || mhos == '' || mhos <= 0) {
-            alert("Invalid value of inductance!");
+            alert("(非正常數值)Invalid value of inductance!");
             return;
         }
         document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(139,0,139);stroke-width:2"/>'));
@@ -374,7 +374,7 @@ $("#container").mouseup(function (e) {
         y2 = approx_x(AlligatorFinal.pageY);
         x2 += 10;
         if (x1 == x2 && y1 == y2) {
-            alert("It is meaningless to insert both the ends of wire to the same point.");
+            alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
         document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + AlligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:rgb(255,0,0);stroke-width:2"/>'));
@@ -507,52 +507,59 @@ $(document).ready(function () {
 
     };
 
-    // context.lineWidth=5;
-    // context.beginPath(); // Start the path
-    // context.moveTo(90, 195); // Set the path origin
-    // context.lineTo(50*11-5, 195); // Set the path destination
-    // context.closePath(); // Close the path
-    // context.stroke(); // Outline the path
+    context.lineWidth=3;
+    context.beginPath(); // Start the path
+    context.moveTo(0, 175); // Set the path origin
+    context.lineTo(50*11-5, 175); // Set the path destination
+    context.closePath(); // Close the path
+    context.stroke(); // Outline the path
 
 
-    // context.fillStyle="rgb(88,88,88)";
-    // for (var j = 0; j <5; j++) {
+    context.fillStyle="rgb(88,88,88)";
+    for (var j = 0; j <5; j++) {
 
-    //     for (var i = 0; i < 23; i++) {
-    //             current_x= current_x+20;
-    //             context.fillRect(current_x,210+20*j, 10, 10);
-    //         }; 
-    //     current_x=70;
+        for (var i = 0; i < 23; i++) {
+                current_x= current_x+20;
+                context.fillRect(current_x,180+20*j, 10, 10);
+            }; 
+        current_x=0;
 
-    // };
-    // current_x=70;
-    // context.lineWidth=3;
-    // context.beginPath(); // Start the path
-    // context.moveTo(90, 310); // Set the path origin
-    // context.lineTo(50*11-5, 310); // Set the path destination
-    // context.closePath(); // Close the path
-    // context.stroke(); // Outline the path
+    };
+    current_x=0;
+    context.lineWidth=3;
+    context.beginPath(); // Start the path
+    context.moveTo(0, 275); // Set the path origin
+    context.lineTo(50*11-5, 275); // Set the path destination
+    context.closePath(); // Close the path
+    context.stroke(); // Outline the path
 
-    // current_x=70;
-    // for (var j = 0; j < 4; j++) {
+    current_x=0;
+    for (var j = 0; j < 4; j++) {
 
-    //     for (var i = 0; i < 5; i++) {
-    //         current_x= current_x+20;
-    //         context.fillRect(current_x,320, 10, 10);
-    //     };
-    //     current_x=current_x + 20;
-    // };
-    // current_x=70;
+        for (var i = 0; i < 5; i++) {
+            current_x= current_x+20;
+            context.fillRect(current_x,280, 10, 10);
+        };
+        current_x=current_x + 20;
+    };
+    current_x=0;
 
-    // for (var j = 0; j < 4; j++) {
+    for (var j = 0; j < 4; j++) {
 
-    //     for (var i = 0; i < 5; i++) {
-    //         current_x= current_x+20;
-    //         context.fillRect(current_x,340, 10, 10);
-    //     };
-    //     current_x=current_x + 20;
-    // };
-
+        for (var i = 0; i < 5; i++) {
+            current_x= current_x+20;
+            context.fillRect(current_x,300, 10, 10);
+        };
+        current_x=current_x + 20;
+    };
+    
+    context.lineWidth=3;
+    context.strokeStyle = "red";
+    context.beginPath(); // Start the path
+    context.moveTo(0, 315); // Set the path origin
+    context.lineTo(50*11-5, 315); // Set the path destination
+    context.closePath(); // Close the path
+    context.stroke(); // Outline the path
 
 });
 function toggleDelButton() {
