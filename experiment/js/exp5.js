@@ -27,7 +27,7 @@ const meter1_counterclockwise = document.querySelector("#multimeter1_2");
 const meter2_counterclockwise = document.querySelector("#multimeter2_2");
 
 
-var current1 = 0, voltage1 = 0, current2 = 0, voltage2 = 0, power = 0;
+var current1 = 0, voltage1 = 0, current2 = 0, voltage2 = 0, power = 0, powersupplyOutputStatus = 0;
 
 // 顯示或隱藏子選單
 function switchMenu(theMainMenu, theSubMenu, theEvent) {
@@ -69,8 +69,20 @@ document.getElementById("powersupply14").onclick = function () {
         vol1.innerHTML = "";
         vol2.innerHTML = "";
         power = 0;
+        powersupplyOutputStatus = 0;
     }
 }
+document.getElementById("powersupply13").onclick = function () {
+    if (power == 1 && powersupplyOutputStatus == 0) {
+        powersupplyOutputStatus = 1;
+        console.log("output on!");
+    } else {
+        powersupplyOutputStatus = 0;
+        console.log("power off!");
+    }
+}
+
+
 
 addcurrent1.onclick = function () {
     if (power == 1) {
@@ -177,7 +189,7 @@ const power_drowline3 = document.querySelector("#powersupply17");
 const power_drowline4 = document.querySelector("#powersupply18");
 
 var x1, x2, y1, y2, drawline = true;
-var AlligatorX1,AlligatorY1;
+var AlligatorX1, AlligatorY1;
 var finalOutput;
 var drawWire = 0;
 var wireInitial;
@@ -195,6 +207,7 @@ var inductanceNo = 1;
 var AlligatorNo = 1;
 var deletemode = 0;
 var delIni;
+
 
 power_drowline1.onmousedown = function (e) {
     if (drawAlligator) {
@@ -300,15 +313,15 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
-        if(x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305){
+        if (x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        if(x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305){
+        if (x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:'+colorlist[colorNo]+';stroke-width:2"><title></title></line>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
         wireNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -327,11 +340,11 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)Can't insert both the legs of resistor to the same point.");
             return;
         }
-        if(x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305){
+        if (x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        if(x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305){
+        if (x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
@@ -341,7 +354,7 @@ $("#container").mouseup(function (e) {
             alert("Invalid value of resistance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:'+colorlist[colorNo]+';stroke-width:2"><title>'+ohms +'ohms</title></line>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'ohms</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -354,7 +367,7 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>'+ohms +'ohms</title></polygon>'));
+        document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'ohms</title></polygon>'));
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -373,11 +386,11 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)Can't insert both the legs of inductor to the same point.");
             return;
         }
-        if(x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305){
+        if (x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        if(x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305){
+        if (x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
@@ -387,7 +400,7 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of inductance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:'+colorlist[colorNo]+';stroke-width:2"><title>'+mhos +'mhos</title></line>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -400,7 +413,7 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>'+mhos +'mhos</title></polygon>'));
+        document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
         inductanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -412,7 +425,7 @@ $("#container").mouseup(function (e) {
         x2 = approx_x(AlligatorFinal.pageX);
         y2 = approx_x(AlligatorFinal.pageY);
         x2 += 10;
-        if(x2 < 575 || x2 > 1015 || y2 < 345 || y2 > 605){
+        if (x2 < 575 || x2 > 1015 || y2 < 345 || y2 > 605) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
@@ -420,7 +433,7 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
-        document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + AlligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:'+colorlist[colorNo]+';stroke-width:2"/>'));
+        document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + AlligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
         AlligatorNo++;
         AlligatorInitial = null;
         colorNo = (colorNo + 1) % colorlist.length;
@@ -551,59 +564,59 @@ $(document).ready(function () {
 
     };
 
-    context.lineWidth=3;
+    context.lineWidth = 3;
     context.strokeStyle = "blue";
     context.beginPath(); // Start the path
     context.moveTo(0, 175); // Set the path origin
-    context.lineTo(50*11-5, 175); // Set the path destination
+    context.lineTo(50 * 11 - 5, 175); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
 
-    context.fillStyle="rgb(88,88,88)";
-    for (var j = 0; j <5; j++) {
+    context.fillStyle = "rgb(88,88,88)";
+    for (var j = 0; j < 5; j++) {
 
         for (var i = 0; i < 23; i++) {
-                current_x= current_x+20;
-                context.fillRect(current_x,180+20*j, 10, 10);
-            }; 
-        current_x=0;
+            current_x = current_x + 20;
+            context.fillRect(current_x, 180 + 20 * j, 10, 10);
+        };
+        current_x = 0;
 
     };
-    current_x=0;
-    context.lineWidth=3;
+    current_x = 0;
+    context.lineWidth = 3;
     context.strokeStyle = "black";
     context.beginPath(); // Start the path
     context.moveTo(0, 275); // Set the path origin
-    context.lineTo(50*11-5, 275); // Set the path destination
+    context.lineTo(50 * 11 - 5, 275); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
-    current_x=0;
+    current_x = 0;
     for (var j = 0; j < 4; j++) {
 
         for (var i = 0; i < 5; i++) {
-            current_x= current_x+20;
-            context.fillRect(current_x,280, 10, 10);
+            current_x = current_x + 20;
+            context.fillRect(current_x, 280, 10, 10);
         };
-        current_x=current_x + 20;
+        current_x = current_x + 20;
     };
-    current_x=0;
+    current_x = 0;
 
     for (var j = 0; j < 4; j++) {
 
         for (var i = 0; i < 5; i++) {
-            current_x= current_x+20;
-            context.fillRect(current_x,300, 10, 10);
+            current_x = current_x + 20;
+            context.fillRect(current_x, 300, 10, 10);
         };
-        current_x=current_x + 20;
+        current_x = current_x + 20;
     };
-    
-    context.lineWidth=3;
+
+    context.lineWidth = 3;
     context.strokeStyle = "red";
     context.beginPath(); // Start the path
     context.moveTo(0, 315); // Set the path origin
-    context.lineTo(50*11-5, 315); // Set the path destination
+    context.lineTo(50 * 11 - 5, 315); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -768,30 +781,39 @@ function toggleAlligatorButton() {
 };
 
 
-const MaxNodeNum = 50;
+const MaxNodeNum = 100;
 
 function findNodeNum(x, y) {
     //multimeter 點還沒做
     //node 0~19 保留做特殊用途
-    if (x == 1245) {
-        return 0;
+    let alligatorNodeList = [
+        { x: 1285, y: 545 }, { x: 1250, y: 545 }, { x: 1385, y: 545 }, { x: 1350, y: 545 },
+        { x: 85, y: 565 }, { x: 145, y: 565 }, { x: 205, y: 565 },
+        { x: 345, y: 425 }, { x: 405, y: 425 }, { x: 465, y: 425 }
+    ];//length : 10
+
+    //check buttom node
+    for (let i = 0; i < alligatorNodeList.length; i++) {
+        if (x == alligatorNodeList[i].x && y == alligatorNodeList[i].y) {
+            return i;
+        }
     }
-    if (x == 1285) {
-        return 1;
-    }
-    if (x == 1345) {
-        return 2;
-    }
-    if (x == 1385) {
-        return 3;
-    }
+
+    // find breadboard node
     if (y >= 40 && y <= 50) {
         return 20;
     } else if (y >= 60 && y <= 70) {
         return 21;
-    } else {
+    } else if (y >= 280 && y <= 290) {
+        return 22;
+    } else if (y >= 300 && y <= 310) {
+        return 23;
+    } else if (y >= 80 && y <= 170) {
         x -= x % 20;
-        return x / 20 + 21
+        return x / 20 + 23;
+    } else if (y >= 180 && y <= 270) {
+        x -= x % 20;
+        return x / 20 + 46;
     }
 }
 
@@ -816,6 +838,30 @@ function getWires() {
     }
     return wiresOut;
 }
+
+function getAlligator() {
+    //find all alligators in the html
+    var alligators = $("[id^='Alligator']");
+    let offsetX = 550;
+    let offsetY = 300;
+    var alligatorOut = $.map(alligators, function (alligator) {
+        return {
+            id: alligator.id,
+            x1: alligator.x1.baseVal.value,
+            y1: alligator.y1.baseVal.value,
+            x2: alligator.x2.baseVal.value - offsetX,
+            y2: alligator.y2.baseVal.value - offsetY,
+            node1: findNodeNum(alligator.x1.baseVal.value, alligator.y1.baseVal.value),
+            node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
+        };
+    });
+    for (let i = 0; i < alligatorOut.length; i++) {
+        var alligator = alligatorOut[i];
+        console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
+    }
+    return alligatorOut;
+}
+
 
 function getResitance() {
     //find all resitance in the html
@@ -843,28 +889,54 @@ function getResitance() {
 }
 
 
-function findPotential() {
+function findPotential(status, links) {
     //check short or not --> unfinished
     let INF = 100;
-    var potential = [INF] * MaxNodeNum;
-    wires = getWires();
+    let potential = new Array(MaxNodeNum);
+    potential.fill(INF);
+    console.log(potential);
     let change = true;
+    if (powersupplyOutputStatus == 1) {
+        if (status == 1) {
+            if (current1 != 0) {
+                alert("這個實驗不需要操作電流，請將電流設置為 0\n Please set the current to zero.\n We don't need to change it in this experiment.");
+                return [];
+            }
+            potential[0] = 0;           //negative
+            potential[1] = voltage1;    //positive
+        } else if (status == 2) {
+            if (current1 != 0) {
+                alert("這個實驗不需要操作電流，請將電流設置為 0\n Please set the current to zero.\n We don't need to change it in this experiment.");
+                return [];
+            }
+            potential[2] = 0;           //negative
+            potential[3] = voltage2;    //positive
+        }
+    } else {
+        alert("電源供應器除了 power 要打開外，ouput也要打開\n please open powersupply's power and output.");
+        return [];
+    }
     while (change) {
         change = false;
-        for (let i = 0; i < wires.length; i++) {
-            var wire = wireOut[i];
-            var node1 = wire.node1;
-            var node2 = wire.node2;
-            if ((node1 == -1 && node2 == 0) || (node2 == -1 && node1 == 0)) {
+        for (let i = 0; i < links.length; i++) {
+            let link = links[i];
+            let node1 = link.node1;
+            let node2 = link.node2;
+            console.log("node1", node1, ":", potential[node1]);
+            console.log("node2", node2, ":", potential[node2]);
+            if (node1 <= 4 && node2 <= 4) {
                 //linking powersupplyer
                 alert("short");
+                return [];
             }
             if (node1 == node2) {
                 // safe, but do nothing
             } else if (potential[node1] != INF && potential[node2] != INF && potential[node1] != potential[node2]) {
                 //short
                 alert("short");
+                return [];
             } else if ((potential[node1] == potential[node2]) || (potential[node1] == INF && potential[node2] == INF)) {
+                //都沒連到或者已經連了
                 //do nothing
             } else {
                 // connect it, only one side is INF
@@ -877,6 +949,7 @@ function findPotential() {
             }
         }
     }
+    return potential;
 }
 
 var vis = [];
@@ -912,30 +985,57 @@ function check() {
     // 檢查電路連通而且沒有 short --> unfinished
     // check the positive and negative are connected(resitance, multimeter should also be concerned)
     // make it to a graph and run dfs
+    let links = [];      //存所有連接的電線 + 鱷魚夾，用來檢查 有沒有短路發生
     var graph = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
     }
     console.log(graph);
-    wires = getWires();
+    let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         var wire = wires[i];
         graph[wire.node1].push(wire.node2);
         graph[wire.node2].push(wire.node1);
+        links.push({ node1: wire.node1, node2: wire.node2 });
     }
+
+    let alligators = getAlligator();
+    for (let i = 0; i < alligators.length; i++) {
+        let alli = alligators[i];
+        graph[alli.node1].push(alli.node2);
+        graph[alli.node2].push(alli.node1);
+        links.push({ node1: alli.node1, node2: alli.node2 });
+    }
+
+    let resitances = getResitance();
+    for (let i = 0; i < resitances.length; i++) {
+        let r = resitances[i];
+        graph[r.node1].push(r.node2);
+        graph[r.node2].push(r.node1);
+    }
+
     findConnected(graph);
-    //console.log(vis);
+    console.log(vis);
 
     // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
     let powerUseStatus = 0;
     if (vis[0] == vis[1] && vis[2] == vis[3]) {
         powerUseStatus = 3;
-        alert("you don't need to use two powersupply in this experiment");
+        alert("這個實驗只需要一組輸出喔!\nyou don't need to use two powersupply in this experiment");
         return;
     } else if (vis[0] == vis[1]) {
         powerUseStatus = 1;
     } else if (vis[2] == vis[3]) {
         powerUseStatus = 2;
     }
+    if (powerUseStatus == 0) {
+        alert("斷路了，電源供應器兩端沒有接再一起。\n open circuit");
+        return;
+    }
+    let potential = findPotential(powerUseStatus, links);
     // check there is no short condition 
+    if (potential.length == 0) {
+        return;
+    }
+
 }
