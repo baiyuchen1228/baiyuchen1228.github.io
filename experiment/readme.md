@@ -9,6 +9,8 @@
     - 考慮電阻並串聯
     - 怎麼從三用電表去弄
 - <font color="#00f">新增物件顯現是否有 output </font>，用 powersupplyOutputStatus 去判斷狀態。
+- <font color="#f00">bug</font>: alligator 沒有先點按鈕，還是可以畫線，而且會噴掉
+- <font color="#f00">bug</font>: add wire 從外往內畫線也會噴error
 
 ## done
 - 移動顯示ohm值
