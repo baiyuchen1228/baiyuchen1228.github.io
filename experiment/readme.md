@@ -6,7 +6,6 @@
     - 考慮電阻並串聯
     - 怎麼從三用電表去弄
 - <font color="#00f">新增物件顯現是否有 output </font>，用 powersupplyOutputStatus 去判斷狀態。
-- <font color="#f00">bug</font>: alligator 沒有先點按鈕，還是可以畫線，而且會噴掉
 - <font color="#f00">bug</font>: add wire 從外往內畫線也會噴error
 
 ## done
@@ -27,3 +26,5 @@
 - check : 電阻、電線、鱷魚夾都已經有放進去判定是否相連了
 - findPotential : 檢查 short 結束
 - 增加 powersupplyOutputStatus，來判斷有沒有 output
+
+- <font color="#f00">bug</font>: alligator 沒有先點按鈕，還是可以畫線，而且會噴掉
