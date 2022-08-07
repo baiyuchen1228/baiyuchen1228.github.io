@@ -216,12 +216,15 @@ var drawAlligator = 0;
 var AlligatorInitial;
 var drawInductance = 0;
 var inductanceInitial;
+var drawCapacitance = 0;;
+var CapacitanceInitial;
 
 var chipNo = 1;
 var wireNo = 1;
 var resistanceNo = 1;
 var inductanceNo = 1;
-var AlligatorNo = 1;
+var alligatorNo = 1;
+var capacitanceNo = 1;
 var deletemode = 0;
 var delIni;
 
@@ -302,6 +305,9 @@ $("#container").mousedown(function (e) {
     }
     if (deletemode == 1) {
         delIni = e;
+    }
+    if (drawCapacitance == 1){
+        CapacitanceInitial = e;
     }
 });
 
@@ -434,6 +440,52 @@ $("#container").mouseup(function (e) {
         inductanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
+    if (drawCapacitance){
+        var CapacitanceFinal = e;
+
+        x1 = approx_x(CapacitanceInitial.pageX);
+        y1 = approx_x(CapacitanceInitial.pageY);
+        x2 = approx_x(CapacitanceFinal.pageX);
+        y2 = approx_x(CapacitanceFinal.pageY);
+        x1 -= 540;
+        x2 -= 540;
+        y1 -= 300;
+        y2 -= 300;
+        if (x1 == x2 && y1 == y2) {
+            alert("(不能在同一點畫線)Can't insert both the legs of inductor to the same point.");
+            return;
+        }
+        if (x2 < 25 || x2 > 465 || y2 < 45 || y2 > 305) {
+            alert('(請畫在麵包版上)please draw on breadboard');
+            return;
+        }
+        if (x1 < 25 || x1 > 465 || y1 < 45 || y1 > 305) {
+            alert('(請畫在麵包版上)please draw on breadboard');
+            return;
+        }
+        var ufarad = prompt("(輸入電容單位)Enter the value of Capacitance in micro-farad", "Capacitance in micro-farad");
+        ufarad = parseFloat(ufarad);
+        if (isNaN(ufarad) || ufarad == '' || ufarad <= 0) {
+            alert("(非正常數值)Invalid value of capacitance!");
+            return;
+        }
+        document.getElementById('svgline').appendChild(parseSVG('<line dataufarad"' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
+        //to draw the box of the resistor
+        var centerX = x1 - (x1 - x2) / 2;
+        var centerY = y1 - (y1 - y2) / 2;
+        var slope = Math.atan((y2 - y1) / (x2 - x1));
+        var rectX1 = centerX - 5 * Math.sin(slope) + 10 * Math.cos(slope);
+        var rectY1 = centerY + 5 * Math.cos(slope) + 10 * Math.sin(slope);
+        var rectX2 = centerX + 10 * Math.cos(slope) + 5 * Math.sin(slope);
+        var rectY2 = centerY + 10 * Math.sin(slope) - 5 * Math.cos(slope);
+        var rectX3 = centerX + 5 * Math.sin(slope) - 10 * Math.cos(slope);
+        var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
+        var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
+        var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
+        document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
+        capacitanceNo++;
+        colorNo = (colorNo + 1) % colorlist.length;
+    }
     if (drawAlligator == 1) {
         var AlligatorFinal = e;
 
@@ -450,8 +502,8 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
-        document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + AlligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
-        AlligatorNo++;
+        document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
+        alligatorNo++;
         AlligatorInitial = null;
         colorNo = (colorNo + 1) % colorlist.length;
         toggleAlligatorButton();
@@ -659,6 +711,11 @@ function toggleDelButton() {
         $this.css('background-color', 'white');
         drawAlligator = 0;
     }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawWire = 0;
+    }
     $this = $("#del");
     if (deletemode == 1) {
         $this.css('background-color', 'white');
@@ -670,6 +727,42 @@ function toggleDelButton() {
     }
 }
 
+function toggleCapacitanceButton() {
+    if (drawInductance == 1) {
+        $this = $("#addInductance");
+        $this.css('background-color', 'white');
+        drawInductance = 0;
+    }
+    else if (drawResistance == 1) {
+        $this = $("#addResistance");
+        $this.css('background-color', 'white');
+        drawResistance = 0;
+    }
+    else if (deletemode == 1) {
+        $this = $("#del");
+        $this.css('background-color', 'white');
+        deletemode = 0;
+    }
+    else if (drawAlligator == 1) {
+        $this = $("#addAlligator");
+        $this.css('background-color', 'white');
+        drawAlligator = 0;
+    }
+    else if (drawWire == 1) {
+        $this = $("#addWire");
+        $this.css('background-color', 'white');
+        drawWire = 0;
+    }
+    $this = $("#addCapacitance");
+    if (drawCapacitance == 1) {
+        $this.css('background-color', 'white');
+        drawCapacitance = 0;
+    }
+    else {
+        $this.css('background-color', 'red');
+        drawCapacitance = 1;
+    }
+}
 function toggleWireButton() {
     if (drawInductance == 1) {
         $this = $("#addInductance");
@@ -690,6 +783,11 @@ function toggleWireButton() {
         $this = $("#addAlligator");
         $this.css('background-color', 'white');
         drawAlligator = 0;
+    }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawWire = 0;
     }
     $this = $("#addWire");
     if (drawWire == 1) {
@@ -723,6 +821,11 @@ function toggleResistanceButton() {
         $this.css('background-color', 'white');
         drawAlligator = 0;
     }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawWire = 0;
+    }
     $this = $("#addResistance");
     if (drawResistance == 1) {
         $this.css('background-color', 'white');
@@ -755,6 +858,11 @@ function toggleInductanceButton() {
         $this.css('background-color', 'white');
         drawAlligator = 0;
     }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawWire = 0;
+    }
     $this = $("#addInductance");
     if (drawInductance == 1) {
         $this.css('background-color', 'white');
@@ -785,6 +893,11 @@ function toggleAlligatorButton() {
         $this = $("#addInductance");
         $this.css('background-color', 'white');
         drawInductance = 0;
+    }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawWire = 0;
     }
     $this = $("#addAlligator");
     if (drawAlligator == 1) {
