@@ -1147,17 +1147,24 @@ function check() {
         graph[r.node1].push(r.node2);
         graph[r.node2].push(r.node1);
     }
-
+    if (meter_mode[meter1_mode] >= 7) {
+        graph[4].push(5);
+        graph[5].push(4);
+    }
+    if (meter_mode[meter1_mode] >= 7) {
+        graph[7].push(8);
+        graph[8].push(7);
+    }
     findConnected(graph);
     console.log(vis);
 
     // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
     let powerUseStatus = 0;
-    if (vis[0] == vis[1] && vis[2] == vis[3]) {
+    if (vis[0] == vis[1] && vis[2] == vis[3] && voltage1 != 0 && voltage2 != 0) {
         powerUseStatus = 3;
         alert("這個實驗只需要一組輸出喔!\nyou don't need to use two powersupply in this experiment");
         return;
-    } else if (vis[0] == vis[1]) {
+    } else if (vis[0] == vis[1] && voltage1 != 0) {
         powerUseStatus = 1;
     } else if (vis[2] == vis[3]) {
         powerUseStatus = 2;
@@ -1169,6 +1176,7 @@ function check() {
     let potential = findPotential(powerUseStatus, links);
     // check there is no short condition 
     if (potential.length == 0) {
+        //error occurs in findPotential
         return;
     }
 
