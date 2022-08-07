@@ -469,7 +469,7 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of capacitance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line dataufarad"' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
+        document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -546,6 +546,12 @@ $("#container").mouseup(function (e) {
                     if (Things[i].id[0] == "i") {
 
                         $("#inductanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#" + Things[i].id).remove();
+
+                    }
+                    if (Things[i].id[0] == "c") {
+
+                        $("#capacitanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
 
                     }

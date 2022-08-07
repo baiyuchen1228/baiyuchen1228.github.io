@@ -2,14 +2,14 @@
 - 線移動時加虛線
 - 線兩端加點
 - 阻止一洞插兩線
-- 刪除電容 鱷魚夾
+- 刪除鱷魚夾
 - 計算電壓
     - 考慮電阻並串聯
     - 怎麼從三用電表去弄
 - <font color="#00f">新增物件顯現是否有 output </font>，用 powersupplyOutputStatus 去判斷狀態。
-- <font color="#f00">bug</font>: add wire 從外往內畫線也會噴error
 
 ## done
+- 刪除電容
 - 新增電容
 - 三用電表顯示狀態(指針指到誰)
 - powersupplyer 顏色新增(output 顏色新增)
