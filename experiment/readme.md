@@ -1,6 +1,4 @@
 ##  challenge in exp5
-- 三用電表顯示狀態(指針指到誰)
-- powersupplyer 顏色新增(output 顏色新增)
 - 線移動時加虛線
 - 線兩端加點
 - 阻止一洞插兩線
@@ -13,6 +11,8 @@
 - <font color="#f00">bug</font>: add wire 從外往內畫線也會噴error
 
 ## done
+- 三用電表顯示狀態(指針指到誰)
+- powersupplyer 顏色新增(output 顏色新增)
 - 移動顯示ohm值
 - inductor 單位改 (mh)
 - 線換顏色

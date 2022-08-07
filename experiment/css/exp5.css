@@ -237,6 +237,13 @@ div#powersupply{
     left: 80px;
     font-size: 30px;
 }
+#multimeter1_7{
+    background-color: #FFF5EB;
+    color: black;
+    left: 60px;
+    font-size: 15px;
+    top: 5px;
+}
 #multimeter1_1{
     left :100px;
 }
@@ -263,6 +270,13 @@ div#powersupply{
     font-size: 1px;
     text-indent: -4px;
     width: 20px;
+}
+#multimeter2_7{
+    background-color: #FFF5EB;
+    color: black;
+    left: 60px;
+    font-size: 15px;
+    top: 5px;
 }
 #multimeter2_1{
     left :100px;
