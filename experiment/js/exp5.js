@@ -206,7 +206,7 @@ const power_drowline3 = document.querySelector("#powersupply17");
 const power_drowline4 = document.querySelector("#powersupply18");
 
 var x1, x2, y1, y2, drawline = true;
-var AlligatorX1, AlligatorY1;
+var AlligatorX1 = 0, AlligatorY1 = 0;
 var finalOutput;
 var drawWire = 0;
 var wireInitial;
@@ -494,6 +494,10 @@ $("#container").mouseup(function (e) {
         x2 = approx_x(AlligatorFinal.pageX);
         y2 = approx_x(AlligatorFinal.pageY);
         x2 += 10;
+        if(x1 == 0 || y1 == 0){
+            alert('(請先點按鈕)please click button first');
+            return;
+        }
         if (x2 < 575 || x2 > 1015 || y2 < 345 || y2 > 605) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
@@ -506,7 +510,9 @@ $("#container").mouseup(function (e) {
         alligatorNo++;
         AlligatorInitial = null;
         colorNo = (colorNo + 1) % colorlist.length;
-        toggleAlligatorButton();
+        AlligatorX1 = 0;
+        AlligatorY1 = 0;
+        // toggleAlligatorButton();
     }
     if (deletemode == 1) {
         console.log(delIni);
