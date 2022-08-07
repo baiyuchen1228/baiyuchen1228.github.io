@@ -6,14 +6,13 @@
 - 計算電壓
     - 考慮電阻並串聯
     - 怎麼從三用電表去弄
-- <font color="#00f">新增物件顯現是否有 output </font>，用 powersupplyOutputStatus 去判斷狀態。
 
 ## done
 - 刪除電容
 - 新增電容
 - 三用電表顯示狀態(指針指到誰)
 - powersupplyer 顏色新增(output 顏色新增)
-- 移動顯示ohm值
+- 移動顯示 ohm 值
 - inductor 單位改 (mh)
 - 線換顏色
 - 移動到電阻顯示 ohm 值
@@ -27,5 +26,6 @@
 - check : 電阻、電線、鱷魚夾都已經有放進去判定是否相連了
 - findPotential : 檢查 short 結束
 - 增加 powersupplyOutputStatus，來判斷有沒有 output
+- 新增物件顯現是否有 output，用 powersupplyOutputStatus 去判斷狀態。
 
-- <font color="#f00">bug</font>: alligator 沒有先點按鈕，還是可以畫線，而且會噴掉
+- bug: alligator 沒有先點按鈕，還是可以畫線，而且會噴掉
