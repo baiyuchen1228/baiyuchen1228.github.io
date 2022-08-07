@@ -720,7 +720,7 @@ function toggleDelButton() {
     else if (drawCapacitance == 1) {
         $this = $("#addCapacitance");
         $this.css('background-color', 'white');
-        drawWire = 0;
+        drawCapacitance = 0;
     }
     $this = $("#del");
     if (deletemode == 1) {
@@ -793,7 +793,7 @@ function toggleWireButton() {
     else if (drawCapacitance == 1) {
         $this = $("#addCapacitance");
         $this.css('background-color', 'white');
-        drawWire = 0;
+        drawCapacitance = 0;
     }
     $this = $("#addWire");
     if (drawWire == 1) {
@@ -830,7 +830,7 @@ function toggleResistanceButton() {
     else if (drawCapacitance == 1) {
         $this = $("#addCapacitance");
         $this.css('background-color', 'white');
-        drawWire = 0;
+        drawCapacitance = 0;
     }
     $this = $("#addResistance");
     if (drawResistance == 1) {
@@ -867,7 +867,7 @@ function toggleInductanceButton() {
     else if (drawCapacitance == 1) {
         $this = $("#addCapacitance");
         $this.css('background-color', 'white');
-        drawWire = 0;
+        drawCapacitance = 0;
     }
     $this = $("#addInductance");
     if (drawInductance == 1) {
@@ -903,7 +903,7 @@ function toggleAlligatorButton() {
     else if (drawCapacitance == 1) {
         $this = $("#addCapacitance");
         $this.css('background-color', 'white');
-        drawWire = 0;
+        drawCapacitance = 0;
     }
     $this = $("#addAlligator");
     if (drawAlligator == 1) {
