@@ -6,6 +6,7 @@ const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 
 const meter_Mode = ['200歐姆','2K歐姆','20K歐姆','200K歐姆','2M歐姆','20M歐姆','關機','600交流V','200交流V','600直流V','200直流V','20直流V','2直流V','200m直流A','20m直流A','2m直流A']
 var colorNo = 0;
 
+var pointarray = [];
 var powerOutput = false;
 const power_output = document.querySelector('#powersupply13');
 const cur1 = document.querySelector("#powersupply1");
@@ -320,6 +321,12 @@ function parseSVG(s) {
     return frag;
 }
 
+function deleteRow(arr, row) {
+    arr = arr.slice(0); // make copy
+    arr.splice(row, 1);
+    return arr;
+}
+
 $("#container").mouseup(function (e) {
     if (drawWire == 1) {
         var wireFinal = e;
@@ -332,6 +339,12 @@ $("#container").mouseup(function (e) {
         x2 -= 540;
         y1 -= 300;
         y2 -= 300;
+        for(let i = 0; i < pointarray.length;i++){
+            if((x1==pointarray[i][0] && y1==pointarray[i][1]) || (x2==pointarray[i][0] && y2==pointarray[i][1])){
+                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
+                return;
+            }
+        }
         if (x1 == x2 && y1 == y2) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
@@ -354,6 +367,8 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
         }
+        pointarray.push([x1,y1]);
+        pointarray.push([x2,y2]);
         wireNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -368,6 +383,12 @@ $("#container").mouseup(function (e) {
         x2 -= 540;
         y1 -= 300;
         y2 -= 300;
+        for(let i = 0; i < pointarray.length;i++){
+            if((x1==pointarray[i][0] && y1==pointarray[i][1]) || (x2==pointarray[i][0] && y2==pointarray[i][1])){
+                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
+                return;
+            }
+        }
         if (x1 == x2 && y1 == y2) {
             alert("(不能在同一點畫線)Can't insert both the legs of resistor to the same point.");
             return;
@@ -410,6 +431,8 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'ohms</title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'ohms</title></polygon>'));
         }
+        pointarray.push([x1,y1]);
+        pointarray.push([x2,y2]);
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -424,6 +447,12 @@ $("#container").mouseup(function (e) {
         x2 -= 540;
         y1 -= 300;
         y2 -= 300;
+        for(let i = 0; i < pointarray.length;i++){
+            if((x1==pointarray[i][0] && y1==pointarray[i][1]) || (x2==pointarray[i][0] && y2==pointarray[i][1])){
+                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
+                return;
+            }
+        }
         if (x1 == x2 && y1 == y2) {
             alert("(不能在同一點畫線)Can't insert both the legs of inductor to the same point.");
             return;
@@ -466,6 +495,8 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
         }
+        pointarray.push([x1,y1]);
+        pointarray.push([x2,y2]);
         inductanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -480,6 +511,12 @@ $("#container").mouseup(function (e) {
         x2 -= 540;
         y1 -= 300;
         y2 -= 300;
+        for(let i = 0; i < pointarray.length;i++){
+            if((x1==pointarray[i][0] && y1==pointarray[i][1]) || (x2==pointarray[i][0] && y2==pointarray[i][1])){
+                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
+                return;
+            }
+        }
         if (x1 == x2 && y1 == y2) {
             alert("(不能在同一點畫線)Can't insert both the legs of inductor to the same point.");
             return;
@@ -522,6 +559,8 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
         }
+        pointarray.push([x1,y1]);
+        pointarray.push([x2,y2]);
         capacitanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -533,6 +572,12 @@ $("#container").mouseup(function (e) {
         x2 = approx_x(AlligatorFinal.pageX);
         y2 = approx_x(AlligatorFinal.pageY);
         x2 += 10;
+        for(let i = 0; i < pointarray.length;i++){
+            if((x1==pointarray[i][0] && y1==pointarray[i][1]) || (x2-550==pointarray[i][0] && y2-300==pointarray[i][1])){
+                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
+                return;
+            }
+        }
         if(x1 == 0 || y1 == 0){
             alert('(請先點按鈕)please click button first');
             return;
@@ -555,6 +600,8 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=aalligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
         }
+        pointarray.push([x1,y1]);
+        pointarray.push([x2,y2]);
         alligatorNo++;
         AlligatorInitial = null;
         colorNo = (colorNo + 1) % colorlist.length;
@@ -581,6 +628,16 @@ $("#container").mouseup(function (e) {
             if (Things[i].x1.baseVal.value == x1) {
                 if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
                     console.log(Things[i].id[0]);
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
                     if (Things[i].id[0] == "w") {
                         $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -617,7 +674,19 @@ $("#container").mouseup(function (e) {
             }
             if (Things[i].x2.baseVal.value == x1) {
                 if (Things[i].y2.baseVal.value == y1 && Things[i].x1.baseVal.value == x2 && Things[i].y1.baseVal.value == y2) {
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
                     console.log(Things[i].id[0]);
+                    pointarray.splice(jQuery.inArray([x1,y1],pointarray),1);
+                    pointarray.splice(jQuery.inArray([x2,y2],pointarray),1);
                     if (Things[i].id[0] == "w") {
                         $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -660,7 +729,19 @@ $("#container").mouseup(function (e) {
         for (var i = Things.length - 1; i >= 0; i--) {
             if (Things[i].x1.baseVal.value == x1) {
                 if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
                     console.log(Things[i].id[0]);
+                    pointarray.splice(jQuery.inArray([x1,y1],pointarray),1);
+                    pointarray.splice(jQuery.inArray([x2,y2],pointarray),1);
                     if (Things[i].id[0] == "a") {
                         $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -671,7 +752,19 @@ $("#container").mouseup(function (e) {
             }
             if (Things[i].x2.baseVal.value == x1) {
                 if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
+                    for(let j = 0;j < pointarray.length;j++){
+                        if(Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]){
+                            pointarray = deleteRow(pointarray,j);
+                        }
+                    }
                     console.log(Things[i].id[0]);
+                    pointarray.splice(jQuery.inArray([x1,y1],pointarray),1);
+                    pointarray.splice(jQuery.inArray([x2,y2],pointarray),1);
                     if (Things[i].id[0] == "a") {
                         $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
