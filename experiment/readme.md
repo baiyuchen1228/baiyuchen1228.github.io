@@ -27,5 +27,5 @@
 - findPotential : 檢查 short 結束
 - 增加 powersupplyOutputStatus，來判斷有沒有 output
 - 新增物件顯現是否有 output，用 powersupplyOutputStatus 去判斷狀態。
-
+- bug: 線只能有個位數個
 - bug: alligator 沒有先點按鈕，還是可以畫線，而且會噴掉

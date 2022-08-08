@@ -3,10 +3,11 @@ var meter1_mode = 0;
 var meter2_mode = 0;
 const meter_mode = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
-const meter_Mode = ['200歐姆', '2K歐姆', '20K歐姆', '200K歐姆', '2M歐姆', '20M歐姆', '關機', '600交流V', '200交流V', '600直流V', '200直流V', '20直流V', '2直流V', '200m直流A', '20m直流A', '2m直流A']
+const meter_Mode = ['200歐姆','2K歐姆','20K歐姆','200K歐姆','2M歐姆','20M歐姆','關機','600交流V','200交流V','600直流V','200直流V','20直流V','2直流V','200m直流A','20m直流A','2m直流A']
 var colorNo = 0;
 
-
+var powerOutput = false;
+const power_output = document.querySelector('#powersupply13');
 const cur1 = document.querySelector("#powersupply1");
 const vol1 = document.querySelector("#powersupply2");
 const cur2 = document.querySelector("#powersupply3");
@@ -72,22 +73,29 @@ document.getElementById("powersupply14").onclick = function () {
         vol2.innerHTML = "";
         power = 0;
         powersupplyOutputStatus = 0;
-        $("#powersupply13").css("background-color", "White");
     }
 }
 document.getElementById("powersupply13").onclick = function () {
     if (power == 1 && powersupplyOutputStatus == 0) {
         powersupplyOutputStatus = 1;
-        $("#powersupply13").css("background-color", "Lightgreen");
         console.log("output on!");
     } else {
         powersupplyOutputStatus = 0;
-        $("#powersupply13").css("background-color", "White");
         console.log("power off!");
     }
 }
 
 
+power_output.onclick = function () {
+    if(powerOutput != true){
+        $("#powersupply13").css("background-color", "Lightgreen");
+        powerOutput = true;
+    }
+    else{
+        $("#powersupply13").css("background-color", "White");
+        powerOutput = false;
+    }
+}
 
 addcurrent1.onclick = function () {
     if (power == 1) {
@@ -161,28 +169,28 @@ meter1_clockwise.onclick = function () {
     var last_mode = meter1_mode;
     meter1_mode = (meter1_mode + 1 + 6) % 16 - 6;
     $("#multimeter1").removeClass('multimeter-bg' + last_mode).addClass('multimeter-bg' + meter1_mode);
-    $("#multimeter1_7").text('狀態:' + meter_Mode[meter1_mode + 6]);
+    $("#multimeter1_7").text('狀態:'+meter_Mode[meter1_mode+6]);
 }
 
 meter1_counterclockwise.onclick = function () {
     var last_mode = meter1_mode;
     meter1_mode = (meter1_mode - 1 + 6 + 16) % 16 - 6;
     $("#multimeter1").removeClass('multimeter-bg' + last_mode).addClass('multimeter-bg' + meter1_mode);
-    $("#multimeter1_7").text('狀態:' + meter_Mode[meter1_mode + 6]);
+    $("#multimeter1_7").text('狀態:'+meter_Mode[meter1_mode+6]);
 }
 
 meter2_clockwise.onclick = function () {
     var last_mode = meter2_mode;
     meter2_mode = (meter2_mode + 1 + 6) % 16 - 6;
     $("#multimeter2").removeClass('multimeter-bg' + last_mode).addClass('multimeter-bg' + meter2_mode);
-    $("#multimeter2_7").text('狀態:' + meter_Mode[meter2_mode + 6]);
+    $("#multimeter2_7").text('狀態:'+meter_Mode[meter2_mode+6]);
 }
 
 meter2_counterclockwise.onclick = function () {
     var last_mode = meter2_mode;
     meter2_mode = (meter2_mode - 1 + 6 + 16) % 16 - 6;
     $("#multimeter2").removeClass('multimeter-bg' + last_mode).addClass('multimeter-bg' + meter2_mode);
-    $("#multimeter2_7").text('狀態:' + meter_Mode[meter2_mode + 6]);
+    $("#multimeter2_7").text('狀態:'+meter_Mode[meter2_mode+6]);
 }
 
 
@@ -298,7 +306,7 @@ $("#container").mousedown(function (e) {
     if (deletemode == 1) {
         delIni = e;
     }
-    if (drawCapacitance == 1) {
+    if (drawCapacitance == 1){
         CapacitanceInitial = e;
     }
 });
@@ -336,7 +344,16 @@ $("#container").mouseup(function (e) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+        if(wireNo < 10){
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+        }
+        else{
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+        }
         wireNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -369,7 +386,6 @@ $("#container").mouseup(function (e) {
             alert("Invalid value of resistance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'ohms</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -382,7 +398,18 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'ohms</title></polygon>'));
+        if(resistanceNo < 10){
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'ohms</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'ohms</title></polygon>'));
+        }
+        else{
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'ohms</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'ohms</title></polygon>'));
+        }
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -415,7 +442,6 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of inductance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -428,11 +454,22 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
+        if(inductanceNo < 10){
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
+        }
+        else{
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
+        }
         inductanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
-    if (drawCapacitance) {
+    if (drawCapacitance){
         var CapacitanceFinal = e;
 
         x1 = approx_x(CapacitanceInitial.pageX);
@@ -461,7 +498,6 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of capacitance!");
             return;
         }
-        document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -474,7 +510,18 @@ $("#container").mouseup(function (e) {
         var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-        document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
+        if(capacitanceNo < 10){
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
+        }
+        else{
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
+        }
         capacitanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
     }
@@ -486,7 +533,7 @@ $("#container").mouseup(function (e) {
         x2 = approx_x(AlligatorFinal.pageX);
         y2 = approx_x(AlligatorFinal.pageY);
         x2 += 10;
-        if (x1 == 0 || y1 == 0) {
+        if(x1 == 0 || y1 == 0){
             alert('(請先點按鈕)please click button first');
             return;
         }
@@ -498,7 +545,16 @@ $("#container").mouseup(function (e) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
             return;
         }
-        document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
+        if(alligatorNo < 10){
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=AlligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=AlligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
+        }
+        else{
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=AlligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=AlligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<line id=Alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"/>'));
+        }
         alligatorNo++;
         AlligatorInitial = null;
         colorNo = (colorNo + 1) % colorlist.length;
@@ -526,30 +582,32 @@ $("#container").mouseup(function (e) {
                 if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
                     console.log(Things[i].id[0]);
                     if (Things[i].id[0] == "w") {
+                        $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
                     }
 
                     if (Things[i].id[0] == "r") {
-
-                        $("#resistanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
-
                     }
                     if (Things[i].id[0] == "i") {
-
-                        $("#inductanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
-
                     }
                     if (Things[i].id[0] == "c") {
-
-                        $("#capacitanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
-
                     }
                     if (Things[i].id[0] == "L") {
 
-                        $("#LEdcircle" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
 
                     }
@@ -561,23 +619,32 @@ $("#container").mouseup(function (e) {
                 if (Things[i].y2.baseVal.value == y1 && Things[i].x1.baseVal.value == x2 && Things[i].y1.baseVal.value == y2) {
                     console.log(Things[i].id[0]);
                     if (Things[i].id[0] == "w") {
+                        $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
                     }
+
                     if (Things[i].id[0] == "r") {
-
-                        $("#resistanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
-
                     }
                     if (Things[i].id[0] == "i") {
-
-                        $("#inductanceBox" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
-
+                    }
+                    if (Things[i].id[0] == "c") {
+                        $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#" + Things[i].id).remove();
                     }
                     if (Things[i].id[0] == "L") {
                         //  console.log("#LEdcircle"+Things[i].id[Things[i].id.length -1]);
-                        $("#LEdcircle" + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
 
                     }
@@ -1147,24 +1214,17 @@ function check() {
         graph[r.node1].push(r.node2);
         graph[r.node2].push(r.node1);
     }
-    if (meter_mode[meter1_mode] >= 7) {
-        graph[4].push(5);
-        graph[5].push(4);
-    }
-    if (meter_mode[meter1_mode] >= 7) {
-        graph[7].push(8);
-        graph[8].push(7);
-    }
+
     findConnected(graph);
     console.log(vis);
 
     // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
     let powerUseStatus = 0;
-    if (vis[0] == vis[1] && vis[2] == vis[3] && voltage1 != 0 && voltage2 != 0) {
+    if (vis[0] == vis[1] && vis[2] == vis[3]) {
         powerUseStatus = 3;
         alert("這個實驗只需要一組輸出喔!\nyou don't need to use two powersupply in this experiment");
         return;
-    } else if (vis[0] == vis[1] && voltage1 != 0) {
+    } else if (vis[0] == vis[1]) {
         powerUseStatus = 1;
     } else if (vis[2] == vis[3]) {
         powerUseStatus = 2;
@@ -1176,7 +1236,6 @@ function check() {
     let potential = findPotential(powerUseStatus, links);
     // check there is no short condition 
     if (potential.length == 0) {
-        //error occurs in findPotential
         return;
     }
 
