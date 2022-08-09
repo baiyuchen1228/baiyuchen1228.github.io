@@ -311,12 +311,12 @@ $("#container").mousedown(function (e) {
     if (deletemode == 1) {
         delIni = e;
     }
-    if(!document.onmousemove)
+    if (!document.onmousemove)
         document.onmousemove = drawDashedLine();
 });
 
-function drawDashedLine(){
-    function draw (e) {
+function drawDashedLine() {
+    function draw(e) {
         let mode = false;
         if (drawWire == 1) {
             x1 = approx_x(wireInitial.pageX);
@@ -362,12 +362,12 @@ function drawDashedLine(){
             y2 -= 300;
             mode = true;
         }
-        if(mode){
-            if($("#dashline").length > 0){
+        if (mode) {
+            if ($("#dashline").length > 0) {
                 $("#dashline").remove();
                 document.getElementById('svgline').appendChild(parseSVG('<line id=dashline x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
             }
-            else{
+            else {
                 document.getElementById('svgline').appendChild(parseSVG('<line id=dashline x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
             }
         }
@@ -375,8 +375,8 @@ function drawDashedLine(){
     return draw;
 }
 
-function drawDashedLine2(){
-    function draw (e) {
+function drawDashedLine2() {
+    function draw(e) {
         let mode = false;
         if (drawAlligator == 1) {
             x2 = approx_x(e.pageX);
@@ -384,12 +384,12 @@ function drawDashedLine2(){
             x2 += 10;
             mode = true;
         }
-        if(mode){
-            if($("#dashline").length > 0){
+        if (mode) {
+            if ($("#dashline").length > 0) {
                 $("#dashline").remove();
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
             }
-            else{
+            else {
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
             }
         }
@@ -1230,7 +1230,7 @@ function findNodeNum(x, y) {
 
 function getWires() {
     //find all wires in the html
-    var wires = $("[id^='wire']");
+    var wires = $("line[id^='wire']");
     var wiresOut = $.map(wires, function (wire) {
         return {
             id: wire.id,
@@ -1251,7 +1251,7 @@ function getWires() {
 
 function getAlligator() {
     //find all alligators in the html
-    var alligators = $("[id^='Alligator']");
+    var alligators = $("line[id^='alligator']");
     let offsetX = 550;
     let offsetY = 300;
     var alligatorOut = $.map(alligators, function (alligator) {
@@ -1301,7 +1301,7 @@ function getResitance() {
 
 function findPotential(status, links) {
     //check short or not --> unfinished
-    let INF = 100;
+    const INF = 100;
     let potential = new Array(MaxNodeNum);
     potential.fill(INF);
     console.log(potential);
@@ -1369,7 +1369,7 @@ function dfs(graph, node, color) {
     vis[node] = color;
     //console.log(node, graph[node]);
     for (let i = 0; i < graph[node].length; i++) {
-        var u = graph[node][i];
+        var u = graph[node][i].nxt;
         dfs(graph, u, color);
     }
 }
@@ -1391,7 +1391,52 @@ function findConnected(graph) {
 }
 
 
+var vis_ohm = [];
+function dfs2(node, value, graph) {
+    if (vis[node]) return;
+    if (vis_ohm[node] == 0) {
+        vis_ohm[node] = value;
+    } else {
+        vis_ohm[node] = vis_ohm[node] * value / (vis_ohm[node] + value);
+    }
+    if (node == 1 || node == 3) { return; }
+    for (let i = 0; i < graph[node].length; i++) {
+        if (graph[node][i].val != 0) {
+            continue;
+        }
+        dfs2(graph[node][i].nxt, value, graph);
+    }
+}
+
+function find_total_resitance(resitances, potential, graph) {
+    vis = [];
+    vis_ohm = [];
+    for (let i = 0; i < MaxNodeNum; i++) {
+        vis.push(0);
+        vis_ohm.push(0);
+    }
+
+    for (let i = 0; i < resitances; i++) {
+        let r = resitances[i];
+        //vis[]
+        if (potential[r.node1] > 0 && potential[r.node1] != INF) {
+            vis[r.node1] = 1;
+            dfs2(r.node2, vis_ohm[node1] + r.val, graph);
+        } else if (potential[r.node1] > 0 && potential[r.node1] != INF) {
+            vis[r.node2] = 1;
+            dfs2(r.node1, vis_ohm[node2] + r.val, graph);
+        }
+        vis = [];
+        for (let i = 0; i < MaxNodeNum; i++) {
+            vis.push(0);
+        }
+    }
+
+}
+
+
 function check() {
+    const INF = 100;
     // 檢查電路連通而且沒有 short --> unfinished
     // check the positive and negative are connected(resitance, multimeter should also be concerned)
     // make it to a graph and run dfs
@@ -1404,24 +1449,24 @@ function check() {
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         var wire = wires[i];
-        graph[wire.node1].push(wire.node2);
-        graph[wire.node2].push(wire.node1);
+        graph[wire.node1].push({ nxt: wire.node2, wei: 0 });
+        graph[wire.node2].push({ nxt: wire.node1, wei: 0 });
         links.push({ node1: wire.node1, node2: wire.node2 });
     }
 
     let alligators = getAlligator();
     for (let i = 0; i < alligators.length; i++) {
         let alli = alligators[i];
-        graph[alli.node1].push(alli.node2);
-        graph[alli.node2].push(alli.node1);
+        graph[alli.node1].push({ nxt: alli.node2, wei: 0 });
+        graph[alli.node2].push({ nxt: alli.node1, wei: 0 });
         links.push({ node1: alli.node1, node2: alli.node2 });
     }
 
     let resitances = getResitance();
     for (let i = 0; i < resitances.length; i++) {
         let r = resitances[i];
-        graph[r.node1].push(r.node2);
-        graph[r.node2].push(r.node1);
+        graph[r.node1].push({ nxt: r.node2, wei: r.val });
+        graph[r.node2].push({ nxt: r.node1, wei: r.val });
     }
 
     if (meter_mode[meter1_mode] >= 7) {
@@ -1457,5 +1502,9 @@ function check() {
         //error occurs in findPotential
         return;
     }
+    for (let i = 0; i < resitances.length; i++) {
+        let r = resitances[i];
+        sum = find_total_resitance(r.node1, r.node2);
 
+    }
 }
