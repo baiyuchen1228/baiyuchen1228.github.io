@@ -1391,48 +1391,48 @@ function findConnected(graph) {
 }
 
 
-var vis_ohm = [];
-function dfs2(node, value, graph) {
-    if (vis[node]) return;
-    if (vis_ohm[node] == 0) {
-        vis_ohm[node] = value;
-    } else {
-        vis_ohm[node] = vis_ohm[node] * value / (vis_ohm[node] + value);
-    }
-    if (node == 1 || node == 3) { return; }
-    for (let i = 0; i < graph[node].length; i++) {
-        if (graph[node][i].val != 0) {
-            continue;
-        }
-        dfs2(graph[node][i].nxt, value, graph);
-    }
-}
+// var vis_ohm = [];
+// function dfs2(node, value, graph) {
+//     if (vis[node]) return;
+//     if (vis_ohm[node] == 0) {
+//         vis_ohm[node] = value;
+//     } else {
+//         vis_ohm[node] = vis_ohm[node] * value / (vis_ohm[node] + value);
+//     }
+//     if (node == 1 || node == 3) { return; }
+//     for (let i = 0; i < graph[node].length; i++) {
+//         if (graph[node][i].val != 0) {
+//             continue;
+//         }
+//         dfs2(graph[node][i].nxt, value, graph);
+//     }
+// }
 
-function find_total_resitance(resitances, potential, graph) {
-    vis = [];
-    vis_ohm = [];
-    for (let i = 0; i < MaxNodeNum; i++) {
-        vis.push(0);
-        vis_ohm.push(0);
-    }
+// function find_total_resitance(resitances, potential, graph) {
+//     vis = [];
+//     vis_ohm = [];
+//     for (let i = 0; i < MaxNodeNum; i++) {
+//         vis.push(0);
+//         vis_ohm.push(0);
+//     }
 
-    for (let i = 0; i < resitances; i++) {
-        let r = resitances[i];
-        //vis[]
-        if (potential[r.node1] > 0 && potential[r.node1] != INF) {
-            vis[r.node1] = 1;
-            dfs2(r.node2, vis_ohm[node1] + r.val, graph);
-        } else if (potential[r.node1] > 0 && potential[r.node1] != INF) {
-            vis[r.node2] = 1;
-            dfs2(r.node1, vis_ohm[node2] + r.val, graph);
-        }
-        vis = [];
-        for (let i = 0; i < MaxNodeNum; i++) {
-            vis.push(0);
-        }
-    }
+//     for (let i = 0; i < resitances; i++) {
+//         let r = resitances[i];
+//         //vis[]
+//         if (potential[r.node1] > 0 && potential[r.node1] != INF) {
+//             vis[r.node1] = 1;
+//             dfs2(r.node2, vis_ohm[node1] + r.val, graph);
+//         } else if (potential[r.node1] > 0 && potential[r.node1] != INF) {
+//             vis[r.node2] = 1;
+//             dfs2(r.node1, vis_ohm[node2] + r.val, graph);
+//         }
+//         vis = [];
+//         for (let i = 0; i < MaxNodeNum; i++) {
+//             vis.push(0);
+//         }
+//     }
 
-}
+// }
 
 
 function check() {
@@ -1489,6 +1489,7 @@ function check() {
         return;
     } else if (vis[0] == vis[1] && voltage1 != 0 && voltage2 != 0) {
         powerUseStatus = 1;
+        console.log("fixednode   0  1.0")
     } else if (vis[2] == vis[3] && voltage1 != 0) {
         powerUseStatus = 2;
     }
@@ -1496,15 +1497,16 @@ function check() {
         alert("斷路了，電源供應器兩端沒有接再一起。\n open circuit");
         return;
     }
-    let potential = findPotential(powerUseStatus, links);
-    // check there is no short condition 
-    if (potential.length == 0) {
-        //error occurs in findPotential
-        return;
-    }
-    for (let i = 0; i < resitances.length; i++) {
-        let r = resitances[i];
-        sum = find_total_resitance(r.node1, r.node2);
+    // let potential = findPotential(powerUseStatus, links);
+    // // check there is no short condition 
+    // if (potential.length == 0) {
+    //     //error occurs in findPotential
+    //     return;
+    // }
+    // for (let i = 0; i < resitances.length; i++) {
+    //     let r = resitances[i];
+    //     sum = find_total_resitance(r.node1, r.node2);
 
-    }
+    // }
+    console.log("")
 }
