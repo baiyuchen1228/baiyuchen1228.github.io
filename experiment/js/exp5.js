@@ -225,60 +225,70 @@ power_drowline1.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 1285;
         AlligatorY1 = 545;
+        document.onmousemove = drawDashedLine2();
     }
 }
 power_drowline2.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 1250;
         AlligatorY1 = 545;
+        document.onmousemove = drawDashedLine2();
     }
 }
 power_drowline3.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 1385;
         AlligatorY1 = 545;
+        document.onmousemove = drawDashedLine2();
     }
 }
 power_drowline4.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 1350;
         AlligatorY1 = 545;
+        document.onmousemove = drawDashedLine2();
     }
 }
 meter1_drowline1.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 85;
         AlligatorY1 = 565;
+        document.onmousemove = drawDashedLine2();
     }
 }
 meter1_drowline2.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 145;
         AlligatorY1 = 565;
+        document.onmousemove = drawDashedLine2();
     }
 }
 meter1_drowline3.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 205;
         AlligatorY1 = 565;
+        document.onmousemove = drawDashedLine2();
     }
 }
 meter2_drowline1.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 345;
         AlligatorY1 = 425;
+        document.onmousemove = drawDashedLine2();
     }
 }
 meter2_drowline2.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 405;
         AlligatorY1 = 425;
+        document.onmousemove = drawDashedLine2();
     }
 }
 meter2_drowline3.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 465;
         AlligatorY1 = 425;
+        document.onmousemove = drawDashedLine2();
     }
 }
 function approx_x(x) {
@@ -295,13 +305,97 @@ $("#container").mousedown(function (e) {
     if (drawInductance == 1) {
         inductanceInitial = e;
     }
-    if (deletemode == 1) {
-        delIni = e;
-    }
     if (drawCapacitance == 1) {
         CapacitanceInitial = e;
     }
+    if (deletemode == 1) {
+        delIni = e;
+    }
+    if(!document.onmousemove)
+        document.onmousemove = drawDashedLine();
 });
+
+function drawDashedLine(){
+    function draw (e) {
+        let mode = false;
+        if (drawWire == 1) {
+            x1 = approx_x(wireInitial.pageX);
+            y1 = approx_x(wireInitial.pageY);
+            x2 = approx_x(e.pageX);
+            y2 = approx_x(e.pageY);
+            x1 -= 540;
+            x2 -= 540;
+            y1 -= 300;
+            y2 -= 300;
+            mode = true;
+        }
+        if (drawResistance == 1) {
+            x1 = approx_x(resistanceInitial.pageX);
+            y1 = approx_x(resistanceInitial.pageY);
+            x2 = approx_x(e.pageX);
+            y2 = approx_x(e.pageY);
+            x1 -= 540;
+            x2 -= 540;
+            y1 -= 300;
+            y2 -= 300;
+            mode = true;
+        }
+        if (drawInductance == 1) {
+            x1 = approx_x(inductanceInitial.pageX);
+            y1 = approx_x(inductanceInitial.pageY);
+            x2 = approx_x(e.pageX);
+            y2 = approx_x(e.pageY);
+            x1 -= 540;
+            x2 -= 540;
+            y1 -= 300;
+            y2 -= 300;
+            mode = true;
+        }
+        if (drawCapacitance == 1) {
+            x1 = approx_x(CapacitanceInitial.pageX);
+            y1 = approx_x(CapacitanceInitial.pageY);
+            x2 = approx_x(e.pageX);
+            y2 = approx_x(e.pageY);
+            x1 -= 540;
+            x2 -= 540;
+            y1 -= 300;
+            y2 -= 300;
+            mode = true;
+        }
+        if(mode){
+            if($("#dashline").length > 0){
+                $("#dashline").remove();
+                document.getElementById('svgline').appendChild(parseSVG('<line id=dashline x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
+            }
+            else{
+                document.getElementById('svgline').appendChild(parseSVG('<line id=dashline x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
+            }
+        }
+    }
+    return draw;
+}
+
+function drawDashedLine2(){
+    function draw (e) {
+        let mode = false;
+        if (drawAlligator == 1) {
+            x2 = approx_x(e.pageX);
+            y2 = approx_x(e.pageY);
+            x2 += 10;
+            mode = true;
+        }
+        if(mode){
+            if($("#dashline").length > 0){
+                $("#dashline").remove();
+                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
+            }
+            else{
+                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ';" stroke-width:5 stroke-dasharray="5"></line>'));
+            }
+        }
+    }
+    return draw;
+}
 
 function parseSVG(s) {
     var div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
@@ -319,6 +413,8 @@ function deleteRow(arr, row) {
 }
 
 $("#container").mouseup(function (e) {
+    $("#dashline").remove();
+    document.onmousemove = null;
     if (drawWire == 1) {
         var wireFinal = e;
 
