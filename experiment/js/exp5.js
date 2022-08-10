@@ -1480,33 +1480,39 @@ function check() {
 
     findConnected(graph);
     console.log(vis);
-
+    let circuit_output = "; fixednode nodeindex fixedvoltage\n";
     // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
     let powerUseStatus = 0;
     if (vis[0] == vis[1] && vis[2] == vis[3]) {
         powerUseStatus = 3;
         alert("這個實驗只需要一組輸出喔!\nyou don't need to use two powersupply in this experiment");
         return;
-    } else if (vis[0] == vis[1] && voltage1 != 0 && voltage2 != 0) {
+    } else if (vis[0] == vis[1] && voltage1 != 0) {
         powerUseStatus = 1;
-        console.log("fixednode   0  1.0")
-    } else if (vis[2] == vis[3] && voltage1 != 0) {
+        circuit_output += "fixednode   0  " + voltage1 + "\n";
+        circuit_output += "fixednode   1  0\n";
+    } else if (vis[2] == vis[3] && voltage2 != 0) {
         powerUseStatus = 2;
+        circuit_output += "fixednode   2  " + voltage2 + "\n";
+        circuit_output += "fixednode   3  0\n";
     }
     if (powerUseStatus == 0) {
-        alert("斷路了，電源供應器兩端沒有接再一起。\n open circuit");
+        alert("斷路了，電源供應器兩端沒有接在一起，或電功沒開。\n open circuit");
         return;
     }
-    // let potential = findPotential(powerUseStatus, links);
-    // // check there is no short condition 
-    // if (potential.length == 0) {
-    //     //error occurs in findPotential
-    //     return;
-    // }
-    // for (let i = 0; i < resitances.length; i++) {
-    //     let r = resitances[i];
-    //     sum = find_total_resitance(r.node1, r.node2);
-
-    // }
-    console.log("")
+    let potential = findPotential(powerUseStatus, links);
+    // check there is no short condition 
+    if (potential.length == 0) {
+        //error occurs in findPotential
+        return;
+    }
+    circuit_output += "\n\n\n; resistor ohms leftnodeindex rightnodeindex\n"
+    for (let i = 0; i < links.length; i++) {
+        circuit_output += "resistor 0.1 " + links[i].node1 + " " + links[i].node2 + "\n";
+    }
+    for (let i = 0; i < resitances.length; i++) {
+        let r = resitances[i];
+        circuit_output += "resistor " + r.val + " " + r.node1 + " " + r.node2 + "\n";
+    }
+    console.log(circuit_output);
 }
