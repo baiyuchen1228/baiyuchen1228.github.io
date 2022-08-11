@@ -1,0 +1,63 @@
+;------------------------------------------------------------
+;
+;   cube.circuit
+;
+;   Model of the cubical network of resistors I built.
+;   ( See  http://cosinekitty.com/resistor_cube.html )
+;   Note that all nodes and resistors are zero-based here...
+;
+;
+;
+;
+;------------------------------------------------------------
+
+dt 1.0e-7
+nodecapacitance     1.0e-12
+resistorinductance  0.1
+
+numnodes 4
+
+; "fixednode" nodeindex fixedvoltage
+fixednode   0  1.0
+fixednode   2  0.0
+
+; "resistor" ohms leftnodeindex rightnodeindex
+resistor 0.00000001       0           1      ; R0
+resistor        5       1           2      ; R1
+
+;------------------------------------------------------------
+;   $Log: cube.circuit,v $
+;   Revision 1.4  2006/10/26 20:23:42  dcross
+;   Convergence speed greatly improved by decreasing node capacitance.
+;
+;   Revision 1.3  2006/10/25 20:49:25  dcross
+;   Was able to get this network to converge by fiddling with constants!
+;   >>> Resistor::update ( 0) - V1=0.601792  V2=1  di=9.99201e-022  current=-4.03044e-007  charge=-4.03044e-014
+;   >>> Resistor::update ( 1) - V1=1  V2=0.600986  di=-9.99201e-022  current=4.02232e-007  charge=4.02232e-014
+;   >>> Resistor::update ( 2) - V1=0.600986  V2=0.401128  di=0  current=2.01673e-007  charge=2.01673e-014
+;   >>> Resistor::update ( 3) - V1=0.401128  V2=0.601792  di=0  current=-2.01876e-007  charge=-2.01876e-014
+;   >>> Resistor::update ( 4) - V1=1  V2=0.601488  di=-9.99201e-022  current=4.02944e-007  charge=4.02944e-014
+;   >>> Resistor::update ( 5) - V1=0.600986  V2=0.401229  di=0  current=2.00559e-007  charge=2.00559e-014
+;   >>> Resistor::update ( 6) - V1=0.401128  V2=0  di=9.99201e-022  current=4.03549e-007  charge=4.03549e-014
+;   >>> Resistor::update ( 7) - V1=0.601792  V2=0.401429  di=0  current=2.01168e-007  charge=2.01168e-014
+;   >>> Resistor::update ( 8) - V1=0.601488  V2=0.401229  di=0  current=2.02282e-007  charge=2.02282e-014
+;   >>> Resistor::update ( 9) - V1=0.401229  V2=0  di=9.99201e-022  current=4.02841e-007  charge=4.02841e-014
+;   >>> Resistor::update (10) - V1=0  V2=0.401429  di=-9.99201e-022  current=-4.0183e-007  charge=-4.0183e-014
+;   >>> Resistor::update (11) - V1=0.401429  V2=0.601488  di=0  current=-2.00662e-007  charge=-2.00662e-014
+;   loop 26749:  max_dv = 9.99013450371889e-016
+;   node   0 current = -0.001208220108 milliamps.
+;   node   7 current = 0.001208220108 milliamps.
+;
+;   Revision 1.2  2006/10/25 14:59:41  dcross
+;   Added cheesy text diagram in comments of the circuit, and double-checked all the
+;   "resistor" statements based on it.  No mistakes found.
+;
+;   Revision 1.1  2006/10/23 18:56:20  dcross
+;   Still having problems getting solution to converge, but thought I would go ahead and check in changes:
+;   1. Reworked Resistor::update to get rid of the concept of maintaining between_voltage.
+;   2. Now dt (time increment) can be defined in the input file.  This required moving dt into the class Circuit.
+;   3. Now Node and Component objects have a unique tag, which is simply a copy of their array index
+;      inside the Circuit class.  This allows for helpful debug prints more than anything else.
+;
+;
+

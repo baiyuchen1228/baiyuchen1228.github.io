@@ -1,0 +1,56 @@
+;------------------------------------------------------------
+;
+;   cube.circuit
+;
+;   Model of the cubical network of resistors I built.
+;   ( See  http://cosinekitty.com/resistor_cube.html )
+;   Note that all nodes and resistors are zero-based here...
+;
+;
+;   V0-------R1-------V1
+;    |\              /|
+;    | R4          R5 |
+;    |  \          /  |
+;    |  V4---R8---V5  |
+;    |   |        |   |
+;   R0  R11      R9   R2
+;    |   |        |   |
+;    |  V6--R10---V7  |
+;    |  /          \  |
+;    | R7          R6 |
+;    |/              \|
+;   V3-------R3-------V2
+;
+;
+;
+;------------------------------------------------------------
+
+dt 1.0e-7
+nodecapacitance     1.0e-10
+resistorinductance  0.1
+
+numnodes 8
+
+; "fixednode" nodeindex fixedvoltage
+fixednode   0  1.0
+fixednode   2  0.0
+
+; "resistor" ohms leftnodeindex rightnodeindex
+resistor    988000   3   0      ; R0
+resistor    992000   0   1      ; R1
+resistor    991000   1   2      ; R2
+resistor    994000   2   3      ; R3
+resistor    989000   0   4      ; R4
+resistor    996000   1   5      ; R5
+resistor    994000   2   7      ; R6
+resistor    996000   3   6      ; R7
+resistor    990000   4   5      ; R8
+resistor    996000   5   7      ; R9
+resistor    999000   7   6      ; R10
+resistor    997000   6   4      ; R11
+
+;------------------------------------------------------------
+;   $Log: cube_3.circuit,v $
+;   Revision 1.1  2006/10/25 21:31:46  dcross
+;   Same as cube.circuit, only with different fixed nodes.
+;
