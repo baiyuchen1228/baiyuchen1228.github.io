@@ -2,7 +2,7 @@ dt 1.0e-7
 nodecapacitance     1.0e-12
 resistorinductance  0.1
 
-numnodes 100
+numnodes 70
 
 ; fixednode nodeindex fixedvoltage
 fixednode   0  3.5000000000000018
