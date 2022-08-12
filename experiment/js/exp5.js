@@ -1503,7 +1503,7 @@ function check() {
     // check the positive and negative are connected(resitance, multimeter should also be concerned)
     // make it to a graph and run dfs
     let links = [];      //存所有連接的電線 + 鱷魚夾，用來檢查 有沒有短路發生
-    var graph = [];
+    var graph = [], graph2 = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
     }
@@ -1524,6 +1524,26 @@ function check() {
         links.push({ node1: alli.node1, node2: alli.node2 });
     }
 
+    if (meter_2_mode[meter2_mode] != 0) {
+        //安培計要串聯
+        graph[4].push({ nxt: 5, wei: 0 });
+        graph[5].push({ nxt: 4, wei: 0 });
+    }
+    graph2 = graph;                 //copy 一份用來確定電壓計有沒有連接
+    // check the circuit is short or not
+    // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
+    findConnected(graph);
+    console.log(vis);
+
+    let powerUseStatus = 0;             //確定 powersupply 狀態
+    let multimeterVoltageUseState = 0;  //確定電壓計使用狀態
+    let multimeterCurrentUseState = 0;  //確定安培計使用狀態
+    if (vis[0] == vis[1] || vis[2] == vis[3]) {
+        // voltage 給 0 照樣 alert();
+        alert("short!");
+        return;
+    }
+
     let resitances = getResitance();
     for (let i = 0; i < resitances.length; i++) {
         let r = resitances[i];
@@ -1531,50 +1551,55 @@ function check() {
         graph[r.node2].push({ nxt: r.node1, wei: r.val });
     }
 
-    if (meter_1_mode[meter1_mode] >= 7) {//有動到
-        graph[4].push(5);
-        graph[5].push(4);
-    }
-    if (meter_1_mode[meter1_mode] >= 7) {
-        graph[7].push(8);
-        graph[8].push(7);
-    }
-
+    //確定電阻有成功連到
+    //加電阻後是通路
     findConnected(graph);
     console.log(vis);
-    let circuit_output = "; fixednode nodeindex fixedvoltage\n";
-    // find powersupplyer's positive and negative : use not use(0), left one(1), right(2) one or both(3)
-    let powerUseStatus = 0;
-    if (vis[0] == vis[1] && vis[2] == vis[3]) {
-        powerUseStatus = 3;
-        alert("這個實驗只需要一組輸出喔!\nyou don't need to use two powersupply in this experiment");
+    if (vis[0] == vis[1] && vis[2] == vis[3] && voltage1 != 0 && voltage2 != 0) {
+        alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
         return;
-    } else if (vis[0] == vis[1] && voltage1 != 0) {
+    }
+    if (vis[0] == vis[1] && voltage1 != 0) {
         powerUseStatus = 1;
-        circuit_output += "fixednode   0  " + voltage1 + "\n";
-        circuit_output += "fixednode   1  0\n";
     } else if (vis[2] == vis[3] && voltage2 != 0) {
         powerUseStatus = 2;
-        circuit_output += "fixednode   2  " + voltage2 + "\n";
-        circuit_output += "fixednode   3  0\n";
     }
     if (powerUseStatus == 0) {
-        alert("斷路了，電源供應器兩端沒有接在一起，或電功沒開。\n open circuit");
+        alert("open circuit! (或者電供沒開 ouput)");
         return;
     }
-    let potential = findPotential(powerUseStatus, links);
-    // check there is no short condition 
-    if (potential.length == 0) {
-        //error occurs in findPotential
-        return;
+
+
+    //確認電壓計有連通
+    if (meter_1_Mode[meter_1_mode] > 0 && meter_1_Mode[meter_1_mode] <= 6) {
+        graph2[4].push({ nxt: 4, wei: 1000000 });
+        graph2[5].push({ nxt: 4, wei: 1000000 });
     }
-    circuit_output += "\n\n\n; resistor ohms leftnodeindex rightnodeindex\n"
-    for (let i = 0; i < links.length; i++) {
-        circuit_output += "resistor 0.1 " + links[i].node1 + " " + links[i].node2 + "\n";
+    findConnected(graph2);
+    console.log(vis);
+    //確認電壓計連通
+    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
+        //確定電壓有跟正負極連接
+        //留電線、電壓計、安培計後有connect
+        console.log("debug1!");
+        multimeterVoltageUseState = 1;
     }
-    for (let i = 0; i < resitances.length; i++) {
-        let r = resitances[i];
-        circuit_output += "resistor " + r.val + " " + r.node1 + " " + r.node2 + "\n";
+
+
+    //電壓計確定完成，電流計還有些 case 沒有處理
+    /*
+        不能只看有沒有連通，下面的例子會錯
+        --A-----V-----
+        |-------R----|
+        |-------v0---|
+        確認電流計和電供有連在一起就行(X)
+    */
+    if (multimeterVoltageUseState == 1) {
+        if (powerUseStatus == 1) {
+            return { voltage: voltage1, current: voltage1 / resitances[0].val };
+        } else {
+            return { voltage: voltage2, current: voltage2 / resitances[0].val };
+        }
     }
-    console.log(circuit_output);
+    return "unfinished!";
 }
