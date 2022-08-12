@@ -161,6 +161,7 @@ div#powersupply{
     float: left;
     position:absolute;
     color: #000000;
+    height: 40px;
     top: 170px;
     font-size: 1px;
     text-indent: -4px;
@@ -222,9 +223,10 @@ div#powersupply{
     position:absolute;
     float: left;
     color: #000000;
+    height: 40px;
     top: 80px;
     text-indent: 0px;
-    font-size: 1px;
+    font-size: 10px;
     width: 40px;
     border-radius: 15px;
     cursor: pointer;
