@@ -57,6 +57,36 @@ function hideMenu() {
 }
 
 document.getElementById("powersupply14").onclick = function () {
+    if (drawResistance == 1) {
+        $this = $("#addResistance");
+        $this.css('background-color', 'white');
+        drawResistance = 0;
+    }
+    else if (deletemode == 1) {
+        $this = $("#del");
+        $this.css('background-color', 'white');
+        deletemode = 0;
+    }
+    else if (drawWire == 1) {
+        $this = $("#addWire");
+        $this.css('background-color', 'white');
+        drawWire = 0;
+    }
+    else if (drawInductance == 1) {
+        $this = $("#addInductance");
+        $this.css('background-color', 'white');
+        drawInductance = 0;
+    }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawCapacitance = 0;
+    }
+    else if (drawAlligator == 1) {
+        $this = $("#addAlligator");
+        $this.css('background-color', 'white');
+        drawAlligator = 0;
+    }
     if (power == 0) {
         cur1.innerHTML = current1.toFixed(2);
         cur2.innerHTML = current2.toFixed(2);
@@ -77,6 +107,36 @@ document.getElementById("powersupply14").onclick = function () {
 
 
 document.getElementById("powersupply13").onclick = function () {
+    if (drawResistance == 1) {
+        $this = $("#addResistance");
+        $this.css('background-color', 'white');
+        drawResistance = 0;
+    }
+    else if (deletemode == 1) {
+        $this = $("#del");
+        $this.css('background-color', 'white');
+        deletemode = 0;
+    }
+    else if (drawWire == 1) {
+        $this = $("#addWire");
+        $this.css('background-color', 'white');
+        drawWire = 0;
+    }
+    else if (drawInductance == 1) {
+        $this = $("#addInductance");
+        $this.css('background-color', 'white');
+        drawInductance = 0;
+    }
+    else if (drawCapacitance == 1) {
+        $this = $("#addCapacitance");
+        $this.css('background-color', 'white');
+        drawCapacitance = 0;
+    }
+    else if (drawAlligator == 1) {
+        $this = $("#addAlligator");
+        $this.css('background-color', 'white');
+        drawAlligator = 0;
+    }
     if (power == 1 && powersupplyOutputStatus == 0) {
         powersupplyOutputStatus = 1;
         $("#powersupply13").css("background-color", "Lightgreen");
