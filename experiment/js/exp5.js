@@ -145,6 +145,10 @@ document.getElementById("powersupply13").onclick = function () {
         powersupplyOutputStatus = 1;
         $("#powersupply13").css("background-color", "Lightgreen");
         console.log("output on!");
+        var va = check();
+        $("#multimeter1_3").text(va.voltage);
+        $("#multimeter2_3").text(va.current);
+        console.log(va.voltage,va.current);
     } else {
         powersupplyOutputStatus = 0;
         $("#powersupply13").css("background-color", "White");
