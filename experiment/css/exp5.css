@@ -128,6 +128,24 @@ div#multimeter2{
 .multimeter-1-bg-6{
     background-image: url('../../images/multimeter/multimeter-6.jpg');
 }
+.multimeter-2-bg0{
+    background-image: url('../../images/multimeter2/multimeter0.jpg');
+}
+.multimeter-2-bg1{
+    background-image: url('../../images/multimeter2/multimeter1.jpg');
+}
+.multimeter-2-bg2{
+    background-image: url('../../images/multimeter2/multimeter2.jpg');
+}
+.multimeter-2-bg3{
+    background-image: url('../../images/multimeter2/multimeter3.jpg');
+}
+.multimeter-2-bg4{
+    background-image: url('../../images/multimeter2/multimeter4.jpg');
+}
+.multimeter-2-bg5{
+    background-image: url('../../images/multimeter2/multimeter5.jpg');
+}
 div#powersupply{
     position: absolute;
     left: 1090px;
@@ -219,12 +237,24 @@ div#powersupply{
     top: 230px;
     left: 245px;
 }
-.multimeter-button{
+.multimeter-button-1{
     position:absolute;
     float: left;
     color: #000000;
     height: 20px;
     top: 80px;
+    text-indent: 0px;
+    font-size: 10px;
+    width: 40px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.multimeter-button-2{
+    position:absolute;
+    float: left;
+    color: #000000;
+    height: 20px;
+    top: 100px;
     text-indent: 0px;
     font-size: 10px;
     width: 40px;
@@ -286,28 +316,33 @@ div#powersupply{
 #multimeter2_2{
     left: 50px;
 }
+#multimeter2_3{
+    top : 30px;
+}
 #multimeter2_4{
-    top: 250px;
-    left: 30px;
+    top: 305px;
+    left: 40px;
     font-size: 1px;
     text-indent: -4px;
     width: 20px;
 }
 #multimeter2_5{
-    top: 250px;
+    top: 305px;
     left: 90px;
     font-size: 1px;
     text-indent: -4px;
     width: 20px;
 }
 #multimeter2_6{
-    top: 250px;
-    left: 150px;
+    top: 305px;
+    left: 140px;
     font-size: 1px;
     text-indent: -4px;
     width: 20px;
 }
-#mu
+#multimeter2_7{
+    top: 15px;
+}
 .buttonInactive
 {
     background-color: white;

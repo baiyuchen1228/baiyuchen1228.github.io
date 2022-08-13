@@ -107,8 +107,7 @@ document.getElementById("powersupply14").onclick = function () {
     }
 }
 
-
-document.getElementById("powersupply13").onclick = function () {
+function turnOffMode(){
     if (drawResistance == 1) {
         $this = $("#addResistance");
         $this.css('background-color', 'white');
@@ -139,6 +138,9 @@ document.getElementById("powersupply13").onclick = function () {
         $this.css('background-color', 'white');
         drawAlligator = 0;
     }
+}
+document.getElementById("powersupply13").onclick = function () {
+    turnOffMode();
     if (power == 1 && powersupplyOutputStatus == 0) {
         powersupplyOutputStatus = 1;
         $("#powersupply13").css("background-color", "Lightgreen");
@@ -152,6 +154,7 @@ document.getElementById("powersupply13").onclick = function () {
 
 
 addcurrent1.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         current1 += 0.01;
         cur1.innerHTML = current1.toFixed(2);
@@ -159,6 +162,7 @@ addcurrent1.onclick = function () {
 }
 
 addvoltage1.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         voltage1 += 0.1;
         vol1.innerHTML = voltage1.toFixed(1);
@@ -166,6 +170,7 @@ addvoltage1.onclick = function () {
 }
 
 addcurrent2.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         current2 += 0.01;
         cur2.innerHTML = current2.toFixed(2);
@@ -173,6 +178,7 @@ addcurrent2.onclick = function () {
 }
 
 addvoltage2.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         voltage2 += 0.1;
         vol2.innerHTML = voltage2.toFixed(1);
@@ -180,6 +186,7 @@ addvoltage2.onclick = function () {
 }
 
 deccurrent1.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         current1 -= 0.01;
         if (current1 < 0) {
@@ -190,6 +197,7 @@ deccurrent1.onclick = function () {
 }
 
 decvoltage1.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         voltage1 -= 0.1;
         if (voltage1 < 0) {
@@ -200,6 +208,7 @@ decvoltage1.onclick = function () {
 }
 
 deccurrent2.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         current2 -= 0.01;
         if (current2 < 0) {
@@ -210,6 +219,7 @@ deccurrent2.onclick = function () {
 }
 
 decvoltage2.onclick = function () {
+    turnOffMode();
     if (power == 1) {
         voltage2 -= 0.1;
         if (voltage2 < 0) {
@@ -220,30 +230,34 @@ decvoltage2.onclick = function () {
 }
 
 meter1_clockwise.onclick = function () {
+    turnOffMode();
     var last_mode = meter1_mode;
     meter1_mode = (meter1_mode + 1 + 6) % 16 - 6;
-    $("#multimeter1").removeClass('multimeter-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
+    $("#multimeter1").removeClass('multimeter-1-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
     $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode + 6]);
 }
 
 meter1_counterclockwise.onclick = function () {
+    turnOffMode();
     var last_mode = meter1_mode;
     meter1_mode = (meter1_mode - 1 + 6 + 16) % 16 - 6;
-    $("#multimeter1").removeClass('multimeter-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
+    $("#multimeter1").removeClass('multimeter-1-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
     $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode + 6]);
 }
 
 meter2_clockwise.onclick = function () {
+    turnOffMode();
     var last_mode = meter2_mode;
-    meter2_mode = (meter2_mode + 1 + 6) % 16 - 6;
-    $("#multimeter2").removeClass('multimeter-bg' + last_mode).addClass('multimeter-1-bg' + meter2_mode);
+    meter2_mode = (meter2_mode + 1) % 6;
+    $("#multimeter2").removeClass('multimeter-2-bg' + last_mode).addClass('multimeter-2-bg' + meter2_mode);
     $("#multimeter2_7").text('狀態:' + meter_1_Mode[meter2_mode + 6]);
 }
 
 meter2_counterclockwise.onclick = function () {
+    turnOffMode();
     var last_mode = meter2_mode;
-    meter2_mode = (meter2_mode - 1 + 6 + 16) % 16 - 6;
-    $("#multimeter2").removeClass('multimeter-bg' + last_mode).addClass('multimeter-1-bg' + meter2_mode);
+    meter2_mode = (meter2_mode - 1 + 6) % 6;
+    $("#multimeter2").removeClass('multimeter-2-bg' + last_mode).addClass('multimeter-2-bg' + meter2_mode);
     $("#multimeter2_7").text('狀態:' + meter_1_Mode[meter2_mode + 6]);
 }
 
@@ -334,22 +348,22 @@ meter1_drowline3.onmousedown = function (e) {
 }
 meter2_drowline1.onmousedown = function (e) {
     if (drawAlligator) {
-        AlligatorX1 = 345;
-        AlligatorY1 = 425;
+        AlligatorX1 = 355;
+        AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
 }
 meter2_drowline2.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 405;
-        AlligatorY1 = 425;
+        AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
 }
 meter2_drowline3.onmousedown = function (e) {
     if (drawAlligator) {
-        AlligatorX1 = 465;
-        AlligatorY1 = 425;
+        AlligatorX1 = 455;
+        AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
 }
