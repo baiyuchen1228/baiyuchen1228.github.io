@@ -1,10 +1,10 @@
 var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
 var meter1_mode = 0;
 var meter2_mode = 0;
-const meter_1_mode = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const meter_1_mode = [0, 1, 2, 3, 4];
 const meter_2_mode = [0, 1, 2, 3, 4, 5];
 const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
-const meter_1_Mode = ['200歐姆', '2K歐姆', '20K歐姆', '200K歐姆', '2M歐姆', '20M歐姆', '關機', '600交流V', '200交流V', '600直流V', '200直流V', '20直流V', '2直流V', '200m直流A', '20m直流A', '2m直流A']
+const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V']
 const meter_2_Mode = ['關機', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
 var colorNo = 0;
 
@@ -232,17 +232,17 @@ decvoltage2.onclick = function () {
 meter1_clockwise.onclick = function () {
     turnOffMode();
     var last_mode = meter1_mode;
-    meter1_mode = (meter1_mode + 1 + 6) % 16 - 6;
+    meter1_mode = (meter1_mode + 1) % 5;
     $("#multimeter1").removeClass('multimeter-1-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
-    $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode + 6]);
+    $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode]);
 }
 
 meter1_counterclockwise.onclick = function () {
     turnOffMode();
     var last_mode = meter1_mode;
-    meter1_mode = (meter1_mode - 1 + 6 + 16) % 16 - 6;
+    meter1_mode = (meter1_mode - 1 + 5) % 5;
     $("#multimeter1").removeClass('multimeter-1-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
-    $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode + 6]);
+    $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode]);
 }
 
 meter2_clockwise.onclick = function () {
@@ -250,7 +250,7 @@ meter2_clockwise.onclick = function () {
     var last_mode = meter2_mode;
     meter2_mode = (meter2_mode + 1) % 6;
     $("#multimeter2").removeClass('multimeter-2-bg' + last_mode).addClass('multimeter-2-bg' + meter2_mode);
-    $("#multimeter2_7").text('狀態:' + meter_1_Mode[meter2_mode + 6]);
+    $("#multimeter2_7").text('狀態:' + meter_2_Mode[meter2_mode]);
 }
 
 meter2_counterclockwise.onclick = function () {
@@ -258,7 +258,7 @@ meter2_counterclockwise.onclick = function () {
     var last_mode = meter2_mode;
     meter2_mode = (meter2_mode - 1 + 6) % 6;
     $("#multimeter2").removeClass('multimeter-2-bg' + last_mode).addClass('multimeter-2-bg' + meter2_mode);
-    $("#multimeter2_7").text('狀態:' + meter_1_Mode[meter2_mode + 6]);
+    $("#multimeter2_7").text('狀態:' + meter_2_Mode[meter2_mode]);
 }
 
 
