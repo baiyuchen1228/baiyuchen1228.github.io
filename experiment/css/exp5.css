@@ -314,3 +314,9 @@ div#powersupply{
 {
     background-color: white;
 }
+#addInductance{
+    background-color: #CCCCCC;
+}
+#addCapacitance{
+    background-color: #CCCCCC;
+}
