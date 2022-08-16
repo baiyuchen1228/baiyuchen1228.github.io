@@ -10,6 +10,8 @@ const meter_2_Mode = ['關機', '200u直流A', '2m直流A', '20m直流A', '200m�
 const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
 var colorNo = 0;
 
+var delALLalligator = null;
+
 var pointarray = [];
 const cur1 = document.querySelector("#powersupply1");
 const vol1 = document.querySelector("#powersupply2");
@@ -70,6 +72,7 @@ document.getElementById("powersupply14").onclick = function () {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawWire == 1) {
         $this = $("#addWire");
@@ -121,6 +124,7 @@ function turnOffMode() {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawWire == 1) {
         $this = $("#addWire");
@@ -348,12 +352,18 @@ power_drowline1.onmousedown = function (e) {
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
+    if (deletemode){
+        delALLalligator = [1285, 545];
+    }
 }
 power_drowline2.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 1250;
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode){
+        delALLalligator = [1250, 545];
     }
 }
 power_drowline3.onmousedown = function (e) {
@@ -362,12 +372,18 @@ power_drowline3.onmousedown = function (e) {
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
+    if (deletemode){
+        delALLalligator = [1385, 545];
+    }
 }
 power_drowline4.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 1350;
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode){
+        delALLalligator = [1350, 545];
     }
 }
 meter1_drowline1.onmousedown = function (e) {
@@ -376,12 +392,18 @@ meter1_drowline1.onmousedown = function (e) {
         AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
+    if (deletemode){
+        delALLalligator = [85, 565];
+    }
 }
 meter1_drowline2.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 145;
         AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode){
+        delALLalligator = [145, 565];
     }
 }
 meter1_drowline3.onmousedown = function (e) {
@@ -390,12 +412,18 @@ meter1_drowline3.onmousedown = function (e) {
         AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
+    if (deletemode){
+        delALLalligator = [205, 565];
+    }
 }
 meter2_drowline1.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 355;
         AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode){
+        delALLalligator = [355, 480];
     }
 }
 meter2_drowline2.onmousedown = function (e) {
@@ -404,12 +432,18 @@ meter2_drowline2.onmousedown = function (e) {
         AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
+    if (deletemode){
+        delALLalligator = [405, 480];
+    }
 }
 meter2_drowline3.onmousedown = function (e) {
     if (drawAlligator) {
         AlligatorX1 = 455;
         AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode){
+        delALLalligator = [455, 480];
     }
 }
 
@@ -943,56 +977,61 @@ $("#container").mouseup(function (e) {
                 }
             }
         }
-        x1 += 540;
-        x2 += 540;
-        y1 += 300;
-        y2 += 300;
-        x2 += 10;
-        for (var i = Things.length - 1; i >= 0; i--) {
-            if (Things[i].x1.baseVal.value == x1) {
-                if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
+        if(delALLalligator != null) {
+            x1 = delALLalligator[0];
+            y1 = delALLalligator[1];
+            x2 += 540;
+            y2 += 300;
+            x2 += 10;
+            console.log([x1, y1, x2, y2]);
+            for (var i = Things.length - 1; i >= 0; i--) {
+                if (Things[i].x1.baseVal.value == x1) {
+                    if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
+                        for (let j = 0; j < pointarray.length; j++) {
+                            if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                                pointarray = deleteRow(pointarray, j);
+                            }
                         }
-                    }
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
+                        for (let j = 0; j < pointarray.length; j++) {
+                            if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                                pointarray = deleteRow(pointarray, j);
+                            }
                         }
+                        console.log(Things[i].id[0]);
+                        pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
+                        pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
+                        if (Things[i].id[0] == "a") {
+                            $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                            $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                            $("#" + Things[i].id).remove();
+                            delALLalligator = null;
+                        }
+                        return;
                     }
-                    console.log(Things[i].id[0]);
-                    pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
-                    pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
-                    if (Things[i].id[0] == "a") {
-                        $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-                    return;
                 }
-            }
-            if (Things[i].x2.baseVal.value == x1) {
-                if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
+                if (Things[i].x2.baseVal.value == x1) {
+                    if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
+                        for (let j = 0; j < pointarray.length; j++) {
+                            if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                                pointarray = deleteRow(pointarray, j);
+                            }
                         }
-                    }
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
+                        for (let j = 0; j < pointarray.length; j++) {
+                            if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                                pointarray = deleteRow(pointarray, j);
+                            }
                         }
+                        console.log(Things[i].id[0]);
+                        pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
+                        pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
+                        if (Things[i].id[0] == "a") {
+                            $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                            $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                            $("#" + Things[i].id).remove();
+                            delALLalligator = null;
+                        }
+                        return;
                     }
-                    console.log(Things[i].id[0]);
-                    pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
-                    pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
-                    if (Things[i].id[0] == "a") {
-                        $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-                    return;
                 }
             }
         }
@@ -1136,6 +1175,7 @@ function toggleDelButton() {
     $this = $("#del");
     if (deletemode == 1) {
         $this.css('background-color', 'white');
+        delALLalligator = null;
         deletemode = 0;
 
     } else {
@@ -1159,6 +1199,7 @@ function toggleCapacitanceButton() {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawAlligator == 1) {
         $this = $("#addAlligator");
@@ -1195,6 +1236,7 @@ function toggleWireButton() {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawAlligator == 1) {
         $this = $("#addAlligator");
@@ -1228,6 +1270,7 @@ function toggleResistanceButton() {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawWire == 1) {
         $this = $("#addWire");
@@ -1265,6 +1308,7 @@ function toggleInductanceButton() {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawWire == 1) {
         $this = $("#addWire");
@@ -1303,6 +1347,7 @@ function toggleAlligatorButton() {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
+        delALLalligator = null;
     }
     else if (drawWire == 1) {
         $this = $("#addWire");
