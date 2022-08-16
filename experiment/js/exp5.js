@@ -1425,118 +1425,14 @@ function findConnected(graph) {
 
 
 function checkCurrent(graph, powerUseStatus) {
-    if (powerUseStatus != 1 && powerUseStatus != 2) {
-        return false;
+    findConnected(graph);
+    //確認電壓計連通
+    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
+        //確定電壓有跟正負極連接
+        //留電線、電壓計、電阻後有connect --> 安培計沒有串聯
+        return 0;
     }
-    //console.log(graph);
-
-    let node = 7, pre = 8, touchResistance = 0, touchPower = 0;
-    while (!touchPower && !touchResistance) {
-        if (graph[node].length != 2) {
-            return false;
-        }
-        if (graph[node][0].nxt == pre) {
-            //go to graph[node][1].nxt
-            if (graph[node][1].wei != 0) {
-                touchResistance++;
-                break;
-            } else if (powerUseStatus == 1) {
-                if (graph[node][1].nxt == 0 || graph[node][1].nxt == 1) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][1].nxt;
-                }
-            } else {
-                if (graph[node][1].nxt == 2 || graph[node][1].nxt == 3) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][1].nxt;
-                }
-            }
-        } else {
-            //go to graph[node][0].nxt
-            if (graph[node][0].wei != 0) {
-                touchResistance++;
-                break;
-            } else if (powerUseStatus == 1) {
-                if (graph[node][0].nxt == 0 || graph[node][0].nxt == 1) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][0].nxt;
-                }
-            } else {
-                if (graph[node][0].nxt == 2 || graph[node][0].nxt == 3) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][0].nxt;
-                }
-            }
-        }
-    }
-    node = 8, pre = 7;
-    while (!touchPower || !touchResistance) {
-        if (graph[node].length > 2) {
-            return false;
-        }
-        if (graph[node][0].nxt == pre) {
-            //go to graph[node][1].nxt
-            if (graph[node][1].wei != 0) {
-                touchResistance++;
-                break;
-            } else if (powerUseStatus == 1) {
-                if (graph[node][1].nxt == 0 || graph[node][1].nxt == 1) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][1].nxt;
-                }
-            } else {
-                if (graph[node][1].nxt == 2 || graph[node][1].nxt == 3) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][1].nxt;
-                }
-            }
-        } else {
-            //go to graph[node][0].nxt
-            if (graph[node][0].wei != 0) {
-                touchResistance++;
-                break;
-            } else if (powerUseStatus == 1) {
-                if (graph[node][0].nxt == 0 || graph[node][0].nxt == 1) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][0].nxt;
-                }
-            } else {
-                if (graph[node][0].nxt == 2 || graph[node][0].nxt == 3) {
-                    touchPower++;
-                    break;
-                } else {
-                    pre = node;
-                    node = graph[node][0].nxt;
-                }
-            }
-        }
-    }
-    console.log(touchPower, touchResistance);
-    if (touchPower == 1 && touchResistance == 1) {
-        return true;
-    }
-    return false;
+    return 1;
 }
 
 function check() {
@@ -1544,11 +1440,12 @@ function check() {
     // 檢查電路連通而且沒有 short --> unfinished
     // check the positive and negative are connected(resitance, multimeter should also be concerned)
     // make it to a graph and run dfs
-    let links = [];      //存所有連接的電線 + 鱷魚夾，用來檢查 有沒有短路發生
-    var graph = [], graph2 = [];
+    //let links = [];      //存所有連接的電線 + 鱷魚夾，用來檢查 有沒有短路發生
+    var graph = [], graph2 = [], graph3 = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
         graph2[i] = [];
+        graph3[i] = [];
     }
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
@@ -1557,7 +1454,9 @@ function check() {
         graph[wire.node2].push({ nxt: wire.node1, wei: 0 });
         graph2[wire.node1].push({ nxt: wire.node2, wei: 0 });
         graph2[wire.node2].push({ nxt: wire.node1, wei: 0 });
-        links.push({ node1: wire.node1, node2: wire.node2 });
+        graph3[wire.node1].push({ nxt: wire.node2, wei: 0 });
+        graph3[wire.node2].push({ nxt: wire.node1, wei: 0 });
+        //links.push({ node1: wire.node1, node2: wire.node2 });
     }
 
     let alligators = getAlligator();
@@ -1567,7 +1466,9 @@ function check() {
         graph[alli.node2].push({ nxt: alli.node1, wei: 0 });
         graph2[alli.node1].push({ nxt: alli.node2, wei: 0 });
         graph2[alli.node2].push({ nxt: alli.node1, wei: 0 });
-        links.push({ node1: alli.node1, node2: alli.node2 });
+        graph3[alli.node1].push({ nxt: alli.node2, wei: 0 });
+        graph3[alli.node2].push({ nxt: alli.node1, wei: 0 });
+        //links.push({ node1: alli.node1, node2: alli.node2 });
     }
 
     if (meter2_mode != 0) {
@@ -1594,6 +1495,8 @@ function check() {
         let r = resitances[i];
         graph[r.node1].push({ nxt: r.node2, wei: r.val });
         graph[r.node2].push({ nxt: r.node1, wei: r.val });
+        graph3[r.node1].push({ nxt: r.node2, wei: r.val });
+        graph3[r.node2].push({ nxt: r.node1, wei: r.val });
     }
 
     //確定電阻有成功連到
@@ -1613,8 +1516,9 @@ function check() {
         alert("open circuit! (或者電供沒開 ouput)");
         return { voltage: "ERR", current: "ERR" };
     }
-    let multimeterCurrentUseState = checkCurrent(graph, powerUseStatus);  //確定安培計使用狀態
+    let multimeterCurrentUseState = checkCurrent(graph3, powerUseStatus);  //確定安培計使用狀態
     console.log(multimeterCurrentUseState);
+
     //確認電壓計有連通
     if (meter1_mode != 0) {
         graph2[4].push({ nxt: 5, wei: 1000000 });
