@@ -1,11 +1,13 @@
 var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
+
 var meter1_mode = 0;
 var meter2_mode = 0;
 const meter_1_mode = [0, 1, 2, 3, 4];
 const meter_2_mode = [0, 1, 2, 3, 4, 5];
-const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
 const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V']
 const meter_2_Mode = ['關機', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
+
+const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
 var colorNo = 0;
 
 var pointarray = [];
@@ -146,8 +148,72 @@ document.getElementById("powersupply13").onclick = function () {
         $("#powersupply13").css("background-color", "Lightgreen");
         console.log("output on!");
         var va = check();
-        $("#multimeter1_3").text(va.voltage);
-        $("#multimeter2_3").text(va.current);
+        if(meter1_mode == 0){
+            $("#multimeter1_3").text('');
+        }
+        else if(va.voltage == 'ERR') {
+            $("#multimeter1_3").text(va.voltage);
+        }
+        else if(meter1_mode == 1){
+            let v = va.voltage.toFixed(0);
+            if(v > 600) v = 'ERR'
+            $("#multimeter1_3").text(v);
+        }
+        else if(meter1_mode == 2){
+            let v = va.voltage.toFixed(0);
+            if(v > 200) v = 'ERR'
+            $("#multimeter1_3").text(v);
+        }
+        else if(meter1_mode == 3){
+            let v = va.voltage.toFixed(1);
+            if(v > 20) v = 'ERR'
+            $("#multimeter1_3").text(v);
+        }
+        else if(meter1_mode == 4){
+            let v = va.voltage.toFixed(2);
+            if(v > 2) v = 'ERR'
+            $("#multimeter1_3").text(v);
+        }
+        if(meter2_mode == 0){
+            $("#multimeter2_3").text('');
+        }
+        else if(va.current == 'ERR'){
+            $("#multimeter2_3").text(va.current);
+        }
+        else if(meter2_mode == 1){
+            let c = va.current;
+            c /= 1000000;
+            c = c.toFixed(0);
+            if(c > 200) c = 'ERR';
+            $("#multimeter2_3").text(c);
+        }
+        else if(meter2_mode == 2){
+            let c = va.current;
+            c /= 1000;
+            c = c.toFixed(2);
+            if(c > 2) c = 'ERR';
+            $("#multimeter2_3").text(c);
+        }
+        else if(meter2_mode == 3){
+            let c = va.current;
+            c /= 1000;
+            c = c.toFixed(1);
+            if(c > 20) c = 'ERR';
+            $("#multimeter2_3").text(c);
+        }
+        else if(meter2_mode == 4){
+            let c = va.current;
+            c /= 1000;
+            c = c.toFixed(0);
+            if(c > 200) c = 'ERR';
+            $("#multimeter2_3").text(c);
+        }
+        else if(meter2_mode == 5){
+            let c = va.current;
+            c = c.toFixed(1);
+            if(c > 10) c = 'ERR';
+            $("#multimeter2_3").text(c);
+        }
         console.log(va.voltage, va.current);
     } else {
         powersupplyOutputStatus = 0;
@@ -233,36 +299,174 @@ decvoltage2.onclick = function () {
     }
 }
 
+
+
 meter1_clockwise.onclick = function () {
     turnOffMode();
-    var last_mode = meter1_mode;
+    let last_mode = meter1_mode;
     meter1_mode = (meter1_mode + 1) % 5;
     $("#multimeter1").removeClass('multimeter-1-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
     $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode]);
+    let va = check();
+    if(meter1_mode == 0){
+        $("#multimeter1_3").text('');
+    }
+    else if(va.voltage == 'ERR') {
+        $("#multimeter1_3").text(va.voltage);
+    }
+    else if(meter1_mode == 1){
+        let v = va.voltage.toFixed(0);
+        if(v > 600) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
+    else if(meter1_mode == 2){
+        let v = va.voltage.toFixed(0);
+        if(v > 200) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
+    else if(meter1_mode == 3){
+        let v = va.voltage.toFixed(1);
+        if(v > 20) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
+    else if(meter1_mode == 4){
+        let v = va.voltage.toFixed(2);
+        if(v > 2) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
 }
 
 meter1_counterclockwise.onclick = function () {
     turnOffMode();
-    var last_mode = meter1_mode;
+    let last_mode = meter1_mode;
     meter1_mode = (meter1_mode - 1 + 5) % 5;
     $("#multimeter1").removeClass('multimeter-1-bg' + last_mode).addClass('multimeter-1-bg' + meter1_mode);
     $("#multimeter1_7").text('狀態:' + meter_1_Mode[meter1_mode]);
+    let va = check();
+    if(meter1_mode == 0){
+        $("#multimeter1_3").text('');
+    }
+    else if(va.voltage == 'ERR') {
+        $("#multimeter1_3").text(va.voltage);
+    }
+    else if(meter1_mode == 1){
+        let v = va.voltage.toFixed(0);
+        if(v > 600) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
+    else if(meter1_mode == 2){
+        let v = va.voltage.toFixed(0);
+        if(v > 200) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
+    else if(meter1_mode == 3){
+        let v = va.voltage.toFixed(1);
+        if(v > 20) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
+    else if(meter1_mode == 4){
+        let v = va.voltage.toFixed(2);
+        if(v > 2) v = 'ERR'
+        $("#multimeter1_3").text(v);
+    }
 }
 
 meter2_clockwise.onclick = function () {
     turnOffMode();
-    var last_mode = meter2_mode;
+    let last_mode = meter2_mode;
     meter2_mode = (meter2_mode + 1) % 6;
     $("#multimeter2").removeClass('multimeter-2-bg' + last_mode).addClass('multimeter-2-bg' + meter2_mode);
     $("#multimeter2_7").text('狀態:' + meter_2_Mode[meter2_mode]);
+    let va = check();
+    if(meter2_mode == 0){
+        $("#multimeter2_3").text('');
+    }
+    else if(va.current == 'ERR'){
+        $("#multimeter2_3").text(va.current);
+    }
+    else if(meter2_mode == 1){
+        let c = va.current;
+        c /= 1000000;
+        c = c.toFixed(0);
+        if(c > 200) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 2){
+        let c = va.current;
+        c /= 1000;
+        c = c.toFixed(2);
+        if(c > 2) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 3){
+        let c = va.current;
+        c /= 1000;
+        c = c.toFixed(1);
+        if(c > 20) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 4){
+        let c = va.current;
+        c /= 1000;
+        c = c.toFixed(0);
+        if(c > 200) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 5){
+        let c = va.current;
+        c = c.toFixed(1);
+        if(c > 10) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
 }
 
 meter2_counterclockwise.onclick = function () {
     turnOffMode();
-    var last_mode = meter2_mode;
+    let last_mode = meter2_mode;
     meter2_mode = (meter2_mode - 1 + 6) % 6;
     $("#multimeter2").removeClass('multimeter-2-bg' + last_mode).addClass('multimeter-2-bg' + meter2_mode);
     $("#multimeter2_7").text('狀態:' + meter_2_Mode[meter2_mode]);
+    let va = check();
+    if(meter2_mode == 0){
+        $("#multimeter2_3").text('');
+    }
+    else if(va.current == 'ERR'){
+        $("#multimeter2_3").text(va.current);
+    }
+    else if(meter2_mode == 1){
+        let c = va.current;
+        c /= 1000000;
+        c = c.toFixed(0);
+        if(c > 200) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 2){
+        let c = va.current;
+        c /= 1000;
+        c = c.toFixed(2);
+        if(c > 2) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 3){
+        let c = va.current;
+        c /= 1000;
+        c = c.toFixed(1);
+        if(c > 20) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 4){
+        let c = va.current;
+        c /= 1000;
+        c = c.toFixed(0);
+        if(c > 200) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
+    else if(meter2_mode == 5){
+        let c = va.current;
+        c = c.toFixed(1);
+        if(c > 10) c = 'ERR';
+        $("#multimeter2_3").text(c);
+    }
 }
 
 
@@ -1253,8 +1457,10 @@ function toggleInductanceButton() {
 };
 function toggleAlligatorButton() {
     if (drawResistance == 1) {
-        $this = $("#addResistance");
-        $this.css('background-color', 'white');
+        if(resistanceOne==1){
+            $this = $("#addResistance");
+            $this.css('background-color', 'white');
+        }
         drawResistance = 0;
     }
     else if (deletemode == 1) {
@@ -1585,16 +1791,16 @@ function check() {
     let result = { voltage: "ERR", current: "ERR" };
     if (multimeterVoltageUseState == 1) {
         if (powerUseStatus == 1) {
-            result.voltage = voltage1.toFixed(2);
+            result.voltage = voltage1;
         } else {
-            result.voltage = voltage2.toFixed(2);
+            result.voltage = voltage2;
         }
     }
     if (multimeterCurrentUseState == 1) {
         if (powerUseStatus == 1) {
-            result.current = (voltage1 / resistances[0].val).toFixed(2);
+            result.current = (voltage1 / resistances[0].val);
         } else {
-            result.current = (voltage2 / resistances[0].val).toFixed(2);
+            result.current = (voltage2 / resistances[0].val);
         }
     }
     return result;
