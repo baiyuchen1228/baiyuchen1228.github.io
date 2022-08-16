@@ -1646,7 +1646,7 @@ function getPowerUseStatus() {
 }
 
 
-function check() {
+function checkCircuit() {
     // 檢查電路連通而且沒有 short --> unfinished
     // check the positive and negative are connected(resistance, multimeter should also be concerned)
     // make it to a graph and run dfs
@@ -1684,7 +1684,11 @@ function check() {
             result.current = (voltage2 / resistances[0].val);
         }
     }
-    let va = result;
+    return result;
+}
+
+function check(){
+    let va = checkCircuit();
     if(meter1_mode == 0){
         $("#multimeter1_3").text('');
     }
@@ -1751,7 +1755,7 @@ function check() {
         if(c > 10) c = 'ERR';
         $("#multimeter2_3").text(c);
     }
-    return result;
+    return;
 }
 
 
