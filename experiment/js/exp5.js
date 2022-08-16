@@ -1371,8 +1371,8 @@ function getAlligator() {
 }
 
 
-function getResitance() {
-    //find all resitance in the html
+function getResistance() {
+    //find all resistance in the html
     var resistances = $("line[id^='resistance']");
     var resistanceOut = $.map(resistances, function (resistance) {
         var rval = $("#" + resistance.id).attr("dataohm");
@@ -1424,9 +1424,19 @@ function findConnected(graph) {
 }
 
 
-function checkCurrent(graph, powerUseStatus) {
+function checkCurrent(powerUseStatus, resistances) {
+    //安培計要和電阻串聯 -> 把安培計拿掉之後電阻 + 電線不會連通
+    let graph = getGraph();
+
+    //加電阻
+    for (let i = 0; i < resistances.length; i++) {
+        let r = resistances[i];
+        graph[r.node1].push({ nxt: r.node2, wei: r.val });
+        graph[r.node2].push({ nxt: r.node1, wei: r.val });
+    }
+
     findConnected(graph);
-    //確認電壓計連通
+    //確認連通
     if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
         //確定電壓有跟正負極連接
         //留電線、電壓計、電阻後有connect --> 安培計沒有串聯
@@ -1435,28 +1445,90 @@ function checkCurrent(graph, powerUseStatus) {
     return 1;
 }
 
-function check() {
-    const INF = 100;
-    // 檢查電路連通而且沒有 short --> unfinished
-    // check the positive and negative are connected(resitance, multimeter should also be concerned)
-    // make it to a graph and run dfs
-    //let links = [];      //存所有連接的電線 + 鱷魚夾，用來檢查 有沒有短路發生
-    var graph = [], graph2 = [], graph3 = [];
+function checkVoltage(powerUseStatus) {
+    //確認電壓計有連通
+    //電壓計與電阻並聯 --> 電阻拔掉電路要連通
+    let graph = getGraph();
+    //加電壓計
+    if (meter1_mode != 0) {
+        graph[4].push({ nxt: 5, wei: 1000000 });
+        graph[5].push({ nxt: 4, wei: 1000000 });
+    }
+
+    // 安培計要串聯 --> 安培計當電線用
+    if (meter2_mode != 0) {
+        graph[7].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 7, wei: 0 });
+    }
+    findConnected(graph);
+    //確認電壓計連通
+    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
+        //確定電壓有跟正負極連接
+        //留電線、電壓計、安培計後有connect
+        return 1;
+    }
+    return 0;
+}
+function checkShort(powerUseStatus) {
+    //parameter
+    //      graph : only contain wires and alligators
+    //      powerUseStatus : the status of powersupply(choose output)
+    // check the circuit is short or not
+    // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
+    let graph = getGraph();
+    if (meter2_mode != 0) {
+        //安培計要串聯
+        graph[7].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 7, wei: 0 });
+    }
+
+    findConnected(graph);
+
+    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
+        alert("short!");
+        return 1;
+    }
+    return 0;
+}
+
+function checkOpen(powerUseStatus, resistances) {
+    //parameter
+    //      graph : only contain wires and alligators
+    //      powerUseStatus : the status of powersupply(choose output)
+    // check the circuit is open or not
+    // 電線 + 電阻 + 安培計都加確定有連通 
+    let graph = getGraph();
+    if (meter2_mode != 0) {
+        //安培計要串聯
+        graph[7].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 7, wei: 0 });
+    }
+
+    for (let i = 0; i < resistances.length; i++) {
+        let r = resistances[i];
+        graph[r.node1].push({ nxt: r.node2, wei: r.val });
+        graph[r.node2].push({ nxt: r.node1, wei: r.val });
+    }
+
+    findConnected(graph);
+
+    if ((powerUseStatus == 1 && vis[0] != vis[1]) || (powerUseStatus == 2 && vis[2] != vis[3])) {
+        alert("open");
+        return 1;
+    }
+    return 0;
+}
+
+function getGraph() {
+    var graph = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
-        graph2[i] = [];
-        graph3[i] = [];
     }
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         var wire = wires[i];
         graph[wire.node1].push({ nxt: wire.node2, wei: 0 });
         graph[wire.node2].push({ nxt: wire.node1, wei: 0 });
-        graph2[wire.node1].push({ nxt: wire.node2, wei: 0 });
-        graph2[wire.node2].push({ nxt: wire.node1, wei: 0 });
-        graph3[wire.node1].push({ nxt: wire.node2, wei: 0 });
-        graph3[wire.node2].push({ nxt: wire.node1, wei: 0 });
-        //links.push({ node1: wire.node1, node2: wire.node2 });
     }
 
     let alligators = getAlligator();
@@ -1464,84 +1536,52 @@ function check() {
         let alli = alligators[i];
         graph[alli.node1].push({ nxt: alli.node2, wei: 0 });
         graph[alli.node2].push({ nxt: alli.node1, wei: 0 });
-        graph2[alli.node1].push({ nxt: alli.node2, wei: 0 });
-        graph2[alli.node2].push({ nxt: alli.node1, wei: 0 });
-        graph3[alli.node1].push({ nxt: alli.node2, wei: 0 });
-        graph3[alli.node2].push({ nxt: alli.node1, wei: 0 });
-        //links.push({ node1: alli.node1, node2: alli.node2 });
     }
+    return graph;
+}
 
-    if (meter2_mode != 0) {
-        //安培計要串聯
-        graph[7].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 7, wei: 0 });
-        graph2[7].push({ nxt: 8, wei: 0 });
-        graph2[8].push({ nxt: 7, wei: 0 });
-    }
-    // check the circuit is short or not
-    // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
-    findConnected(graph);
-
+function getPowerUseStatus() {
     let powerUseStatus = 0;             //確定 powersupply 狀態
-    let multimeterVoltageUseState = 0;  //確定電壓計使用狀態
-    if (vis[0] == vis[1] || vis[2] == vis[3]) {
-        // voltage 給 0 照樣 alert();
-        alert("short!");
-        return { voltage: "ERR", current: "ERR" };
-    }
-
-    let resitances = getResitance();
-    for (let i = 0; i < resitances.length; i++) {
-        let r = resitances[i];
-        graph[r.node1].push({ nxt: r.node2, wei: r.val });
-        graph[r.node2].push({ nxt: r.node1, wei: r.val });
-        graph3[r.node1].push({ nxt: r.node2, wei: r.val });
-        graph3[r.node2].push({ nxt: r.node1, wei: r.val });
-    }
-
-    //確定電阻有成功連到
-    //加電阻後是通路
-    findConnected(graph);
-    //console.log(vis);
-    if (vis[0] == vis[1] && vis[2] == vis[3] && voltage1 != 0 && voltage2 != 0) {
+    if (voltage1 != 0 && voltage2 != 0) {
         alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
-        return { voltage: "ERR", current: "ERR" };
+        return 0;
     }
-    if (vis[0] == vis[1] && voltage1 != 0) {
+    if (voltage1 != 0) {
         powerUseStatus = 1;
-    } else if (vis[2] == vis[3] && voltage2 != 0) {
+    } else if (voltage2 != 0) {
         powerUseStatus = 2;
     }
+    if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
+        alert("電供沒開 ouput 或電壓沒有設定");
+        return 0;
+    }
+    return powerUseStatus;
+}
+
+
+function check() {
+    // 檢查電路連通而且沒有 short --> unfinished
+    // check the positive and negative are connected(resistance, multimeter should also be concerned)
+    // make it to a graph and run dfs
+    //var graph = getGraph();
+
+    let powerUseStatus = getPowerUseStatus();             //確定 powersupply 狀態
     if (powerUseStatus == 0) {
-        alert("open circuit! (或者電供沒開 ouput)");
         return { voltage: "ERR", current: "ERR" };
     }
-    let multimeterCurrentUseState = checkCurrent(graph3, powerUseStatus);  //確定安培計使用狀態
-    console.log(multimeterCurrentUseState);
-
-    //確認電壓計有連通
-    if (meter1_mode != 0) {
-        graph2[4].push({ nxt: 5, wei: 1000000 });
-        graph2[5].push({ nxt: 4, wei: 1000000 });
+    if (checkShort(powerUseStatus) == 1) {
+        return { voltage: "ERR", current: "ERR" };
     }
-    //console.log(graph2);
-    findConnected(graph2);
-    //確認電壓計連通
-    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
-        //確定電壓有跟正負極連接
-        //留電線、電壓計、安培計後有connect
-        multimeterVoltageUseState = 1;
+    let resistances = getResistance();
+    if (checkOpen(powerUseStatus, resistances) == 1) {
+        return { voltage: "ERR", current: "ERR" };
     }
 
+    let multimeterCurrentUseState = checkCurrent(powerUseStatus, resistances);   //確定安培計使用狀態
+    let multimeterVoltageUseState = checkVoltage(powerUseStatus);       //確認電壓計有連通
 
-    //電壓計確定完成，電流計還有些 case 沒有處理
-    /*
-        不能只看有沒有連通，下面的例子會錯
-        --A-----V-----
-        |-------R----|
-        |-------v0---|
-        確認電流計和電供有連在一起就行(X)
-    */
+
+
     let result = { voltage: "ERR", current: "ERR" };
     if (multimeterVoltageUseState == 1) {
         if (powerUseStatus == 1) {
@@ -1552,10 +1592,12 @@ function check() {
     }
     if (multimeterCurrentUseState == 1) {
         if (powerUseStatus == 1) {
-            result.current = (voltage1 / resitances[0].val).toFixed(2);
+            result.current = (voltage1 / resistances[0].val).toFixed(2);
         } else {
-            result.current = (voltage2 / resitances[0].val).toFixed(2);
+            result.current = (voltage2 / resistances[0].val).toFixed(2);
         }
     }
     return result;
 }
+
+
