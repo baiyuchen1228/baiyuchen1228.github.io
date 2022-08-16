@@ -1297,7 +1297,7 @@ function findNodeNum(x, y) {
     let alligatorNodeList = [
         { x: 1285, y: 545 }, { x: 1250, y: 545 }, { x: 1385, y: 545 }, { x: 1350, y: 545 },
         { x: 85, y: 565 }, { x: 145, y: 565 }, { x: 205, y: 565 },
-        { x: 345, y: 425 }, { x: 405, y: 425 }, { x: 465, y: 425 }
+        { x: 355, y: 480 }, { x: 405, y: 480 }, { x: 455, y: 480 }
     ];//length : 10
 
     //check buttom node
@@ -1424,6 +1424,121 @@ function findConnected(graph) {
 }
 
 
+function checkCurrent(graph, powerUseStatus) {
+    if (powerUseStatus != 1 && powerUseStatus != 2) {
+        return false;
+    }
+    //console.log(graph);
+
+    let node = 7, pre = 8, touchResistance = 0, touchPower = 0;
+    while (!touchPower && !touchResistance) {
+        if (graph[node].length != 2) {
+            return false;
+        }
+        if (graph[node][0].nxt == pre) {
+            //go to graph[node][1].nxt
+            if (graph[node][1].wei != 0) {
+                touchResistance++;
+                break;
+            } else if (powerUseStatus == 1) {
+                if (graph[node][1].nxt == 0 || graph[node][1].nxt == 1) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][1].nxt;
+                }
+            } else {
+                if (graph[node][1].nxt == 2 || graph[node][1].nxt == 3) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][1].nxt;
+                }
+            }
+        } else {
+            //go to graph[node][0].nxt
+            if (graph[node][0].wei != 0) {
+                touchResistance++;
+                break;
+            } else if (powerUseStatus == 1) {
+                if (graph[node][0].nxt == 0 || graph[node][0].nxt == 1) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][0].nxt;
+                }
+            } else {
+                if (graph[node][0].nxt == 2 || graph[node][0].nxt == 3) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][0].nxt;
+                }
+            }
+        }
+    }
+    node = 8, pre = 7;
+    while (!touchPower || !touchResistance) {
+        if (graph[node].length > 2) {
+            return false;
+        }
+        if (graph[node][0].nxt == pre) {
+            //go to graph[node][1].nxt
+            if (graph[node][1].wei != 0) {
+                touchResistance++;
+                break;
+            } else if (powerUseStatus == 1) {
+                if (graph[node][1].nxt == 0 || graph[node][1].nxt == 1) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][1].nxt;
+                }
+            } else {
+                if (graph[node][1].nxt == 2 || graph[node][1].nxt == 3) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][1].nxt;
+                }
+            }
+        } else {
+            //go to graph[node][0].nxt
+            if (graph[node][0].wei != 0) {
+                touchResistance++;
+                break;
+            } else if (powerUseStatus == 1) {
+                if (graph[node][0].nxt == 0 || graph[node][0].nxt == 1) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][0].nxt;
+                }
+            } else {
+                if (graph[node][0].nxt == 2 || graph[node][0].nxt == 3) {
+                    touchPower++;
+                    break;
+                } else {
+                    pre = node;
+                    node = graph[node][0].nxt;
+                }
+            }
+        }
+    }
+    console.log(touchPower, touchResistance);
+    if (touchPower == 1 && touchResistance == 1) {
+        return true;
+    }
+    return false;
+}
+
 function check() {
     const INF = 100;
     // 檢查電路連通而且沒有 short --> unfinished
@@ -1433,12 +1548,15 @@ function check() {
     var graph = [], graph2 = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
+        graph2[i] = [];
     }
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         var wire = wires[i];
         graph[wire.node1].push({ nxt: wire.node2, wei: 0 });
         graph[wire.node2].push({ nxt: wire.node1, wei: 0 });
+        graph2[wire.node1].push({ nxt: wire.node2, wei: 0 });
+        graph2[wire.node2].push({ nxt: wire.node1, wei: 0 });
         links.push({ node1: wire.node1, node2: wire.node2 });
     }
 
@@ -1447,26 +1565,28 @@ function check() {
         let alli = alligators[i];
         graph[alli.node1].push({ nxt: alli.node2, wei: 0 });
         graph[alli.node2].push({ nxt: alli.node1, wei: 0 });
+        graph2[alli.node1].push({ nxt: alli.node2, wei: 0 });
+        graph2[alli.node2].push({ nxt: alli.node1, wei: 0 });
         links.push({ node1: alli.node1, node2: alli.node2 });
     }
 
-    if (meter_2_mode[meter2_mode] != 0) {
+    if (meter2_mode != 0) {
         //安培計要串聯
-        graph[4].push({ nxt: 5, wei: 0 });
-        graph[5].push({ nxt: 4, wei: 0 });
+        graph[7].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 7, wei: 0 });
+        graph2[7].push({ nxt: 8, wei: 0 });
+        graph2[8].push({ nxt: 7, wei: 0 });
     }
-    graph2 = graph;                 //copy 一份用來確定電壓計有沒有連接
     // check the circuit is short or not
     // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
     findConnected(graph);
 
     let powerUseStatus = 0;             //確定 powersupply 狀態
     let multimeterVoltageUseState = 0;  //確定電壓計使用狀態
-    let multimeterCurrentUseState = 0;  //確定安培計使用狀態
     if (vis[0] == vis[1] || vis[2] == vis[3]) {
         // voltage 給 0 照樣 alert();
         alert("short!");
-        return;
+        return { voltage: "ERR", current: "ERR" };
     }
 
     let resitances = getResitance();
@@ -1482,7 +1602,7 @@ function check() {
     //console.log(vis);
     if (vis[0] == vis[1] && vis[2] == vis[3] && voltage1 != 0 && voltage2 != 0) {
         alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
-        return;
+        return { voltage: "ERR", current: "ERR" };
     }
     if (vis[0] == vis[1] && voltage1 != 0) {
         powerUseStatus = 1;
@@ -1491,15 +1611,16 @@ function check() {
     }
     if (powerUseStatus == 0) {
         alert("open circuit! (或者電供沒開 ouput)");
-        return;
+        return { voltage: "ERR", current: "ERR" };
     }
-
-
+    let multimeterCurrentUseState = checkCurrent(graph, powerUseStatus);  //確定安培計使用狀態
+    console.log(multimeterCurrentUseState);
     //確認電壓計有連通
-    if (meter_1_Mode[meter_1_mode] > 0 && meter_1_Mode[meter_1_mode] <= 6) {
-        graph2[4].push({ nxt: 4, wei: 1000000 });
+    if (meter1_mode != 0) {
+        graph2[4].push({ nxt: 5, wei: 1000000 });
         graph2[5].push({ nxt: 4, wei: 1000000 });
     }
+    //console.log(graph2);
     findConnected(graph2);
     //確認電壓計連通
     if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
@@ -1517,12 +1638,20 @@ function check() {
         |-------v0---|
         確認電流計和電供有連在一起就行(X)
     */
+    let result = { voltage: "ERR", current: "ERR" };
     if (multimeterVoltageUseState == 1) {
         if (powerUseStatus == 1) {
-            return { voltage: voltage1, current: voltage1 / resitances[0].val };
+            result.voltage = voltage1.toFixed(2);
         } else {
-            return { voltage: voltage2, current: voltage2 / resitances[0].val };
+            result.voltage = voltage2.toFixed(2);
         }
     }
-    return { voltage: "unfinished!", current: "unfinished" };
+    if (multimeterCurrentUseState == 1) {
+        if (powerUseStatus == 1) {
+            result.current = (voltage1 / resitances[0].val).toFixed(2);
+        } else {
+            result.current = (voltage2 / resitances[0].val).toFixed(2);
+        }
+    }
+    return result;
 }
