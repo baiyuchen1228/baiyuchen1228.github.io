@@ -107,7 +107,7 @@ document.getElementById("powersupply14").onclick = function () {
     }
 }
 
-function turnOffMode(){
+function turnOffMode() {
     if (drawResistance == 1) {
         $this = $("#addResistance");
         $this.css('background-color', 'white');
@@ -148,7 +148,7 @@ document.getElementById("powersupply13").onclick = function () {
         var va = check();
         $("#multimeter1_3").text(va.voltage);
         $("#multimeter2_3").text(va.current);
-        console.log(va.voltage,va.current);
+        console.log(va.voltage, va.current);
     } else {
         powersupplyOutputStatus = 0;
         $("#powersupply13").css("background-color", "White");
@@ -373,12 +373,12 @@ meter2_drowline3.onmousedown = function (e) {
     }
 }
 
-function switchResistance(){
-    if(resistanceOn == 1){
+function switchResistance() {
+    if (resistanceOn == 1) {
         $("#addResistance").css('background-color', '#CCCCCC');
         resistanceOn = 0;
     }
-    else{
+    else {
         $("#addResistance").css('background-color', 'white');
         resistanceOn = 1;
     }
@@ -1072,7 +1072,7 @@ function toggleDelButton() {
         drawInductance = 0;
     }
     else if (drawResistance == 1) {
-        if(resistanceOn == 1) {
+        if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
         }
@@ -1178,7 +1178,7 @@ function toggleWireButton() {
 };
 
 function toggleResistanceButton() {
-    if (resistanceOn==0)return;
+    if (resistanceOn == 0) return;
     if (drawInductance == 1) {
         $this = $("#addInductance");
         $this.css('background-color', 'white');
@@ -1397,75 +1397,12 @@ function getResitance() {
 }
 
 
-function findPotential(status, links) {
-    //check short or not --> unfinished
-    const INF = 100;
-    let potential = new Array(MaxNodeNum);
-    potential.fill(INF);
-    console.log(potential);
-    let change = true;
-    if (powersupplyOutputStatus == 1) {
-        if (status == 1) {
-            if (current1 != 0) {
-                alert("這個實驗不需要操作電流，請將電流設置為 0\n Please set the current to zero.\n We don't need to change it in this experiment.");
-                return [];
-            }
-            potential[0] = 0;           //negative
-            potential[1] = voltage1;    //positive
-        } else if (status == 2) {
-            if (current1 != 0) {
-                alert("這個實驗不需要操作電流，請將電流設置為 0\n Please set the current to zero.\n We don't need to change it in this experiment.");
-                return [];
-            }
-            potential[2] = 0;           //negative
-            potential[3] = voltage2;    //positive
-        }
-    } else {
-        alert("電源供應器除了 power 要打開外，ouput也要打開\n please open powersupply's power and output.");
-        return [];
-    }
-    while (change) {
-        change = false;
-        for (let i = 0; i < links.length; i++) {
-            let link = links[i];
-            let node1 = link.node1;
-            let node2 = link.node2;
-            console.log("node1", node1, ":", potential[node1]);
-            console.log("node2", node2, ":", potential[node2]);
-            if (node1 <= 4 && node2 <= 4) {
-                //linking powersupplyer
-                alert("short");
-                return [];
-            }
-            if (node1 == node2) {
-                // safe, but do nothing
-            } else if (potential[node1] != INF && potential[node2] != INF && potential[node1] != potential[node2]) {
-                //short
-                alert("short");
-                return [];
-            } else if ((potential[node1] == potential[node2]) || (potential[node1] == INF && potential[node2] == INF)) {
-                //都沒連到或者已經連了
-                //do nothing
-            } else {
-                // connect it, only one side is INF
-                if (potential[node1] == INF) {
-                    potential[node1] = potential[node2];
-                } else {
-                    potential[node2] = potential[node1];
-                }
-                change = true;
-            }
-        }
-    }
-    return potential;
-}
 
 var vis = [];
 
 function dfs(graph, node, color) {
     if (vis[node] != 0) return;
     vis[node] = color;
-    //console.log(node, graph[node]);
     for (let i = 0; i < graph[node].length; i++) {
         var u = graph[node][i].nxt;
         dfs(graph, u, color);
@@ -1479,58 +1416,12 @@ function findConnected(graph) {
     for (let i = 0; i < MaxNodeNum; i++) {
         vis.push(0);
     }
-    //console.log(vis, color);
     for (let i = 0; i < MaxNodeNum; i++) {
         if (vis[i] == 0) {
             dfs(graph, i, color++);
         }
     }
-    //console.log(vis, color);
 }
-
-
-// var vis_ohm = [];
-// function dfs2(node, value, graph) {
-//     if (vis[node]) return;
-//     if (vis_ohm[node] == 0) {
-//         vis_ohm[node] = value;
-//     } else {
-//         vis_ohm[node] = vis_ohm[node] * value / (vis_ohm[node] + value);
-//     }
-//     if (node == 1 || node == 3) { return; }
-//     for (let i = 0; i < graph[node].length; i++) {
-//         if (graph[node][i].val != 0) {
-//             continue;
-//         }
-//         dfs2(graph[node][i].nxt, value, graph);
-//     }
-// }
-
-// function find_total_resitance(resitances, potential, graph) {
-//     vis = [];
-//     vis_ohm = [];
-//     for (let i = 0; i < MaxNodeNum; i++) {
-//         vis.push(0);
-//         vis_ohm.push(0);
-//     }
-
-//     for (let i = 0; i < resitances; i++) {
-//         let r = resitances[i];
-//         //vis[]
-//         if (potential[r.node1] > 0 && potential[r.node1] != INF) {
-//             vis[r.node1] = 1;
-//             dfs2(r.node2, vis_ohm[node1] + r.val, graph);
-//         } else if (potential[r.node1] > 0 && potential[r.node1] != INF) {
-//             vis[r.node2] = 1;
-//             dfs2(r.node1, vis_ohm[node2] + r.val, graph);
-//         }
-//         vis = [];
-//         for (let i = 0; i < MaxNodeNum; i++) {
-//             vis.push(0);
-//         }
-//     }
-
-// }
 
 
 function check() {
@@ -1543,7 +1434,6 @@ function check() {
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
     }
-    console.log(graph);
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         var wire = wires[i];
@@ -1569,7 +1459,6 @@ function check() {
     // check the circuit is short or not
     // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
     findConnected(graph);
-    console.log(vis);
 
     let powerUseStatus = 0;             //確定 powersupply 狀態
     let multimeterVoltageUseState = 0;  //確定電壓計使用狀態
@@ -1590,7 +1479,7 @@ function check() {
     //確定電阻有成功連到
     //加電阻後是通路
     findConnected(graph);
-    console.log(vis);
+    //console.log(vis);
     if (vis[0] == vis[1] && vis[2] == vis[3] && voltage1 != 0 && voltage2 != 0) {
         alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
         return;
@@ -1612,12 +1501,10 @@ function check() {
         graph2[5].push({ nxt: 4, wei: 1000000 });
     }
     findConnected(graph2);
-    console.log(vis);
     //確認電壓計連通
     if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
         //確定電壓有跟正負極連接
         //留電線、電壓計、安培計後有connect
-        console.log("debug1!");
         multimeterVoltageUseState = 1;
     }
 
@@ -1637,5 +1524,5 @@ function check() {
             return { voltage: voltage2, current: voltage2 / resitances[0].val };
         }
     }
-    return "unfinished!";
+    return { voltage: "unfinished!", current: "unfinished" };
 }
