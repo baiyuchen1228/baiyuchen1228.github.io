@@ -1691,6 +1691,7 @@ let edge_cnt = 0;
 let edge_list = [];
 class Edge {
     constructor(node1, node2, ohm) {
+        //電流從 node1 流到 node2
         this._id = edge_cnt++;
         this._node1 = node1;
         this._node2 = node2;
@@ -1699,16 +1700,35 @@ class Edge {
     get id() {
         return this._id;
     }
+
+    get node1() {
+        return this._node1;
+    }
+
+    get node2() {
+        return this._node2;
+    }
+
+    get ohm() {
+        return this._ohm;
+    }
     go_next(node) {
         if (this._node1 == node) {
             return this._node2;
         }
         return this._node1;
     }
+    get_par(node) {
+        if (this._node1 == node) {
+            return this._ohm;
+        }
+        return -this._ohm;
+    }
 }
 
 
 function getFullGraph() {
+    edge_cnt = 0;
     var graph = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
@@ -1759,7 +1779,88 @@ function getFullGraph() {
     return graph;
 }
 
+let equations = [];
+let equation_cnt = 0;
+let vis_edge = [];
+let path = [];
 
+//challenge : v0 不能給變數當電流，但連接時要當有連到
+function find_loop(goal, node, graph, loop_length) {
+    if (loop_length != 0 && goal == node) {
+        //find loop
+        console.log(path);
+    }
+    if (loop_length != 0) {
+        console.log(path[loop_length - 1].edgeid, path[loop_length - 1].par);
+    }
+    console.log(node);
+    if (node < 4 && path[loop_length - 1].edgeid != edge_cnt) {
+        //challenge : v0 不能給變數當電流，但連接時要當有連到
+        if (node == 0) {//正極
+            path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
+            find_loop(goal, 1, graph, loop_length + 1);
+        }
+        if (node == 2) {//正極
+            path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
+            find_loop(goal, 3, graph, loop_length + 1);
+        }
+
+        if (node == 1) {//負極
+            path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
+            find_loop(goal, 0, graph, loop_length + 1);
+        }
+
+        if (node == 3) {//負極
+            path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
+            find_loop(goal, 2, graph, loop_length + 1);
+        }
+    }
+    for (let i = 0; i < graph[node].length; i++) {
+        let edge = graph[node][i];
+        if (vis[edge.id] == 0) {
+            vis[edge.id] = 1;
+            path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
+            find_loop(goal, edge.go_next(), graph, loop_length + 1);
+            vis[edge.id] = 0;
+        }
+    }
+}
+
+function equation() {
+    graph = getFullGraph();
+    equations = [];
+    equation_cnt = 0;
+    vis_edge = [];
+    path = [];
+
+    for (let i = 4; i <= MaxNodeNum; i++) {//電供沒有流入等於流出
+        if (graph[i].length == 0) {
+            continue;
+        }
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
+        }
+        for (let j = 0; j < graph[i].length; j++) {
+            let edge = graph[i][j];
+            if (edge.node1 == i) {
+                //流出
+                equations[equation_cnt][edge.id] = 1;
+            } else {
+                equations[equation_cnt][edge.id] = -1;
+            }
+        }
+        equation_cnt++;
+    }
+
+    for (let i = 4; i < MaxNodeNum; i++) {
+        for (let j = 0; j < edge_cnt; j++) {
+            vis[j] = 0;
+        }
+        find_loop(i, i, graph, 0);
+    }
+    console.log(equations);
+}
 
 function check() {
     let va = checkCircuit();
