@@ -114,7 +114,7 @@ document.getElementById("powersupply14").onclick = function () {
 
 function turnOffMode() {
     if (drawResistance == 1) {
-        if(resistanceOn == 1){
+        if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
         }
@@ -165,7 +165,7 @@ document.getElementById("powersupply13").onclick = function () {
 
 addcurrent1.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -177,7 +177,7 @@ addcurrent1.onclick = function () {
 
 addvoltage1.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -189,7 +189,7 @@ addvoltage1.onclick = function () {
 
 addcurrent2.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -201,7 +201,7 @@ addcurrent2.onclick = function () {
 
 addvoltage2.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -213,7 +213,7 @@ addvoltage2.onclick = function () {
 
 deccurrent1.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -228,7 +228,7 @@ deccurrent1.onclick = function () {
 
 decvoltage1.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -243,7 +243,7 @@ decvoltage1.onclick = function () {
 
 deccurrent2.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -258,7 +258,7 @@ deccurrent2.onclick = function () {
 
 decvoltage2.onclick = function () {
     turnOffMode();
-    if(powersupplyOutputStatus == 1){
+    if (powersupplyOutputStatus == 1) {
         alert("no change when output(電源供應時不要改變電壓電流)");
         return;
     }
@@ -352,7 +352,7 @@ power_drowline1.onmousedown = function (e) {
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [1285, 545];
     }
 }
@@ -362,7 +362,7 @@ power_drowline2.onmousedown = function (e) {
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [1250, 545];
     }
 }
@@ -372,7 +372,7 @@ power_drowline3.onmousedown = function (e) {
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [1385, 545];
     }
 }
@@ -382,7 +382,7 @@ power_drowline4.onmousedown = function (e) {
         AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [1350, 545];
     }
 }
@@ -392,7 +392,7 @@ meter1_drowline1.onmousedown = function (e) {
         AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [85, 565];
     }
 }
@@ -402,7 +402,7 @@ meter1_drowline2.onmousedown = function (e) {
         AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [145, 565];
     }
 }
@@ -412,7 +412,7 @@ meter1_drowline3.onmousedown = function (e) {
         AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [205, 565];
     }
 }
@@ -422,7 +422,7 @@ meter2_drowline1.onmousedown = function (e) {
         AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [355, 480];
     }
 }
@@ -432,7 +432,7 @@ meter2_drowline2.onmousedown = function (e) {
         AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [405, 480];
     }
 }
@@ -442,7 +442,7 @@ meter2_drowline3.onmousedown = function (e) {
         AlligatorY1 = 480;
         document.onmousemove = drawDashedLine2();
     }
-    if (deletemode){
+    if (deletemode) {
         delALLalligator = [455, 480];
     }
 }
@@ -977,7 +977,7 @@ $("#container").mouseup(function (e) {
                 }
             }
         }
-        if(delALLalligator != null) {
+        if (delALLalligator != null) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
             x2 += 540;
@@ -1337,7 +1337,7 @@ function toggleInductanceButton() {
 };
 function toggleAlligatorButton() {
     if (drawResistance == 1) {
-        if(resistanceOne==1){
+        if (resistanceOne == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
         }
@@ -1687,72 +1687,146 @@ function checkCircuit() {
     return result;
 }
 
-function check(){
+let edge_cnt = 0;
+let edge_list = [];
+class Edge {
+    constructor(node1, node2, ohm) {
+        this._id = edge_cnt++;
+        this._node1 = node1;
+        this._node2 = node2;
+        this._ohm = parseInt(ohm);
+    }
+    get id() {
+        return this._id;
+    }
+    go_next(node) {
+        if (this._node1 == node) {
+            return this._node2;
+        }
+        return this._node1;
+    }
+}
+
+
+function getFullGraph() {
+    var graph = [];
+    for (let i = 0; i <= MaxNodeNum; i++) {
+        graph[i] = [];
+    }
+    let wires = getWires();
+    for (let i = 0; i < wires.length; i++) {
+        let wire = wires[i];
+        let e = new Edge(wire.node1, wire.node2, 0);
+        edge_list.push(e);
+        graph[wire.node1].push(e);
+        graph[wire.node2].push(e);
+    }
+
+    let alligators = getAlligator();
+    for (let i = 0; i < alligators.length; i++) {
+        let alli = alligators[i];
+        let e = new Edge(alli.node1, alli.node2, 0);
+        edge_list.push(e);
+        graph[alli.node1].push(e);
+        graph[alli.node2].push(e);
+    }
+
+    let resistances = getResistance();
+    for (let i = 0; i < resistances.length; i++) {
+        let r = resistances[i];
+        let e = new Edge(r.node1, r.node2, r.val);
+        edge_list.push(e);
+        graph[r.node1].push(e);
+        graph[r.node2].push(e);
+    }
+
+    if (meter2_mode != 0) {
+        //安培計要串聯
+        let e = new Edge(7, 8, 0);
+        edge_list.push(e);
+        graph[7].push(e);
+        graph[8].push(e);
+    }
+
+    //加電壓計
+    if (meter1_mode != 0) {
+        let e = new Edge(4, 5, 1000000);
+        edge_list.push(e);
+        graph[4].push(e);
+        graph[5].push(e);
+    }
+    console.log(edge_list);
+    return graph;
+}
+
+
+
+function check() {
     let va = checkCircuit();
-    if(meter1_mode == 0){
+    if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
-    else if(va.voltage == 'ERR') {
+    else if (va.voltage == 'ERR') {
         $("#multimeter1_3").text(va.voltage);
     }
-    else if(meter1_mode == 1){
+    else if (meter1_mode == 1) {
         let v = va.voltage.toFixed(0);
-        if(v > 600) v = 'ERR'
+        if (v > 600) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
-    else if(meter1_mode == 2){
+    else if (meter1_mode == 2) {
         let v = va.voltage.toFixed(0);
-        if(v > 200) v = 'ERR'
+        if (v > 200) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
-    else if(meter1_mode == 3){
+    else if (meter1_mode == 3) {
         let v = va.voltage.toFixed(1);
-        if(v > 20) v = 'ERR'
+        if (v > 20) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
-    else if(meter1_mode == 4){
+    else if (meter1_mode == 4) {
         let v = va.voltage.toFixed(2);
-        if(v > 2) v = 'ERR'
+        if (v > 2) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
-    if(meter2_mode == 0){
+    if (meter2_mode == 0) {
         $("#multimeter2_3").text('');
     }
-    else if(va.current == 'ERR'){
+    else if (va.current == 'ERR') {
         $("#multimeter2_3").text(va.current);
     }
-    else if(meter2_mode == 1){
+    else if (meter2_mode == 1) {
         let c = va.current;
         c *= 1000000;
         c = c.toFixed(0);
-        if(c > 200) c = 'ERR';
+        if (c > 200) c = 'ERR';
         $("#multimeter2_3").text(c);
     }
-    else if(meter2_mode == 2){
+    else if (meter2_mode == 2) {
         let c = va.current;
         c *= 1000;
         c = c.toFixed(2);
-        if(c > 2) c = 'ERR';
+        if (c > 2) c = 'ERR';
         $("#multimeter2_3").text(c);
     }
-    else if(meter2_mode == 3){
+    else if (meter2_mode == 3) {
         let c = va.current;
         c *= 1000;
         c = c.toFixed(1);
-        if(c > 20) c = 'ERR';
+        if (c > 20) c = 'ERR';
         $("#multimeter2_3").text(c);
     }
-    else if(meter2_mode == 4){
+    else if (meter2_mode == 4) {
         let c = va.current;
         c *= 1000;
         c = c.toFixed(0);
-        if(c > 200) c = 'ERR';
+        if (c > 200) c = 'ERR';
         $("#multimeter2_3").text(c);
     }
-    else if(meter2_mode == 5){
+    else if (meter2_mode == 5) {
         let c = va.current;
         c = c.toFixed(1);
-        if(c > 10) c = 'ERR';
+        if (c > 10) c = 'ERR';
         $("#multimeter2_3").text(c);
     }
     return;
