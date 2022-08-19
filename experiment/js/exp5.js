@@ -1337,7 +1337,7 @@ function toggleInductanceButton() {
 };
 function toggleAlligatorButton() {
     if (drawResistance == 1) {
-        if (resistanceOne == 1) {
+        if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
         }
