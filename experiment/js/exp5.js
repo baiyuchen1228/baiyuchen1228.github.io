@@ -5,7 +5,7 @@ var meter2_mode = 0;
 const meter_1_mode = [0, 1, 2, 3, 4];
 const meter_2_mode = [0, 1, 2, 3, 4, 5];
 const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V']
-const meter_2_Mode = ['關機', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
+const meter_2_Mode = ['Hz', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
 
 const colorlist = ['Red', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
 var colorNo = 0;
@@ -321,6 +321,8 @@ var capacitanceNo = 1;
 var deletemode = 0;
 var delIni;
 
+var meter2On = 1;
+
 
 power_drowline1.onmousedown = function (e) {
     colorNo = 0;
@@ -430,6 +432,17 @@ meter2_drowline3.onmousedown = function (e) {
     }
     if (deletemode) {
         delALLalligator = [455, 480];
+    }
+}
+
+function switchMeter2(){
+    if (meter2On == 1) {
+        $("#multimeter2_8").css('background-color', '#CCCCCC');
+        meter2On = 0;
+    }
+    else {
+        $("#multimeter2_8").css('background-color', 'lightgreen');
+        meter2On = 1;
     }
 }
 
@@ -1894,7 +1907,7 @@ function check() {
         if (v > 2) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
-    if (meter2_mode == 0) {
+    if (meter2_mode == 0 || meter2On == 0) {
         $("#multimeter2_3").text('');
     }
     else if (va.current == 'ERR') {

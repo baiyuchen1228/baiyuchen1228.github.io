@@ -1,5 +1,4 @@
 ##  challenge in exp5
-- meter2 加 on
 - 限制:
     - 電阻功率 1/8 W
 
@@ -48,3 +47,4 @@
 - 鱷魚夾:
     - 正極 : 紅色
     - 負極 : 藍色 
+- meter2 加 on

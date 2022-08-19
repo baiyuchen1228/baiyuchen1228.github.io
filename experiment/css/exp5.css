@@ -310,6 +310,14 @@ div#powersupply{
 #multimeter2_7{
     top: 15px;
 }
+#multimeter2_8{
+    top: 135px;
+    left: 50px;
+    font-size: 1px;
+    text-indent: -4px;
+    width: 20px;
+    background-color: #CCCCCC;
+}
 .buttonInactive
 {
     background-color: white;
