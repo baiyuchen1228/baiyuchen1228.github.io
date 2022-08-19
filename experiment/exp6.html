@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>實驗六: 克希荷夫</title>
-    <link rel="stylesheet" href="../canvas.css">
+    <title>實驗六: 克希荷夫</title><meta charset="UTF-8">
+    <link rel="stylesheet" href="css/exp6.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.bgiframe.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css" />
 </head>
 <body>
     <h1>
@@ -26,37 +30,64 @@
     <h2>
         我的課程 / 普通物理實驗 / 實驗六: 克希荷夫
     </h2>
-    <script type="text/javascript">
-        var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
+    <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0; height: 600px;">
+        <div id="powersupply">
+            <p id="powersupply1" class="powersupply-text"></p>
+            <p id="powersupply2" class="powersupply-text"></p>
+            <p id="powersupply3" class="powersupply-text"></p>
+            <p id="powersupply4" class="powersupply-text"></p>
+            <button type="button" id="powersupply5" class="powersupply-button">＋</button>
+            <button type="button" id="powersupply6" class="powersupply-button">－</button>
+            <button type="button" id="powersupply7" class="powersupply-button">＋</button>
+            <button type="button" id="powersupply8" class="powersupply-button">－</button>
+            <button type="button" id="powersupply9" class="powersupply-button">＋</button>
+            <button type="button" id="powersupply10" class="powersupply-button">－</button>
+            <button type="button" id="powersupply11" class="powersupply-button">＋</button>
+            <button type="button" id="powersupply12" class="powersupply-button">－</button>
+            <button type="button" id="powersupply13" class="powersupply-button">output</button>
+            <button type="button" id="powersupply14" class="powersupply-button">power</button>
+            <button type="button" id="powersupply15" class="powersupply-button">＋</button>
+            <button type="button" id="powersupply16" class="powersupply-button">－</button>
+            <button type="button" id="powersupply17" class="powersupply-button">＋</button>
+            <button type="button" id="powersupply18" class="powersupply-button">－</button>
+        </div>
+        <div id="multimeter1" class="multimeter-1-bg0">
+            <p id="multimeter1_3" class="multimeter-title"></p>
+            <p id="multimeter1_7" class="multimeter-title">狀態:關機</p>
+            <button type="button" id="multimeter1_1" class="multimeter-button-1">－＞</button>
+            <button type="button" id="multimeter1_2" class="multimeter-button-1">＜－</button>
+            <button type="button" id="multimeter1_4" class="multimeter-button-1">＋</button>
+            <button type="button" id="multimeter1_5" class="multimeter-button-1">－</button>
+            <button type="button" id="multimeter1_6" class="multimeter-button-1">＋</button>
+        </div>
+        <div id="multimeter2" class="multimeter-2-bg0">
+            <p id="multimeter2_3" class="multimeter-title"></p>
+            <p id="multimeter2_7" class="multimeter-title">狀態:關機</p>
+            <button type="button" id="multimeter2_1" class="multimeter-button-2">－＞</button>
+            <button type="button" id="multimeter2_2" class="multimeter-button-2">＜－</button>
+            <button type="button" id="multimeter2_4" class="multimeter-button-2">＋</button>
+            <button type="button" id="multimeter2_5" class="multimeter-button-2">－</button>
+            <button type="button" id="multimeter2_6" class="multimeter-button-2">＋</button>
+        </div>
+        <canvas id="myCanvas" width="500" height="360"
+            style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
+            style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"></svg>
 
-    // 顯示或隱藏子選單
-    function switchMenu( theMainMenu, theSubMenu, theEvent ){
-        var SubMenu = document.getElementById( theSubMenu );
-        if( SubMenu.style.display == 'none' ){ // 顯示子選單
-            SubMenu.style.minWidth = theMainMenu.clientWidth; // 讓子選單的最小寬度與主選單相同 (僅為了美觀)
-            SubMenu.style.display = 'block';
-            hideMenu(); // 隱藏子選單
-            VisibleMenu = theSubMenu;
-        }
-        else{ // 隱藏子選單
-            if( theEvent != 'MouseOver' || VisibleMenu != theSubMenu ){
-                SubMenu.style.display = 'none';
-                VisibleMenu = '';
-            }
-        }
-    }
-
-    // 隱藏子選單
-    function hideMenu(){
-        if( VisibleMenu != '' ){
-            document.getElementById( VisibleMenu ).style.display = 'none';
-        }
-        VisibleMenu = '';
-    }
-    </script>
-    <img id="apple" src="../images/apple.png" alt="" width="300" style="position:absolute; top:200px"><br>
-    <img id="banana" src="../images/banana.png" alt=""width="300" style="position:absolute; top:500px;"><br>
-    <script type="text/javascript">
+    </div>
+    <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
+        Wire(單芯線)</button>
+    <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
+        Resistor(電阻)</button>
+    <button type="button" class="buttonInactive" id="addInductance" href="#">Add
+        Inductor(電感)</button>
+    <button type="button" class="buttonInactive" id="addCapacitance" href="#">Add
+        Capacitance(電容)</button>
+    <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
+        Alligator Clip(鱷魚夾)</button>
+    <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
+    <a href="exp5_menu.html" target="_blank">使用手冊</a>
+    <!-- <script type="text/javascript">
     function move (target) {
         function moveTarget (e) {
             var intX = e.pageX;
@@ -78,7 +109,7 @@
         else
             document.onmousemove = null;
     }
-    </script>
-
+    </script> -->
+    <script type="text/javascript" src="js\exp6.js"></script>
 </body>
 </html>

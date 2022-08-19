@@ -165,42 +165,58 @@ document.getElementById("powersupply13").onclick = function () {
 
 addcurrent1.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         current1 += 0.01;
         cur1.innerHTML = current1.toFixed(2);
     }
-    check();
 }
 
 addvoltage1.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         voltage1 += 0.1;
         vol1.innerHTML = voltage1.toFixed(1);
     }
-    check();
 }
 
 addcurrent2.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         current2 += 0.01;
         cur2.innerHTML = current2.toFixed(2);
     }
-    check();
 }
 
 addvoltage2.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         voltage2 += 0.1;
         vol2.innerHTML = voltage2.toFixed(1);
     }
-    check();
 }
 
 deccurrent1.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         current1 -= 0.01;
         if (current1 < 0) {
@@ -208,11 +224,14 @@ deccurrent1.onclick = function () {
         }
         cur1.innerHTML = current1.toFixed(2);
     }
-    check();
 }
 
 decvoltage1.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         voltage1 -= 0.1;
         if (voltage1 < 0) {
@@ -220,11 +239,14 @@ decvoltage1.onclick = function () {
         }
         vol1.innerHTML = voltage1.toFixed(1);
     }
-    check();
 }
 
 deccurrent2.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         current2 -= 0.01;
         if (current2 < 0) {
@@ -232,11 +254,14 @@ deccurrent2.onclick = function () {
         }
         cur2.innerHTML = current2.toFixed(2);
     }
-    check();
 }
 
 decvoltage2.onclick = function () {
     turnOffMode();
+    if (powersupplyOutputStatus == 1) {
+        alert("no change when output(電源供應時不要改變電壓電流)");
+        return;
+    }
     if (power == 1) {
         voltage2 -= 0.1;
         if (voltage2 < 0) {
@@ -244,7 +269,6 @@ decvoltage2.onclick = function () {
         }
         vol2.innerHTML = voltage2.toFixed(1);
     }
-    check();
 }
 
 
@@ -1850,14 +1874,6 @@ function equation() {
 
 function check() {
     let va = checkCircuit();
-    if(getPowerUseStatus()==1){
-        vol1.innerHTML = va.voltage.toFixed(2);
-        cur1.innerHTML = va.current.toFixed(2);
-    }
-    else if(getPowerUseStatus()==2){
-        vol2.innerHTML = va.voltage.toFixed(2);
-        cur2.innerHTML = va.current.toFixed(2);    
-    }
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
