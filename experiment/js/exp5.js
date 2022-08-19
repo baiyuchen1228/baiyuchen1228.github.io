@@ -7,7 +7,7 @@ const meter_2_mode = [0, 1, 2, 3, 4, 5];
 const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V']
 const meter_2_Mode = ['關機', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
 
-const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
+const colorlist = ['Red', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
 var colorNo = 0;
 
 var delALLalligator = null;
@@ -323,6 +323,7 @@ var delIni;
 
 
 power_drowline1.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 1285;
         AlligatorY1 = 545;
@@ -333,6 +334,7 @@ power_drowline1.onmousedown = function (e) {
     }
 }
 power_drowline2.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 1250;
         AlligatorY1 = 545;
@@ -343,6 +345,7 @@ power_drowline2.onmousedown = function (e) {
     }
 }
 power_drowline3.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 1385;
         AlligatorY1 = 545;
@@ -353,6 +356,7 @@ power_drowline3.onmousedown = function (e) {
     }
 }
 power_drowline4.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 1350;
         AlligatorY1 = 545;
@@ -363,6 +367,7 @@ power_drowline4.onmousedown = function (e) {
     }
 }
 meter1_drowline1.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 85;
         AlligatorY1 = 565;
@@ -373,6 +378,7 @@ meter1_drowline1.onmousedown = function (e) {
     }
 }
 meter1_drowline2.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 145;
         AlligatorY1 = 565;
@@ -383,6 +389,7 @@ meter1_drowline2.onmousedown = function (e) {
     }
 }
 meter1_drowline3.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 205;
         AlligatorY1 = 565;
@@ -393,6 +400,7 @@ meter1_drowline3.onmousedown = function (e) {
     }
 }
 meter2_drowline1.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 355;
         AlligatorY1 = 480;
@@ -403,6 +411,7 @@ meter2_drowline1.onmousedown = function (e) {
     }
 }
 meter2_drowline2.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 405;
         AlligatorY1 = 480;
@@ -413,6 +422,7 @@ meter2_drowline2.onmousedown = function (e) {
     }
 }
 meter2_drowline3.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 455;
         AlligatorY1 = 480;
