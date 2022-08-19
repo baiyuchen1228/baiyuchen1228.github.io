@@ -109,6 +109,7 @@ document.getElementById("powersupply14").onclick = function () {
         vol2.innerHTML = "";
         power = 0;
         powersupplyOutputStatus = 0;
+        $("#powersupply13").css("background-color", "White");
     }
 }
 
@@ -147,6 +148,7 @@ function turnOffMode() {
         drawAlligator = 0;
     }
 }
+
 document.getElementById("powersupply13").onclick = function () {
     turnOffMode();
     if (power == 1 && powersupplyOutputStatus == 0) {
@@ -158,6 +160,10 @@ document.getElementById("powersupply13").onclick = function () {
     } else {
         powersupplyOutputStatus = 0;
         $("#powersupply13").css("background-color", "White");
+        cur1.innerHTML = current1.toFixed(2);
+        cur2.innerHTML = current2.toFixed(2);
+        vol1.innerHTML = voltage1.toFixed(2);
+        vol2.innerHTML = voltage2.toFixed(2);
         console.log("power off!");
     }
 }
@@ -435,7 +441,7 @@ meter2_drowline3.onmousedown = function (e) {
     }
 }
 
-function switchMeter2(){
+function switchMeter2() {
     if (meter2On == 1) {
         $("#multimeter2_8").css('background-color', '#CCCCCC');
         meter2On = 0;
@@ -1638,7 +1644,7 @@ function getPowerUseStatus() {
         powerUseStatus = 2;
     }
     if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
-        alert("電供沒開 ouput 或電壓沒有設定");
+        //alert("電供沒開 ouput 或電壓沒有設定");
         return 0;
     }
     return powerUseStatus;
@@ -1694,6 +1700,47 @@ function checkCircuit() {
         result.current = ans_current;
     }
     return result;
+}
+
+function checkPowerSupply() {
+    let powerUseStatus = getPowerUseStatus();             //確定 powersupply 狀態
+    if (powerUseStatus == 0) {
+        return { voltage: "ERR", current: "ERR" };
+    }
+    if (checkShort(powerUseStatus) == 1) {
+        if (powerUseStatus == 1) {
+            return { voltage: voltage1, current: current1 };
+        } else {
+            return { voltage: voltage2, current: current2 };
+        }
+    }
+    let resistances = getResistance();
+    if (checkOpen(powerUseStatus, resistances) == 1) {
+        if (powerUseStatus == 1) {
+            return { voltage: voltage1, current: current1 };
+        } else {
+            return { voltage: voltage2, current: current2 };
+        }
+    }
+    let ans_current = 0, ans_voltage = 0;
+    if (powerUseStatus == 1) {
+        if (voltage1 > current1 * resistances[0].val) {
+            ans_voltage = current1 * resistances[0].val;
+            ans_current = current1;
+        } else {
+            ans_voltage = voltage1;
+            ans_current = voltage1 / resistances[0].val;
+        }
+    } else {
+        if (voltage2 > current2 * resistances[0].val) {
+            ans_voltage = current2 * resistances[0].val;
+            ans_current = current2;
+        } else {
+            ans_voltage = voltage2;
+            ans_current = voltage2 / resistances[0].val;
+        }
+    }
+    return { voltage: ans_voltage, current: ans_current };
 }
 
 let edge_cnt = 0;
@@ -1873,13 +1920,14 @@ function equation() {
 
 function check() {
     let va = checkCircuit();
-    if(getPowerUseStatus()==1){
-        vol1.innerHTML = va.voltage.toFixed(2);
-        cur1.innerHTML = va.current.toFixed(2);
+    let res = checkPowerSupply();
+    if (getPowerUseStatus() == 1) {
+        vol1.innerHTML = res.voltage.toFixed(2);
+        cur1.innerHTML = res.current.toFixed(2);
     }
-    else if(getPowerUseStatus()==2){
-        vol2.innerHTML = va.voltage.toFixed(2);
-        cur2.innerHTML = va.current.toFixed(2);    
+    else if (getPowerUseStatus() == 2) {
+        vol2.innerHTML = res.voltage.toFixed(2);
+        cur2.innerHTML = res.current.toFixed(2);
     }
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
