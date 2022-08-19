@@ -1670,19 +1670,29 @@ function checkCircuit() {
 
 
     let result = { voltage: "ERR", current: "ERR" };
-    if (multimeterVoltageUseState == 1) {
-        if (powerUseStatus == 1) {
-            result.voltage = voltage1;
+    let ans_voltage, ans_current;
+    if (powerUseStatus == 1) {
+        if (voltage1 > current1 * resistances[0].val) {
+            ans_voltage = current1 * resistances[0].val;
+            ans_current = current1;
         } else {
-            result.voltage = voltage2;
+            ans_voltage = voltage1;
+            ans_current = voltage1 / resistances[0].val;
+        }
+    } else {
+        if (voltage2 > current2 * resistances[0].val) {
+            ans_voltage = current2 * resistances[0].val;
+            ans_current = current2;
+        } else {
+            ans_voltage = voltage2;
+            ans_current = voltage2 / resistances[0].val;
         }
     }
+    if (multimeterVoltageUseState == 1) {
+        result.voltage = ans_voltage;
+    }
     if (multimeterCurrentUseState == 1) {
-        if (powerUseStatus == 1) {
-            result.current = (voltage1 / resistances[0].val);
-        } else {
-            result.current = (voltage2 / resistances[0].val);
-        }
+        result.current = ans_current;
     }
     return result;
 }
