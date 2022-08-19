@@ -5,9 +5,9 @@ var meter2_mode = 0;
 const meter_1_mode = [0, 1, 2, 3, 4];
 const meter_2_mode = [0, 1, 2, 3, 4, 5];
 const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V']
-const meter_2_Mode = ['關機', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
+const meter_2_Mode = ['Hz', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
 
-const colorlist = ['Red', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
+const colorlist = ['Red', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
 var colorNo = 0;
 
 var delALLalligator = null;
@@ -171,58 +171,42 @@ document.getElementById("powersupply13").onclick = function () {
 
 addcurrent1.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         current1 += 0.01;
         cur1.innerHTML = current1.toFixed(2);
     }
+    check();
 }
 
 addvoltage1.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         voltage1 += 0.1;
         vol1.innerHTML = voltage1.toFixed(1);
     }
+    check();
 }
 
 addcurrent2.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         current2 += 0.01;
         cur2.innerHTML = current2.toFixed(2);
     }
+    check();
 }
 
 addvoltage2.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         voltage2 += 0.1;
         vol2.innerHTML = voltage2.toFixed(1);
     }
+    check();
 }
 
 deccurrent1.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         current1 -= 0.01;
         if (current1 < 0) {
@@ -230,14 +214,11 @@ deccurrent1.onclick = function () {
         }
         cur1.innerHTML = current1.toFixed(2);
     }
+    check();
 }
 
 decvoltage1.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         voltage1 -= 0.1;
         if (voltage1 < 0) {
@@ -245,14 +226,11 @@ decvoltage1.onclick = function () {
         }
         vol1.innerHTML = voltage1.toFixed(1);
     }
+    check();
 }
 
 deccurrent2.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         current2 -= 0.01;
         if (current2 < 0) {
@@ -260,14 +238,11 @@ deccurrent2.onclick = function () {
         }
         cur2.innerHTML = current2.toFixed(2);
     }
+    check();
 }
 
 decvoltage2.onclick = function () {
     turnOffMode();
-    if (powersupplyOutputStatus == 1) {
-        alert("no change when output(電源供應時不要改變電壓電流)");
-        return;
-    }
     if (power == 1) {
         voltage2 -= 0.1;
         if (voltage2 < 0) {
@@ -275,6 +250,7 @@ decvoltage2.onclick = function () {
         }
         vol2.innerHTML = voltage2.toFixed(1);
     }
+    check();
 }
 
 
@@ -351,8 +327,11 @@ var capacitanceNo = 1;
 var deletemode = 0;
 var delIni;
 
+var meter2On = 1;
+
 
 power_drowline1.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 1285;
         AlligatorY1 = 545;
@@ -363,6 +342,7 @@ power_drowline1.onmousedown = function (e) {
     }
 }
 power_drowline2.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 1250;
         AlligatorY1 = 545;
@@ -373,6 +353,7 @@ power_drowline2.onmousedown = function (e) {
     }
 }
 power_drowline3.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 1385;
         AlligatorY1 = 545;
@@ -383,6 +364,7 @@ power_drowline3.onmousedown = function (e) {
     }
 }
 power_drowline4.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 1350;
         AlligatorY1 = 545;
@@ -393,6 +375,7 @@ power_drowline4.onmousedown = function (e) {
     }
 }
 meter1_drowline1.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 85;
         AlligatorY1 = 565;
@@ -403,6 +386,7 @@ meter1_drowline1.onmousedown = function (e) {
     }
 }
 meter1_drowline2.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 145;
         AlligatorY1 = 565;
@@ -413,6 +397,7 @@ meter1_drowline2.onmousedown = function (e) {
     }
 }
 meter1_drowline3.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 205;
         AlligatorY1 = 565;
@@ -423,6 +408,7 @@ meter1_drowline3.onmousedown = function (e) {
     }
 }
 meter2_drowline1.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 355;
         AlligatorY1 = 480;
@@ -433,6 +419,7 @@ meter2_drowline1.onmousedown = function (e) {
     }
 }
 meter2_drowline2.onmousedown = function (e) {
+    colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 405;
         AlligatorY1 = 480;
@@ -443,6 +430,7 @@ meter2_drowline2.onmousedown = function (e) {
     }
 }
 meter2_drowline3.onmousedown = function (e) {
+    colorNo = 0;
     if (drawAlligator) {
         AlligatorX1 = 455;
         AlligatorY1 = 480;
@@ -450,6 +438,17 @@ meter2_drowline3.onmousedown = function (e) {
     }
     if (deletemode) {
         delALLalligator = [455, 480];
+    }
+}
+
+function switchMeter2() {
+    if (meter2On == 1) {
+        $("#multimeter2_8").css('background-color', '#CCCCCC');
+        meter2On = 0;
+    }
+    else {
+        $("#multimeter2_8").css('background-color', 'lightgreen');
+        meter2On = 1;
     }
 }
 
@@ -1783,10 +1782,72 @@ class Edge {
     }
 }
 
+class GuassionElimination {
+    constructor(R, C, A) {
+        this.m = R;
+        this.n = C;
+        this.M = A;
+    }
+
+    // row operation 的加法，把一行乘一個數字加到另一行
+    add(add_index, added_index, scalar) {
+        for (let i = 0; i <= this.n; i++) {
+            this.M[added_index][i] += this.M[add_index][i] * scalar;
+        }
+    }
+
+
+    // row operation 的交換，兩行互換
+    swap(swap_index1, swap_index2) {
+        //把指標指的位置互換
+        let tmp = this.M[swap_index1];
+        this.M[swap_index1] = this.M[swap_index2];
+        this.M[swap_index2] = tmp;
+    }
+
+
+    // row operation 的乘法，把一整行同乘一個常數
+    multiple(index, scalar) {
+        for (let i = 0; i <= this.n; i++) {
+            this.M[index][i] *= scalar;
+        }
+    }
+
+    Gaussian_Jordan_elimination() {
+        for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
+            if (this.M[i][i] == 0) {
+                for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
+                    if (this.M[j][i] != 0) {
+                        this.swap(i, j);
+                        break;
+                    }
+                }
+            }
+            if (this.M[i][i] == 0) {
+                alert("無解");
+            }
+            this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
+            for (let j = i + 1; j < this.n; j++) {// elmination 往下把同column中所有非0的值消成0
+                this.add(i, j, -1 * this.M[j][i]);
+            }
+        }
+        for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
+            for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
+                this.add(i, j, -1 * this.M[j][i]);
+            }
+        }
+        let x = [];
+        for (let i = 0; i < this.n; i++) {//存答案
+            x[i] = this.M[i][this.n];
+        }
+        return x;
+    }
+}
 
 function getFullGraph() {
     edge_cnt = 0;
     var graph = [];
+    edge_list = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
     }
@@ -1845,32 +1906,42 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
+        /*console.log("loop:");
         for (let i = 0; i < loop_length; i++) {
-            console.log(path[i]);
+            console.log(path[i].edgeid, path[i].par);
+        }*/
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
         }
+        for (let j = 0; j < loop_length; j++) {
+            equations[equation_cnt][path[j].edgeid] += path[j].par;
+        }
+        equation_cnt++;
+        return;
     }
-    /*if (loop_length != 0) {
-        console.log(path[loop_length - 1].edgeid, path[loop_length - 1].par);
+    /*console.log("node: ", node, loop_length);
+    for (let i = 0; i < loop_length; i++) {
+        console.log(path[i].edgeid, path[i].par);
     }*/
-    //console.log(node);
-    if (node < 4 && path[loop_length - 1].edgeid != edge_cnt) {
+    if (node < 4 && loop_length != 0 && path[loop_length - 1].edgeid != edge_cnt) {
         //challenge : v0 不能給變數當電流，但連接時要當有連到
         if (node == 0) {//正極
-            path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
+            path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
             find_loop(goal, 1, graph, loop_length + 1);
         }
         if (node == 2) {//正極
-            path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
+            path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
             find_loop(goal, 3, graph, loop_length + 1);
         }
 
         if (node == 1) {//負極
-            path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
+            path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
             find_loop(goal, 0, graph, loop_length + 1);
         }
 
         if (node == 3) {//負極
-            path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
+            path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
             find_loop(goal, 2, graph, loop_length + 1);
         }
     }
@@ -1879,7 +1950,7 @@ function find_loop(goal, node, graph, loop_length) {
         if (vis[edge.id] == 0) {
             vis[edge.id] = 1;
             path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
-            find_loop(goal, edge.go_next(), graph, loop_length + 1);
+            find_loop(goal, edge.go_next(node), graph, loop_length + 1);
             vis[edge.id] = 0;
         }
     }
@@ -1916,9 +1987,15 @@ function equation() {
         for (let j = 0; j < edge_cnt; j++) {
             vis[j] = 0;
         }
+        path = [];
         find_loop(i, i, graph, 0);
     }
-    console.log(equations);
+    for (let i = 0; i < equation_cnt; i++) {
+        console.log(equations[i]);
+    }
+    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
+    let x = gua.Gaussian_Jordan_elimination();
+    console.log(x);
 }
 
 function check() {
@@ -1932,7 +2009,6 @@ function check() {
         vol2.innerHTML = res.voltage.toFixed(2);
         cur2.innerHTML = res.current.toFixed(2);
     }
-
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
@@ -1959,7 +2035,7 @@ function check() {
         if (v > 2) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
-    if (meter2_mode == 0) {
+    if (meter2_mode == 0 || meter2On == 0) {
         $("#multimeter2_3").text('');
     }
     else if (va.current == 'ERR') {
