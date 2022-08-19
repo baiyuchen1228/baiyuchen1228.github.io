@@ -1782,10 +1782,72 @@ class Edge {
     }
 }
 
+class GuassionElimination {
+    constructor(R, C, A) {
+        this.m = R;
+        this.n = C;
+        this.M = A;
+    }
+
+    // row operation 的加法，把一行乘一個數字加到另一行
+    add(add_index, added_index, scalar) {
+        for (let i = 0; i <= this.n; i++) {
+            this.M[added_index][i] += this.M[add_index][i] * scalar;
+        }
+    }
+
+
+    // row operation 的交換，兩行互換
+    swap(swap_index1, swap_index2) {
+        //把指標指的位置互換
+        let tmp = this.M[swap_index1];
+        this.M[swap_index1] = this.M[swap_index2];
+        this.M[swap_index2] = tmp;
+    }
+
+
+    // row operation 的乘法，把一整行同乘一個常數
+    multiple(index, scalar) {
+        for (let i = 0; i <= this.n; i++) {
+            this.M[index][i] *= scalar;
+        }
+    }
+
+    Gaussian_Jordan_elimination() {
+        for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
+            if (this.M[i][i] == 0) {
+                for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
+                    if (this.M[j][i] != 0) {
+                        this.swap(i, j);
+                        break;
+                    }
+                }
+            }
+            if (this.M[i][i] == 0) {
+                alert("無解");
+            }
+            this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
+            for (let j = i + 1; j < this.n; j++) {// elmination 往下把同column中所有非0的值消成0
+                this.add(i, j, -1 * this.M[j][i]);
+            }
+        }
+        for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
+            for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
+                this.add(i, j, -1 * this.M[j][i]);
+            }
+        }
+        let x = [];
+        for (let i = 0; i < this.n; i++) {//存答案
+            x[i] = this.M[i][this.n];
+        }
+        return x;
+    }
+}
 
 function getFullGraph() {
     edge_cnt = 0;
     var graph = [];
+    edge_list = [];
     for (let i = 0; i <= MaxNodeNum; i++) {
         graph[i] = [];
     }
@@ -1844,30 +1906,42 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
-        console.log(path);
+        /*console.log("loop:");
+        for (let i = 0; i < loop_length; i++) {
+            console.log(path[i].edgeid, path[i].par);
+        }*/
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
+        }
+        for (let j = 0; j < loop_length; j++) {
+            equations[equation_cnt][path[j].edgeid] += path[j].par;
+        }
+        equation_cnt++;
+        return;
     }
-    if (loop_length != 0) {
-        console.log(path[loop_length - 1].edgeid, path[loop_length - 1].par);
-    }
-    console.log(node);
-    if (node < 4 && path[loop_length - 1].edgeid != edge_cnt) {
+    /*console.log("node: ", node, loop_length);
+    for (let i = 0; i < loop_length; i++) {
+        console.log(path[i].edgeid, path[i].par);
+    }*/
+    if (node < 4 && loop_length != 0 && path[loop_length - 1].edgeid != edge_cnt) {
         //challenge : v0 不能給變數當電流，但連接時要當有連到
         if (node == 0) {//正極
-            path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
+            path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
             find_loop(goal, 1, graph, loop_length + 1);
         }
         if (node == 2) {//正極
-            path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
+            path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
             find_loop(goal, 3, graph, loop_length + 1);
         }
 
         if (node == 1) {//負極
-            path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
+            path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
             find_loop(goal, 0, graph, loop_length + 1);
         }
 
         if (node == 3) {//負極
-            path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
+            path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
             find_loop(goal, 2, graph, loop_length + 1);
         }
     }
@@ -1876,7 +1950,7 @@ function find_loop(goal, node, graph, loop_length) {
         if (vis[edge.id] == 0) {
             vis[edge.id] = 1;
             path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
-            find_loop(goal, edge.go_next(), graph, loop_length + 1);
+            find_loop(goal, edge.go_next(node), graph, loop_length + 1);
             vis[edge.id] = 0;
         }
     }
@@ -1913,9 +1987,15 @@ function equation() {
         for (let j = 0; j < edge_cnt; j++) {
             vis[j] = 0;
         }
+        path = [];
         find_loop(i, i, graph, 0);
     }
-    console.log(equations);
+    for (let i = 0; i < equation_cnt; i++) {
+        console.log(equations[i]);
+    }
+    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
+    let x = gua.Gaussian_Jordan_elimination();
+    console.log(x);
 }
 
 function check() {
