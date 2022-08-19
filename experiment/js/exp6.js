@@ -694,7 +694,7 @@ $("#container").mouseup(function (e) {
         pointarray.push([x2, y2]);
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
-        switchResistance();
+        // switchResistance();
     }
     if (drawInductance == 1) {
         var inductanceFinal = e;
