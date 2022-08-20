@@ -1493,7 +1493,7 @@ function getResistance() {
 function getPowerUseStatus() {
     let powerUseStatus = 0;             //確定 powersupply 狀態
     if (voltage1 != 0 && voltage2 != 0) {
-        //alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
+        alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
         return 0;
     }
     if (voltage1 != 0) {
@@ -1714,11 +1714,11 @@ function find_loop(goal, node, graph, loop_length) {
     }
     for (let i = 0; i < graph[node].length; i++) {
         let edge = graph[node][i];
-        if (vis[edge.id] == 0) {
-            vis[edge.id] = 1;
+        if (vis_edge[edge.id] == 0) {
+            vis_edge[edge.id] = 1;
             path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
             find_loop(goal, edge.go_next(node), graph, loop_length + 1);
-            vis[edge.id] = 0;
+            vis_edge[edge.id] = 0;
         }
     }
 }
@@ -1752,13 +1752,14 @@ function equation() {
 
     for (let i = 4; i < MaxNodeNum; i++) {
         for (let j = 0; j < edge_cnt; j++) {
-            vis[j] = 0;
+            vis_edge[j] = 0;
         }
         path = [];
         find_loop(i, i, graph, 0);
     }
     for (let i = 0; i < equation_cnt; i++) {
         console.log(equations[i]);
+        equations[i][edge_cnt] *= -1;
     }
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
@@ -1766,7 +1767,7 @@ function equation() {
 }
 
 function check() {
-    let va = checkCircuit();
+    /*let va = checkCircuit();
     let res = checkPowerSupply();
     if (getPowerUseStatus() == 1) {
         vol1.innerHTML = res.voltage.toFixed(2);
@@ -1841,7 +1842,7 @@ function check() {
         c = c.toFixed(1);
         if (c > 10) c = 'ERR';
         $("#multimeter2_3").text(c);
-    }
+    }*/
     return;
 }
 
