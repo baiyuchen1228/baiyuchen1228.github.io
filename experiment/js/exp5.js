@@ -447,8 +447,10 @@ function switchMeter2() {
         meter2On = 0;
     }
     else {
+        turnOffMode();
         $("#multimeter2_8").css('background-color', 'lightgreen');
         meter2On = 1;
+        check();
     }
 }
 
@@ -1747,6 +1749,12 @@ function checkPowerSupply() {
 function check() {
     let va = checkCircuit();
     let res = checkPowerSupply();
+    if(res.voltage * res.current > 0.125){
+        alert("電阻燒掉了(resistance over 0.125w)");
+        $("#multimeter1_3").text("ERR");
+        $("#multimeter2_3").text("ERR");
+        return;
+    }
     if (getPowerUseStatus() == 1) {
         vol1.innerHTML = res.voltage.toFixed(2);
         cur1.innerHTML = res.current.toFixed(2);
