@@ -1455,10 +1455,10 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    for (let i = 0; i < alligatorOut.length; i++) {
-        var alligator = alligatorOut[i];
-        console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    }
+    // for (let i = 0; i < alligatorOut.length; i++) {
+    //     var alligator = alligatorOut[i];
+    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
+    // }
     return alligatorOut;
 }
 
@@ -1481,10 +1481,10 @@ function getResistance() {
         };
     });
 
-    for (let i = 0; i < resistanceOut.length; i++) {
-        var resistance = resistanceOut[i];
-        console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
-    }
+    // for (let i = 0; i < resistanceOut.length; i++) {
+    //     var resistance = resistanceOut[i];
+    //     console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
+    // }
     return resistanceOut;
 }
 
@@ -1591,7 +1591,12 @@ class GuassionElimination {
                 }
             }
             if (this.M[i][i] == 0) {
-                alert("無解");
+                console.log("Short(無解)", i);
+                let x = [];
+                for (let i = 0; i < this.n; i++) {//存答案
+                    x[i] = NaN;
+                }
+                return x;
             }
             this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
             for (let j = i + 1; j < this.n; j++) {// elmination 往下把同column中所有非0的值消成0
@@ -1645,23 +1650,27 @@ function getFullGraph() {
         graph[r.node2].push(e);
     }
 
+    let curr_eid = -1;
     if (meter2_mode != 0) {
         //安培計要串聯
         let e = new Edge(7, 8, 0);
         edge_list.push(e);
         graph[7].push(e);
         graph[8].push(e);
+        curr_eid = e.id;
     }
 
     //加電壓計
+    let vol_eid = -1;
     if (meter1_mode != 0) {
         let e = new Edge(4, 5, 1000000);
         edge_list.push(e);
         graph[4].push(e);
         graph[5].push(e);
+        vol_eid = e.id;
     }
     console.log(edge_list);
-    return graph;
+    return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
 }
 
 let equations = [];
@@ -1724,7 +1733,8 @@ function find_loop(goal, node, graph, loop_length) {
 }
 
 function equation() {
-    graph = getFullGraph();
+    let FG = getFullGraph();
+    graph = FG.graph;
     equations = [];
     equation_cnt = 0;
     vis_edge = [];
@@ -1764,19 +1774,34 @@ function equation() {
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     console.log(x);
+    let result = { voltage: "", current: "" };
+    for (let i = 0; i < this.n; i++) {//存答案
+        if (x[i] == NaN) {
+            result.voltage = "ERR";
+            result.current = "ERR";
+            return result;
+        }
+    }
+    if (FG.current_edgeid != -1) {
+        result.current = x[FG.current_edgeid];
+    }
+    if (FG.voltage_edgeid != -1) {
+        result.voltage = x[FG.voltage_edgeid] * edge_list[FG.voltage_edgeid].ohm;
+    }
+    return result;
 }
 
 function check() {
-    /*let va = checkCircuit();
-    let res = checkPowerSupply();
-    if (getPowerUseStatus() == 1) {
+    let va = equation();
+    //let res = checkPowerSupply();
+    /*if (getPowerUseStatus() == 1) {
         vol1.innerHTML = res.voltage.toFixed(2);
         cur1.innerHTML = res.current.toFixed(2);
     }
     else if (getPowerUseStatus() == 2) {
         vol2.innerHTML = res.voltage.toFixed(2);
         cur2.innerHTML = res.current.toFixed(2);
-    }
+    }*/
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
@@ -1842,7 +1867,7 @@ function check() {
         c = c.toFixed(1);
         if (c > 10) c = 'ERR';
         $("#multimeter2_3").text(c);
-    }*/
+    }
     return;
 }
 
