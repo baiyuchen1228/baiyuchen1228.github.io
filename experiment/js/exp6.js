@@ -1481,44 +1481,30 @@ function getResistance() {
         };
     });
 
-    // for (let i = 0; i < resistanceOut.length; i++) {
-    //     var resistance = resistanceOut[i];
-    //     console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
-    // }
+    for (let i = 0; i < resistanceOut.length; i++) {
+        var r = resistanceOut[i];
+        r.val = parseInt(r.val);
+        if (r.val == NaN) {
+            alert("電阻不可以是小數")
+        }
+        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
+    }
     return resistanceOut;
 }
 
-
-
-function getPowerUseStatus() {
-    let powerUseStatus = 0;             //確定 powersupply 狀態
-    if (voltage1 != 0 && voltage2 != 0) {
-        alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
-        return 0;
-    }
-    if (voltage1 != 0) {
-        powerUseStatus = 1;
-    } else if (voltage2 != 0) {
-        powerUseStatus = 2;
-    }
-    if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
-        //alert("電供沒開 ouput 或電壓沒有設定");
-        return 0;
-    }
-    return powerUseStatus;
-}
 
 
 
 let edge_cnt = 0;
 let edge_list = [];
 class Edge {
-    constructor(node1, node2, ohm) {
+    constructor(node1, node2, type, ohm) {
         //電流從 node1 流到 node2
         this._id = edge_cnt++;
         this._node1 = node1;
         this._node2 = node2;
-        this._ohm = parseInt(ohm);
+        this._type = type;
+        this._ohm = ohm;
     }
     get id() {
         return this._id;
@@ -1531,7 +1517,9 @@ class Edge {
     get node2() {
         return this._node2;
     }
-
+    get type() {
+        return this._type;
+    }
     get ohm() {
         return this._ohm;
     }
@@ -1592,6 +1580,7 @@ class GuassionElimination {
             }
             if (this.M[i][i] == 0) {
                 console.log("Short(無解)", i);
+                console.log(this.M);
                 let x = [];
                 for (let i = 0; i < this.n; i++) {//存答案
                     x[i] = NaN;
@@ -1599,7 +1588,7 @@ class GuassionElimination {
                 return x;
             }
             this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
-            for (let j = i + 1; j < this.n; j++) {// elmination 往下把同column中所有非0的值消成0
+            for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
                 this.add(i, j, -1 * this.M[j][i]);
             }
         }
@@ -1626,7 +1615,7 @@ function getFullGraph() {
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         let wire = wires[i];
-        let e = new Edge(wire.node1, wire.node2, 0);
+        let e = new Edge(wire.node1, wire.node2, "wire", 0);
         edge_list.push(e);
         graph[wire.node1].push(e);
         graph[wire.node2].push(e);
@@ -1635,7 +1624,7 @@ function getFullGraph() {
     let alligators = getAlligator();
     for (let i = 0; i < alligators.length; i++) {
         let alli = alligators[i];
-        let e = new Edge(alli.node1, alli.node2, 0);
+        let e = new Edge(alli.node1, alli.node2, "wire", 0);
         edge_list.push(e);
         graph[alli.node1].push(e);
         graph[alli.node2].push(e);
@@ -1644,7 +1633,7 @@ function getFullGraph() {
     let resistances = getResistance();
     for (let i = 0; i < resistances.length; i++) {
         let r = resistances[i];
-        let e = new Edge(r.node1, r.node2, r.val);
+        let e = new Edge(r.node1, r.node2, "resistance", r.val);
         edge_list.push(e);
         graph[r.node1].push(e);
         graph[r.node2].push(e);
@@ -1653,7 +1642,7 @@ function getFullGraph() {
     let curr_eid = -1;
     if (meter2_mode != 0) {
         //安培計要串聯
-        let e = new Edge(7, 8, 0);
+        let e = new Edge(7, 8, "ammeter", 0);
         edge_list.push(e);
         graph[7].push(e);
         graph[8].push(e);
@@ -1663,12 +1652,24 @@ function getFullGraph() {
     //加電壓計
     let vol_eid = -1;
     if (meter1_mode != 0) {
-        let e = new Edge(4, 5, 1000000);
+        let e = new Edge(4, 5, "voltmeter", 100000000);
         edge_list.push(e);
         graph[4].push(e);
         graph[5].push(e);
         vol_eid = e.id;
     }
+
+    //加電供
+    let e = new Edge(0, 1, "voltage source", voltage1);
+    edge_list.push(e);
+    graph[0].push(e);
+    graph[1].push(e);
+
+    e = new Edge(2, 3, "voltage source", voltage2);
+    edge_list.push(e);
+    graph[2].push(e);
+    graph[3].push(e);
+
     console.log(edge_list);
     return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
 }
@@ -1682,10 +1683,10 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
-        /*console.log("loop:");
+        console.log("loop:");
         for (let i = 0; i < loop_length; i++) {
             console.log(path[i].edgeid, path[i].par);
-        }*/
+        }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
@@ -1700,33 +1701,38 @@ function find_loop(goal, node, graph, loop_length) {
     for (let i = 0; i < loop_length; i++) {
         console.log(path[i].edgeid, path[i].par);
     }*/
-    if (node < 4 && loop_length != 0 && path[loop_length - 1].edgeid != edge_cnt) {
-        //challenge : v0 不能給變數當電流，但連接時要當有連到
-        if (node == 0) {//正極
-            path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
-            find_loop(goal, 1, graph, loop_length + 1);
-        }
-        if (node == 2) {//正極
-            path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
-            find_loop(goal, 3, graph, loop_length + 1);
-        }
+    // if (node < 4 && loop_length != 0 && path[loop_length - 1].edgeid != edge_cnt) {
+    //     //challenge : v0 不能給變數當電流，但連接時要當有連到
+    //     if (node == 0) {//正極
+    //         path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
+    //         find_loop(goal, 1, graph, loop_length + 1);
+    //     }
+    //     if (node == 2) {//正極
+    //         path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
+    //         find_loop(goal, 3, graph, loop_length + 1);
+    //     }
 
-        if (node == 1) {//負極
-            path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
-            find_loop(goal, 0, graph, loop_length + 1);
-        }
+    //     if (node == 1) {//負極
+    //         path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
+    //         find_loop(goal, 0, graph, loop_length + 1);
+    //     }
 
-        if (node == 3) {//負極
-            path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
-            find_loop(goal, 2, graph, loop_length + 1);
-        }
-    }
+    //     if (node == 3) {//負極
+    //         path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
+    //         find_loop(goal, 2, graph, loop_length + 1);
+    //     }
+    // }
     for (let i = 0; i < graph[node].length; i++) {
         let edge = graph[node][i];
         if (vis_edge[edge.id] == 0) {
             vis_edge[edge.id] = 1;
-            path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
-            find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            if (edge.type == "voltage source") {
+                path[loop_length] = { edgeid: edge_cnt, par: edge.get_par(node) };
+                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            } else {
+                path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
+                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            }
             vis_edge[edge.id] = 0;
         }
     }
@@ -1740,7 +1746,7 @@ function equation() {
     vis_edge = [];
     path = [];
 
-    for (let i = 4; i <= MaxNodeNum; i++) {//電供沒有流入等於流出
+    for (let i = 0; i < MaxNodeNum; i++) {//電供沒有流入等於流出
         if (graph[i].length == 0) {
             continue;
         }
