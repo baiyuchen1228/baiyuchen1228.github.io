@@ -1,6 +1,6 @@
 ##  challenge in exp5
 
-
+- powersupply output 關的時候三用電表值要變 0
 
 
 ## 手冊沒寫
