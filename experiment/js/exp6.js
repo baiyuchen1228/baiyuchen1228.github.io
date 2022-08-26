@@ -1683,10 +1683,10 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
-        console.log("loop:");
-        for (let i = 0; i < loop_length; i++) {
-            console.log(path[i].edgeid, path[i].par);
-        }
+        // console.log("loop:");
+        // for (let i = 0; i < loop_length; i++) {
+        //     console.log(path[i].edgeid, path[i].par);
+        // }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
@@ -1697,31 +1697,7 @@ function find_loop(goal, node, graph, loop_length) {
         equation_cnt++;
         return;
     }
-    /*console.log("node: ", node, loop_length);
-    for (let i = 0; i < loop_length; i++) {
-        console.log(path[i].edgeid, path[i].par);
-    }*/
-    // if (node < 4 && loop_length != 0 && path[loop_length - 1].edgeid != edge_cnt) {
-    //     //challenge : v0 不能給變數當電流，但連接時要當有連到
-    //     if (node == 0) {//正極
-    //         path[loop_length] = { edgeid: edge_cnt, par: voltage1 };
-    //         find_loop(goal, 1, graph, loop_length + 1);
-    //     }
-    //     if (node == 2) {//正極
-    //         path[loop_length] = { edgeid: edge_cnt, par: voltage2 };
-    //         find_loop(goal, 3, graph, loop_length + 1);
-    //     }
 
-    //     if (node == 1) {//負極
-    //         path[loop_length] = { edgeid: edge_cnt, par: -voltage1 };
-    //         find_loop(goal, 0, graph, loop_length + 1);
-    //     }
-
-    //     if (node == 3) {//負極
-    //         path[loop_length] = { edgeid: edge_cnt, par: -voltage2 };
-    //         find_loop(goal, 2, graph, loop_length + 1);
-    //     }
-    // }
     for (let i = 0; i < graph[node].length; i++) {
         let edge = graph[node][i];
         if (vis_edge[edge.id] == 0) {
