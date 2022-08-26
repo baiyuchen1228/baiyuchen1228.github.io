@@ -1492,7 +1492,10 @@ function getResistance() {
     return resistanceOut;
 }
 
-
+function abs(x) {
+    if (x < 0) { return -x; }
+    return x;
+}
 
 
 let edge_cnt = 0;
@@ -1605,13 +1608,8 @@ class GuassionElimination {
     }
 }
 
-function getFullGraph() {
-    edge_cnt = 0;
-    var graph = [];
-    edge_list = [];
-    for (let i = 0; i <= MaxNodeNum; i++) {
-        graph[i] = [];
-    }
+function getFullGraph(graph) {
+
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         let wire = wires[i];
@@ -1659,6 +1657,18 @@ function getFullGraph() {
         vol_eid = e.id;
     }
 
+    console.log(edge_list);
+    return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
+}
+
+function getFullGraphVoltageVoltage() {
+    edge_cnt = 0;
+    var graph = [];
+    edge_list = [];
+    for (let i = 0; i <= MaxNodeNum; i++) {
+        graph[i] = [];
+    }
+
     //加電供
     let e = new Edge(0, 1, "voltage source", voltage1);
     edge_list.push(e);
@@ -1670,9 +1680,9 @@ function getFullGraph() {
     graph[2].push(e);
     graph[3].push(e);
 
-    console.log(edge_list);
-    return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
+    return getFullGraph(graph);
 }
+
 
 let equations = [];
 let equation_cnt = 0;
@@ -1714,8 +1724,8 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equation() {
-    let FG = getFullGraph();
+function equationVoltageVoltage() {
+    let FG = getFullGraphVoltageVoltage();
     graph = FG.graph;
     equations = [];
     equation_cnt = 0;
@@ -1756,6 +1766,11 @@ function equation() {
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     console.log(x);
+    return { FullGraph: FG, ans: x };
+
+}
+
+function checkMeter(FG, x) {
     let result = { voltage: "", current: "" };
     for (let i = 0; i < this.n; i++) {//存答案
         if (x[i] == NaN) {
@@ -1773,8 +1788,19 @@ function equation() {
     return result;
 }
 
+function checkCircuit() {
+    let FGx = equationVoltageVoltage();
+    let FG = FGx.FullGraph;
+    let x = FGx.ans;
+    if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
+        console.log("電供 case 是 voltage, voltage");
+        return checkMeter(FG, x);
+    }
+
+}
+
 function check() {
-    let va = equation();
+    let va = checkCircuit();
     //let res = checkPowerSupply();
     /*if (getPowerUseStatus() == 1) {
         vol1.innerHTML = res.voltage.toFixed(2);
