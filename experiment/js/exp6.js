@@ -1770,6 +1770,75 @@ function equationVoltageVoltage() {
 
 }
 
+function getFullGraphCurrentCurrent() {
+    edge_cnt = 0;
+    var graph = [];
+    edge_list = [];
+    for (let i = 0; i <= MaxNodeNum; i++) {
+        graph[i] = [];
+    }
+
+    //加電供
+    let e = new Edge(0, 1, "current source", current1);
+    edge_list.push(e);
+    graph[0].push(e);
+    graph[1].push(e);
+
+    e = new Edge(2, 3, "current source", current2);
+    edge_list.push(e);
+    graph[2].push(e);
+    graph[3].push(e);
+
+    return getFullGraph(graph);
+}
+
+function equationVoltageVoltage() {
+    let FG = getFullGraphVoltageVoltage();
+    graph = FG.graph;
+    equations = [];
+    equation_cnt = 0;
+    vis_edge = [];
+    path = [];
+
+    for (let i = 0; i < MaxNodeNum; i++) {//電供沒有流入等於流出
+        if (graph[i].length == 0) {
+            continue;
+        }
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
+        }
+        for (let j = 0; j < graph[i].length; j++) {
+            let edge = graph[i][j];
+            if (edge.node1 == i) {
+                //流出
+                equations[equation_cnt][edge.id] = 1;
+            } else {
+                equations[equation_cnt][edge.id] = -1;
+            }
+        }
+        equation_cnt++;
+    }
+
+    for (let i = 4; i < MaxNodeNum; i++) {
+        for (let j = 0; j < edge_cnt; j++) {
+            vis_edge[j] = 0;
+        }
+        path = [];
+        find_loop(i, i, graph, 0);
+    }
+    for (let i = 0; i < equation_cnt; i++) {
+        console.log(equations[i]);
+        equations[i][edge_cnt] *= -1;
+    }
+    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
+    let x = gua.Gaussian_Jordan_elimination();
+    console.log(x);
+    return { FullGraph: FG, ans: x };
+
+}
+
+
 function checkMeter(FG, x) {
     let result = { voltage: "", current: "" };
     for (let i = 0; i < this.n; i++) {//存答案
