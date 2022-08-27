@@ -1792,7 +1792,7 @@ function getFullGraphCurrentCurrent() {
     return getFullGraph(graph);
 }
 
-function equationVoltageVoltage() {
+function equationCurrentCurrent() {
     let FG = getFullGraphVoltageVoltage();
     graph = FG.graph;
     equations = [];
