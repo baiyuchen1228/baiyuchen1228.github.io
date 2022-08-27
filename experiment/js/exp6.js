@@ -1793,12 +1793,26 @@ function getFullGraphCurrentCurrent() {
 }
 
 function equationCurrentCurrent() {
-    let FG = getFullGraphVoltageVoltage();
+    let FG = getFullGraphCurrentCurrent();
     graph = FG.graph;
     equations = [];
     equation_cnt = 0;
     vis_edge = [];
     path = [];
+
+    for (let j = 0; j <= edge_cnt; j++) {
+        equations[equation_cnt][j] = 0;
+    }
+    equations[equation_cnt][0] = 1;
+    equations[equation_cnt][edge_cnt] = edge_list[0].get_par(0);
+    equation_cnt++;
+
+    for (let j = 0; j <= edge_cnt; j++) {
+        equations[equation_cnt][j] = 0;
+    }
+    equations[equation_cnt][1] = 1;
+    equations[equation_cnt][edge_cnt] = edge_list[1].get_par(2);
+    equation_cnt++;
 
     for (let i = 0; i < MaxNodeNum; i++) {//電供沒有流入等於流出
         if (graph[i].length == 0) {
