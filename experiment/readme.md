@@ -1,12 +1,12 @@
 ##  challenge in exp5
 
-- powersupply output 關的時候三用電表值要變 0
 
 
 ## 手冊沒寫
 - 換電表(電表功能分開)
 
 ## done in exp5
+- 增加undo
 - 搞按鈕變小 bug(應該解決了)
 - 線移動時加虛線
 - 阻止一洞插兩線
@@ -50,6 +50,7 @@
         - 取小的那一組
 - 限制:
     - 電阻功率 1/8 W
+- powersupply output 關的時候三用電表值要變 0
 
 
 ## challenge in exp6
@@ -59,5 +60,6 @@
     - 雙電流下要算四種組合嗎
 
 ## done in exp6
+- 增加undo
 - source node 的流入和流出用多一個電流變數解決
 - 電壓計目前寫法是給一個很大的電阻，然後用 Kirchoff 算電流，在用電流乘那個很大的數字當電壓(很大的數字 : 10^8)
