@@ -1572,6 +1572,7 @@ class GuassionElimination {
     }
 
     Gaussian_Jordan_elimination() {
+        let single = [];
         for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
             if (this.M[i][i] == 0) {
                 for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
@@ -1582,13 +1583,10 @@ class GuassionElimination {
                 }
             }
             if (this.M[i][i] == 0) {
-                console.log("Short(無解)", i);
+                console.log("無唯一解/無解", i);
                 console.log(this.M);
-                let x = [];
-                for (let i = 0; i < this.n; i++) {//存答案
-                    x[i] = NaN;
-                }
-                return x;
+                single.push(i);
+                continue;
             }
             this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
             for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
@@ -1597,9 +1595,36 @@ class GuassionElimination {
         }
         for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
             for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
+                //if(i == j)continue;
                 this.add(i, j, -1 * this.M[j][i]);
             }
         }
+
+        //檢查是不是無解
+        for(let i=this.n;i<this.m;i++){
+            if(this.M[i][this.n] != 0){
+                console.log("無解");
+                let x = [];
+                for (let i = 0; i < this.n; i++) {//存答案
+                    x[i] = NaN;
+                }
+                return;
+            }
+        }
+        for(let j=0;j<single.length;j++){
+            let i= single[j];
+            if(this.M[i][this.n] != 0){
+                console.log("無解");
+                let x = [];
+                for (let i = 0; i < this.n; i++) {//存答案
+                    x[i] = NaN;
+                }
+                return x;
+            }
+        }
+
+
+        console.log(this.M);
         let x = [];
         for (let i = 0; i < this.n; i++) {//存答案
             x[i] = this.M[i][this.n];
@@ -1715,6 +1740,13 @@ function find_loop(goal, node, graph, loop_length) {
             if (edge.type == "voltage source") {
                 path[loop_length] = { edgeid: edge_cnt, par: edge.get_par(node) };
                 find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            } else if(edge.type == "current source"){
+                let _par = 1;
+                if(node != 0 && node != 2){
+                    _par *= -1;
+                }
+                path[loop_length] = {edgeid:edge.id, par:_par};
+                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
             } else {
                 path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
                 find_loop(goal, edge.go_next(node), graph, loop_length + 1);
@@ -1732,7 +1764,7 @@ function equationVoltageVoltage() {
     vis_edge = [];
     path = [];
 
-    for (let i = 0; i < MaxNodeNum; i++) {//電供沒有流入等於流出
+    for (let i = 0; i < MaxNodeNum; i++) {//流入等於流出
         if (graph[i].length == 0) {
             continue;
         }
@@ -1778,7 +1810,7 @@ function getFullGraphCurrentCurrent() {
         graph[i] = [];
     }
 
-    //加電供
+    //加電供 : 分別是 edge 0 和 edge1
     let e = new Edge(0, 1, "current source", current1);
     edge_list.push(e);
     graph[0].push(e);
@@ -1799,22 +1831,21 @@ function equationCurrentCurrent() {
     equation_cnt = 0;
     vis_edge = [];
     path = [];
+    // for (let j = 0; j <= edge_cnt; j++) {
+    //     equations[equation_cnt][j] = 0;
+    // }
+    // equations[equation_cnt][0] = 1;
+    // equations[equation_cnt][edge_cnt] = edge_list[0].get_par(0);
+    // equation_cnt++;
 
-    for (let j = 0; j <= edge_cnt; j++) {
-        equations[equation_cnt][j] = 0;
-    }
-    equations[equation_cnt][0] = 1;
-    equations[equation_cnt][edge_cnt] = edge_list[0].get_par(0);
-    equation_cnt++;
+    // for (let j = 0; j <= edge_cnt; j++) {
+    //     equations[equation_cnt][j] = 0;
+    // }
+    // equations[equation_cnt][1] = 1;
+    // equations[equation_cnt][edge_cnt] = edge_list[1].get_par(2);
+    // equation_cnt++;
 
-    for (let j = 0; j <= edge_cnt; j++) {
-        equations[equation_cnt][j] = 0;
-    }
-    equations[equation_cnt][1] = 1;
-    equations[equation_cnt][edge_cnt] = edge_list[1].get_par(2);
-    equation_cnt++;
-
-    for (let i = 0; i < MaxNodeNum; i++) {//電供沒有流入等於流出
+    for (let i = 0; i < MaxNodeNum; i++) {//流入等於流出
         if (graph[i].length == 0) {
             continue;
         }
@@ -1824,7 +1855,11 @@ function equationCurrentCurrent() {
         }
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
-            if (edge.node1 == i) {
+            if(edge.id == 0 || edge.id == 1){
+                //current source
+                console.log("current source!");
+                equations[equation_cnt][edge_cnt] += edge.get_par(i);
+            }else if (edge.node1 == i) {
                 //流出
                 equations[equation_cnt][edge.id] = 1;
             } else {
@@ -1879,6 +1914,9 @@ function checkCircuit() {
         console.log("電供 case 是 voltage, voltage");
         return checkMeter(FG, x);
     }
+    FGx = equationCurrentCurrent();
+    FG = FGx.FullGraph;
+    x = FGx.ans;
 
 }
 
