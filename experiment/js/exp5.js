@@ -156,7 +156,6 @@ document.getElementById("powersupply13").onclick = function () {
         $("#powersupply13").css("background-color", "Lightgreen");
         console.log("output on!");
         check();
-        console.log(va.voltage, va.current);
     } else {
         powersupplyOutputStatus = 0;
         $("#powersupply13").css("background-color", "White");
@@ -165,6 +164,7 @@ document.getElementById("powersupply13").onclick = function () {
         vol1.innerHTML = voltage1.toFixed(2);
         vol2.innerHTML = voltage2.toFixed(2);
         console.log("power off!");
+        check();
     }
 }
 
@@ -1831,5 +1831,51 @@ function check() {
     }
     return;
 }
+
+function undo(){
+    Things = $("line");
+    console.log(Things);
+    console.log(Things.length);
+    let target = Things.length - 1;
+    pointarray = deleteRow(pointarray, pointarray.length-1);
+    pointarray = deleteRow(pointarray, pointarray.length-1);
+    if (Things[target].id[0] == "w") {
+        $("#wireCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#wireCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#" + Things[target].id).remove();
+    }
+
+    if (Things[target].id[0] == "r") {
+        $("#resistanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#resistanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#resistanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#" + Things[target].id).remove();
+        switchResistance();
+    }
+    if (Things[target].id[0] == "i") {
+        $("#inductanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#inductanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#inductanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#" + Things[target].id).remove();
+    }
+    if (Things[target].id[0] == "c") {
+        $("#capacitanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#capacitanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#capacitanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#" + Things[target].id).remove();
+    }
+    if (Things[target].id[0] == "a") {
+        $("#alligatorCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#alligatorCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
+        $("#" + Things[target].id).remove();
+        delALLalligator = null;
+    }
+}
+function KeyPress(e) {
+    var evtobj = window.event? event : e
+    if (evtobj.keyCode == 90 && evtobj.ctrlKey) undo();
+}
+
+document.onkeydown = KeyPress;
 
 
