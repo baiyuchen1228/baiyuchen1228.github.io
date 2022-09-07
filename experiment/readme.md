@@ -2,7 +2,6 @@
 - delete mode
 	- 點一下消失
 - 電流計
-	- node 修正
 	- 從大電流往回
 	- 只讓兩端接線
 	- OVERFLOW 顯示
@@ -25,11 +24,13 @@
 ### 一些 idea
 - 確保學生真的有接電路
     - 讓學生輸入學號姓名(reload 後才能重輸資料)，學生將完成的電路截圖
-        - demo :
+        - demo : ![](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/verify_demo.png)
     - 寫程式把他接的電路元件匯出，學生繳交匯出檔案
         - 電供設定那些也要匯出可能會比較麻煩
-        - demo : 
+        - demo : ![](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/ouput_demo.png)
         - 匯出的順序會按照學生接電路的順序，所以可能可以拿來比對，不過小電路之下，重疊率可能會很高
+    - 把提示放在 F12 的 console
+        - demo : ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/console_demo.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/console_demo.png)
 
 ## 手冊沒寫
 - 換電表(電表功能分開)
@@ -42,11 +43,6 @@
 - 雙電流下會有一些問題
     - 電流源串聯/並聯
     - 考慮 drop 電流驅動(實驗中只有電壓驅動的，可以在電供變成以電流驅動時提醒使用者就好)
-
-## done in exp6
-- 增加undo
-- source node 的流入和流出用多一個電流變數解決
-- 電壓計目前寫法是給一個很大的電阻，然後用 Kirchoff 算電流，在用電流乘那個很大的數字當電壓(很大的數字 : 10^8)
 
 ## new challenge(波形產生器)
 - 交流電
@@ -101,3 +97,10 @@
 - 限制:
     - 電阻功率 1/8 W
 - powersupply output 關的時候三用電表值要變 0
+- 電流計
+	- node 修正
+
+## done in exp6
+- 增加undo
+- source node 的流入和流出用多一個電流變數解決
+- 電壓計目前寫法是給一個很大的電阻，然後用 Kirchoff 算電流，在用電流乘那個很大的數字當電壓(很大的數字 : 10^8)
