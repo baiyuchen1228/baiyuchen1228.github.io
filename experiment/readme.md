@@ -18,6 +18,7 @@
     - (請先點按鈕)please click button first --> 
     1. 請先點選電供、電表的按鈕，在接到麵包版上
     2. 請先取消___，再點選合適按鈕
+- meeting note 不用之後把連結拿掉
 ### more fun challenge
 可能要再想想
 - rotate breadboard
