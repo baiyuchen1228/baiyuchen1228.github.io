@@ -154,7 +154,7 @@ document.getElementById("powersupply13").onclick = function () {
     if (power == 1 && powersupplyOutputStatus == 0) {
         powersupplyOutputStatus = 1;
         $("#powersupply13").css("background-color", "Lightgreen");
-        console.log("output on!");
+        //console.log("output on!");
         check();
     } else {
         powersupplyOutputStatus = 0;
@@ -163,7 +163,7 @@ document.getElementById("powersupply13").onclick = function () {
         cur2.innerHTML = current2.toFixed(2);
         vol1.innerHTML = voltage1.toFixed(2);
         vol2.innerHTML = voltage2.toFixed(2);
-        console.log("power off!");
+        //console.log("power off!");
         check();
     }
 }
@@ -1434,10 +1434,10 @@ function getWires() {
             node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
-    for (let i = 0; i < wiresOut.length; i++) {
+    /*for (let i = 0; i < wiresOut.length; i++) {
         var wire = wiresOut[i];
         console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    }
+    }*/
     return wiresOut;
 }
 
@@ -1457,10 +1457,10 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    for (let i = 0; i < alligatorOut.length; i++) {
+    /*for (let i = 0; i < alligatorOut.length; i++) {
         var alligator = alligatorOut[i];
         console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    }
+    }*/
     return alligatorOut;
 }
 
@@ -1483,10 +1483,10 @@ function getResistance() {
         };
     });
 
-    for (let i = 0; i < resistanceOut.length; i++) {
+    /*for (let i = 0; i < resistanceOut.length; i++) {
         var resistance = resistanceOut[i];
         console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
-    }
+    }*/
     return resistanceOut;
 }
 
@@ -1550,9 +1550,13 @@ function checkVoltage(powerUseStatus) {
     }
 
     // 安培計要串聯 --> 安培計當電線用
-    if (meter2_mode != 0) {
+    if (meter2_mode == 5) {
+        //安培計要串聯
         graph[7].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 7, wei: 0 });
+    }else if(meter_2_mode != 0){
+        graph[9].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 9, wei: 0 });
     }
     findConnected(graph);
     //確認電壓計連通
@@ -1570,16 +1574,19 @@ function checkShort(powerUseStatus) {
     // check the circuit is short or not
     // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
     let graph = getGraph();
-    if (meter2_mode != 0) {
+    if (meter2_mode == 5) {
         //安培計要串聯
         graph[7].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 7, wei: 0 });
+    }else if(meter_2_mode != 0){
+        graph[9].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 9, wei: 0 });
     }
 
     findConnected(graph);
 
     if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
-        alert("short!");
+        //alert("short!");
         return 1;
     }
     return 0;
@@ -1592,10 +1599,13 @@ function checkOpen(powerUseStatus, resistances) {
     // check the circuit is open or not
     // 電線 + 電阻 + 安培計都加確定有連通 
     let graph = getGraph();
-    if (meter2_mode != 0) {
+    if (meter2_mode == 5) {
         //安培計要串聯
         graph[7].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 7, wei: 0 });
+    }else if(meter_2_mode != 0){
+        graph[9].push({ nxt: 8, wei: 0 });
+        graph[8].push({ nxt: 9, wei: 0 });
     }
 
     for (let i = 0; i < resistances.length; i++) {
@@ -1607,7 +1617,8 @@ function checkOpen(powerUseStatus, resistances) {
     findConnected(graph);
 
     if ((powerUseStatus == 1 && vis[0] != vis[1]) || (powerUseStatus == 2 && vis[2] != vis[3])) {
-        alert("open");
+        //alert("open");
+        console.log("open");
         return 1;
     }
     return 0;
@@ -1637,7 +1648,8 @@ function getGraph() {
 function getPowerUseStatus() {
     let powerUseStatus = 0;             //確定 powersupply 狀態
     if (voltage1 != 0 && voltage2 != 0) {
-        alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
+        //alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
+        console.log("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.");
         return 0;
     }
     if (voltage1 != 0) {
@@ -1647,6 +1659,7 @@ function getPowerUseStatus() {
     }
     if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
         //alert("電供沒開 ouput 或電壓沒有設定");
+        console.log("電供沒開 ouput 或電壓沒有設定");
         return 0;
     }
     return powerUseStatus;
@@ -1661,7 +1674,7 @@ function checkCircuit() {
 
     let powerUseStatus = getPowerUseStatus();             //確定 powersupply 狀態
     if (powerUseStatus == 0) {
-        return { voltage: "ERR", current: "ERR" };
+        return { voltage: 0, current: 0 };
     }
     if (checkShort(powerUseStatus) == 1) {
         return { voltage: "ERR", current: "ERR" };
@@ -1789,6 +1802,7 @@ function check() {
         if (v > 2) v = 'ERR'
         $("#multimeter1_3").text(v);
     }
+
     if (meter2_mode == 0 || meter2On == 0) {
         $("#multimeter2_3").text('');
     }
