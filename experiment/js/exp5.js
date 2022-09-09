@@ -169,9 +169,119 @@ document.getElementById("powersupply13").onclick = function () {
 }
 
 
-addcurrent1.onclick = function () {
+var intervalID;
+$(powersupply5).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1 && current1 <= 3) {
+        current1 += 0.01;
+        cur1.innerHTML = current1.toFixed(2);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply6).mousedown(function (){
+    intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
+        current1 -= 0.01;
+        if (current1 < 0) {
+            current1 = 0;
+        }
+        cur1.innerHTML = current1.toFixed(2);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply7).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1 && voltage1 <= 30) {
+        voltage1 += 0.1;
+        vol1.innerHTML = voltage1.toFixed(1);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply8).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1) {
+        voltage1 -= 0.1;
+        if (voltage1 < 0) {
+            voltage1 = 0;
+        }
+        vol1.innerHTML = voltage1.toFixed(1);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply9).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1 && current2 <= 3) {
+        current2 += 0.01;
+        cur2.innerHTML = current2.toFixed(2);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply10).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1) {
+        current2 -= 0.01;
+        if (current2 < 0) {
+            current2 = 0;
+        }
+        cur2.innerHTML = current2.toFixed(2);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply11).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1 && voltage2 <= 30) {
+        voltage2 += 0.1;
+        vol2.innerHTML = voltage2.toFixed(1);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+$(powersupply12).mousedown(function (){
+    intervalID = setInterval( function (){
+    turnOffMode();
+    if (power == 1) {
+        voltage2 -= 0.1;
+        if (voltage2 < 0) {
+            voltage2 = 0;
+        }
+        vol2.innerHTML = voltage2.toFixed(1);
+    }
+    check();
+}, 200 );
+}).mouseup(function () {
+    clearInterval(intervalID);
+});
+
+addcurrent1.onclick = function () {
+    turnOffMode();
+    if (power == 1 && current1 <= 3) {
         current1 += 0.01;
         cur1.innerHTML = current1.toFixed(2);
     }
@@ -180,7 +290,7 @@ addcurrent1.onclick = function () {
 
 addvoltage1.onclick = function () {
     turnOffMode();
-    if (power == 1) {
+    if (power == 1 && voltage1 <= 30) {
         voltage1 += 0.1;
         vol1.innerHTML = voltage1.toFixed(1);
     }
@@ -189,7 +299,7 @@ addvoltage1.onclick = function () {
 
 addcurrent2.onclick = function () {
     turnOffMode();
-    if (power == 1) {
+    if (power == 1 && current2 <= 3) {
         current2 += 0.01;
         cur2.innerHTML = current2.toFixed(2);
     }
@@ -198,7 +308,7 @@ addcurrent2.onclick = function () {
 
 addvoltage2.onclick = function () {
     turnOffMode();
-    if (power == 1) {
+    if (power == 1 && current2 <= 30) {
         voltage2 += 0.1;
         vol2.innerHTML = voltage2.toFixed(1);
     }
