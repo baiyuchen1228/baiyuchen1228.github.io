@@ -555,6 +555,7 @@ function switchMeter2() {
     if (meter2On == 1) {
         $("#multimeter2_8").css('background-color', '#CCCCCC');
         meter2On = 0;
+        check();
     }
     else {
         turnOffMode();

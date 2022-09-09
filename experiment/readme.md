@@ -6,7 +6,6 @@
 	- 只讓兩端接線
 	- 小圓點
 - 電路更新 : check circuit
-- output == 0 : 輸出 0
 - 按鈕復原
     - (請先點按鈕)please click button first --> 
     1. 請先點選電供、電表的按鈕，在接到麵包版上
@@ -46,6 +45,7 @@
 - 方波、三角波、sin
 
 ## done in exp5
+- output == 0 : 輸出 0
 - 電流計
 	- OVERFLOW 顯示
 - 電供:
