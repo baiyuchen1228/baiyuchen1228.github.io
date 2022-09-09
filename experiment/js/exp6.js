@@ -2034,15 +2034,21 @@ function checkCircuit() {
 
 function check() {
     let va = checkCircuit();
-    //let res = checkPowerSupply();
-    /*if (getPowerUseStatus() == 1) {
+    let res = checkPowerSupply();
+    if(res.voltage * res.current > 0.125){
+        alert("電阻燒掉了(resistance over 0.125w)");
+        $("#multimeter1_3").text("ERR");
+        $("#multimeter2_3").text("ERR");
+        return;
+    }
+    if (getPowerUseStatus() == 1) {
         vol1.innerHTML = res.voltage.toFixed(2);
         cur1.innerHTML = res.current.toFixed(2);
     }
     else if (getPowerUseStatus() == 2) {
         vol2.innerHTML = res.voltage.toFixed(2);
         cur2.innerHTML = res.current.toFixed(2);
-    }*/
+    }
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
@@ -2051,24 +2057,25 @@ function check() {
     }
     else if (meter1_mode == 1) {
         let v = va.voltage.toFixed(0);
-        if (v > 600) v = 'ERR'
+        if (v > 600) v = 'OverFlow'
         $("#multimeter1_3").text(v);
     }
     else if (meter1_mode == 2) {
         let v = va.voltage.toFixed(0);
-        if (v > 200) v = 'ERR'
+        if (v > 200) v = 'OverFlow'
         $("#multimeter1_3").text(v);
     }
     else if (meter1_mode == 3) {
         let v = va.voltage.toFixed(1);
-        if (v > 20) v = 'ERR'
+        if (v > 20) v = 'OverFlow'
         $("#multimeter1_3").text(v);
     }
     else if (meter1_mode == 4) {
         let v = va.voltage.toFixed(2);
-        if (v > 2) v = 'ERR'
+        if (v > 2) v = 'OverFlow'
         $("#multimeter1_3").text(v);
     }
+
     if (meter2_mode == 0 || meter2On == 0) {
         $("#multimeter2_3").text('');
     }
@@ -2079,34 +2086,34 @@ function check() {
         let c = va.current;
         c *= 1000000;
         c = c.toFixed(0);
-        if (c > 200) c = 'ERR';
+        if (c > 200) c = 'OverFlow';
         $("#multimeter2_3").text(c);
     }
     else if (meter2_mode == 2) {
         let c = va.current;
         c *= 1000;
         c = c.toFixed(2);
-        if (c > 2) c = 'ERR';
+        if (c > 2) c = 'OverFlow';
         $("#multimeter2_3").text(c);
     }
     else if (meter2_mode == 3) {
         let c = va.current;
         c *= 1000;
         c = c.toFixed(1);
-        if (c > 20) c = 'ERR';
+        if (c > 20) c = 'OverFlow';
         $("#multimeter2_3").text(c);
     }
     else if (meter2_mode == 4) {
         let c = va.current;
         c *= 1000;
         c = c.toFixed(0);
-        if (c > 200) c = 'ERR';
+        if (c > 200) c = 'OverFlow';
         $("#multimeter2_3").text(c);
     }
     else if (meter2_mode == 5) {
         let c = va.current;
         c = c.toFixed(1);
-        if (c > 10) c = 'ERR';
+        if (c > 10) c = 'OverFlow';
         $("#multimeter2_3").text(c);
     }
     return;

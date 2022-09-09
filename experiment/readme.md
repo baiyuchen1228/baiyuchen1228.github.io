@@ -4,7 +4,6 @@
 - 電流計
 	- 從大電流往回
 	- 只讓兩端接線
-	- OVERFLOW 顯示
 	- 小圓點
 - 電路更新 : check circuit
 - output == 0 : 輸出 0
@@ -47,6 +46,8 @@
 - 方波、三角波、sin
 
 ## done in exp5
+- 電流計
+	- OVERFLOW 顯示
 - 電供:
 	- 按住一直跑
 	- V : 30V, I = 3A
