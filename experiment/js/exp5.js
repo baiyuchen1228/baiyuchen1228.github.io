@@ -2004,5 +2004,21 @@ function KeyPress(e) {
 document.onkeydown = KeyPress;
 
 function reload(){
-    location.reload();
+    for(var i = 0; i < 100; i++){
+        undo();
+    }
+}
+
+function start(){
+    console.log("Starting");
+    let date = new Date();
+    let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
+    $("#time1").text(time);
+    $("#name2").text($("#name1")[0].value);
+    $("#id2").text($("#id1")[0].value);
+    $("#class2").text($("#class1")[0].value);
+    $("#name1").css("display", "none");
+    $("#id1").css("display", "none");
+    $("#class1").css("display", "none");
+    $("#submitbuttom").css("display", "none");
 }

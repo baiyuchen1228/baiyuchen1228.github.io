@@ -100,6 +100,14 @@
     <a href="https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/readme.md" target="_blank">開會紀錄(先放在這裡好了)</a>
     <button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
     <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
+    <form id="form1">
+        時間:<a id="time1"></a><br>
+        姓名:<input class="input" value="" id="name1"></input><a id="name2"></a><br>
+        學號:<input class="input" value="" id="id1"></input><a id="id2"></a><br>
+        系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
+    </form>
+    
     <!-- <script type="text/javascript">
     function move (target) {
         function moveTarget (e) {

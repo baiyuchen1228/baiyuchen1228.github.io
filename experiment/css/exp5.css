@@ -328,3 +328,7 @@ div#powersupply{
 #addCapacitance{
     background-color: #CCCCCC;
 }
+#form1{
+    position: relative;
+    left: 800px;
+}
