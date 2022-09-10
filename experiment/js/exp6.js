@@ -1,5 +1,7 @@
 var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
 
+var startbool = false;
+
 var meter1_mode = 0;
 var meter2_mode = 0;
 const meter_1_mode = [0, 1, 2, 3, 4];
@@ -1154,6 +1156,7 @@ $("#container").mouseup(function (e) {
             }
         }
     }
+    check();
 });
 $(document).ready(function () {
 
@@ -2034,6 +2037,10 @@ function checkCircuit() {
 }
 
 function check() {
+    if(startbool == false) {
+        alert("請先填寫個人資料(please submit personal information first)");
+        return;
+    }
     let va = checkCircuit();
     let res = checkPowerSupply();
     if(res.voltage * res.current > 0.125){
@@ -2174,6 +2181,7 @@ function reload(){
 
 function start(){
     console.log("Starting");
+    startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
     $("#time1").text(time);
