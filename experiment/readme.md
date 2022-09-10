@@ -13,7 +13,6 @@
 - meeting note 不用之後把連結拿掉
 ### more fun challenge
 可能要再想想
-- rotate breadboard
 ### 一些 idea
 - 確保學生真的有接電路
     - 讓學生輸入學號姓名(reload 後才能重輸資料)，學生將完成的電路截圖
@@ -45,6 +44,8 @@
 - 方波、三角波、sin
 
 ## done in exp5
+- rotate breadboard
+- 增加學生資料
 - output == 0 : 輸出 0
 - 電流計
 	- OVERFLOW 顯示
