@@ -1515,6 +1515,12 @@ function findNodeNum(x, y) {
         }
     }
 
+    //transpose to before --> swap(x, y)
+    let tmo = x;
+    x = y;
+    y = tmo;
+
+
     // find breadboard node
     if (y >= 40 && y <= 50) {
         return 20;
@@ -1668,7 +1674,7 @@ function checkVoltage(powerUseStatus) {
         //安培計要串聯
         graph[7].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 7, wei: 0 });
-    }else if(meter_2_mode != 0){
+    }else if(meter2_mode != 0){
         graph[9].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 9, wei: 0 });
     }
@@ -1692,7 +1698,7 @@ function checkShort(powerUseStatus) {
         //安培計要串聯
         graph[7].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 7, wei: 0 });
-    }else if(meter_2_mode != 0){
+    }else if(meter2_mode != 0){
         graph[9].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 9, wei: 0 });
     }
@@ -1717,7 +1723,7 @@ function checkOpen(powerUseStatus, resistances) {
         //安培計要串聯
         graph[7].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 7, wei: 0 });
-    }else if(meter_2_mode != 0){
+    }else if(meter2_mode != 0){
         graph[9].push({ nxt: 8, wei: 0 });
         graph[8].push({ nxt: 9, wei: 0 });
     }
@@ -1795,7 +1801,7 @@ function checkCircuit() {
     }
     let resistances = getResistance();
     if (checkOpen(powerUseStatus, resistances) == 1) {
-        return { voltage: "ERR", current: "ERR" };
+        return { voltage: 0, current: 0 };
     }
 
     let multimeterCurrentUseState = checkCurrent(powerUseStatus, resistances);   //確定安培計使用狀態
@@ -1803,7 +1809,7 @@ function checkCircuit() {
 
 
 
-    let result = { voltage: "ERR", current: "ERR" };
+    let result = { voltage: 0, current: "ERR" };
     let ans_voltage, ans_current;
     if (powerUseStatus == 1) {
         if (voltage1 > current1 * resistances[0].val) {
@@ -1846,9 +1852,9 @@ function checkPowerSupply() {
     let resistances = getResistance();
     if (checkOpen(powerUseStatus, resistances) == 1) {
         if (powerUseStatus == 1) {
-            return { voltage: voltage1, current: current1 };
+            return { voltage: 0, current: 0 };
         } else {
-            return { voltage: voltage2, current: current2 };
+            return { voltage: 0, current: 0 };
         }
     }
     let ans_current = 0, ans_voltage = 0;

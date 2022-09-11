@@ -12,7 +12,7 @@
     2. 請先取消___，再點選合適按鈕
 - meeting note 不用之後把連結拿掉
 ### more fun challenge
-可能要再想想
+可能要再想想的一些挑戰
 ### 一些 idea
 - 確保學生真的有接電路
     - 讓學生輸入學號姓名(reload 後才能重輸資料)，學生將完成的電路截圖
@@ -45,6 +45,7 @@
 
 ## done in exp5
 - rotate breadboard
+    - 電路驗證完成
 - 增加學生資料
 - output == 0 : 輸出 0
 - 電流計
