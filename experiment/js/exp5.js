@@ -745,6 +745,7 @@ $("#container").mouseup(function (e) {
         pointarray.push([x2, y2]);
         wireNo++;
         colorNo = (colorNo + 1) % colorlist.length;
+        turnOffMode();
     }
     if (drawResistance == 1) {
         var resistanceFinal = e;
@@ -810,6 +811,7 @@ $("#container").mouseup(function (e) {
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
         switchResistance();
+        turnOffMode();
     }
     if (drawInductance == 1) {
         var inductanceFinal = e;
@@ -983,6 +985,7 @@ $("#container").mouseup(function (e) {
         AlligatorX1 = 0;
         AlligatorY1 = 0;
         // toggleAlligatorButton();
+        turnOffMode();
     }
     if (deletemode == 1) {
         console.log(delIni);
