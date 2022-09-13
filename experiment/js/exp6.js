@@ -1518,6 +1518,12 @@ function findNodeNum(x, y) {
         }
     }
 
+    //transpose to before --> swap(x, y)
+    let tmo = x;
+    x = y;
+    y = tmo;
+
+
     // find breadboard node
     if (y >= 40 && y <= 50) {
         return 20;
@@ -1782,12 +1788,18 @@ function getFullGraph(graph) {
     }
 
     let curr_eid = -1;
-    if (meter2_mode != 0) {
+    if (meter2_mode == 5) {
         //安培計要串聯
         let e = new Edge(7, 8, "ammeter", 0);
         edge_list.push(e);
         graph[7].push(e);
         graph[8].push(e);
+        curr_eid = e.id;
+    }else if(meter2_mode != 0){
+        let e = new Edge(8, 9, "ammeter", 0);
+        edge_list.push(e);
+        graph[8].push(e);
+        graph[9].push(e);
         curr_eid = e.id;
     }
 
