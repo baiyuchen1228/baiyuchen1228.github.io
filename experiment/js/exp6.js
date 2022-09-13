@@ -673,7 +673,7 @@ function drawDashedLine2() {
         }
         if (mode) {
             if ($("#dashline").length > 0) {
-                // $("#dashline").remove();
+                $("#dashline").remove();
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
             else {
