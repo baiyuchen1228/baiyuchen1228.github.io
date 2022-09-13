@@ -115,3 +115,4 @@
 - bug : 虛擬線不會消失
 - 電阻燒掉檢查 tested
 - powersupply 檢查與 exp5 不同，已修正，test finished
+
