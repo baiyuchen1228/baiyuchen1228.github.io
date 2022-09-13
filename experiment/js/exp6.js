@@ -1737,8 +1737,8 @@ class GuassionElimination {
             }
         }
         for(let j=0;j<single.length;j++){
-            let i= single[j];
-            if(this.M[i][this.n] != 0){
+            let i= single[j];     // 123456789
+            if(this.M[i][this.n] > 0.000001){
                 console.log("無解");
                 let x = [];
                 for (let i = 0; i < this.n; i++) {//存答案
@@ -1956,12 +1956,14 @@ function checkMeter(FG, x) {
 
 function checkResitanceBurn(x){
     //return false;
-    for(let e in edge_list){
+    for(let i=0; i < edge_list.length;i++){
+        let e = edge_list[i];
         if(e.type == "resistance" && x[e.id] * x[e.id] * e.ohm > 0.125){
             console.log("burn");
             return true;
         }
     }
+    return false;
 }
 
 
@@ -2000,7 +2002,10 @@ function check() {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
     }
-    
+    if(powersupplyOutputStatus == 0){
+        console.log("記得開 output")
+        return;
+    }
     let res = checkCircuit();
     let va = res.meter;
     
@@ -2012,10 +2017,10 @@ function check() {
     //     return;
     // }
     
-    vol1.innerHTML = res.power1.voltage.toFixed(2);
-    cur1.innerHTML = res.power1.current.toFixed(2);
-    vol2.innerHTML = res.power2.voltage.toFixed(2);
-    cur2.innerHTML = res.power2.current.toFixed(2);
+    vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
+    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
+    vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
+    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : res.power2.current.toFixed(2)
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }

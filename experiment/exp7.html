@@ -54,31 +54,6 @@
         VisibleMenu = '';
     }
     </script>
-    <img id="apple" src="../images/apple.png" alt="" width="300" style="position:absolute; top:200px"><br>
-    <img id="banana" src="../images/banana.png" alt=""width="300" style="position:absolute; top:500px;"><br>
-    <script type="text/javascript">
-    function move (target) {
-        function moveTarget (e) {
-            var intX = e.pageX;
-            var intY = e.pageY;
-            target.style.left = intX - (target.width)/2 + "px";
-            target.style.top = intY - (target.height)/2 + "px";
-        }
-        return moveTarget;
-    }
-    document.getElementById("apple").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    document.getElementById("banana").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    </script>
 
 </body>
 </html>

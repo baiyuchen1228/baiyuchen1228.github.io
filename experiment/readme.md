@@ -31,10 +31,9 @@
 - 雙電流下會有一些問題
     - 電流源串聯/並聯
     - 考慮 drop 電流驅動(實驗中只有電壓驅動的，可以在電供變成以電流驅動時提醒使用者就好)
-- 電阻燒掉檢查 untest
-- powersupply 檢查與 exp5 不同，已修正，但 untest
-- bug : 無法輸入姓名等資料
-- bug : 虛擬線不會消失
+- bug : 某些數字可能會無解(目前猜測可能原因為浮點數誤差)
+    - ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png)
+- bug : 有時候 current 會停不下來，目前不太清楚發生的原因
 
 ## new challenge(波形產生器)
 - 交流電
@@ -112,3 +111,7 @@
 - 增加undo
 - source node 的流入和流出用多一個電流變數解決
 - 電壓計目前寫法是給一個很大的電阻，然後用 Kirchoff 算電流，在用電流乘那個很大的數字當電壓(很大的數字 : 10^8)
+- bug : 無法輸入姓名等資料
+- bug : 虛擬線不會消失
+- 電阻燒掉檢查 tested
+- powersupply 檢查與 exp5 不同，已修正，test finished
