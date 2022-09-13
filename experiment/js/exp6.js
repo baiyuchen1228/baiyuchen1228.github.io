@@ -1933,90 +1933,7 @@ function equationVoltageVoltage() {
 
 }
 
-function getFullGraphCurrentCurrent() {
-    edge_cnt = 0;
-    var graph = [];
-    edge_list = [];
-    for (let i = 0; i <= MaxNodeNum; i++) {
-        graph[i] = [];
-    }
 
-    //加電供 : 分別是 edge 0 和 edge1
-    let e = new Edge(0, 1, "current source", current1);
-    edge_list.push(e);
-    graph[0].push(e);
-    graph[1].push(e);
-
-    e = new Edge(2, 3, "current source", current2);
-    edge_list.push(e);
-    graph[2].push(e);
-    graph[3].push(e);
-
-    return getFullGraph(graph);
-}
-
-function equationCurrentCurrent() {
-    let FG = getFullGraphCurrentCurrent();
-    graph = FG.graph;
-    equations = [];
-    equation_cnt = 0;
-    vis_edge = [];
-    path = [];
-    // for (let j = 0; j <= edge_cnt; j++) {
-    //     equations[equation_cnt][j] = 0;
-    // }
-    // equations[equation_cnt][0] = 1;
-    // equations[equation_cnt][edge_cnt] = edge_list[0].get_par(0);
-    // equation_cnt++;
-
-    // for (let j = 0; j <= edge_cnt; j++) {
-    //     equations[equation_cnt][j] = 0;
-    // }
-    // equations[equation_cnt][1] = 1;
-    // equations[equation_cnt][edge_cnt] = edge_list[1].get_par(2);
-    // equation_cnt++;
-
-    for (let i = 0; i < MaxNodeNum; i++) {//流入等於流出
-        if (graph[i].length == 0) {
-            continue;
-        }
-        equations[equation_cnt] = [];
-        for (let j = 0; j <= edge_cnt; j++) {
-            equations[equation_cnt][j] = 0;
-        }
-        for (let j = 0; j < graph[i].length; j++) {
-            let edge = graph[i][j];
-            if(edge.id == 0 || edge.id == 1){
-                //current source
-                console.log("current source!");
-                equations[equation_cnt][edge_cnt] += edge.get_par(i);
-            }else if (edge.node1 == i) {
-                //流出
-                equations[equation_cnt][edge.id] = 1;
-            } else {
-                equations[equation_cnt][edge.id] = -1;
-            }
-        }
-        equation_cnt++;
-    }
-
-    for (let i = 4; i < MaxNodeNum; i++) {
-        for (let j = 0; j < edge_cnt; j++) {
-            vis_edge[j] = 0;
-        }
-        path = [];
-        find_loop(i, i, graph, 0);
-    }
-    for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
-        equations[i][edge_cnt] *= -1;
-    }
-    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
-    let x = gua.Gaussian_Jordan_elimination();
-    console.log(x);
-    return { FullGraph: FG, ans: x };
-
-}
 
 
 function checkMeter(FG, x) {
@@ -2037,17 +1954,44 @@ function checkMeter(FG, x) {
     return result;
 }
 
+function checkResitanceBurn(x){
+    //return false;
+    for(let e in edge_list){
+        if(e.type == "resistance" && x[e.id] * x[e.id] * e.ohm > 0.125){
+            console.log("burn");
+            return true;
+        }
+    }
+}
+
+
 function checkCircuit() {
     let FGx = equationVoltageVoltage();
     let FG = FGx.FullGraph;
     let x = FGx.ans;
     if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
         console.log("電供 case 是 voltage, voltage");
-        return checkMeter(FG, x);
+        let res_meter = checkMeter(FG, x);
+        let res_power1 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage1, current:x[0]})
+        let res_power2 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage2, current:x[1]})
+        if(checkResitanceBurn(x)){
+            let ERR = {voltage:"ERR", current:"ERR"}
+            return {meter:ERR, power1:ERR, power2:ERR};
+        }
+        return {meter : res_meter, power1 : res_power1, power2 : res_power2};
     }
-    FGx = equationCurrentCurrent();
-    FG = FGx.FullGraph;
-    x = FGx.ans;
+
+    //兩邊的電流有至少一邊超過最大電流
+    if(current1 < current2){
+
+    }else{
+
+    }
+    let ERR = {voltage:"ERR", current:"ERR"}
+    return {meter:ERR, power1:ERR, power2:ERR};
+    // FGx = equationCurrentCurrent();
+    // FG = FGx.FullGraph;
+    // x = FGx.ans;
 
 }
 
@@ -2056,22 +2000,22 @@ function check() {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
     }
-    let va = checkCircuit();
-    let res = checkPowerSupply();
-    if(res.voltage * res.current > 0.125){
-        alert("電阻燒掉了(resistance over 0.125w)");
-        $("#multimeter1_3").text("ERR");
-        $("#multimeter2_3").text("ERR");
-        return;
-    }
-    if (getPowerUseStatus() == 1) {
-        vol1.innerHTML = res.voltage.toFixed(2);
-        cur1.innerHTML = res.current.toFixed(2);
-    }
-    else if (getPowerUseStatus() == 2) {
-        vol2.innerHTML = res.voltage.toFixed(2);
-        cur2.innerHTML = res.current.toFixed(2);
-    }
+    
+    let res = checkCircuit();
+    let va = res.meter;
+    
+    // 電阻燒壞檢查
+    // if(res.voltage * res.current > 0.125){
+    //     alert("電阻燒掉了(resistance over 0.125w)");
+    //     $("#multimeter1_3").text("ERR");
+    //     $("#multimeter2_3").text("ERR");
+    //     return;
+    // }
+    
+    vol1.innerHTML = res.power1.voltage.toFixed(2);
+    cur1.innerHTML = res.power1.current.toFixed(2);
+    vol2.innerHTML = res.power2.voltage.toFixed(2);
+    cur2.innerHTML = res.power2.current.toFixed(2);
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
