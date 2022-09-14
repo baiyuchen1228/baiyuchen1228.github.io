@@ -117,10 +117,10 @@ document.getElementById("powersupply14").onclick = function () {
 
 function turnOffMode() {
     if (drawResistance == 1) {
-        if (resistanceOn == 1) {
+        //if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
-        }
+        //}
         drawResistance = 0;
     }
     else if (deletemode == 1) {
@@ -432,7 +432,7 @@ var CapacitanceInitial;
 var chipNo = 1;
 var wireNo = 1;
 var resistanceNo = 1;
-var resistanceOn = 1;
+//var resistanceOn = 1;
 var inductanceNo = 1;
 var alligatorNo = 1;
 var capacitanceNo = 1;
@@ -567,16 +567,6 @@ function switchMeter2() {
     }
 }
 
-function switchResistance() {
-    if (resistanceOn == 1) {
-        $("#addResistance").css('background-color', '#CCCCCC');
-        resistanceOn = 0;
-    }
-    else {
-        $("#addResistance").css('background-color', 'white');
-        resistanceOn = 1;
-    }
-}
 
 function approx_x(x) {
     return (Math.floor(x / 20) * 20 + 5);
@@ -810,7 +800,6 @@ $("#container").mouseup(function (e) {
         pointarray.push([x2, y2]);
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
-        // switchResistance();
         turnOffMode();
     }
     if (drawInductance == 1) {
@@ -1027,7 +1016,6 @@ $("#container").mouseup(function (e) {
                         $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
-                        switchResistance();
                     }
                     if (Things[i].id[0] == "i") {
                         $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -1275,10 +1263,8 @@ function toggleDelButton() {
         drawInductance = 0;
     }
     else if (drawResistance == 1) {
-        if (resistanceOn == 1) {
-            $this = $("#addResistance");
-            $this.css('background-color', 'white');
-        }
+        $this = $("#addResistance");
+        $this.css('background-color', 'white');
         drawResistance = 0;
     }
     else if (drawWire == 1) {
@@ -1384,7 +1370,7 @@ function toggleWireButton() {
 };
 
 function toggleResistanceButton() {
-    if (resistanceOn == 0) return;
+    //if (resistanceOn == 0) return;
     if (drawInductance == 1) {
         $this = $("#addInductance");
         $this.css('background-color', 'white');
@@ -1461,10 +1447,10 @@ function toggleInductanceButton() {
 };
 function toggleAlligatorButton() {
     if (drawResistance == 1) {
-        if (resistanceOn == 1) {
+        //if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
-        }
+        //}
         drawResistance = 0;
     }
     else if (deletemode == 1) {
@@ -2116,7 +2102,6 @@ function undo(){
         $("#resistanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#resistanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#" + Things[target].id).remove();
-        switchResistance();
     }
     if (Things[target].id[0] == "i") {
         $("#inductanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
