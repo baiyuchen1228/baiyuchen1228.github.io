@@ -1733,7 +1733,7 @@ class GuassionElimination {
         for(let i=this.n;i<this.m;i++){
             if(this.M[i][this.n] > 1e-10){
                 console.log("無解");
-                show_error("可能短路了\n short!")
+                show_error("可能短路了<br> short!")
                 let x = [];
                 for (let i = 0; i < this.n; i++) {//存答案
                     x[i] = NaN;
@@ -1964,7 +1964,7 @@ function checkResitanceBurn(x){
     for(let i=0; i < edge_list.length;i++){
         let e = edge_list[i];
         if(e.type == "resistance" && x[e.id] * x[e.id] * e.ohm > 0.125){
-            show_error("電阻燒壞了\n at least one resistor burned");
+            show_error("電阻燒壞了<br> at least one resistor burned");
             return true;
         }
     }
@@ -1989,7 +1989,7 @@ function checkCircuit() {
     }
 
     //兩邊的電流有至少存在一邊超過最大電流
-    show_error("電源供應器的最大電流給得太小了\nmax current is too small")
+    show_error("電源供應器的最大電流給得太小了<br>max current is too small")
     if(current1 < current2){
 
     }else{

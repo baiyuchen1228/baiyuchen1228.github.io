@@ -338,7 +338,7 @@ div#powersupply{
     background-color : PaleGreen;
     position: absolute;
     width : 350px;
-    height : 100px;
+    height : 130px;
     left : 550px;
     z-index: 1;
 }

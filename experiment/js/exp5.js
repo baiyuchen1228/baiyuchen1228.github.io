@@ -1772,8 +1772,8 @@ function getPowerUseStatus() {
     let powerUseStatus = 0;             //確定 powersupply 狀態
     if (voltage1 != 0 && voltage2 != 0) {
         //alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
-        show_error("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.");
-        return 0;
+        show_error("本實驗不須用兩個電供<br>This experiment is not allow to use two ouput of powersupply.<br>需要兩組輸出者，請右轉到 exp6");
+        return 3;
     }
     if (voltage1 != 0) {
         powerUseStatus = 1;
@@ -1796,7 +1796,9 @@ function checkCircuit() {
     //var graph = getGraph();
 
     let powerUseStatus = getPowerUseStatus();             //確定 powersupply 狀態
-    if (powerUseStatus == 0) {
+    if (powerUseStatus == 3) {
+        return { voltage: "ERR", current: "ERR" };
+    }else if(powerUseStatus == 0){
         return { voltage: 0, current: 0 };
     }
     if (checkShort(powerUseStatus) == 1) {
