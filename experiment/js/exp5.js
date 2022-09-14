@@ -1161,6 +1161,30 @@ $("#container").mouseup(function (e) {
     }
     check();
 });
+
+function deleteBurnedResistance(){
+    Things = $("line");
+    for (var i = Things.length - 1; i >= 0; i--) {
+        if (Things[i].id[0] == "r") {
+            for (let j = 0; j < pointarray.length; j++) {
+                if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                    pointarray = deleteRow(pointarray, j);
+                }
+            }
+            for (let j = 0; j < pointarray.length; j++) {
+                if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                    pointarray = deleteRow(pointarray, j);
+                }
+            }
+            $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+            $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+            $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+            $("#" + Things[i].id).remove();
+            switchResistance();
+        }
+    }
+}
+
 $(document).ready(function () {
 
     var canvas = $("#myCanvas");
@@ -1893,9 +1917,11 @@ function check() {
     let va = checkCircuit();
     let res = checkPowerSupply();
     if(res.voltage * res.current > 0.125){
+        alert("電阻燒掉了(resistance over 0.125w)")
         show_error("電阻燒掉了(resistance over 0.125w)");
         $("#multimeter1_3").text("ERR");
         $("#multimeter2_3").text("ERR");
+        deleteBurnedResistance();
         return;
     }
     if (getPowerUseStatus() == 1) {

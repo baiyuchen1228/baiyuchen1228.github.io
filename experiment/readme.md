@@ -20,6 +20,7 @@
     - 把提示放在 F12 的 console
         - demo : ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/console_demo.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/console_demo.png)
     - 增加提示區
+        - 電阻燒掉會消失( code 寫好了，但留著然後印提示感覺比較好，使用的感受上會瞬間變 open)
 
 ## 手冊沒寫
 - 換電表(電表功能分開)
@@ -42,6 +43,7 @@
 - 方波、三角波、sin
 
 ## done in exp5
+- 電阻燒掉會消失( code 寫好了，但留著然後印錯誤運席感覺比較好)
 - 按鈕復原
     - (請先點按鈕)please click button first --> 
     1. 請先點選電供、電表的按鈕，在接到麵包版上
@@ -116,10 +118,10 @@
 - powersupply 檢查與 exp5 不同，已修正，test finished
 - bug : 某些數字可能會無解(原因為浮點數誤差，允許誤差範圍在 1e-10 內)
     - ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png)
+- 加電阻返回有 bug
 
 ## 0914
 確認鍵換顏色
 電阻燒掉會消失
-加電阻返回有 bug
 電壓計、電流計混用
 正極暖系列，負極冷系列
