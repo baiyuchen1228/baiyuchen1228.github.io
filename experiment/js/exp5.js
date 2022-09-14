@@ -1741,7 +1741,7 @@ function checkOpen(powerUseStatus, resistances) {
 
     if ((powerUseStatus == 1 && vis[0] != vis[1]) || (powerUseStatus == 2 && vis[2] != vis[3])) {
         //alert("open");
-        console.log("open");
+        show_error("open");
         return 1;
     }
     return 0;
@@ -1772,7 +1772,7 @@ function getPowerUseStatus() {
     let powerUseStatus = 0;             //確定 powersupply 狀態
     if (voltage1 != 0 && voltage2 != 0) {
         //alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
-        console.log("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.");
+        show_error("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.");
         return 0;
     }
     if (voltage1 != 0) {
@@ -1782,7 +1782,7 @@ function getPowerUseStatus() {
     }
     if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
         //alert("電供沒開 ouput 或電壓沒有設定");
-        console.log("電供沒開 ouput 或電壓沒有設定");
+        show_error("電供沒開 ouput 或電壓沒有設定");
         return 0;
     }
     return powerUseStatus;
@@ -1883,6 +1883,7 @@ function checkPowerSupply() {
 
 
 function check() {
+    show_error("");
     if(startbool == false) {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
@@ -1890,7 +1891,7 @@ function check() {
     let va = checkCircuit();
     let res = checkPowerSupply();
     if(res.voltage * res.current > 0.125){
-        alert("電阻燒掉了(resistance over 0.125w)");
+        show_error("電阻燒掉了(resistance over 0.125w)");
         $("#multimeter1_3").text("ERR");
         $("#multimeter2_3").text("ERR");
         return;
@@ -2038,4 +2039,8 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+}
+
+function show_error(s){
+    document.querySelector("#error_message_content").innerHTML = s;
 }

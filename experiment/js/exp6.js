@@ -1733,6 +1733,7 @@ class GuassionElimination {
         for(let i=this.n;i<this.m;i++){
             if(this.M[i][this.n] > 1e-10){
                 console.log("無解");
+                show_error("可能短路了\n short!")
                 let x = [];
                 for (let i = 0; i < this.n; i++) {//存答案
                     x[i] = NaN;
@@ -1963,7 +1964,7 @@ function checkResitanceBurn(x){
     for(let i=0; i < edge_list.length;i++){
         let e = edge_list[i];
         if(e.type == "resistance" && x[e.id] * x[e.id] * e.ohm > 0.125){
-            console.log("burn");
+            show_error("電阻燒壞了\n at least one resistor burned");
             return true;
         }
     }
@@ -1988,6 +1989,7 @@ function checkCircuit() {
     }
 
     //兩邊的電流有至少存在一邊超過最大電流
+    show_error("電源供應器的最大電流給得太小了\nmax current is too small")
     if(current1 < current2){
 
     }else{
@@ -2002,12 +2004,13 @@ function checkCircuit() {
 }
 
 function check() {
+    show_error("");
     if(startbool == false) {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
     }
     if(powersupplyOutputStatus == 0){
-        console.log("記得開 output")
+        show_error("記得開 output")
         return;
     }
     let res = checkCircuit();
@@ -2160,4 +2163,7 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+}
+function show_error(s){
+    document.querySelector("#error_message_content").innerHTML = s;
 }
