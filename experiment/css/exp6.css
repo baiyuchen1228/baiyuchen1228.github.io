@@ -40,6 +40,7 @@ h2 {
     padding:0px; 
     list-style-type:none; 
     position:absolute; 
+    z-index: 2;
 } /* 下拉清單的樣式 */
 .sub-menu li {
     padding: 3px 5px;
@@ -331,4 +332,13 @@ div#powersupply{
 #form1{
     position: relative;
     left: 800px;
+}
+#error_message{
+    background-color : PaleGreen;
+    position: absolute;
+    width : 350px;
+    height : 100px;
+    left : 550px;
+    top : 150px;
+    z-index: 1;
 }

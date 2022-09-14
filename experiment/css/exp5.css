@@ -40,6 +40,7 @@ h2 {
     padding:0px; 
     list-style-type:none; 
     position:absolute; 
+    z-index: 2;
 } /* 下拉清單的樣式 */
 .sub-menu li {
     padding: 3px 5px;
@@ -339,4 +340,5 @@ div#powersupply{
     width : 350px;
     height : 100px;
     left : 550px;
+    z-index: 1;
 }
