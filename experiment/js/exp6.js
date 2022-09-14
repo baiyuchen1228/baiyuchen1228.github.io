@@ -1725,20 +1725,13 @@ class GuassionElimination {
             }
         }
 
+        //after guassian elimination
+        console.log("Guassian Elimination")
+        console.log(this.M);
+        
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
-            if(this.M[i][this.n] != 0){
-                console.log("無解");
-                let x = [];
-                for (let i = 0; i < this.n; i++) {//存答案
-                    x[i] = NaN;
-                }
-                return;
-            }
-        }
-        for(let j=0;j<single.length;j++){
-            let i= single[j];     // 123456789
-            if(this.M[i][this.n] > 0.000001){
+            if(this.M[i][this.n] > 1e-10){
                 console.log("無解");
                 let x = [];
                 for (let i = 0; i < this.n; i++) {//存答案
@@ -1748,8 +1741,19 @@ class GuassionElimination {
             }
         }
 
+        //我忘記這段在做什麼了QQ
+        // for(let j=0;j<single.length;j++){
+        //     let i = single[j];     // 123456789
+        //     if(this.M[i][this.n] != 0){
+        //         console.log("無解");
+        //         let x = [];
+        //         for (let i = 0; i < this.n; i++) {//存答案
+        //             x[i] = NaN;
+        //         }
+        //         return x;
+        //     }
+        // }
 
-        console.log(this.M);
         let x = [];
         for (let i = 0; i < this.n; i++) {//存答案
             x[i] = this.M[i][this.n];
@@ -1983,7 +1987,7 @@ function checkCircuit() {
         return {meter : res_meter, power1 : res_power1, power2 : res_power2};
     }
 
-    //兩邊的電流有至少一邊超過最大電流
+    //兩邊的電流有至少存在一邊超過最大電流
     if(current1 < current2){
 
     }else{

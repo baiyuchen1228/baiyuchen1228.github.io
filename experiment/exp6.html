@@ -74,6 +74,7 @@
             <button type="button" id="multimeter2_4" class="multimeter-button-2">＋</button>
             <button type="button" id="multimeter2_5" class="multimeter-button-2">－</button>
             <button type="button" id="multimeter2_6" class="multimeter-button-2">＋</button>
+            <button type="button" id="multimeter2_8" class="multimeter-button-2" onclick="switchMeter2()">on</button>
         </div>
         <canvas id="myCanvas" width="500" height="360"
             style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
@@ -102,29 +103,6 @@
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
-    <!-- <script type="text/javascript">
-    function move (target) {
-        function moveTarget (e) {
-            var intX = e.pageX;
-            var intY = e.pageY;
-            target.style.left = intX - (target.width)/2 + "px";
-            target.style.top = intY - (target.height)/2 + "px";
-        }
-        return moveTarget;
-    }
-    document.getElementById("apple").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    document.getElementById("banana").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    </script> -->
     <script type="text/javascript" src="js\exp6.js"></script>
 </body>
 

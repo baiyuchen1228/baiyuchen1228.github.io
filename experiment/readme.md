@@ -31,8 +31,6 @@
 - 雙電流下會有一些問題
     - 電流源串聯/並聯
     - 考慮 drop 電流驅動(實驗中只有電壓驅動的，可以在電供變成以電流驅動時提醒使用者就好)
-- bug : 某些數字可能會無解(目前猜測可能原因為浮點數誤差)
-    - ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png)
 - bug : 有時候 current 會停不下來，目前不太清楚發生的原因
 
 ## new challenge(波形產生器)
@@ -115,4 +113,5 @@
 - bug : 虛擬線不會消失
 - 電阻燒掉檢查 tested
 - powersupply 檢查與 exp5 不同，已修正，test finished
-
+- bug : 某些數字可能會無解(原因為浮點數誤差，允許誤差範圍在 1e-10 內)
+    - ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png)
