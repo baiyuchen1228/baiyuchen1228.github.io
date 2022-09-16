@@ -342,3 +342,8 @@ div#powersupply{
     top : 150px;
     z-index: 1;
 }
+#submitbuttom{
+    width: 30px;
+    border-radius: 5px;
+    background-color: #e7dc8f;
+}
