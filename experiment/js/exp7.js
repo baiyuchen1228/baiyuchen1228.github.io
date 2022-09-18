@@ -701,7 +701,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(40, current_x, 10, 10);
+            context.fillRect(current_x, 40, 10, 10);
         };
         current_x = current_x + 20;
     };
@@ -710,7 +710,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(60, current_x, 10, 10);
+            context.fillRect(current_x, 60, 10, 10);
         };
         current_x = current_x + 20;
     };
@@ -718,15 +718,15 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "red";
     context.beginPath(); // Start the path
-    context.moveTo(35, 0); // Set the path origin
-    context.lineTo(35, 50 * 11 - 5); // Set the path destination
+    context.moveTo(0, 35); // Set the path origin
+    context.lineTo(50 * 11 - 5, 35); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
     context.strokeStyle = "black";
     context.beginPath(); // Start the path
-    context.moveTo(75, 0); // Set the path origin
-    context.lineTo(75, 50 * 11 - 5); // Set the path destination
+    context.moveTo(0, 75); // Set the path origin
+    context.lineTo(50 * 11 - 5, 75); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -734,7 +734,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 23; i++) {
             current_x = current_x + 20;
-            context.fillRect(80 + 20 * j, current_x, 10, 10);
+            context.fillRect(current_x, 80 + 20 * j, 10, 10);
         };
         current_x = 0;
 
@@ -743,8 +743,8 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "blue";
     context.beginPath(); // Start the path
-    context.moveTo(175, 0); // Set the path origin
-    context.lineTo(175, 50 * 11 - 5); // Set the path destination
+    context.moveTo(0, 175); // Set the path origin
+    context.lineTo(50 * 11 - 5, 175); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -754,7 +754,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 23; i++) {
             current_x = current_x + 20;
-            context.fillRect(180 + 20 * j, current_x, 10, 10);
+            context.fillRect(current_x, 180 + 20 * j, 10, 10);
         };
         current_x = 0;
 
@@ -763,8 +763,8 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "black";
     context.beginPath(); // Start the path
-    context.moveTo(275, 0); // Set the path origin
-    context.lineTo(275, 50 * 11 - 5); // Set the path destination
+    context.moveTo(0, 275); // Set the path origin
+    context.lineTo(50 * 11 - 5, 270); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -773,7 +773,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(280, current_x, 10, 10);
+            context.fillRect(current_x, 280, 10, 10);
         };
         current_x = current_x + 20;
     };
@@ -783,7 +783,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(300, current_x, 10, 10);
+            context.fillRect(current_x, 300, 10, 10);
         };
         current_x = current_x + 20;
     };
@@ -791,8 +791,8 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "red";
     context.beginPath(); // Start the path
-    context.moveTo(315, 0); // Set the path origin
-    context.lineTo(315, 50 * 11 - 5); // Set the path destination
+    context.moveTo(0, 315); // Set the path origin
+    context.lineTo(50 * 11 - 5, 315); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
