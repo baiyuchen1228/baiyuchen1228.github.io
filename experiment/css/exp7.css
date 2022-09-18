@@ -65,7 +65,7 @@ div#generator{
     position: absolute;
     left: 30px;
     top: 150px;
-    height: 200px;
+    height: 190px;
     width: 500px;
     border: 5px solid black;
     background-image:url('../../images/waveform_generator.jpg');
