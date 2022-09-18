@@ -64,23 +64,23 @@ h2 {
 div#generator{
     position: absolute;
     left: 30px;
-    top: 150px;
+    top: 60px;
     height: 190px;
-    width: 500px;
+    width: 520px;
     border: 5px solid black;
     background-image:url('../../images/waveform_generator.jpg');
-    background-size: 500px ;
+    background-size: 520px ;
     background-repeat: no-repeat;
 }
 div#oscilloscope{
     position: absolute;
-    left: 900px;
+    left: 630px;
     top: 150px;
-    height: 270px;
-    width: 600px;
+    height: 360px;
+    width: 800px;
     border: 5px solid black;
     background-image:url('../../images/oscilloscope.jpg');
-    background-size: 600px ;
+    background-size: 800px ;
     background-repeat: no-repeat;
 }
 .powersupply-text{
@@ -153,7 +153,7 @@ div#oscilloscope{
     position: absolute;
     width : 350px;
     height : 130px;
-    left : 550px;
+    left : 570px;
     z-index: 1;
 }
 #submitbuttom{
