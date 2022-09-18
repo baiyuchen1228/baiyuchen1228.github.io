@@ -1466,7 +1466,32 @@ function equationVoltageVoltage() {
 }
 
 
-
+class Oscilloscope{
+    constructor(frequency, amplitude, type){
+        self._frequency = frequency;
+        self._amplitude = amplitude;
+        self._type = type;
+    }
+    static get square_wave(){
+        return "square_wave";
+    }
+    static get sin_wave(){
+        return "sin_wave";
+    }
+    static get triangle_wave(){
+        return "triangle_wave";
+    }
+    get frequency(){
+        return self._frequency;
+    }
+    get amplitude(){
+        return self._amplitude;
+    }
+    get type(){
+        return self._type;
+    }
+    
+}
 
 function checkMeter(FG, x) {
     let result = { voltage: "", current: "" };
