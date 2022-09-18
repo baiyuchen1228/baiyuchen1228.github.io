@@ -1468,9 +1468,10 @@ function equationVoltageVoltage() {
 
 class Oscilloscope{
     constructor(frequency, amplitude, type){
-        self._frequency = frequency;
-        self._amplitude = amplitude;
-        self._type = type;
+        this._frequency = frequency;
+        this._amplitude = amplitude;
+        this._cycle = 1 / frequency;
+        this._type = type;
     }
     static get square_wave(){
         return "square_wave";
@@ -1482,15 +1483,38 @@ class Oscilloscope{
         return "triangle_wave";
     }
     get frequency(){
-        return self._frequency;
+        return this._frequency;
     }
     get amplitude(){
-        return self._amplitude;
+        return this._amplitude;
     }
     get type(){
-        return self._type;
+        return this._type;
     }
-    
+    voltage_at(t){
+        if(this.type == "square_wave"){
+            let pos = t - this._cycle * floor(t / this._cycle);
+            if(pos < this._cycle / 2){
+                return 0;
+            }else{
+                return 2 * this._amplitude;
+            }
+        }else if(this.type == "sin_wave"){
+            return this._amplitude * sin(this._cycle * t);
+        }else if(this.type == "triangle_wave"){
+            let pos = t - this._cycle * floor(t / this._cycle);
+            if(pos < this._cycle/4){
+                
+            }else if(pos < this._cycle / 2){
+
+            }else if(pos < 3*this._cycle/4){
+
+            }else{
+
+            }
+        }
+        return 0;
+    }
 }
 
 function checkMeter(FG, x) {
