@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>實驗七: RC直流電路</title>
-    <link rel="stylesheet" href="../canvas.css">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/exp7.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.bgiframe.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css" />
 </head>
+
 <body>
+    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px"
+        style="left: 0px; top: 0px; position:absolute"></svg>
     <h1>
         <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-        <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span style="font-size:9px;">&#9660;</span>
+        <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
+                style="font-size:9px;">&#9660;</span>
             <ul id="SubMenu1" class="sub-menu" style="display:none;">
                 <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
                 <li><a href="exp5.html" target="_self">實驗五: 歐姆定律及電容實驗</a></li>
@@ -26,34 +36,45 @@
     <h2>
         我的課程 / 普通物理實驗 / 實驗七: RC直流電路
     </h2>
-    <script type="text/javascript">
-        var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
+    <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0; height: 600px;">
+        <canvas id="myCanvas" width="500" height="360"
+            style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
+            style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"></svg>
+        <div>
+            <div id="oscilloscope">
 
-    // 顯示或隱藏子選單
-    function switchMenu( theMainMenu, theSubMenu, theEvent ){
-        var SubMenu = document.getElementById( theSubMenu );
-        if( SubMenu.style.display == 'none' ){ // 顯示子選單
-            SubMenu.style.minWidth = theMainMenu.clientWidth; // 讓子選單的最小寬度與主選單相同 (僅為了美觀)
-            SubMenu.style.display = 'block';
-            hideMenu(); // 隱藏子選單
-            VisibleMenu = theSubMenu;
-        }
-        else{ // 隱藏子選單
-            if( theEvent != 'MouseOver' || VisibleMenu != theSubMenu ){
-                SubMenu.style.display = 'none';
-                VisibleMenu = '';
-            }
-        }
-    }
+            </div>
+            <div id="generator">
 
-    // 隱藏子選單
-    function hideMenu(){
-        if( VisibleMenu != '' ){
-            document.getElementById( VisibleMenu ).style.display = 'none';
-        }
-        VisibleMenu = '';
-    }
-    </script>
-
+            </div>
+    </div>
+    <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
+        Wire(單芯線)</button>
+    <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
+        Resistor(電阻)</button>
+    <button type="button" class="buttonInactive" id="addInductance" href="#">Add
+        Inductor(電感)</button>
+    <button type="button" class="buttonInactive" id="addCapacitance" href="#">Add
+        Capacitance(電容)</button>
+    <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
+        Alligator Clip(鱷魚夾)</button>
+    <button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
+    <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
+    <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
+    <a href="exp6_menu.html" target="_blank">使用手冊</a>
+    <div id = "error_message">
+        小提示，卡關了可以偷看，但僅供參考
+        <p id="error_message_content"></p>
+    </div>
+    <form id="form1">
+        時間:<a id="time1"></a><br>
+        姓名:<input class="input" value="" id="name1"></input><a id="name2"></a><br>
+        學號:<input class="input" value="" id="id1"></input><a id="id2"></a><br>
+        系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
+    </form>
+    <script type="text/javascript" src="js\exp7.js"></script>
 </body>
+
 </html>
