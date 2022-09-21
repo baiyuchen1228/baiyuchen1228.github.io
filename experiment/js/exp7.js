@@ -1493,29 +1493,102 @@ class Oscilloscope{
     }
     voltage_at(t){
         if(this.type == "square_wave"){
-            let pos = t - this._cycle * floor(t / this._cycle);
+            let pos = 1.0 * t - this._cycle * Math.floor(t / this._cycle);
             if(pos < this._cycle / 2){
-                return 0;
+                return -this._amplitude;
             }else{
-                return 2 * this._amplitude;
+                return this._amplitude;
             }
         }else if(this.type == "sin_wave"){
-            return this._amplitude * sin(this._cycle * t);
+            return this._amplitude * Math.sin(this._cycle * t);
         }else if(this.type == "triangle_wave"){
-            let pos = t - this._cycle * floor(t / this._cycle);
+            let pos = t - this._cycle * Math.floor(t / this._cycle);
             if(pos < this._cycle/4){
-                
+                return pos*4/this._cycle*this._amplitude;
             }else if(pos < this._cycle / 2){
-
+                pos -= this._cycle / 4;
+                return this.amplitude - pos*4/this._cycle*this._amplitude;
             }else if(pos < 3*this._cycle/4){
-
+                pos -= this._cycle / 2;
+                return - pos*4/this._cycle*this._amplitude;
             }else{
-
+                pos -= this._cycle*3 / 4;
+                return -this.amplitude + pos*4/this._cycle*this._amplitude;
             }
         }
         return 0;
     }
+    draw(){
+        let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
+        if (chartStatus != undefined) {
+            chartStatus.destroy();
+        }
+        const labels = [];
+        const DATA_COUNT = 100;
+        const datapoints = [];
+        for(let i=0;i<DATA_COUNT;i++){
+            datapoints[i] = this.voltage_at(i);
+            labels[i] = i;
+        }
+        const data = {
+            labels:labels,
+        datasets: [
+            {
+            data: datapoints,
+            borderColor: 'rgb(0, 0, 0)',
+            // backgroundColor: 'rgb(255, 0, 255)',
+            tension: 0.4
+            }
+        ]
+        };
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+              responsive: true,
+              aspectRatio: 1.2,
+              plugins: {
+                legend: {
+                    display: false //要不要顯示 lable
+                  }
+              },
+              elements: {
+                point:{
+                    radius: 0
+                }
+              },
+              interaction: {
+                intersect: false,
+              },
+              scales: {
+                x: {
+                    display: false, //要不要顯示 x
+                    ticks: {
+                      color: "black", // not 'fontColor:' anymore
+                      // fontSize: 18,
+                      font: {
+                        size: 6, // 'size' now within object 'font {}'
+                      },
+                    }
+                  },
+                y: {
+                  ticks: {
+                    color: "black", // not 'fontColor:' anymore
+                    // fontSize: 18,
+                    font: {
+                      size: 6, // 'size' now within object 'font {}'
+                    },
+                  }
+                }
+              }
+            },
+          };
+        var canvas = $("#oscilloscopeScreenCanvas");
+        var myChart = new Chart(canvas, config);
+    }
 }
+
+
 
 function checkMeter(FG, x) {
     let result = { voltage: "", current: "" };
@@ -1739,6 +1812,12 @@ function start(){
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
 }
+
+function drawWave(fre, amp, type){
+    var osi = new Oscilloscope($("#frequency")[0].value, $("#amplitude")[0].value, $("#wave_type")[0].value);
+    console.log(osi.draw());
+}
+
 function show_error(s){
     document.querySelector("#error_message_content").innerHTML = s;
 }

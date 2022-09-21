@@ -41,13 +41,14 @@
 - 示波器螢幕 10x8
 - V(t) = a sin(wt+b)
 - 方波、三角波、sin
+    - 目前算是弄好了
 
-## done in exp5
+<!-- ## done in exp5
 - 確認鍵換顏色
 - 正極暖系列，負極冷系列
 - 電阻燒掉會消失( code 寫好了，但留著然後印錯誤運席感覺比較好)
 - 按鈕復原
-    - (請先點按鈕)please click button first --> 
+    - (請先點按鈕)please click button first -- > 
     1. 請先點選電供、電表的按鈕，在接到麵包版上
     2. 請先取消___，再點選合適按鈕
 - rotate breadboard
@@ -120,9 +121,13 @@
 - powersupply 檢查與 exp5 不同，已修正，test finished
 - bug : 某些數字可能會無解(原因為浮點數誤差，允許誤差範圍在 1e-10 內)
     - ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png)
-- 加電阻返回有 bug
+- 加電阻返回有 bug -->
 
 ## 0914
 
 電阻燒掉會消失
 電壓計、電流計混用
+
+## reference
+- [char.js](https://www.chartjs.org/docs/latest/)
+- [zoom in](https://ithelp.ithome.com.tw/m/articles/10264604)

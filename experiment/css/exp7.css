@@ -83,6 +83,14 @@ div#oscilloscope{
     background-size: 800px ;
     background-repeat: no-repeat;
 }
+div#oscilloscopeScreen{
+    position: absolute;
+    left: 50px;
+    top: 45px;
+    width: 280px;
+    height: 225px;
+    background-color: #CCCCCC;
+}
 .powersupply-text{
     float: left;
     position: absolute;
@@ -147,6 +155,11 @@ div#oscilloscope{
     position: relative;
     left: 800px;
     /* top: 100px; */
+}
+#demo_wave{
+    position: absolute;
+    left: 1200px;
+    top: 150px;
 }
 #error_message{
     background-color : PaleGreen;

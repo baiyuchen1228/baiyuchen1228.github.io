@@ -12,6 +12,7 @@
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.bgiframe.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -42,7 +43,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
             style="left: 100px; top: 270px; z-index:0; position:absolute" id="svgline"></svg>
         <div id="oscilloscope">
-
+            <div id="oscilloscopeScreen">
+                <canvas id="oscilloscopeScreenCanvas"></canvas>
+            </div>
         </div>
         <div id="generator">
 
@@ -72,6 +75,13 @@
         學號:<input class="input" value="" id="id1"></input><a id="id2"></a><br>
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
+    </form>
+    <form id="demo_wave">
+        頻率:<input class="input" value="" id="frequency"></input><br>
+        振幅:<input class="input" value="" id="amplitude"></input><br>
+        類型:<input class="input" value="" id="wave_type"></input><br>
+        類型有 sin_wave, square_wave, triangle_wave
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
     </form>
     <script type="text/javascript" src="js\exp7.js"></script>
 </body>
