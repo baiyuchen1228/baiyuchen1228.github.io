@@ -1500,7 +1500,7 @@ class Oscilloscope{
                 return this._amplitude;
             }
         }else if(this.type == "sin_wave"){
-            return this._amplitude * Math.sin(this._cycle * t);
+            return this._amplitude * Math.sin(this._frequency * t);
         }else if(this.type == "triangle_wave"){
             let pos = t - this._cycle * Math.floor(t / this._cycle);
             if(pos < this._cycle/4){
