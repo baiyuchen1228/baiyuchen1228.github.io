@@ -1047,7 +1047,7 @@ $("#container").mouseup(function (e) {
                         $("#" + Things[i].id).remove();
 
                     }
-
+                    check();
                     return;
                 }
             }
@@ -1096,6 +1096,7 @@ $("#container").mouseup(function (e) {
                         $("#" + Things[i].id).remove();
 
                     }
+                    check();
                     return;
                 }
             }
@@ -1129,6 +1130,7 @@ $("#container").mouseup(function (e) {
                             $("#" + Things[i].id).remove();
                             delALLalligator = null;
                         }
+                        check();
                         return;
                     }
                 }
@@ -1153,6 +1155,7 @@ $("#container").mouseup(function (e) {
                             $("#" + Things[i].id).remove();
                             delALLalligator = null;
                         }
+                        check();
                         return;
                     }
                 }
