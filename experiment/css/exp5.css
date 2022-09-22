@@ -347,3 +347,9 @@ div#powersupply{
     border-radius: 5px;
     background-color: #e7dc8f;
 }
+#clear{
+    position: absolute;
+    background-color: rgb(255, 145, 145);
+    left: 1200px;
+    top: 700px;
+}
