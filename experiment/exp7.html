@@ -48,6 +48,24 @@
             </div>
         </div>
         <div id="generator">
+            <button id="minus_generator_frequency" type="button" class="generator-button" onclick="minus_generator_frequency()">＜－</button>
+            <button id="add_generator_frequency" type="button" class="generator-button" onclick="add_generator_frequency()">－＞</button>
+            <p id="generator_frequency" class="generator-text">1</p>
+            <p id="generator_frequency_menu" class="generator-text"></p>
+            <button id="generator_power" type="button" class="generator-button" onclick="generator_power()"></button>
+            <button id="generator_frequency6" type="button" class="generator-button" onclick="generator_frequency_6()"></button>
+            <button id="generator_frequency5" type="button" class="generator-button" onclick="generator_frequency_5()"></button>
+            <button id="generator_frequency4" type="button" class="generator-button" onclick="generator_frequency_4()"></button>
+            <button id="generator_frequency3" type="button" class="generator-button" onclick="generator_frequency_3()"></button>
+            <button id="generator_frequency2" type="button" class="generator-button" onclick="generator_frequency_2()"></button>
+            <button id="generator_frequency1" type="button" class="generator-button" onclick="generator_frequency_1()"></button>
+            <button id="generator_frequency0" type="button" class="generator-button" onclick="generator_frequency_0()"></button>
+            <p id="generator_inv_text" class="generator-text">inv</p>
+            <button id="generator_inv" type="button" class="generator-button" onclick="generator_inv()"></button>
+            <p id="generator_wave_text" class="generator-text"></p>
+            <button id="generator_square" type="button" class="generator-button" onclick="generator_square()"></button>
+            <button id="generator_triangle" type="button" class="generator-button" onclick="generator_triangle()"></button>
+            <button id="generator_sin" type="button" class="generator-button" onclick="generator_sin()"></button>
 
         </div>
     </div>
@@ -80,7 +98,7 @@
         頻率:<input class="input" value="" id="frequency"></input><br>
         振幅:<input class="input" value="" id="amplitude"></input><br>
         類型:<input class="input" value="" id="wave_type"></input><br>
-        類型有 sin_wave, square_wave, triangle_wave
+        類型有 sin_wave, square_wave, triangle_wave<\n>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
     </form>
     <script type="text/javascript" src="js\exp7.js"></script>

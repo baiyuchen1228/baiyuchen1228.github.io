@@ -72,10 +72,118 @@ div#generator{
     background-size: 520px ;
     background-repeat: no-repeat;
 }
+.generator-text{
+    float: left;
+    position: absolute;
+    color: white;
+    text-align: center;
+    top: 50px;
+}
+.generator-button{
+    position:absolute;
+    float: left;
+    color: #000000;
+    height: 20px;
+    top: 80px;
+    text-indent: 0px;
+    font-size: 10px;
+    width: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+#minus_generator_frequency{
+    top: 120px;
+    left: 40px;
+    width: 40px;
+}
+#add_generator_frequency{
+    top: 120px;
+    left: 80px;
+    width: 40px;
+}
+#generator_frequency{
+    height: 20px;
+    width: 40px;
+    background-color: #000000;
+    top: 80px;
+    left: 60px;
+}
+#generator_frequency_menu{
+    height: 15px;
+    width: 160px;
+    background-color: #000000;
+    top: 20px;
+    left: 140px;
+    font-size: x-small;
+}
+#generator_power{
+    top: 52px;
+    left: 122px;
+}
+#generator_frequency6{
+    top: 52px;
+    left: 145px;
+}
+#generator_frequency5{
+    top: 52px;
+    left: 168px;
+}
+#generator_frequency4{
+    top: 52px;
+    left: 191px;
+}
+#generator_frequency3{
+    top: 52px;
+    left: 214px;
+}
+#generator_frequency2{
+    top: 52px;
+    left: 237px;
+}
+#generator_frequency1{
+    top: 52px;
+    left: 260px;
+}
+#generator_frequency0{
+    top: 52px;
+    left: 283px;
+}
+#generator_inv_text{
+    height: 15px;
+    width: 20px;
+    background-color: #000000;
+    top: 20px;
+    left: 320px;
+    font-size: x-small;
+}
+#generator_inv{
+    top: 52px;
+    left: 320px;
+}
+#generator_wave_text{
+    height: 15px;
+    width: 60px;
+    background-color: #000000;
+    top: 20px;
+    left: 345px;
+    font-size: x-small;
+}
+#generator_square{
+    top: 52px;
+    left: 343px;
+}
+#generator_triangle{
+    top: 52px;
+    left: 366px;
+}
+#generator_sin{
+    top: 52px;
+    left: 389px;
+}
 div#oscilloscope{
     position: absolute;
     left: 630px;
-    top: 150px;
+    top: 30px;
     height: 360px;
     width: 800px;
     border: 5px solid black;
@@ -91,56 +199,7 @@ div#oscilloscopeScreen{
     height: 225px;
     background-color: #CCCCCC;
 }
-.powersupply-text{
-    float: left;
-    position: absolute;
-    color: white;
-    top: 50px;
-}
-.powersupply-button{
-    float: left;
-    position:absolute;
-    color: #000000;
-    height: 20px;
-    top: 170px;
-    font-size: 10px;
-    text-indent: -4px;
-    width: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-.multimeter-button-1{
-    position:absolute;
-    float: left;
-    color: #000000;
-    height: 20px;
-    top: 80px;
-    text-indent: 0px;
-    font-size: 10px;
-    width: 40px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-.multimeter-button-2{
-    position:absolute;
-    float: left;
-    color: #000000;
-    height: 20px;
-    top: 100px;
-    text-indent: 0px;
-    font-size: 10px;
-    width: 40px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-.multimeter-title{
-    float: left;
-    position: absolute;
-    color: black;
-    top: 10px;
-    left: 80px;
-    font-size: 30px;
-}
+
 .buttonInactive
 {
     background-color: white;
@@ -166,7 +225,26 @@ div#oscilloscopeScreen{
     position: absolute;
     width : 350px;
     height : 130px;
-    left : 570px;
+    left : 600px;
+    top : 800px;
+    z-index: 1;
+}
+#form1{
+    background-color : PaleGreen;
+    position: absolute;
+    width : 350px;
+    height : 130px;
+    left : 900px;
+    top : 800px;
+    z-index: 1;
+}
+#demo_wave{
+    background-color : PaleGreen;
+    position: absolute;
+    width : 350px;
+    height : 130px;
+    left : 1200px;
+    top : 800px;
     z-index: 1;
 }
 #submitbuttom{

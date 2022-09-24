@@ -46,6 +46,13 @@ var delIni;
 
 var meter2On = 0;
 
+var generator_frequency = 1; // 1 * 10 ^ 2
+var generator_frequency1 = 1;
+var generator_frequency2 = 1;
+var generator_power_on = false;
+var wave_type;
+var generator_inv_on = false;
+
 // 顯示或隱藏子選單
 function switchMenu(theMainMenu, theSubMenu, theEvent) {
     var SubMenu = document.getElementById(theSubMenu);
@@ -701,7 +708,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(current_x, 40, 10, 10);
+            context.fillRect(40, current_x,10, 10);
         };
         current_x = current_x + 20;
     };
@@ -710,7 +717,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(current_x, 60, 10, 10);
+            context.fillRect(60, current_x,10, 10);
         };
         current_x = current_x + 20;
     };
@@ -718,15 +725,15 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "red";
     context.beginPath(); // Start the path
-    context.moveTo(0, 35); // Set the path origin
-    context.lineTo(50 * 11 - 5, 35); // Set the path destination
+    context.moveTo(35, 0); // Set the path origin
+    context.lineTo(35, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
     context.strokeStyle = "black";
     context.beginPath(); // Start the path
-    context.moveTo(0, 75); // Set the path origin
-    context.lineTo(50 * 11 - 5, 75); // Set the path destination
+    context.moveTo(75, 0); // Set the path origin
+    context.lineTo(75, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -734,7 +741,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 23; i++) {
             current_x = current_x + 20;
-            context.fillRect(current_x, 80 + 20 * j, 10, 10);
+            context.fillRect(80 + 20 * j, current_x, 10, 10);
         };
         current_x = 0;
 
@@ -743,8 +750,8 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "blue";
     context.beginPath(); // Start the path
-    context.moveTo(0, 175); // Set the path origin
-    context.lineTo(50 * 11 - 5, 175); // Set the path destination
+    context.moveTo(175, 0); // Set the path origin
+    context.lineTo(175, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -754,7 +761,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 23; i++) {
             current_x = current_x + 20;
-            context.fillRect(current_x, 180 + 20 * j, 10, 10);
+            context.fillRect(180 + 20 * j, current_x, 10, 10);
         };
         current_x = 0;
 
@@ -763,8 +770,8 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "black";
     context.beginPath(); // Start the path
-    context.moveTo(0, 275); // Set the path origin
-    context.lineTo(50 * 11 - 5, 270); // Set the path destination
+    context.moveTo(275, 0); // Set the path origin
+    context.lineTo(275, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -773,7 +780,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(current_x, 280, 10, 10);
+            context.fillRect(280, current_x, 10, 10);
         };
         current_x = current_x + 20;
     };
@@ -783,7 +790,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < 5; i++) {
             current_x = current_x + 20;
-            context.fillRect(current_x, 300, 10, 10);
+            context.fillRect(300, current_x, 10, 10);
         };
         current_x = current_x + 20;
     };
@@ -791,8 +798,8 @@ $(document).ready(function () {
     context.lineWidth = 3;
     context.strokeStyle = "red";
     context.beginPath(); // Start the path
-    context.moveTo(0, 315); // Set the path origin
-    context.lineTo(50 * 11 - 5, 315); // Set the path destination
+    context.moveTo(315, 0); // Set the path origin
+    context.lineTo(315, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
@@ -1820,4 +1827,138 @@ function drawWave(fre, amp, type){
 
 function show_error(s){
     document.querySelector("#error_message_content").innerHTML = s;
+}
+
+function pow(a, x){
+    var tmp = 1;
+    for(let i = 0;i < x;i++){
+        tmp *= a;
+    }
+    return tmp;
+}
+
+function evaluate_generator_frequency(){
+    generator_frequency = generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0));
+    $("#generator_frequency").text(generator_frequency1.toFixed(1));
+    $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
+}
+
+function minus_generator_frequency(){
+    if(generator_frequency1 < 0.2)return;
+    generator_frequency1 -= 0.1;
+    evaluate_generator_frequency();
+}
+
+function add_generator_frequency(){
+    if(generator_frequency1 > 2)return;
+    generator_frequency1 += 0.1;
+    evaluate_generator_frequency();
+}
+
+function generator_power(){
+    if(generator_power_on){
+        $("#generator_power").css("backgroundColor", "green");
+        generator_power_on = false;
+    }
+    else{
+        $("#generator_power").css("backgroundColor", "white");
+        generator_power_on = true;
+    }
+}
+
+function clear_generator_frequency(){
+    $("#generator_frequency6").css("backgroundColor", "white");
+    $("#generator_frequency5").css("backgroundColor", "white");
+    $("#generator_frequency4").css("backgroundColor", "white");
+    $("#generator_frequency3").css("backgroundColor", "white");
+    $("#generator_frequency2").css("backgroundColor", "white");
+    $("#generator_frequency1").css("backgroundColor", "white");
+    $("#generator_frequency0").css("backgroundColor", "white");
+}
+
+function generator_frequency_6(){
+    clear_generator_frequency();
+    $("#generator_frequency6").css("backgroundColor", "green");
+    generator_frequency2 = 6;
+    evaluate_generator_frequency();
+}
+
+function generator_frequency_5(){
+    clear_generator_frequency();
+    $("#generator_frequency5").css("backgroundColor", "green");
+    generator_frequency2 = 5;
+    evaluate_generator_frequency();
+}
+
+function generator_frequency_4(){
+    clear_generator_frequency();
+    $("#generator_frequency4").css("backgroundColor", "green");
+    generator_frequency2 = 4;
+    evaluate_generator_frequency();
+}
+
+function generator_frequency_3(){
+    clear_generator_frequency();
+    $("#generator_frequency3").css("backgroundColor", "green");
+    generator_frequency2 = 3;
+    evaluate_generator_frequency();
+}
+
+function generator_frequency_2(){
+    clear_generator_frequency();
+    $("#generator_frequency2").css("backgroundColor", "green");
+    generator_frequency2 = 2;
+    evaluate_generator_frequency();
+}
+
+function generator_frequency_1(){
+    clear_generator_frequency();
+    $("#generator_frequency1").css("backgroundColor", "green");
+    generator_frequency2 = 1;
+    evaluate_generator_frequency();
+}
+
+function generator_frequency_0(){
+    clear_generator_frequency();
+    $("#generator_frequency0").css("backgroundColor", "green");
+    generator_frequency2 = 0;
+    evaluate_generator_frequency();
+}
+
+function generator_inv(){
+    if(generator_inv_on){
+        $("#generator_inv").css("backgroundColor", "white");
+        generator_inv_on = false;
+    }
+    else{
+        $("#generator_inv").css("backgroundColor", "green");
+        generator_inv_on = true;
+    }
+}
+
+function clear_generator_wave(){
+    $("#generator_square").css("backgroundColor", "white");
+    $("#generator_triangle").css("backgroundColor", "white");
+    $("#generator_sin").css("backgroundColor", "white");
+}
+
+function generator_square(){
+    clear_generator_wave();
+    $("#generator_square").css("backgroundColor", "green");
+    wave_type = "square_wave";
+    $("#generator_wave_text").text(wave_type);
+}
+
+function generator_triangle(){
+    clear_generator_wave();
+    $("#generator_triangle").css("backgroundColor", "green");
+    wave_type = "triangle_wave";
+    $("#generator_wave_text").text(wave_type);
+}
+
+function generator_sin(){
+    clear_generator_wave();
+    $("#generator_sin").css("backgroundColor", "green");
+    wave_type = "sin_wave";
+    $("#generator_wave_text").text(wave_type);
 }
