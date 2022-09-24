@@ -93,12 +93,12 @@ div#generator{
 }
 #minus_generator_frequency{
     top: 120px;
-    left: 40px;
+    left: 30px;
     width: 40px;
 }
 #add_generator_frequency{
     top: 120px;
-    left: 80px;
+    left: 70px;
     width: 40px;
 }
 #generator_frequency{
@@ -106,7 +106,7 @@ div#generator{
     width: 40px;
     background-color: #000000;
     top: 80px;
-    left: 60px;
+    left: 50px;
 }
 #generator_frequency_menu{
     height: 15px;
@@ -179,6 +179,92 @@ div#generator{
 #generator_sin{
     top: 52px;
     left: 389px;
+}
+#generator_AMPL1_text{
+    height: 15px;
+    width: 30px;
+    background-color: #000000;
+    top: 20px;
+    left: 410px;
+    font-size: x-small;
+}
+#generator_AMPL1{
+    top: 52px;
+    left: 422px;
+}
+#generator_duty_text{
+    height: 15px;
+    width: 40px;
+    background-color: #000000;
+    top: 90px;
+    left: 140px;
+    font-size: x-small;
+}
+#minus_generator_duty{
+    top: 140px;
+    left: 120px;
+    width: 30px;
+}
+#add_generator_duty{
+    top: 140px;
+    left: 150px;
+    width: 30px;
+}
+#generator_offset_text{
+    height: 15px;
+    width: 50px;
+    background-color: #000000;
+    top: 90px;
+    left: 190px;
+    font-size: x-small;
+}
+#generator_offset_switch{
+    top: 120px;
+    left: 205px;
+}
+#minus_generator_offset{
+    top: 140px;
+    left: 185px;
+    width: 30px;
+}
+#add_generator_offset{
+    top: 140px;
+    left: 215px;
+    width: 30px;
+}
+#generator_AMPL2{
+    height: 15px;
+    width: 40px;
+    background-color: #000000;
+    top: 90px;
+    left: 255px;
+    font-size: x-small;
+}
+#generator_AMPL_switch{
+    top: 120px;
+    left: 265px;
+}
+#minus_generator_AMPL{
+    top: 140px;
+    left: 245px;
+    width: 30px;
+}
+#add_generator_AMPL{
+    top: 140px;
+    left: 275px;
+    width: 30px;
+}
+#generator_output50{
+    height: 15px;
+    width: 40px;
+    background-color: #000000;
+    top: 90px;
+    left: 405px;
+    font-size: x-small;
+}
+#generator_output_switch{
+    top: 125px;
+    left: 417px;
 }
 div#oscilloscope{
     position: absolute;

@@ -52,6 +52,13 @@ var generator_frequency2 = 1;
 var generator_power_on = false;
 var wave_type;
 var generator_inv_on = false;
+var generator_AMPL1_on = false;
+var generator_duty = 0.5;
+var generator_offset_on = false;
+var generator_offset = 0;
+var generator_AMPL2_on = false;
+var generator_AMPL = 0;
+var generator_output_on = false;
 
 // 顯示或隱藏子選單
 function switchMenu(theMainMenu, theSubMenu, theEvent) {
@@ -1961,4 +1968,90 @@ function generator_sin(){
     $("#generator_sin").css("backgroundColor", "green");
     wave_type = "sin_wave";
     $("#generator_wave_text").text(wave_type);
+}
+
+function generator_AMPL1(){
+    if(generator_AMPL1_on){
+        $("#generator_AMPL1").css("backgroundColor", "white");
+        generator_AMPL1_on = false;
+    }
+    else{
+        $("#generator_AMPL1").css("backgroundColor", "green");
+        generator_AMPL1_on = true;
+    }
+}
+
+function minus_generator_duty(){
+    if(generator_duty < 0.55){
+        return;
+    }
+    generator_duty -= 0.05;
+}
+
+function add_generator_duty(){
+    if(generator_duty > 0.95){
+        return;
+    }
+    generator_duty += 0.05;
+}
+
+function generator_offset_switch(){
+    if(generator_offset_on){
+        $("#generator_offset_switch").css("backgroundColor", "white");
+        generator_offset_on = false;
+    }
+    else{
+        $("#generator_offset_switch").css("backgroundColor", "green");
+        generator_offset = 0;
+        generator_offset_on = true;
+    }
+}
+
+function minus_generator_offset(){
+    if(generator_offset < -30){
+        return;
+    }
+    generator_offset -= 1;
+}
+
+function add_generator_offset(){
+    if(generator_offset > 30){
+        return;
+    }
+    generator_offset += 1;
+}
+
+function generator_AMPL_switch(){
+    if(generator_AMPL2_on){
+        $("#generator_AMPL_switch").css("backgroundColor", "white");
+        generator_AMPL2_on = false;
+    }
+    else{
+        $("#generator_AMPL_switch").css("backgroundColor", "green");
+        generator_AMPL2_on = true;
+    }
+}
+
+function minus_generator_AMPL(){
+    if(generator_AMPL < 1){
+        return;
+    }
+    generator_AMPL -= 1;
+}
+
+function add_generator_AMPL(){
+    if(generator_AMPL > 30){
+        return;
+    }
+    generator_AMPL += 1;
+}
+function generator_output_switch(){
+    if(generator_output_on){
+        $("#generator_output_switch").css("backgroundColor", "white");
+        generator_output_on = false;
+    }
+    else{
+        $("#generator_output_switch").css("backgroundColor", "green");
+        generator_output_on = true;
+    }
 }
