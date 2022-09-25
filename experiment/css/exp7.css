@@ -89,7 +89,7 @@ div#oscilloscopeScreen{
     top: 45px;
     width: 280px;
     height: 225px;
-    background-color: #CCCCCC;
+    background-image:url('../../images/oscilloscope_screen.jpg');
 }
 .powersupply-text{
     float: left;

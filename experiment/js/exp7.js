@@ -1572,6 +1572,10 @@ class Oscilloscope{
                     }
                   },
                 y: {
+                  display: false,
+                  max: 5,
+                  min: -5,
+                  padding:5,
                   ticks: {
                     color: "black", // not 'fontColor:' anymore
                     // fontSize: 18,

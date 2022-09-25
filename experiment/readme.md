@@ -9,6 +9,8 @@
 - meeting note 不用之後把連結拿掉
 ### more fun challenge
 可能要再想想的一些挑戰
+- 電阻燒掉會消失
+- 電壓計、電流計混用
 ### 一些 idea
 - 確保學生真的有接電路
     - 讓學生輸入學號姓名(reload 後才能重輸資料)，學生將完成的電路截圖
@@ -123,10 +125,6 @@
     - ![https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png](https://github.com/baiyuchen1228/baiyuchen1228.github.io/blob/main/experiment/demo/bug.png)
 - 加電阻返回有 bug -->
 
-## 0914
-
-電阻燒掉會消失
-電壓計、電流計混用
 
 ## reference
 - [char.js](https://www.chartjs.org/docs/latest/)
