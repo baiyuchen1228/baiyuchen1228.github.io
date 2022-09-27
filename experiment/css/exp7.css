@@ -88,7 +88,7 @@ div#oscilloscopeScreen{
     left: 50px;
     top: 45px;
     width: 280px;
-    height: 225px;
+    height: 224px;
     background-image:url('../../images/oscilloscope_screen.jpg');
 }
 
@@ -110,6 +110,15 @@ div#oscilloscopeScreen{
     width: 20px;
     border-radius: 15px;
     cursor: pointer;
+}
+.demo_wave{
+    background-color : PaleGreen;
+    position: absolute;
+    width : 350px;
+    height : 130px;
+    left : 1200px;
+    top : 800px;
+    z-index: 1;
 }
 #minus_generator_frequency{
     top: 120px;
@@ -321,10 +330,15 @@ div#oscilloscopeScreen{
     left: 800px;
     /* top: 100px; */
 }
-#demo_wave{
+#demo_wave1{
     position: absolute;
     left: 1200px;
-    top: 150px;
+    /* top: 150px; */
+}
+#demo_wave2{
+    position: absolute;
+    left: 1550px;
+    /* top: 150px; */
 }
 #error_message{
     background-color : PaleGreen;
@@ -341,15 +355,6 @@ div#oscilloscopeScreen{
     width : 350px;
     height : 130px;
     left : 900px;
-    top : 800px;
-    z-index: 1;
-}
-#demo_wave{
-    background-color : PaleGreen;
-    position: absolute;
-    width : 350px;
-    height : 130px;
-    left : 1200px;
     top : 800px;
     z-index: 1;
 }

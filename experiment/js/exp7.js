@@ -1505,7 +1505,8 @@ class Oscilloscope{
     get type(){
         return this._type;
     }
-    voltage_at(t){
+    voltage_at(i, t){
+        
         if(this.type == "square_wave"){
             let pos = 1.0 * t - this._cycle * Math.floor(t / this._cycle);
             if(pos < this._cycle / 2){
@@ -1514,7 +1515,7 @@ class Oscilloscope{
                 return this._amplitude;
             }
         }else if(this.type == "sin_wave"){
-            return this._amplitude * Math.sin(this._frequency * t);
+            return this._amplitude * Math.sin(2*Math.PI*this._frequency * t);
         }else if(this.type == "triangle_wave"){
             let pos = t - this._cycle * Math.floor(t / this._cycle);
             if(pos < this._cycle/4){
@@ -1539,20 +1540,27 @@ class Oscilloscope{
         }
         const labels = [];
         const DATA_COUNT = 100;
-        const datapoints = [];
+        const datapoints = [], datapoints2 = [];
         for(let i=0;i<DATA_COUNT;i++){
             datapoints[i] = this.voltage_at(i);
+            datapoints2[i] = i/100;
             labels[i] = i;
         }
         const data = {
             labels:labels,
         datasets: [
             {
-            data: datapoints,
-            borderColor: 'rgb(0, 0, 0)',
-            // backgroundColor: 'rgb(255, 0, 255)',
-            tension: 0.4
-            }
+                data: datapoints,
+                borderColor: 'rgb(255, 255, 0)',
+                //backgroundColor: 'rgb(255, 255, 0)',
+                tension: 0.4
+            },
+            {
+                data: datapoints2,
+                borderColor: 'rgb(0, 255, 0)',
+                //backgroundColor: 'rgb(255, 255, 0)',
+                tension: 0.4
+            },
         ]
         };
         const config = {
@@ -1838,8 +1846,15 @@ function start(){
     $("#submitbuttom").css("display", "none");
 }
 
-function drawWave(fre, amp, type){
-    var osi = new Oscilloscope($("#frequency")[0].value, $("#amplitude")[0].value, $("#wave_type")[0].value);
+function drawWave1(){
+    var osi = new Oscilloscope($("#demo_frequency1")[0].value, $("#demo_amplitude1")[0].value, $("#demo_wave_type1")[0].value);
+    //color = 'rgb(255, 255, 0)';
+    console.log(osi.draw());
+}
+
+function drawWave2(){
+    var osi = new Oscilloscope($("#demo_frequency2")[0].value, $("#demo_amplitude2")[0].value, $("#demo_wave_type2")[0].value);
+    //color = 'rgb(0, 255, 0)';
     console.log(osi.draw());
 }
 

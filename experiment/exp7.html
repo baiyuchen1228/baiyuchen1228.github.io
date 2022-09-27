@@ -110,12 +110,21 @@
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
-    <form id="demo_wave">
-        頻率:<input class="input" value="" id="frequency"></input><br>
-        振幅:<input class="input" value="" id="amplitude"></input><br>
-        類型:<input class="input" value="" id="wave_type"></input><br>
-        類型有 sin_wave, square_wave, triangle_wave<\n>
-        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
+    <form class="demo_wave" id="demo_wave1">
+        wave 1<br>
+        頻率:<input class="input" value="" id="demo_frequency1"></input><br>
+        振幅:<input class="input" value="" id="demo_amplitude1"></input><br>
+        類型:<input class="input" value="" id="demo_wave_type1"></input><br>
+        類型有 sin_wave, square_wave, triangle_wave<br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave1()"></input><br>
+    </form>
+    <form class="demo_wave" id="demo_wave2">
+        wave 2<br>
+        頻率:<input class="input" value="" id="demo_frequency2"></input><br>
+        振幅:<input class="input" value="" id="demo_amplitude2"></input><br>
+        類型:<input class="input" value="" id="demo_wave_type2"></input><br>
+        類型有 sin_wave, square_wave, triangle_wave<br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave2()"></input><br>
     </form>
     <script type="text/javascript" src="js\exp7.js"></script>
 </body>
