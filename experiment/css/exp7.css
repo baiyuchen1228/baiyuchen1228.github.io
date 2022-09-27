@@ -112,10 +112,11 @@ div#oscilloscopeScreen{
     cursor: pointer;
 }
 .demo_wave{
+    padding: 5px;
     background-color : PaleGreen;
     position: absolute;
     width : 350px;
-    height : 130px;
+    height : 250px;
     left : 1200px;
     top : 800px;
     z-index: 1;
@@ -330,30 +331,28 @@ div#oscilloscopeScreen{
     left: 800px;
     /* top: 100px; */
 }
-#demo_wave1{
+#demo_wave{
     position: absolute;
     left: 1200px;
     /* top: 150px; */
 }
-#demo_wave2{
-    position: absolute;
-    left: 1550px;
-    /* top: 150px; */
-}
+
 #error_message{
+    padding: 5px;
     background-color : PaleGreen;
     position: absolute;
     width : 350px;
-    height : 130px;
+    height : 250px;
     left : 600px;
     top : 800px;
     z-index: 1;
 }
 #form1{
+    padding: 5px;
     background-color : PaleGreen;
     position: absolute;
     width : 350px;
-    height : 130px;
+    height : 250px;
     left : 900px;
     top : 800px;
     z-index: 1;

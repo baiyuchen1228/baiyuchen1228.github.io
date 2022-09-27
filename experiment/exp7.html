@@ -99,6 +99,7 @@
     <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
     <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
     <a href="exp7_menu.html" target="_blank">使用手冊</a>
+    
     <div id = "error_message">
         小提示，卡關了可以偷看，但僅供參考
         <p id="error_message_content"></p>
@@ -110,21 +111,17 @@
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
-    <form class="demo_wave" id="demo_wave1">
+    <form class="demo_wave" id="demo_wave">
         wave 1<br>
-        頻率:<input class="input" value="" id="demo_frequency1"></input><br>
-        振幅:<input class="input" value="" id="demo_amplitude1"></input><br>
-        類型:<input class="input" value="" id="demo_wave_type1"></input><br>
-        類型有 sin_wave, square_wave, triangle_wave<br>
-        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave1()"></input><br>
-    </form>
-    <form class="demo_wave" id="demo_wave2">
+        &emsp;頻率:<input class="input" value="" id="demo_frequency1"></input><br>
+        &emsp;振幅:<input class="input" value="" id="demo_amplitude1"></input><br>
+        &emsp;類型:<input class="input" value="" id="demo_wave_type1"></input><br>
         wave 2<br>
-        頻率:<input class="input" value="" id="demo_frequency2"></input><br>
-        振幅:<input class="input" value="" id="demo_amplitude2"></input><br>
-        類型:<input class="input" value="" id="demo_wave_type2"></input><br>
+        &emsp;頻率:<input class="input" value="" id="demo_frequency2"></input><br>
+        &emsp;振幅:<input class="input" value="" id="demo_amplitude2"></input><br>
+        &emsp;類型:<input class="input" value="" id="demo_wave_type2"></input><br>
         類型有 sin_wave, square_wave, triangle_wave<br>
-        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave2()"></input><br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
     </form>
     <script type="text/javascript" src="js\exp7.js"></script>
 </body>

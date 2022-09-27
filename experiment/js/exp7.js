@@ -1481,11 +1481,14 @@ function equationVoltageVoltage() {
 
 
 class Oscilloscope{
-    constructor(frequency, amplitude, type){
-        this._frequency = frequency;
-        this._amplitude = amplitude;
-        this._cycle = 1 / frequency;
-        this._type = type;
+    constructor(frequencys = [], amplitudes = [], types = []){
+        this._frequencys = frequencys;
+        this._amplitudes = amplitudes;
+        this._cycles = [];
+        for(let i=0;i<2;i++){
+            this._cycles[i] = 1 / frequencys[i];
+        }
+        this._types = types;
     }
     static get square_wave(){
         return "square_wave";
@@ -1496,39 +1499,40 @@ class Oscilloscope{
     static get triangle_wave(){
         return "triangle_wave";
     }
-    get frequency(){
-        return this._frequency;
+    get frequencys(){
+        return this._frequencys;
     }
-    get amplitude(){
-        return this._amplitude;
+    get amplitudes(){
+        return this._amplitudes;
     }
-    get type(){
-        return this._type;
+    get types(){
+        return this._types;
     }
     voltage_at(i, t){
-        
-        if(this.type == "square_wave"){
-            let pos = 1.0 * t - this._cycle * Math.floor(t / this._cycle);
-            if(pos < this._cycle / 2){
-                return -this._amplitude;
+        let cycle = this._cycles[i], amplitude = this._amplitudes[i];
+        let frequency = this._frequencys[i], type = this._types[i];
+        if(type == "square_wave"){
+            let pos = 1.0 * t - cycle * Math.floor(t / cycle);
+            if(pos < cycle / 2){
+                return amplitude;
             }else{
-                return this._amplitude;
+                return -amplitude;
             }
-        }else if(this.type == "sin_wave"){
-            return this._amplitude * Math.sin(2*Math.PI*this._frequency * t);
-        }else if(this.type == "triangle_wave"){
-            let pos = t - this._cycle * Math.floor(t / this._cycle);
-            if(pos < this._cycle/4){
-                return pos*4/this._cycle*this._amplitude;
-            }else if(pos < this._cycle / 2){
-                pos -= this._cycle / 4;
-                return this.amplitude - pos*4/this._cycle*this._amplitude;
-            }else if(pos < 3*this._cycle/4){
-                pos -= this._cycle / 2;
-                return - pos*4/this._cycle*this._amplitude;
+        }else if(type == "sin_wave"){
+            return amplitude * Math.sin(2*Math.PI*frequency * t);
+        }else if(type == "triangle_wave"){
+            let pos = t - cycle * Math.floor(t / cycle);
+            if(pos < cycle/4){
+                return pos* 4 / cycle * amplitude;
+            }else if(pos < cycle / 2){
+                pos -= cycle / 4;
+                return amplitude - pos * 4 / cycle * amplitude;
+            }else if(pos < 3 * cycle/4){
+                pos -= cycle / 2;
+                return - pos * 4 / cycle * amplitude;
             }else{
-                pos -= this._cycle*3 / 4;
-                return -this.amplitude + pos*4/this._cycle*this._amplitude;
+                pos -= cycle*3 / 4;
+                return -amplitude + pos * 4 / cycle * amplitude;
             }
         }
         return 0;
@@ -1540,23 +1544,23 @@ class Oscilloscope{
         }
         const labels = [];
         const DATA_COUNT = 100;
-        const datapoints = [], datapoints2 = [];
+        const datapoints0 = [], datapoints1 = [];
         for(let i=0;i<DATA_COUNT;i++){
-            datapoints[i] = this.voltage_at(i);
-            datapoints2[i] = i/100;
+            datapoints0[i] = this.voltage_at(0, i);
+            datapoints1[i] = this.voltage_at(1, i);
             labels[i] = i;
         }
         const data = {
             labels:labels,
         datasets: [
             {
-                data: datapoints,
+                data: datapoints0,
                 borderColor: 'rgb(255, 255, 0)',
                 //backgroundColor: 'rgb(255, 255, 0)',
                 tension: 0.4
             },
             {
-                data: datapoints2,
+                data: datapoints1,
                 borderColor: 'rgb(0, 255, 0)',
                 //backgroundColor: 'rgb(255, 255, 0)',
                 tension: 0.4
@@ -1595,8 +1599,8 @@ class Oscilloscope{
                   },
                 y: {
                   display: false,
-                  max: 5,
-                  min: -5,
+                  max: 8,
+                  min: -8,
                   padding:5,
                   ticks: {
                     color: "black", // not 'fontColor:' anymore
@@ -1846,17 +1850,17 @@ function start(){
     $("#submitbuttom").css("display", "none");
 }
 
-function drawWave1(){
-    var osi = new Oscilloscope($("#demo_frequency1")[0].value, $("#demo_amplitude1")[0].value, $("#demo_wave_type1")[0].value);
+function drawWave(){
+    let frequencys = [], amplitudes = [], types = [];
+    frequencys[0] = $("#demo_frequency1")[0].value, frequencys[1] = $("#demo_frequency2")[0].value;
+    amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
+    types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
+
+    var osi = new Oscilloscope(frequencys, amplitudes, types);
     //color = 'rgb(255, 255, 0)';
     console.log(osi.draw());
 }
 
-function drawWave2(){
-    var osi = new Oscilloscope($("#demo_frequency2")[0].value, $("#demo_amplitude2")[0].value, $("#demo_wave_type2")[0].value);
-    //color = 'rgb(0, 255, 0)';
-    console.log(osi.draw());
-}
 
 function show_error(s){
     document.querySelector("#error_message_content").innerHTML = s;
