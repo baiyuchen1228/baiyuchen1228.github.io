@@ -2052,9 +2052,16 @@ function KeyPress(e) {
 document.onkeydown = KeyPress;
 
 function reload(){
+    if(!confirm("確定要清除全部嗎？\nAre you sure to reload？")){
+        return;
+    }
     for(var i = 0; i < 100; i++){
         undo();
     }
+}
+
+window.onbeforeunload = () => {
+    return confirm('確定要離開?')
 }
 
 function start(){

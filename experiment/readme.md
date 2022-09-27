@@ -37,13 +37,33 @@
     - 考慮 drop 電流驅動(實驗中只有電壓驅動的，可以在電供變成以電流驅動時提醒使用者就好)
 - bug : 有時候 current 會停不下來，目前不太清楚發生的原因
 
-## new challenge(波形產生器)
+## challenge in exp7 (波形產生器)
 - 交流電
 - 同軸電纜
-- 示波器螢幕 10x8
 - V(t) = a sin(wt+b)
 - 方波、三角波、sin
     - 目前算是弄好了
+- 按鈕標示的字要打清楚
+- 按鈕拉出
+- 頻率輸入 0~2
+- 顯示頻率在右上角
+- INV * -1
+- -20 dB : 振幅除10
+- AMPL 振幅(拉出除以10
+- MIN = 0, MAX 15
+- OFFSET 拔出才能轉
+- DUTY CYCLE(50~99) -- > 慢點做
+- OUTPUT 只有最右邊有用
+
+## challenge done in exp7
+- 格子數
+- 示波器螢幕 10x8
+
+## challenge in all
+- check() 亂寫
+
+## challenge done in all
+- Clear 前問一下
 
 <!-- ## done in exp5
 - 確認鍵換顏色
