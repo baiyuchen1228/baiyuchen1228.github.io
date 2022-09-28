@@ -1479,8 +1479,9 @@ function equationVoltageVoltage() {
 
 }
 
+const WAVE_DATA_COUNT = 100;
 
-class Oscilloscope{
+class WaveGenerator{
     constructor(frequencys = [], amplitudes = [], types = []){
         this._frequencys = frequencys;
         this._amplitudes = amplitudes;
@@ -1537,17 +1538,21 @@ class Oscilloscope{
         }
         return 0;
     }
-    draw(){
+    
+}
+
+class Oscillator{
+    constructor(){
+        
+    }
+    draw(datapoints0, datapoints1){
+        show_error(datapoints0)
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();
         }
         const labels = [];
-        const DATA_COUNT = 100;
-        const datapoints0 = [], datapoints1 = [];
-        for(let i=0;i<DATA_COUNT;i++){
-            datapoints0[i] = this.voltage_at(0, i);
-            datapoints1[i] = this.voltage_at(1, i);
+        for(let i=0;i<WAVE_DATA_COUNT;i++){
             labels[i] = i;
         }
         const data = {
@@ -1617,6 +1622,7 @@ class Oscilloscope{
         var myChart = new Chart(canvas, config);
     }
 }
+
 
 
 
@@ -1856,9 +1862,14 @@ function drawWave(){
     amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
     types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
 
-    var osi = new Oscilloscope(frequencys, amplitudes, types);
-    //color = 'rgb(255, 255, 0)';
-    console.log(osi.draw());
+    let wg = new WaveGenerator(frequencys, amplitudes, types);
+    const datapoints0 = [], datapoints1 = [];
+    for(let i=0;i<WAVE_DATA_COUNT;i++){
+        datapoints0[i] = wg.voltage_at(0, i);
+        datapoints1[i] = wg.voltage_at(1, i);
+    }
+    let osi = new Oscillator();
+    console.log(osi.draw(datapoints0, datapoints1));
 }
 
 
