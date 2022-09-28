@@ -1546,7 +1546,6 @@ class Oscillator{
         
     }
     draw(datapoints0, datapoints1){
-        show_error(datapoints0)
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();
@@ -1858,9 +1857,20 @@ function start(){
 
 function drawWave(){
     let frequencys = [], amplitudes = [], types = [];
-    frequencys[0] = $("#demo_frequency1")[0].value, frequencys[1] = $("#demo_frequency2")[0].value;
-    amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
-    types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
+    if(generator_power_on == false){
+        frequencys[0] = $("#demo_frequency1")[0].value / 1000.0, frequencys[1] = $("#demo_frequency2")[0].value / 1000.0;
+        amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
+        types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
+    }else{
+        frequencys[0] = generator_frequency / 1000.0, frequencys[1] = $("#demo_frequency2")[0].value / 1000.0;
+        amplitudes[0] = generator_AMPL, amplitudes[1] = $("#demo_amplitude2")[0].value;
+        types[0] =  wave_type, types[1] = $("#demo_wave_type2")[0].value;
+        document.getElementById("demo_frequency1").value = generator_frequency;         
+        document.getElementById("demo_amplitude1").value = generator_AMPL;
+        document.getElementById("demo_wave_type1").value = wave_type;
+
+    }
+    
 
     let wg = new WaveGenerator(frequencys, amplitudes, types);
     const datapoints0 = [], datapoints1 = [];
@@ -1889,6 +1899,7 @@ function evaluate_generator_frequency(){
     generator_frequency = generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0));
     $("#generator_frequency").text(generator_frequency1.toFixed(1));
     $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
+    return generator_frequency;
 }
 
 function minus_generator_frequency(){
@@ -1905,11 +1916,11 @@ function add_generator_frequency(){
 
 function generator_power(){
     if(generator_power_on){
-        $("#generator_power").css("backgroundColor", "green");
+        $("#generator_power").css("backgroundColor", "white");
         generator_power_on = false;
     }
     else{
-        $("#generator_power").css("backgroundColor", "white");
+        $("#generator_power").css("backgroundColor", "green");
         generator_power_on = true;
     }
 }
