@@ -1482,10 +1482,12 @@ function equationVoltageVoltage() {
 const WAVE_DATA_COUNT = 1000;
 
 class WaveGenerator{
-    constructor(frequencys = [], amplitudes = [], types = []){
+    constructor(frequencys = [], amplitudes = [], types = [], inv = [], offset = []){
         this._frequencys = frequencys;
         this._amplitudes = amplitudes;
         this._cycles = [];
+        this._inv = inv;
+        this._offset = offset;
         for(let i=0;i<2;i++){
             this._frequencys[i] /= 1000.0
             this._cycles[i] = 1 / this._frequencys[i];
@@ -1513,29 +1515,30 @@ class WaveGenerator{
     voltage_at(i, t){
         let cycle = this._cycles[i], amplitude = this._amplitudes[i];
         let frequency = this._frequencys[i], type = this._types[i];
+        let inv = this._inv[i];
         t *= 0.003
         if(type == "square_wave"){
             let pos = 1.0 * t - cycle * Math.floor(t / cycle);
             if(pos < cycle / 2){
-                return amplitude;
+                return inv * amplitude;
             }else{
-                return -amplitude;
+                return inv * -amplitude;
             }
         }else if(type == "sin_wave"){
-            return amplitude * Math.sin(2*Math.PI*frequency * t);
+            return inv * amplitude * Math.sin(2*Math.PI*frequency * t);
         }else if(type == "triangle_wave"){
             let pos = t - cycle * Math.floor(t / cycle);
             if(pos < cycle/4){
-                return pos* 4 / cycle * amplitude;
+                return inv * (pos * 4 / cycle * amplitude);
             }else if(pos < cycle / 2){
                 pos -= cycle / 4;
-                return amplitude - pos * 4 / cycle * amplitude;
+                return inv * (amplitude - pos * 4 / cycle * amplitude);
             }else if(pos < 3 * cycle/4){
                 pos -= cycle / 2;
-                return - pos * 4 / cycle * amplitude;
+                return inv * (- pos * 4 / cycle * amplitude);
             }else{
                 pos -= cycle*3 / 4;
-                return -amplitude + pos * 4 / cycle * amplitude;
+                return inv * (-amplitude + pos * 4 / cycle * amplitude);
             }
         }
         return 0;
@@ -1858,28 +1861,35 @@ function start(){
 }
 
 function drawWave(){
-    let frequencys = [], amplitudes = [], types = [];
+    let frequencys = [], amplitudes = [], types = [], inv = [];
     if(generator_power_on == false){
         frequencys[0] = $("#demo_frequency1")[0].value, frequencys[1] = $("#demo_frequency2")[0].value;
         amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
         types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
+        inv[0] = parseInt($("#demo_wave_inv1")[0].value), inv[1] = parseInt($("#demo_wave_inv2")[0].value);
     }else{
         frequencys[0] = generator_frequency, frequencys[1] = $("#demo_frequency2")[0].value;
         amplitudes[0] = generator_AMPL, amplitudes[1] = $("#demo_amplitude2")[0].value;
         types[0] =  wave_type, types[1] = $("#demo_wave_type2")[0].value;
+        inv[0] = 1, inv[1] = parseInt($("#demo_wave_inv2")[0].value);
         document.getElementById("demo_frequency1").value = generator_frequency;         
         document.getElementById("demo_amplitude1").value = generator_AMPL;
         document.getElementById("demo_wave_type1").value = wave_type;
-
+        if(generator_inv_on){
+            inv[0] *= -1;
+            document.getElementById("demo_wave_inv1").value = -1;
+        }else{
+            document.getElementById("demo_wave_inv1").value = 1;
+        }
     }
-    
 
-    let wg = new WaveGenerator(frequencys, amplitudes, types);
+    let wg = new WaveGenerator(frequencys, amplitudes, types, inv);
     const datapoints0 = [], datapoints1 = [];
     for(let i=0;i<WAVE_DATA_COUNT;i++){
         datapoints0[i] = wg.voltage_at(0, i);
         datapoints1[i] = wg.voltage_at(1, i);
     }
+    
     let osi = new Oscillator();
     console.log(osi.draw(datapoints0, datapoints1));
 }
