@@ -1479,7 +1479,7 @@ function equationVoltageVoltage() {
 
 }
 
-const WAVE_DATA_COUNT = 100;
+const WAVE_DATA_COUNT = 1000;
 
 class WaveGenerator{
     constructor(frequencys = [], amplitudes = [], types = []){
@@ -1487,7 +1487,8 @@ class WaveGenerator{
         this._amplitudes = amplitudes;
         this._cycles = [];
         for(let i=0;i<2;i++){
-            this._cycles[i] = 1 / frequencys[i];
+            this._frequencys[i] /= 1000.0
+            this._cycles[i] = 1 / this._frequencys[i];
         }
         this._types = types;
     }
@@ -1512,6 +1513,7 @@ class WaveGenerator{
     voltage_at(i, t){
         let cycle = this._cycles[i], amplitude = this._amplitudes[i];
         let frequency = this._frequencys[i], type = this._types[i];
+        t *= 0.003
         if(type == "square_wave"){
             let pos = 1.0 * t - cycle * Math.floor(t / cycle);
             if(pos < cycle / 2){
@@ -1551,7 +1553,7 @@ class Oscillator{
             chartStatus.destroy();
         }
         const labels = [];
-        for(let i=0;i<WAVE_DATA_COUNT;i++){
+        for(let i=1;i<WAVE_DATA_COUNT;i++){
             labels[i] = i;
         }
         const data = {
@@ -1858,11 +1860,11 @@ function start(){
 function drawWave(){
     let frequencys = [], amplitudes = [], types = [];
     if(generator_power_on == false){
-        frequencys[0] = $("#demo_frequency1")[0].value / 1000.0, frequencys[1] = $("#demo_frequency2")[0].value / 1000.0;
+        frequencys[0] = $("#demo_frequency1")[0].value, frequencys[1] = $("#demo_frequency2")[0].value;
         amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
         types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
     }else{
-        frequencys[0] = generator_frequency / 1000.0, frequencys[1] = $("#demo_frequency2")[0].value / 1000.0;
+        frequencys[0] = generator_frequency, frequencys[1] = $("#demo_frequency2")[0].value;
         amplitudes[0] = generator_AMPL, amplitudes[1] = $("#demo_amplitude2")[0].value;
         types[0] =  wave_type, types[1] = $("#demo_wave_type2")[0].value;
         document.getElementById("demo_frequency1").value = generator_frequency;         
