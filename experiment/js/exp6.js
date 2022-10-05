@@ -2124,6 +2124,7 @@ function undo(){
         $("#" + Things[target].id).remove();
         delALLalligator = null;
     }
+    check();
 }
 function KeyPress(e) {
     var evtobj = window.event? event : e

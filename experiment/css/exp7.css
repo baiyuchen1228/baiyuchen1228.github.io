@@ -83,6 +83,189 @@ div#oscilloscope{
     background-size: 800px ;
     background-repeat: no-repeat;
 }
+.oscilloscope-text{
+    float: left;
+    position: absolute;
+    color: white;
+    text-align: center;
+    top: 50px;
+}
+.oscilloscope-button{
+    position:absolute;
+    float: left;
+    color: #000000;
+    height: 20px;
+    top: 80px;
+    text-indent: 0px;
+    font-size: 10px;
+    width: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+#oscilloscope_inten_text{
+    height: 15px;
+    width: 30px;
+    background-color: #000000;
+    top: 245px;
+    left: 20px;
+    font-size: x-small;
+}
+#minus_oscilloscope_inten{
+    top: 270px;
+    left: 5px;
+    width: 30px;
+}
+#add_oscilloscope_inten{
+    top: 270px;
+    left: 35px;
+    width: 30px;
+}
+#oscilloscope_focus_text{
+    height: 15px;
+    width: 30px;
+    background-color: #000000;
+    top: 245px;
+    left: 90px;
+    font-size: x-small;
+}
+#minus_oscilloscope_focus{
+    top: 270px;
+    left: 75px;
+    width: 30px;
+}
+#add_oscilloscope_focus{
+    top: 270px;
+    left: 105px;
+    width: 30px;
+}
+#oscilloscope_power_text{
+    height: 15px;
+    width: 30px;
+    background-color: #000000;
+    top: 245px;
+    left: 270px;
+    font-size: x-small;
+}
+#oscilloscope_power{
+    top: 270px;
+    left: 275px;
+    width: 20px;
+}
+#horizonal_position_text{
+    height: 15px;
+    width: 40px;
+    background-color: #000000;
+    top: 45px;
+    left: 345px;
+    font-size: x-small;
+}
+#minus_horizonal_position{
+    top: 75px;
+    left: 330px;
+    width: 30px;
+}
+#add_horizonal_position{
+    top: 75px;
+    left: 360px;
+    width: 30px;
+}
+#horizonal_SWP_text{
+    height: 15px;
+    width: 60px;
+    background-color: #000000;
+    top: 45px;
+    left: 405px;
+    font-size: x-small;
+}
+#minus_horizonal_SWP{
+    top: 75px;
+    left: 410px;
+    width: 30px;
+}
+#add_horizonal_SWP{
+    top: 75px;
+    left: 440px;
+    width: 30px;
+}
+#horizonal_time_text{
+    height: 15px;
+    width: 60px;
+    background-color: #000000;
+    top: 20px;
+    left: 485px;
+    font-size: x-small;
+}
+#horizonal_time{
+    height: 15px;
+    width: 60px;
+    background-color: #000000;
+    top: 30px;
+    left: 485px;
+    font-size: x-small;
+}
+#minus_horizonal_time{
+    top: 75px;
+    left: 490px;
+    width: 30px;
+}
+#add_horizonal_time{
+    top: 75px;
+    left: 520px;
+    width: 30px;
+}
+#minus_horizonal_mag{
+    top: 100px;
+    left: 376px;
+    width: 40px;
+}
+#trigger_level_text{
+    height: 15px;
+    width: 40px;
+    background-color: #000000;
+    top: 45px;
+    left: 575px;
+    font-size: x-small;
+}
+#minus_trigger_level{
+    top: 75px;
+    left: 570px;
+    width: 30px;
+}
+#add_trigger_level{
+    top: 75px;
+    left: 600px;
+    width: 30px;
+}
+#trigger_alt{
+    top: 15px;
+    left: 570px;
+    width: 40px;
+}
+#trigger_ch1{
+    top: 7px;
+    left: 690px;
+    width: 40px;
+}
+#trigger_ch2{
+    top: 25px;
+    left: 690px;
+    width: 40px;
+}
+#trigger_line{
+    top: 43px;
+    left: 690px;
+    width: 40px;
+}
+#trigger_ext{
+    top: 60px;
+    left: 690px;
+    width: 40px;
+}
+#trigger_slope{
+    top: 100px;
+    left: 600px;
+    width: 55px;
+}
 div#oscilloscopeScreen{
     position: absolute;
     left: 50px;
