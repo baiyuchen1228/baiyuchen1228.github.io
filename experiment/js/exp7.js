@@ -2036,12 +2036,12 @@ function generator_sin(){
 
 function generator_AMPL1(){
     if(generator_AMPL1_on){
-        generator_AMPL *= 100;
+        generator_AMPL *= 10;
         $("#generator_AMPL1").css("backgroundColor", "white");
         generator_AMPL1_on = false;
     }
     else{
-        generator_AMPL /= 100;
+        generator_AMPL /= 10;
         $("#generator_AMPL1").css("backgroundColor", "green");
         generator_AMPL1_on = true;
     }
@@ -2089,12 +2089,12 @@ function add_generator_offset(){
 
 function generator_AMPL_switch(){
     if(generator_AMPL2_on){
-        generator_AMPL *= 100;
+        generator_AMPL *= 10;
         $("#generator_AMPL_switch").css("backgroundColor", "white");
         generator_AMPL2_on = false;
     }
     else{
-        generator_AMPL /= 100;
+        generator_AMPL /= 10;
         $("#generator_AMPL_switch").css("backgroundColor", "green");
         generator_AMPL2_on = true;
     }
