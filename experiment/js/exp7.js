@@ -57,7 +57,7 @@ var generator_duty = 0.5;
 var generator_offset_on = false;
 var generator_offset = 0;
 var generator_AMPL2_on = false;
-var generator_AMPL = 0;
+var generator_AMPL = 100;
 var generator_output_on = false;
 
 // 顯示或隱藏子選單
@@ -2036,10 +2036,12 @@ function generator_sin(){
 
 function generator_AMPL1(){
     if(generator_AMPL1_on){
+        generator_AMPL *= 100;
         $("#generator_AMPL1").css("backgroundColor", "white");
         generator_AMPL1_on = false;
     }
     else{
+        generator_AMPL /= 100;
         $("#generator_AMPL1").css("backgroundColor", "green");
         generator_AMPL1_on = true;
     }
@@ -2087,27 +2089,23 @@ function add_generator_offset(){
 
 function generator_AMPL_switch(){
     if(generator_AMPL2_on){
+        generator_AMPL *= 100;
         $("#generator_AMPL_switch").css("backgroundColor", "white");
         generator_AMPL2_on = false;
     }
     else{
+        generator_AMPL /= 100;
         $("#generator_AMPL_switch").css("backgroundColor", "green");
         generator_AMPL2_on = true;
     }
 }
 
 function minus_generator_AMPL(){
-    if(generator_AMPL < 1){
-        return;
-    }
-    generator_AMPL -= 1;
+    generator_AMPL /= 1.1;
 }
 
 function add_generator_AMPL(){
-    if(generator_AMPL > 30){
-        return;
-    }
-    generator_AMPL += 1;
+    generator_AMPL *= 1.1;
 }
 function generator_output_switch(){
     if(generator_output_on){
