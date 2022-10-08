@@ -57,9 +57,9 @@ var generator_duty = 0.5;
 var generator_offset_on = false;
 var generator_offset = 0;
 var generator_AMPL2_on = false;
-var generator_AMPL = 100;
-var generator_AMPL_base = 1;
-var generator_AMPL_pow = 2;
+var generator_AMPL = 1; // 1 * 10 ^ 0
+var generator_AMPL_base = 1; 
+var generator_AMPL_pow = 0;
 var generator_output_on = false;
 
 // 顯示或隱藏子選單
@@ -1903,8 +1903,16 @@ function show_error(s){
 
 function pow(a, x){
     var tmp = 1;
-    for(let i = 0;i < x;i++){
-        tmp *= a;
+    if(x > 0){
+        for(let i = 0;i < x;i++){
+            tmp *= a;
+        }
+    }
+    else{
+        x *= -1;
+        for(let i = 0;i < x;i++){
+            tmp /= a;
+        }
     }
     return tmp;
 }
