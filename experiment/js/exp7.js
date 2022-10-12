@@ -1579,6 +1579,8 @@ class Oscillator{
     constructor(){
         this._vertical_v = [1, 1];
         this._vertical_offset = [0, 0];
+        this.datapoints0 = []
+        this.datapoints1 = []
     }
     set_vertical_v(i, val){
         this._vertical_v[i] = val
@@ -1592,12 +1594,23 @@ class Oscillator{
     get vertical_offset(){
         return this._vertical_offset
     }
-    draw(datapoints0, datapoints1){
+    get_data(){
+        for(let i=0;i<WAVE_DATA_COUNT;i++){
+            this.datapoints0[i] = wg.voltage_at(i);
+            this.datapoints1[i] = wg.voltage_at(2 * i);
+        }
+        console.log(this.datapoints0);
+        console.log(this.datapoints1);
+    }
+    draw(){
+        this.get_data();
+        let datapoints0 = []
+        let datapoints1 = []
         for(let i=1;i <WAVE_DATA_COUNT;i++){
-            datapoints0[i] *= this.vertical_v[0];
+            datapoints0[i] = this.datapoints0[i] * this.vertical_v[0];
             datapoints0[i] += this.vertical_offset[0];
 
-            datapoints1[i] *= this.vertical_v[1];
+            datapoints1[i] *= this.datapoints1[i] * this.vertical_v[1];
             datapoints1[i] += this.vertical_offset[1];
         }
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
@@ -1927,13 +1940,7 @@ function drawWave(){
 
 
 
-    const datapoints0 = [], datapoints1 = [];
-    for(let i=0;i<WAVE_DATA_COUNT;i++){
-        datapoints0[i] = wg.voltage_at(i);
-        datapoints1[i] = wg.voltage_at(i);
-    }
-    console.log(datapoints0);
-    console.log(datapoints1);
+    
     console.log(osi.draw(datapoints0, datapoints1));
 }
 
