@@ -1485,7 +1485,6 @@ function equationVoltageVoltage() {
 
 }
 
-const WAVE_DATA_COUNT = 1000;
 
 class WaveGenerator{
     constructor(){
@@ -1528,6 +1527,12 @@ class WaveGenerator{
     get amplitude(){
         return this._amplitude;
     }
+    get inv(){
+        return this._inv;
+    }
+    get offset(){
+        return this._offset
+    }
     get type(){
         return this._type;
     }
@@ -1568,7 +1573,10 @@ class WaveGenerator{
         return 0;
     }
     voltage_at(t){
-        return this._offset + this.voltage(t);
+        if(generator_offset_on){
+            return this._offset + this.voltage(t);
+        }
+        return this.voltage(t);
     }
     
 }
@@ -1579,14 +1587,24 @@ class Oscillator{
     constructor(){
         this._vertical_v = [1, 1];
         this._vertical_offset = [0, 0];
-        this.datapoints0 = []
-        this.datapoints1 = []
+        this._datapoints0 = []
+        this._datapoints1 = []
+        this._time_mul = 1;
+        this._time_offset = 0;
+        this.WAVE_DATA_COUNT = 1000
     }
+
     set_vertical_v(i, val){
         this._vertical_v[i] = val
     }
     set_vertical_offset(i, val){
         this._vertical_offset[i] = val
+    }
+    set_time_mul(val){
+        this._time_mul = val;
+    }
+    set_time_offset(val){
+        this._time_offset = val;
     }
     get vertical_v(){
         return this._vertical_v
@@ -1594,44 +1612,52 @@ class Oscillator{
     get vertical_offset(){
         return this._vertical_offset
     }
+    get time_mul(){
+        return this._time_mul;
+    }
+    get time_offset(){
+        return this._time_offset;
+    }
     get_data(){
-        for(let i=0;i<WAVE_DATA_COUNT;i++){
-            this.datapoints0[i] = wg.voltage_at(i);
-            this.datapoints1[i] = wg.voltage_at(2 * i);
+        for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
+            this._datapoints0[i] = wg.voltage_at(i + this._time_offset);
+            this._datapoints1[i] = wg.voltage_at(i);
         }
-        console.log(this.datapoints0);
-        console.log(this.datapoints1);
+        console.log(this._datapoints0);
+        console.log(this._datapoints1);
     }
     draw(){
         this.get_data();
         let datapoints0 = []
         let datapoints1 = []
-        for(let i=1;i <WAVE_DATA_COUNT;i++){
-            datapoints0[i] = this.datapoints0[i] * this.vertical_v[0];
-            datapoints0[i] += this.vertical_offset[0];
+        for(let i=1;i <(this.WAVE_DATA_COUNT * this._time_mul);i++){
+            datapoints0[i] = this._datapoints0[i] * this._vertical_v[0];
+            datapoints0[i] += this._vertical_offset[0];
 
-            datapoints1[i] *= this.datapoints1[i] * this.vertical_v[1];
-            datapoints1[i] += this.vertical_offset[1];
+            datapoints1[i] = this._datapoints1[i] * this._vertical_v[1];
+            datapoints1[i] += this._vertical_offset[1];
         }
+        console.log(datapoints0);
+        console.log(datapoints1);
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();
         }
         const labels = [];
-        for(let i=1;i<WAVE_DATA_COUNT;i++){
+        for(let i=1;i<(this.WAVE_DATA_COUNT * this.time_mul);i++){
             labels[i] = i;
         }
         const data = {
             labels:labels,
         datasets: [
             {
-                data: datapoints0,
+                data: datapoints1,
                 borderColor: 'rgb(255, 255, 0)',
                 //backgroundColor: 'rgb(255, 255, 0)',
                 tension: 0.4
             },
             {
-                data: datapoints1,
+                data: datapoints0,
                 borderColor: 'rgb(0, 255, 0)',
                 //backgroundColor: 'rgb(255, 255, 0)',
                 tension: 0.4
@@ -1767,14 +1793,6 @@ function check() {
     }
     let res = checkCircuit();
     let va = res.meter;
-    
-    // 電阻燒壞檢查
-    // if(res.voltage * res.current > 0.125){
-    //     alert("電阻燒掉了(resistance over 0.125w)");
-    //     $("#multimeter1_3").text("ERR");
-    //     $("#multimeter2_3").text("ERR");
-    //     return;
-    // }
     
     vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
     cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
@@ -1936,12 +1954,8 @@ function drawWave(){
     document.getElementById("demo_wave_type1").value = wave_type;
     document.getElementById("demo_wave_offset1").value = generator_offset;
     document.getElementById("demo_wave_inv1").value = generator_inv_on?-1:1;
-        
-
-
-
     
-    console.log(osi.draw(datapoints0, datapoints1));
+    console.log(osi.draw());
 }
 
 
@@ -1969,6 +1983,8 @@ function evaluate_generator_frequency(){
     generator_frequency = generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0));
     $("#generator_frequency").text(generator_frequency1.toFixed(1));
     $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
+    wg.set_frequency(generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0)))
+    osi.draw()
     return generator_frequency;
 }
 
@@ -2063,6 +2079,8 @@ function generator_inv(){
         $("#generator_inv").css("backgroundColor", "green");
         generator_inv_on = true;
     }
+    wg.set_inv(wg.inv * (-1))
+    osi.draw()
 }
 
 function clear_generator_wave(){
@@ -2076,6 +2094,8 @@ function generator_square(){
     $("#generator_square").css("backgroundColor", "green");
     wave_type = "square_wave";
     $("#generator_wave_text").text(wave_type);
+    wg.set_type("square_wave")
+    osi.draw()
 }
 
 function generator_triangle(){
@@ -2083,6 +2103,8 @@ function generator_triangle(){
     $("#generator_triangle").css("backgroundColor", "green");
     wave_type = "triangle_wave";
     $("#generator_wave_text").text(wave_type);
+    wg.set_type("triangle_wave")
+    osi.draw()
 }
 
 function generator_sin(){
@@ -2090,6 +2112,8 @@ function generator_sin(){
     $("#generator_sin").css("backgroundColor", "green");
     wave_type = "sin_wave";
     $("#generator_wave_text").text(wave_type);
+    wg.set_type("sin_wave")
+    osi.draw()
 }
 
 function minus_generator_duty(){
@@ -2116,23 +2140,36 @@ function generator_offset_switch(){
         generator_offset = 0;
         generator_offset_on = true;
     }
+    osi.draw()
 }
 
 function minus_generator_offset(){
-    if(generator_offset < -30){
-        return;
+    if(generator_offset_on){
+        if(wg.offset < -30){
+            osi.draw()
+            return;
+        }
+        wg.set_offset(wg.offset - 1)
+        generator_offset -= 1;
     }
-    generator_offset -= 1;
+    osi.draw()
 }
 
 function add_generator_offset(){
-    if(generator_offset > 30){
-        return;
+    if(generator_offset_on){
+        if(wg.offset > 30){
+            osi.draw()
+            return;
+        }
+        wg.set_offset(wg.offset + 1)
+        generator_offset += 1;
     }
-    generator_offset += 1;
+    osi.draw()
 }
 
 function evaluate_generator_AMPL(){
+    wg.set_amplitude(generator_AMPL_base * pow(10, generator_AMPL_pow));
+    osi.draw();
     generator_AMPL = generator_AMPL_base * pow(10, generator_AMPL_pow);
 }
 
@@ -2191,26 +2228,52 @@ function generator_output_switch(){
 
 function minus_vertical_v_outer1(){
     osi.set_vertical_v(0, osi.vertical_v[0] - 0.1)
+    osi.draw()
 }
 function add_vertical_v_outer1(){
     osi.set_vertical_v(0, osi.vertical_v[0] + 0.1)
+    osi.draw()
 }
 function minus_vertical_v_outer2(){
     osi.set_vertical_v(1, osi.vertical_v[1] - 0.1)
+    osi.draw()
 }
 function add_vertical_v_outer2(){
     osi.set_vertical_v(1, osi.vertical_v[1] + 0.1)
+    osi.draw()
 }
 
 function minus_vertical_position1(){
     osi.set_vertical_offset(0, osi.vertical_offset[0] - 0.1)
+    osi.draw()
 }
 function add_vertical_position1(){
     osi.set_vertical_offset(0, osi.vertical_offset[0] + 0.1)
+    osi.draw()
 }
 function minus_vertical_position2(){
     osi.set_vertical_offset(1, osi.vertical_offset[1] - 0.1)
+    osi.draw()
 }
 function add_vertical_position2(){
     osi.set_vertical_offset(1, osi.vertical_offset[1] + 0.1)
+    osi.draw()
+}
+
+function minus_horizonal_time(){
+    osi.set_time_mul(osi.time_mul-0.1)
+    osi.draw()
+}
+function add_horizonal_time(){
+    osi.set_time_mul(osi.time_mul+0.1)
+    osi.draw()
+}
+
+function minus_horizonal_position(){
+    osi.set_time_offset(osi.time_offset-100)
+    osi.draw()
+}
+function add_horizonal_position(){
+    osi.set_time_offset(osi.time_offset+100)
+    osi.draw()
 }
