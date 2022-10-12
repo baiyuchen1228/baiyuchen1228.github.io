@@ -164,20 +164,26 @@
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
-    <form class="demo_wave" id="demo_wave">
+    <form class="demo_wave" id="demo_wave1">
         wave 1<br>
         &emsp;頻率:<input class="input" value="" id="demo_frequency1"></input><br>
         &emsp;振幅:<input class="input" value="" id="demo_amplitude1"></input><br>
         &emsp;類型:<input class="input" value="" id="demo_wave_type1"></input><br>
         &emsp;反向:<input class="input" value="" id="demo_wave_inv1"></input><br>
+        &emsp;偏移:<input class="input" value="" id="demo_wave_offset1"></input><br>
+        類型有 sin_wave, square_wave, triangle_wave<br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
+    </form>
+    <form class="demo_wave" id="demo_wave2">
         wave 2<br>
         &emsp;頻率:<input class="input" value="" id="demo_frequency2"></input><br>
         &emsp;振幅:<input class="input" value="" id="demo_amplitude2"></input><br>
         &emsp;類型:<input class="input" value="" id="demo_wave_type2"></input><br>
         &emsp;反向:<input class="input" value="" id="demo_wave_inv2"></input><br>
-        類型有 sin_wave, square_wave, triangle_wave<br>
-        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
+        &emsp;偏移:<input class="input" value="" id="demo_wave_offset2"></input><br>
+        反向的參數為 1 或 -1<br>
     </form>
+
     <script type="text/javascript" src="js\exp7.js"></script>
 </body>
 

@@ -657,9 +657,14 @@ div#oscilloscopeScreen{
     left: 800px;
     /* top: 100px; */
 }
-#demo_wave{
+#demo_wave1{
     position: absolute;
     left: 1200px;
+    /* top: 150px; */
+}
+#demo_wave2{
+    position: absolute;
+    left: 1500px;
     /* top: 150px; */
 }
 

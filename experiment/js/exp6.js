@@ -173,17 +173,19 @@ document.getElementById("powersupply13").onclick = function () {
 
 var intervalID;
 $(powersupply5).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && current1 <= 3) {
-        current1 += 0.01;
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}, 200 );
+    intervalID = setInterval(function (){
+        turnOffMode();
+        if (power == 1 && current1 <= 3) {
+            current1 += 0.01;
+            cur1.innerHTML = current1.toFixed(2);
+        }
+        check();
+        }, 200
+    );
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply6).mousedown(function (){
     intervalID = setInterval( function (){
     turnOffMode();
@@ -199,18 +201,20 @@ $(powersupply6).mousedown(function (){
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply7).mousedown(function (){
     intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && voltage1 <= 30) {
-        voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(1);
-    }
-    check();
-}, 200 );
+        turnOffMode();
+        if (power == 1 && voltage1 <= 30) {
+            voltage1 += 0.1;
+            vol1.innerHTML = voltage1.toFixed(1);
+        }
+        check();
+    }, 200 );
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply8).mousedown(function (){
     intervalID = setInterval( function (){
     turnOffMode();
@@ -226,6 +230,7 @@ $(powersupply8).mousedown(function (){
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply9).mousedown(function (){
     intervalID = setInterval( function (){
     turnOffMode();

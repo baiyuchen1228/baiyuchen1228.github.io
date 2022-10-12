@@ -62,6 +62,10 @@ var generator_AMPL_base = 1;
 var generator_AMPL_pow = 0;
 var generator_output_on = false;
 
+
+
+
+
 // 顯示或隱藏子選單
 function switchMenu(theMainMenu, theSubMenu, theEvent) {
     var SubMenu = document.getElementById(theSubMenu);
@@ -1484,17 +1488,13 @@ function equationVoltageVoltage() {
 const WAVE_DATA_COUNT = 1000;
 
 class WaveGenerator{
-    constructor(frequencys = [], amplitudes = [], types = [], inv = [], offset = []){
-        this._frequencys = frequencys;
-        this._amplitudes = amplitudes;
-        this._cycles = [];
-        this._inv = inv;
-        this._offset = offset;
-        for(let i=0;i<2;i++){
-            this._frequencys[i] /= 1000.0
-            this._cycles[i] = 1 / this._frequencys[i];
-        }
-        this._types = types;
+    constructor(){
+        this._frequency = 0;
+        this._amplitude = 1;
+        this._inv = 1;
+        this._offset = 0;
+        this._cycle = 100000;
+        this._type = "";
     }
     static get square_wave(){
         return "square_wave";
@@ -1505,19 +1505,41 @@ class WaveGenerator{
     static get triangle_wave(){
         return "triangle_wave";
     }
-    get frequencys(){
-        return this._frequencys;
+    set_frequency(freq_val){
+        this._frequency = freq_val / 1000.0       //調參
+        //this._frequency = freq_val
+        this._cycle = 1 / this._frequency
     }
-    get amplitudes(){
-        return this._amplitudes;
+    set_amplitude(val){
+        this._amplitude = val
     }
-    get types(){
-        return this._types;
+    set_inv(val){
+        this._inv = val
     }
-    voltage_at(i, t){
-        let cycle = this._cycles[i], amplitude = this._amplitudes[i];
-        let frequency = this._frequencys[i], type = this._types[i];
-        let inv = this._inv[i];
+    set_offset(val){
+        this._offset = val
+    }
+    set_type(val){
+        this._type = val
+    }
+    get frequency(){
+        return this._frequency;
+    }
+    get amplitude(){
+        return this._amplitude;
+    }
+    get type(){
+        return this._type;
+    }
+    voltage(t){
+        // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
+        // let frequency = this._frequencys[i], type = this._types[i];
+        // let inv = this._inv[i];
+        let cycle = this._cycle
+        let amplitude = this._amplitude;
+        let frequency = this._frequency;
+        let inv = this._inv;
+        let type = this._type
         t *= 0.003
         if(type == "square_wave"){
             let pos = 1.0 * t - cycle * Math.floor(t / cycle);
@@ -1545,14 +1567,39 @@ class WaveGenerator{
         }
         return 0;
     }
+    voltage_at(t){
+        return this._offset + this.voltage(t);
+    }
     
 }
 
+var wg = new WaveGenerator();
+
 class Oscillator{
     constructor(){
-        
+        this._vertical_v = [1, 1];
+        this._vertical_offset = [0, 0];
+    }
+    set_vertical_v(i, val){
+        this._vertical_v[i] = val
+    }
+    set_vertical_offset(i, val){
+        this._vertical_offset[i] = val
+    }
+    get vertical_v(){
+        return this._vertical_v
+    }
+    get vertical_offset(){
+        return this._vertical_offset
     }
     draw(datapoints0, datapoints1){
+        for(let i=1;i <WAVE_DATA_COUNT;i++){
+            datapoints0[i] *= this.vertical_v[0];
+            datapoints0[i] += this.vertical_offset[0];
+
+            datapoints1[i] *= this.vertical_v[1];
+            datapoints1[i] += this.vertical_offset[1];
+        }
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();
@@ -1610,8 +1657,8 @@ class Oscillator{
                   },
                 y: {
                   display: false,
-                  max: 8,
-                  min: -8,
+                  max: 4,
+                  min: -4,
                   padding:5,
                   ticks: {
                     color: "black", // not 'fontColor:' anymore
@@ -1629,6 +1676,7 @@ class Oscillator{
     }
 }
 
+var osi = new Oscillator();
 
 
 
@@ -1863,36 +1911,29 @@ function start(){
 }
 
 function drawWave(){
-    let frequencys = [], amplitudes = [], types = [], inv = [];
-    if(generator_power_on == false){
-        frequencys[0] = $("#demo_frequency1")[0].value, frequencys[1] = $("#demo_frequency2")[0].value;
-        amplitudes[0] = $("#demo_amplitude1")[0].value, amplitudes[1] = $("#demo_amplitude2")[0].value;
-        types[0] =  $("#demo_wave_type1")[0].value, types[1] = $("#demo_wave_type2")[0].value;
-        inv[0] = parseInt($("#demo_wave_inv1")[0].value), inv[1] = parseInt($("#demo_wave_inv2")[0].value);
-    }else{
-        frequencys[0] = generator_frequency, frequencys[1] = $("#demo_frequency2")[0].value;
-        amplitudes[0] = generator_AMPL, amplitudes[1] = $("#demo_amplitude2")[0].value;
-        types[0] =  wave_type, types[1] = $("#demo_wave_type2")[0].value;
-        inv[0] = 1, inv[1] = parseInt($("#demo_wave_inv2")[0].value);
-        document.getElementById("demo_frequency1").value = generator_frequency;         
-        document.getElementById("demo_amplitude1").value = generator_AMPL;
-        document.getElementById("demo_wave_type1").value = wave_type;
-        if(generator_inv_on){
-            inv[0] *= -1;
-            document.getElementById("demo_wave_inv1").value = -1;
-        }else{
-            document.getElementById("demo_wave_inv1").value = 1;
-        }
-    }
 
-    let wg = new WaveGenerator(frequencys, amplitudes, types, inv);
+    wg.set_frequency(generator_frequency);
+    wg.set_amplitude(generator_AMPL);
+    wg.set_type(wave_type);
+    wg.set_inv(generator_inv_on?-1:1);
+    wg.set_offset(generator_offset);
+
+    document.getElementById("demo_frequency1").value = generator_frequency;         
+    document.getElementById("demo_amplitude1").value = generator_AMPL;
+    document.getElementById("demo_wave_type1").value = wave_type;
+    document.getElementById("demo_wave_offset1").value = generator_offset;
+    document.getElementById("demo_wave_inv1").value = generator_inv_on?-1:1;
+        
+
+
+
     const datapoints0 = [], datapoints1 = [];
     for(let i=0;i<WAVE_DATA_COUNT;i++){
-        datapoints0[i] = wg.voltage_at(0, i);
-        datapoints1[i] = wg.voltage_at(1, i);
+        datapoints0[i] = wg.voltage_at(i);
+        datapoints1[i] = wg.voltage_at(i);
     }
-    
-    let osi = new Oscillator();
+    console.log(datapoints0);
+    console.log(datapoints1);
     console.log(osi.draw(datapoints0, datapoints1));
 }
 
@@ -2138,4 +2179,30 @@ function generator_output_switch(){
         $("#generator_output_switch").css("backgroundColor", "green");
         generator_output_on = true;
     }
+}
+
+function minus_vertical_v_outer1(){
+    osi.set_vertical_v(0, osi.vertical_v[0] - 0.1)
+}
+function add_vertical_v_outer1(){
+    osi.set_vertical_v(0, osi.vertical_v[0] + 0.1)
+}
+function minus_vertical_v_outer2(){
+    osi.set_vertical_v(1, osi.vertical_v[1] - 0.1)
+}
+function add_vertical_v_outer2(){
+    osi.set_vertical_v(1, osi.vertical_v[1] + 0.1)
+}
+
+function minus_vertical_position1(){
+    osi.set_vertical_offset(0, osi.vertical_offset[0] - 0.1)
+}
+function add_vertical_position1(){
+    osi.set_vertical_offset(0, osi.vertical_offset[0] + 0.1)
+}
+function minus_vertical_position2(){
+    osi.set_vertical_offset(1, osi.vertical_offset[1] - 0.1)
+}
+function add_vertical_position2(){
+    osi.set_vertical_offset(1, osi.vertical_offset[1] + 0.1)
 }
