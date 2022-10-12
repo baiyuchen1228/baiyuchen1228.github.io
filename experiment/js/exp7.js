@@ -2178,6 +2178,7 @@ function generator_output_switch(){
     else{
         $("#generator_output_switch").css("backgroundColor", "green");
         generator_output_on = true;
+        drawWave()
     }
 }
 
