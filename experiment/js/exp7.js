@@ -1592,6 +1592,7 @@ class Oscillator{
         this._time_mul = 1;
         this._time_offset = 0;
         this.WAVE_DATA_COUNT = 1000
+        this._vertical_AC_GND_DC = ["AC", "AC"];  //AC, GND, DC
     }
 
     set_vertical_v(i, val){
@@ -1606,6 +1607,9 @@ class Oscillator{
     set_time_offset(val){
         this._time_offset = val;
     }
+    set_vertical_AC_GND_DC(i, val){
+        this._vertical_AC_GND_DC[i] = val
+    }
     get vertical_v(){
         return this._vertical_v
     }
@@ -1618,10 +1622,21 @@ class Oscillator{
     get time_offset(){
         return this._time_offset;
     }
+    get vertical_AC_GND_DC(){
+        return this._vertical_AC_GND_DC;
+    }
     get_data(){
         for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
-            this._datapoints0[i] = wg.voltage_at(i + this._time_offset);
-            this._datapoints1[i] = wg.voltage_at(i);
+            if(this.vertical_AC_GND_DC[0] == "GND"){
+                this._datapoints0[i] = 0
+            }else{
+                this._datapoints0[i] = wg.voltage_at(i + this._time_offset);
+            }
+            if(this.vertical_AC_GND_DC[1] == "GND"){
+                this._datapoints1[i] = 0
+            }else{
+                this._datapoints1[i] = wg.voltage_at(i + this._time_offset);
+            }   
         }
         console.log(this._datapoints0);
         console.log(this._datapoints1);
@@ -2275,5 +2290,40 @@ function minus_horizonal_position(){
 }
 function add_horizonal_position(){
     osi.set_time_offset(osi.time_offset+100)
+    osi.draw()
+}
+
+function vertical_AC1(){
+    osi.set_vertical_AC_GND_DC(0, "AC")
+    osi.draw()
+    $("#vertical_AC1").css("backgroundColor", "green");
+    $("#vertical_GND1").css("backgroundColor", "white");
+    $("#vertical_DC1").css("backgroundColor", "white");
+}
+function vertical_GND1(){
+    osi.set_vertical_AC_GND_DC(0, "GND")
+    osi.draw()
+    $("#vertical_AC1").css("backgroundColor", "white");
+    $("#vertical_GND1").css("backgroundColor", "green");
+    $("#vertical_DC1").css("backgroundColor", "white");
+}
+function vertical_DC1(){
+    osi.set_vertical_AC_GND_DC(0, "DC")
+    osi.draw()
+    $("#vertical_AC1").css("backgroundColor", "white");
+    $("#vertical_GND1").css("backgroundColor", "white");
+    $("#vertical_DC1").css("backgroundColor", "green");
+}
+
+function vertical_AC2(){
+    osi.set_vertical_AC_GND_DC(1, "AC")
+    osi.draw()
+}
+function vertical_GND2(){
+    osi.set_vertical_AC_GND_DC(1, "GND")
+    osi.draw()
+}
+function vertical_DC2(){
+    osi.set_vertical_AC_GND_DC(1, "DC")
     osi.draw()
 }

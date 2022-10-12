@@ -331,6 +331,7 @@ div#oscilloscope{
     top: 230px;
     left: 410px;
     width: 40px;
+    background-color: green;
 }
 #vertical_GND1{
     top: 250px;
