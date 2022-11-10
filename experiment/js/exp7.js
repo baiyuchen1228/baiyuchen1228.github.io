@@ -163,10 +163,10 @@ function drawDashedLine() {
             y1 = approx_x(wireInitial.pageY);
             x2 = approx_x(e.pageX);
             y2 = approx_x(e.pageY);
-            x1 -= 540;
-            x2 -= 540;
-            y1 -= 300;
-            y2 -= 300;
+            x1 -= 100;
+            x2 -= 100;
+            y1 -= 420;
+            y2 -= 420;
             mode = true;
         }
         if (drawResistance == 1) {
@@ -174,10 +174,10 @@ function drawDashedLine() {
             y1 = approx_x(resistanceInitial.pageY);
             x2 = approx_x(e.pageX);
             y2 = approx_x(e.pageY);
-            x1 -= 540;
-            x2 -= 540;
-            y1 -= 300;
-            y2 -= 300;
+            x1 -= 100;
+            x2 -= 100;
+            y1 -= 420;
+            y2 -= 420;
             mode = true;
         }
         if (drawInductance == 1) {
@@ -185,10 +185,10 @@ function drawDashedLine() {
             y1 = approx_x(inductanceInitial.pageY);
             x2 = approx_x(e.pageX);
             y2 = approx_x(e.pageY);
-            x1 -= 540;
-            x2 -= 540;
-            y1 -= 300;
-            y2 -= 300;
+            x1 -= 100;
+            x2 -= 100;
+            y1 -= 420;
+            y2 -= 420;
             mode = true;
         }
         if (drawCapacitance == 1) {
@@ -196,10 +196,10 @@ function drawDashedLine() {
             y1 = approx_x(CapacitanceInitial.pageY);
             x2 = approx_x(e.pageX);
             y2 = approx_x(e.pageY);
-            x1 -= 540;
-            x2 -= 540;
-            y1 -= 300;
-            y2 -= 300;
+            x1 -= 100;
+            x2 -= 100;
+            y1 -= 420;
+            y2 -= 420;
             mode = true;
         }
         if (mode) {
@@ -262,10 +262,10 @@ $("#container").mouseup(function (e) {
         y1 = approx_x(wireInitial.pageY);
         x2 = approx_x(wireFinal.pageX);
         y2 = approx_x(wireFinal.pageY);
-        x1 -= 540;
-        x2 -= 540;
-        y1 -= 300;
-        y2 -= 300;
+        x1 -= 100;
+        x2 -= 100;
+        y1 -= 420;
+        y2 -= 420;
         for (let i = 0; i < pointarray.length; i++) {
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 == pointarray[i][0] && y2 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
@@ -307,10 +307,10 @@ $("#container").mouseup(function (e) {
         y1 = approx_x(resistanceInitial.pageY);
         x2 = approx_x(resistanceFinal.pageX);
         y2 = approx_x(resistanceFinal.pageY);
-        x1 -= 540;
-        x2 -= 540;
-        y1 -= 300;
-        y2 -= 300;
+        x1 -= 100;
+        x2 -= 100;
+        y1 -= 420;
+        y2 -= 420;
         for (let i = 0; i < pointarray.length; i++) {
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 == pointarray[i][0] && y2 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
@@ -372,10 +372,10 @@ $("#container").mouseup(function (e) {
         y1 = approx_x(inductanceInitial.pageY);
         x2 = approx_x(inductanceFinal.pageX);
         y2 = approx_x(inductanceFinal.pageY);
-        x1 -= 540;
-        x2 -= 540;
-        y1 -= 300;
-        y2 -= 300;
+        x1 -= 100;
+        x2 -= 100;
+        y1 -= 420;
+        y2 -= 420;
         for (let i = 0; i < pointarray.length; i++) {
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 == pointarray[i][0] && y2 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
@@ -436,10 +436,10 @@ $("#container").mouseup(function (e) {
         y1 = approx_x(CapacitanceInitial.pageY);
         x2 = approx_x(CapacitanceFinal.pageX);
         y2 = approx_x(CapacitanceFinal.pageY);
-        x1 -= 540;
-        x2 -= 540;
-        y1 -= 300;
-        y2 -= 300;
+        x1 -= 100;
+        x2 -= 100;
+        y1 -= 420;
+        y2 -= 420;
         for (let i = 0; i < pointarray.length; i++) {
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 == pointarray[i][0] && y2 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
