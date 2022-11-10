@@ -1,3 +1,5 @@
+
+
 var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
 
 var startbool = false;
@@ -1164,6 +1166,68 @@ function getResistance() {
     return resistanceOut;
 }
 
+function getCapacitances(ohmaga) {
+    //find all resistance in the html
+    var capacitances = $("line[id^='capacitance']");
+    var capacitanceOut = $.map(capacitances, function (capacitance) {
+        var rval = $("#" + capacitance.id).attr("dataufarad");
+        return {
+
+            id: capacitance.id,
+            val: rval,
+            x1: capacitance.x1.baseVal.value,
+            y1: capacitance.y1.baseVal.value,
+            x2: capacitance.x2.baseVal.value,
+            y2: capacitance.y2.baseVal.value,
+            node1: findNodeNum(capacitance.x1.baseVal.value, capacitance.y1.baseVal.value),
+            node2: findNodeNum(capacitance.x2.baseVal.value, capacitance.y2.baseVal.value),
+        };
+    });
+
+    for (let i = 0; i < capacitanceOut.length; i++) {
+        var r = capacitanceOut[i];
+        r.val = parseInt(r.val);
+        r.val = math.complex(0, -1/ohmaga/r.val)
+        if (r.val == NaN) {
+            alert("電阻不可以是小數")
+        }
+        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
+    }
+    return capacitanceOut;
+}
+
+function getInductances(ohmaga) {
+    //find all resistance in the html
+    var inductances = $("line[id^='inductance']");
+    var inductanceOut = $.map(inductances, function (inductance) {
+        var rval = $("#" + inductance.id).attr("datamho");
+        return {
+
+            id: inductance.id,
+            val: rval,
+            x1: inductance.x1.baseVal.value,
+            y1: inductance.y1.baseVal.value,
+            x2: inductance.x2.baseVal.value,
+            y2: inductance.y2.baseVal.value,
+            node1: findNodeNum(inductance.x1.baseVal.value, inductance.y1.baseVal.value),
+            node2: findNodeNum(inductance.x2.baseVal.value, inductance.y2.baseVal.value),
+        };
+    });
+
+    for (let i = 0; i < inductanceOut.length; i++) {
+        var r = inductanceOut[i];
+        r.val = parseInt(r.val);
+        r.val = math.complex(0, ohmaga * r.val)
+        if (r.val == NaN) {
+            alert("電阻不可以是小數")
+        }
+        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
+    }
+    return inductanceOut;
+}
+
+
+
 function abs(x) {
     if (x < 0) { return -x; }
     return x;
@@ -1222,7 +1286,7 @@ class GuassionElimination {
     // row operation 的加法，把一行乘一個數字加到另一行
     add(add_index, added_index, scalar) {
         for (let i = 0; i <= this.n; i++) {
-            this.M[added_index][i] += this.M[add_index][i] * scalar;
+            this.M[added_index][i] = this.M[added_index][i].add(this.M[add_index][i].mul(scalar));
         }
     }
 
@@ -1239,36 +1303,38 @@ class GuassionElimination {
     // row operation 的乘法，把一整行同乘一個常數
     multiple(index, scalar) {
         for (let i = 0; i <= this.n; i++) {
-            this.M[index][i] *= scalar;
+            this.M[index][i] = this.M[index][i].mul(scalar);
         }
     }
 
     Gaussian_Jordan_elimination() {
         let single = [];
+        console.log("------------------------------------")
+        console.log(this.M)
         for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
-            if (this.M[i][i] == 0) {
+            if (this.M[i][i] ==  math.complex(0, 0)) {
                 for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
-                    if (this.M[j][i] != 0) {
+                    if (this.M[j][i] !=  math.complex(0, 0)) {
                         this.swap(i, j);
                         break;
                     }
                 }
             }
-            if (this.M[i][i] == 0) {
+            if (this.M[i][i] == math.complex(0, 0)) {
                 console.log("無唯一解/無解", i);
                 console.log(this.M);
                 single.push(i);
                 continue;
             }
-            this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
+            this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));//把開頭變成1
             for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
-                this.add(i, j, -1 * this.M[j][i]);
+                this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));
             }
         }
         for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
             for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
                 //if(i == j)continue;
-                this.add(i, j, -1 * this.M[j][i]);
+                this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));
             }
         }
 
@@ -1278,7 +1344,7 @@ class GuassionElimination {
         
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
-            if(this.M[i][this.n] > 1e-10){
+            if(this.M[i][this.n].re > 1e-10){
                 console.log("無解");
                 show_error("可能短路了<br> short!")
                 let x = [];
@@ -1338,6 +1404,26 @@ function getFullGraph(graph) {
         graph[r.node1].push(e);
         graph[r.node2].push(e);
     }
+
+    let capacitances = getCapacitances();
+    for (let i = 0; i < capacitances.length; i++) {
+        let r = capacitances[i];
+        let e = new Edge(r.node1, r.node2, "capacitance", r.val);
+        edge_list.push(e);
+        graph[r.node1].push(e);
+        graph[r.node2].push(e);
+    }
+
+    let inductances = getInductances();
+    for (let i = 0; i < inductances.length; i++) {
+        let r = inductances[i];
+        let e = new Edge(r.node1, r.node2, "inductance", r.val);
+        edge_list.push(e);
+        graph[r.node1].push(e);
+        graph[r.node2].push(e);
+    }
+
+
 
     let curr_eid = -1;
     if (meter2_mode == 5) {
@@ -1439,7 +1525,7 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage() {
+function equationVoltageVoltage(demo) {
     let FG = getFullGraphVoltageVoltage();
     graph = FG.graph;
     equations = [];
@@ -1483,6 +1569,83 @@ function equationVoltageVoltage() {
     console.log(x);
     return { FullGraph: FG, ans: x };
 
+}
+
+
+
+function testGuassion(){
+    let ohmaga = 100
+    let ohm = 10
+    let fala = 12
+    let homos = 8
+    let voltage = 10
+
+    edge_cnt = 0;
+    var graph = [];
+    edge_list = [];
+    for (let i = 0; i <= MaxNodeNum; i++) {
+        graph[i] = [];
+    }
+
+    let e = new Edge(21, 22, "resistance", ohm);
+    edge_list.push(e);
+    graph[21].push(e);
+    graph[22].push(e);
+
+    e = new Edge(22, 23, "capacitance", math.complex(0, -1/ohmaga / fala));
+    edge_list.push(e);
+    graph[22].push(e);
+    graph[23].push(e);
+
+    e = new Edge(23, 24, "inductance", math.complex(0, ohmaga * homos));
+    edge_list.push(e);
+    graph[23].push(e);
+    graph[24].push(e);
+
+    e = new Edge(21, 24, "voltage source", voltage);
+    edge_list.push(e);
+    graph[21].push(e);
+    graph[24].push(e);
+
+    equations = [];
+    equation_cnt = 0;
+    vis_edge = [];
+    path = [];
+
+    for (let i = 0; i < MaxNodeNum; i++) {//流入等於流出
+        if (graph[i].length == 0) {
+            continue;
+        }
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
+        }
+        for (let j = 0; j < graph[i].length; j++) {
+            let edge = graph[i][j];
+            if (edge.node1 == i) {
+                //流出
+                equations[equation_cnt][edge.id] = 1;
+            } else {
+                equations[equation_cnt][edge.id] = -1;
+            }
+        }
+        equation_cnt++;
+    }
+
+    for (let i = 4; i < MaxNodeNum; i++) {
+        for (let j = 0; j < edge_cnt; j++) {
+            vis_edge[j] = 0;
+        }
+        path = [];
+        find_loop(i, i, graph, 0);
+    }
+    for (let i = 0; i < equation_cnt; i++) {
+        console.log(equations[i]);
+        equations[i][edge_cnt] *= -1;
+    }
+    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
+    let x = gua.Gaussian_Jordan_elimination();
+    console.log(x);
 }
 
 
@@ -1642,6 +1805,11 @@ class Oscillator{
         console.log(this._datapoints1);
     }
     draw(){
+        document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
+        document.getElementById("demo_amplitude1").value = wg.amplitude;
+        document.getElementById("demo_wave_type1").value = wg.type;
+        document.getElementById("demo_wave_offset1").value = wg.offset;
+        document.getElementById("demo_wave_inv1").value = wg.inv;
         this.get_data();
         let datapoints0 = []
         let datapoints1 = []
@@ -1766,7 +1934,7 @@ function checkResitanceBurn(x){
 
 
 function checkCircuit() {
-    let FGx = equationVoltageVoltage();
+    let FGx = equationVoltageVoltage(false);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
     if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
@@ -1795,6 +1963,12 @@ function checkCircuit() {
     // x = FGx.ans;
 
 }
+
+
+
+
+
+
 
 function check() {
     show_error("");
@@ -1963,12 +2137,6 @@ function drawWave(){
     wg.set_type(wave_type);
     wg.set_inv(generator_inv_on?-1:1);
     wg.set_offset(generator_offset);
-
-    document.getElementById("demo_frequency1").value = generator_frequency;         
-    document.getElementById("demo_amplitude1").value = generator_AMPL;
-    document.getElementById("demo_wave_type1").value = wave_type;
-    document.getElementById("demo_wave_offset1").value = generator_offset;
-    document.getElementById("demo_wave_inv1").value = generator_inv_on?-1:1;
     
     console.log(osi.draw());
 }

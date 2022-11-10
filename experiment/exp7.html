@@ -13,6 +13,7 @@
     <script src="js/jquery.bgiframe.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
 </head>
 
 <body>
@@ -165,7 +166,7 @@
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
     <form class="demo_wave" id="demo_wave1">
-        wave 1<br>
+        wave generator<br>
         &emsp;頻率:<input class="input" value="" id="demo_frequency1"></input><br>
         &emsp;振幅:<input class="input" value="" id="demo_amplitude1"></input><br>
         &emsp;類型:<input class="input" value="" id="demo_wave_type1"></input><br>
@@ -174,6 +175,16 @@
         類型有 sin_wave, square_wave, triangle_wave<br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
     </form>
+    <!-- <form class="demo_wave" id="demo_wave2">
+        oscilloscope<br>
+        &emsp;time offset:<input class="input" value="" id="demo_frequency1"></input><br>
+        &emsp;time/DIV:<input class="input" value="" id="demo_amplitude1"></input><br>
+        &emsp;vol:<input class="input" value="" id="demo_wave_type1"></input><br>
+        &emsp;反向:<input class="input" value="" id="demo_wave_inv1"></input><br>
+        &emsp;偏移:<input class="input" value="" id="demo_wave_offset1"></input><br>
+        類型有 sin_wave, square_wave, triangle_wave<br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
+    </form> -->
 
     <script type="text/javascript" src="js\exp7.js"></script>
 </body>
