@@ -1166,7 +1166,10 @@ function getResistance() {
     return resistanceOut;
 }
 
-function getCapacitances(ohmaga) {
+function getCapacitances() {
+
+    let omega = 2 * math.PI * evaluate_generator_frequency()
+
     //find all resistance in the html
     var capacitances = $("line[id^='capacitance']");
     var capacitanceOut = $.map(capacitances, function (capacitance) {
@@ -1187,7 +1190,7 @@ function getCapacitances(ohmaga) {
     for (let i = 0; i < capacitanceOut.length; i++) {
         var r = capacitanceOut[i];
         r.val = parseInt(r.val);
-        r.val = math.complex(0, -1/ohmaga/r.val)
+        r.val = math.complex(0, -1/omega/r.val)
         if (r.val == NaN) {
             alert("電阻不可以是小數")
         }
@@ -1197,6 +1200,9 @@ function getCapacitances(ohmaga) {
 }
 
 function getInductances(ohmaga) {
+
+    let omega = 2 * math.PI * evaluate_generator_frequency()
+
     //find all resistance in the html
     var inductances = $("line[id^='inductance']");
     var inductanceOut = $.map(inductances, function (inductance) {
@@ -1217,7 +1223,7 @@ function getInductances(ohmaga) {
     for (let i = 0; i < inductanceOut.length; i++) {
         var r = inductanceOut[i];
         r.val = parseInt(r.val);
-        r.val = math.complex(0, ohmaga * r.val)
+        r.val = math.complex(0, omega * r.val)
         if (r.val == NaN) {
             alert("電阻不可以是小數")
         }
@@ -1272,7 +1278,7 @@ class Edge {
         if (this._node1 == node) {
             return this._ohm;
         }
-        return -this._ohm;
+        return this._ohm.mul(math.complex(-1, 0));
     }
 }
 
@@ -1303,34 +1309,37 @@ class GuassionElimination {
     // row operation 的乘法，把一整行同乘一個常數
     multiple(index, scalar) {
         for (let i = 0; i <= this.n; i++) {
+            // if(this.M[index][i] == 0)continue
             this.M[index][i] = this.M[index][i].mul(scalar);
         }
     }
 
     Gaussian_Jordan_elimination() {
         let single = [];
-        console.log("------------------------------------")
-        console.log(this.M)
+        
         for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
-            if (this.M[i][i] ==  math.complex(0, 0)) {
+            if (math.isZero(this.M[i][i])) {
                 for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
-                    if (this.M[j][i] !=  math.complex(0, 0)) {
+                    if (!math.isZero(this.M[j][i])) {
                         this.swap(i, j);
                         break;
                     }
                 }
             }
-            if (this.M[i][i] == math.complex(0, 0)) {
+            if (math.isZero(this.M[i][i])) {
                 console.log("無唯一解/無解", i);
                 console.log(this.M);
                 single.push(i);
                 continue;
             }
+            
             this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));//把開頭變成1
             for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
                 this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));
             }
+
         }
+
         for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
             for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
                 //if(i == j)continue;
@@ -1381,7 +1390,7 @@ function getFullGraph(graph) {
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         let wire = wires[i];
-        let e = new Edge(wire.node1, wire.node2, "wire", 0);
+        let e = new Edge(wire.node1, wire.node2, "wire", math.complex(0, 0));
         edge_list.push(e);
         graph[wire.node1].push(e);
         graph[wire.node2].push(e);
@@ -1390,7 +1399,7 @@ function getFullGraph(graph) {
     let alligators = getAlligator();
     for (let i = 0; i < alligators.length; i++) {
         let alli = alligators[i];
-        let e = new Edge(alli.node1, alli.node2, "wire", 0);
+        let e = new Edge(alli.node1, alli.node2, "wire", math.complex(0, 0));
         edge_list.push(e);
         graph[alli.node1].push(e);
         graph[alli.node2].push(e);
@@ -1405,7 +1414,7 @@ function getFullGraph(graph) {
         graph[r.node2].push(e);
     }
 
-    let capacitances = getCapacitances();
+    let capacitances = getCapacitances(omega);
     for (let i = 0; i < capacitances.length; i++) {
         let r = capacitances[i];
         let e = new Edge(r.node1, r.node2, "capacitance", r.val);
@@ -1464,12 +1473,12 @@ function getFullGraphVoltageVoltage() {
     }
 
     //加電供
-    let e = new Edge(0, 1, "voltage source", voltage1);
+    let e = new Edge(0, 1, "voltage source", math.complex(voltage1, 0));
     edge_list.push(e);
     graph[0].push(e);
     graph[1].push(e);
 
-    e = new Edge(2, 3, "voltage source", voltage2);
+    e = new Edge(2, 3, "voltage source", math.complex(voltage2, 0));
     edge_list.push(e);
     graph[2].push(e);
     graph[3].push(e);
@@ -1493,10 +1502,10 @@ function find_loop(goal, node, graph, loop_length) {
         // }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
-            equations[equation_cnt][j] = 0;
+            equations[equation_cnt][j] = math.complex(0, 0);
         }
         for (let j = 0; j < loop_length; j++) {
-            equations[equation_cnt][path[j].edgeid] += path[j].par;
+            equations[equation_cnt][path[j].edgeid] = equations[equation_cnt][path[j].edgeid].add(path[j].par);
         }
         equation_cnt++;
         return;
@@ -1510,9 +1519,9 @@ function find_loop(goal, node, graph, loop_length) {
                 path[loop_length] = { edgeid: edge_cnt, par: edge.get_par(node) };
                 find_loop(goal, edge.go_next(node), graph, loop_length + 1);
             } else if(edge.type == "current source"){
-                let _par = 1;
+                let _par = math.complex(1, 0);
                 if(node != 0 && node != 2){
-                    _par *= -1;
+                    _par = _par.mul(math.complex(-1, 0));
                 }
                 path[loop_length] = {edgeid:edge.id, par:_par};
                 find_loop(goal, edge.go_next(node), graph, loop_length + 1);
@@ -1539,15 +1548,15 @@ function equationVoltageVoltage(demo) {
         }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
-            equations[equation_cnt][j] = 0;
+            equations[equation_cnt][j] = math.complex(0, 0);
         }
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
             if (edge.node1 == i) {
                 //流出
-                equations[equation_cnt][edge.id] = 1;
+                equations[equation_cnt][edge.id] = math.complex(1, 0);
             } else {
-                equations[equation_cnt][edge.id] = -1;
+                equations[equation_cnt][edge.id] = math.complex(-1, 0);
             }
         }
         equation_cnt++;
@@ -1562,7 +1571,7 @@ function equationVoltageVoltage(demo) {
     }
     for (let i = 0; i < equation_cnt; i++) {
         console.log(equations[i]);
-        equations[i][edge_cnt] *= -1;
+        equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
@@ -1576,9 +1585,9 @@ function equationVoltageVoltage(demo) {
 function testGuassion(){
     let ohmaga = 100
     let ohm = 10
-    let fala = 12
+    let fala = 0.012
     let homos = 8
-    let voltage = 10
+    let voltage = 13
 
     edge_cnt = 0;
     var graph = [];
@@ -1587,7 +1596,7 @@ function testGuassion(){
         graph[i] = [];
     }
 
-    let e = new Edge(21, 22, "resistance", ohm);
+    let e = new Edge(21, 22, "resistance", math.complex(ohm, 0));
     edge_list.push(e);
     graph[21].push(e);
     graph[22].push(e);
@@ -1602,10 +1611,12 @@ function testGuassion(){
     graph[23].push(e);
     graph[24].push(e);
 
-    e = new Edge(21, 24, "voltage source", voltage);
+    e = new Edge(21, 24, "voltage source", math.complex(voltage, 0));
     edge_list.push(e);
     graph[21].push(e);
     graph[24].push(e);
+
+    console.log(graph);
 
     equations = [];
     equation_cnt = 0;
@@ -1619,19 +1630,22 @@ function testGuassion(){
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
+            equations[equation_cnt][j] = math.complex(equations[equation_cnt][j])
         }
+        
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
             if (edge.node1 == i) {
                 //流出
-                equations[equation_cnt][edge.id] = 1;
+                equations[equation_cnt][edge.id] = math.complex(1, 0);
             } else {
-                equations[equation_cnt][edge.id] = -1;
+                equations[equation_cnt][edge.id] = math.complex(-1, 0);
             }
         }
+        console.log(equations[equation_cnt])
         equation_cnt++;
     }
-
+    
     for (let i = 4; i < MaxNodeNum; i++) {
         for (let j = 0; j < edge_cnt; j++) {
             vis_edge[j] = 0;
@@ -1641,7 +1655,8 @@ function testGuassion(){
     }
     for (let i = 0; i < equation_cnt; i++) {
         console.log(equations[i]);
-        equations[i][edge_cnt] *= -1;
+        // if(equations[i][edge_cnt] == 0)continue
+        equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
