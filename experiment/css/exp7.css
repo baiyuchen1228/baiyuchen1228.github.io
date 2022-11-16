@@ -344,7 +344,27 @@ div#oscilloscope{
     width: 40px;
 }
 
-
+#vertical_mode_ch1{
+    top: 200px;
+    left: 500px;
+    width: 50px;
+    background-color: green;
+}
+#vertical_mode_ch2{
+    top: 220px;
+    left: 500px;
+    width: 50px;
+}
+#vertical_mode_dual{
+    top: 240px;
+    left: 500px;
+    width: 50px;
+}
+#vertical_mode_add{
+    top: 260px;
+    left: 500px;
+    width: 50px;
+}
 
 #vertical_v_text2{
     height: 15px;
@@ -407,7 +427,22 @@ div#oscilloscope{
     left: 680px;
     width: 20px;
 }
-
+#vertical_AC2{
+    top: 230px;
+    left: 600px;
+    width: 40px;
+    background-color: green;
+}
+#vertical_GND2{
+    top: 250px;
+    left: 600px;
+    width: 40px;
+}
+#vertical_DC2{
+    top: 270px;
+    left: 600px;
+    width: 40px;
+}
 
 
 
@@ -647,12 +682,12 @@ div#oscilloscopeScreen{
 {
     background-color: white;
 }
-#addInductance{
+/* #addInductance{
     background-color: #CCCCCC;
 }
 #addCapacitance{
     background-color: #CCCCCC;
-}
+} */
 #form1{
     position: relative;
     left: 800px;
