@@ -39,10 +39,12 @@ var CapacitanceInitial;
 var chipNo = 1;
 var wireNo = 1;
 var resistanceNo = 1;
-//var resistanceOn = 1;
+var resistanceOn = 1;
 var inductanceNo = 1;
+var inductanceOn = 1;
 var alligatorNo = 1;
 var capacitanceNo = 1;
+var capacitanceOn = 1;
 var deletemode = 0;
 var delIni;
 
@@ -94,39 +96,55 @@ function hideMenu() {
 }
 
 function turnOffMode() {
-    if (drawResistance == 1) {
-        //if (resistanceOn == 1) {
+    //if (drawResistance == 1) {
+        if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
-        //}
+        }
+        else{
+            $this = $("#addResistance");
+            $this.css('background-color', 'gray');
+        }
         drawResistance = 0;
-    }
-    else if (deletemode == 1) {
+    //}
+    //else if (deletemode == 1) {
         $this = $("#del");
         $this.css('background-color', 'white');
         deletemode = 0;
         delALLalligator = null;
-    }
-    else if (drawWire == 1) {
+    //}
+    //else if (drawWire == 1) {
         $this = $("#addWire");
         $this.css('background-color', 'white');
         drawWire = 0;
-    }
-    else if (drawInductance == 1) {
-        $this = $("#addInductance");
-        $this.css('background-color', 'white');
+    //}
+    //else if (drawInductance == 1) {
+        if (inductanceOn == 1) {
+            $this = $("#addInductance");
+            $this.css('background-color', 'white');
+        }
+        else{
+            $this = $("#addInductance");
+            $this.css('background-color', 'gray');
+        }
         drawInductance = 0;
-    }
-    else if (drawCapacitance == 1) {
-        $this = $("#addCapacitance");
-        $this.css('background-color', 'white');
+    //}
+    //else if (drawCapacitance == 1) {
+        if (capacitanceOn == 1) {
+            $this = $("#addCapacitance");
+            $this.css('background-color', 'white');
+        }
+        else{
+            $this = $("#addCapacitance");
+            $this.css('background-color', 'gray');
+        }
         drawCapacitance = 0;
-    }
-    else if (drawAlligator == 1) {
+    //}
+    //else if (drawAlligator == 1) {
         $this = $("#addAlligator");
         $this.css('background-color', 'white');
         drawAlligator = 0;
-    }
+    //}
 }
 
 
@@ -221,7 +239,7 @@ function drawDashedLine2() {
         if (drawAlligator == 1) {
             x2 = approx_x(e.pageX);
             y2 = approx_x(e.pageY);
-            x2 += 10;
+            x2 += 0;
             mode = true;
         }
         if (mode) {
@@ -363,6 +381,7 @@ $("#container").mouseup(function (e) {
         pointarray.push([x2, y2]);
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
+        resistanceOn = 0;
         turnOffMode();
     }
     if (drawInductance == 1) {
@@ -428,6 +447,8 @@ $("#container").mouseup(function (e) {
         pointarray.push([x2, y2]);
         inductanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
+        inductanceOn = 0;
+        turnOffMode();
     }
     if (drawCapacitance) {
         var CapacitanceFinal = e;
@@ -491,7 +512,9 @@ $("#container").mouseup(function (e) {
         pointarray.push([x1, y1]);
         pointarray.push([x2, y2]);
         capacitanceNo++;
+        capacitanceOn = 0;
         colorNo = (colorNo + 1) % colorlist.length;
+        turnOffMode();
     }
     if (drawAlligator == 1) {
         var AlligatorFinal = e;
@@ -500,7 +523,7 @@ $("#container").mouseup(function (e) {
         y1 = AlligatorY1;
         x2 = approx_x(AlligatorFinal.pageX);
         y2 = approx_x(AlligatorFinal.pageY);
-        x2 += 10;
+        x2 += 0;
         for (let i = 0; i < pointarray.length; i++) {
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 - 550 == pointarray[i][0] && y2 - 300 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
@@ -511,7 +534,8 @@ $("#container").mouseup(function (e) {
             alert('(請先點按鈕)please click button first');
             return;
         }
-        if (x2 < 595 || x2 > 855 || y2 < 325 || y2 > 645) {
+        console.log(x2,y2);
+        if (y2 < 445 || y2 > 765 || x2 < 145 || x2 > 405) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
@@ -548,10 +572,10 @@ $("#container").mouseup(function (e) {
         y1 = approx_x(delIni.pageY);
         x2 = approx_x(delFin.pageX);
         y2 = approx_x(delFin.pageY);
-        x1 -= 540;
-        x2 -= 540;
-        y1 -= 300;
-        y2 -= 300;
+        x1 -= 100;
+        x2 -= 100;
+        y1 -= 420;
+        y2 -= 420;
         var id;
         Things = $("line");
         for (var i = Things.length - 1; i >= 0; i--) {
@@ -579,18 +603,21 @@ $("#container").mouseup(function (e) {
                         $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
+                        resistanceOn = 1;
                     }
                     if (Things[i].id[0] == "i") {
                         $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
+                        inductanceOn = 1;
                     }
                     if (Things[i].id[0] == "c") {
                         $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
+                        capacitanceOn = 1;
                     }
                     if (Things[i].id[0] == "L") {
 
@@ -598,7 +625,8 @@ $("#container").mouseup(function (e) {
                         $("#" + Things[i].id).remove();
 
                     }
-
+                    check();
+                    turnOffMode();
                     return;
                 }
             }
@@ -624,18 +652,21 @@ $("#container").mouseup(function (e) {
                     }
 
                     if (Things[i].id[0] == "r") {
+                        resistanceOn = 1;
                         $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
                     }
                     if (Things[i].id[0] == "i") {
+                        inductanceOn = 1;
                         $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#" + Things[i].id).remove();
                     }
                     if (Things[i].id[0] == "c") {
+                        capacitanceOn = 1;
                         $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                         $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -647,6 +678,8 @@ $("#container").mouseup(function (e) {
                         $("#" + Things[i].id).remove();
 
                     }
+                    check();
+                    turnOffMode();
                     return;
                 }
             }
@@ -680,6 +713,8 @@ $("#container").mouseup(function (e) {
                             $("#" + Things[i].id).remove();
                             delALLalligator = null;
                         }
+                        check();
+                        turnOffMode();
                         return;
                     }
                 }
@@ -704,6 +739,8 @@ $("#container").mouseup(function (e) {
                             $("#" + Things[i].id).remove();
                             delALLalligator = null;
                         }
+                        check();
+                        turnOffMode();
                         return;
                     }
                 }
@@ -858,6 +895,7 @@ function toggleDelButton() {
 }
 
 function toggleCapacitanceButton() {
+    if (capacitanceOn == 0) return;
     if (drawInductance == 1) {
         $this = $("#addInductance");
         $this.css('background-color', 'white');
@@ -933,7 +971,7 @@ function toggleWireButton() {
 };
 
 function toggleResistanceButton() {
-    //if (resistanceOn == 0) return;
+    if (resistanceOn == 0) return;
     if (drawInductance == 1) {
         $this = $("#addInductance");
         $this.css('background-color', 'white');
@@ -972,6 +1010,7 @@ function toggleResistanceButton() {
 };
 
 function toggleInductanceButton() {
+    if (inductanceOn == 0) return;
     if (drawResistance == 1) {
         $this = $("#addResistance");
         $this.css('background-color', 'white');
@@ -1010,10 +1049,10 @@ function toggleInductanceButton() {
 };
 function toggleAlligatorButton() {
     if (drawResistance == 1) {
-        //if (resistanceOn == 1) {
+        if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
-        //}
+        }
         drawResistance = 0;
     }
     else if (deletemode == 1) {
@@ -2090,18 +2129,21 @@ function undo(){
         $("#resistanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#resistanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#" + Things[target].id).remove();
+        resistanceOn = 1;
     }
     if (Things[target].id[0] == "i") {
         $("#inductanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#inductanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#inductanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#" + Things[target].id).remove();
+        inductanceOn = 1;
     }
     if (Things[target].id[0] == "c") {
         $("#capacitanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#capacitanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#capacitanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
         $("#" + Things[target].id).remove();
+        capacitanceOn = 1;
     }
     if (Things[target].id[0] == "a") {
         $("#alligatorCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
@@ -2109,6 +2151,7 @@ function undo(){
         $("#" + Things[target].id).remove();
         delALLalligator = null;
     }
+    turnOffMode();
 }
 function KeyPress(e) {
     var evtobj = window.event? event : e
@@ -2412,7 +2455,11 @@ function add_generator_AMPL(){
     }
     evaluate_generator_AMPL();
 }
+
 function generator_output_switch(){
+    if(generator_output_on)return;
+    $("#generator").removeClass('generator_bg0').addClass('generator_bg1');
+    generator_output_on = true;
     if(generator_output_on){
         $("#generator_output_switch").css("backgroundColor", "white");
         generator_output_on = false;
@@ -2423,7 +2470,28 @@ function generator_output_switch(){
         drawWave()
     }
 }
-
+function generator_drawline1() {
+    colorNo = 0;
+    if (drawAlligator) {
+        AlligatorX1 = 430;
+        AlligatorY1 = 400;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [430, 400];
+    }
+}
+function generator_drawline2() {
+    colorNo = 6;
+    if (drawAlligator) {
+        AlligatorX1 = 480;
+        AlligatorY1 = 400;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [490, 400];
+    }
+}
 function minus_vertical_v_outer1(){
     osi.set_vertical_v(0, osi.vertical_v[0] - 0.1)
     osi.draw()
@@ -2501,12 +2569,112 @@ function vertical_DC1(){
 function vertical_AC2(){
     osi.set_vertical_AC_GND_DC(1, "AC")
     osi.draw()
+    $("#vertical_AC2").css("backgroundColor", "green");
+    $("#vertical_GND2").css("backgroundColor", "white");
+    $("#vertical_DC2").css("backgroundColor", "white");
 }
 function vertical_GND2(){
     osi.set_vertical_AC_GND_DC(1, "GND")
     osi.draw()
+    $("#vertical_AC2").css("backgroundColor", "white");
+    $("#vertical_GND2").css("backgroundColor", "green");
+    $("#vertical_DC2").css("backgroundColor", "white");
 }
 function vertical_DC2(){
     osi.set_vertical_AC_GND_DC(1, "DC")
     osi.draw()
+    $("#vertical_AC2").css("backgroundColor", "white");
+    $("#vertical_GND2").css("backgroundColor", "white");
+    $("#vertical_DC2").css("backgroundColor", "green");
+}
+function vertical_mode_ch1(){
+    $("#vertical_mode_ch1").css("backgroundColor", "green");
+    $("#vertical_mode_ch2").css("backgroundColor", "white");
+    $("#vertical_mode_dual").css("backgroundColor", "white");
+    $("#vertical_mode_add").css("backgroundColor", "white");
+}
+function vertical_mode_ch2(){
+    $("#vertical_mode_ch1").css("backgroundColor", "white");
+    $("#vertical_mode_ch2").css("backgroundColor", "green");
+    $("#vertical_mode_dual").css("backgroundColor", "white");
+    $("#vertical_mode_add").css("backgroundColor", "white");
+}
+function vertical_mode_dual(){
+    $("#vertical_mode_ch1").css("backgroundColor", "white");
+    $("#vertical_mode_ch2").css("backgroundColor", "white");
+    $("#vertical_mode_dual").css("backgroundColor", "green");
+    $("#vertical_mode_add").css("backgroundColor", "white");
+}
+function vertical_mode_add(){
+    $("#vertical_mode_ch1").css("backgroundColor", "white");
+    $("#vertical_mode_ch2").css("backgroundColor", "white");
+    $("#vertical_mode_dual").css("backgroundColor", "white");
+    $("#vertical_mode_add").css("backgroundColor", "green");
+}
+var vertical_ch1_input_on = 0;
+var vertical_ch2_input_on = 0;
+function vertical_ch1_input(){
+    if(vertical_ch1_input_on)return;
+    if(vertical_ch2_input_on){
+        $("#oscilloscope").removeClass('oscilloscope-bg01').addClass('oscilloscope-bg11');
+    }
+    else{
+        $("#oscilloscope").removeClass('oscilloscope-bg00').addClass('oscilloscope-bg10');
+    }
+    vertical_ch1_input_on = 1;
+}
+function vertical_ch2_input(){
+    if(vertical_ch2_input_on)return;
+    if(vertical_ch1_input_on){
+        $("#oscilloscope").removeClass('oscilloscope-bg10').addClass('oscilloscope-bg11');
+    }
+    else{
+        $("#oscilloscope").removeClass('oscilloscope-bg00').addClass('oscilloscope-bg01');
+    }
+    vertical_ch2_input_on = 1;
+}
+
+function vertical_drawline1() {
+    colorNo = 0;
+    if (drawAlligator) {
+        AlligatorX1 = 1020;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1020, 530];
+    }
+}
+function vertical_drawline2() {
+    colorNo = 6;
+    if (drawAlligator) {
+        AlligatorX1 = 1070;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1070, 530];
+    }
+}
+function vertical_drawline3() {
+    colorNo = 0;
+    if (drawAlligator) {
+        AlligatorX1 = 1350;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1350, 530];
+    }
+}
+function vertical_drawline4() {
+    colorNo = 6;
+    if (drawAlligator) {
+        AlligatorX1 = 1390;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1390, 530];
+    }
 }
