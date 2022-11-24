@@ -1094,9 +1094,9 @@ function findNodeNum(x, y) {
     //multimeter 點還沒做
     //node 0~19 保留做特殊用途
     let alligatorNodeList = [
-        { x: 1285, y: 545 }, { x: 1250, y: 545 }, { x: 1385, y: 545 }, { x: 1350, y: 545 },
-        { x: 85, y: 565 }, { x: 145, y: 565 }, { x: 205, y: 565 },
-        { x: 355, y: 480 }, { x: 405, y: 480 }, { x: 455, y: 480 }
+        { x: 430, y: 400 }, { x: 480, y: 400 },
+        { x: 1020, y: 530 }, { x: 1070, y: 530 },
+        { x: 1350, y: 530 }, { x: 1390, y: 530 },
     ];//length : 10
 
     //check buttom node
@@ -1155,8 +1155,8 @@ function getWires() {
 function getAlligator() {
     //find all alligators in the html
     var alligators = $("line[id^='alligator']");
-    let offsetX = 550;
-    let offsetY = 300;
+    let offsetX = 100;//550;
+    let offsetY = 420;//300;
     var alligatorOut = $.map(alligators, function (alligator) {
         return {
             id: alligator.id,
@@ -1168,10 +1168,10 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    // for (let i = 0; i < alligatorOut.length; i++) {
-    //     var alligator = alligatorOut[i];
-    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    // }
+    for (let i = 0; i < alligatorOut.length; i++) {
+        var alligator = alligatorOut[i];
+        console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
+    }
     return alligatorOut;
 }
 
@@ -1196,7 +1196,7 @@ function getResistance() {
 
     for (let i = 0; i < resistanceOut.length; i++) {
         var r = resistanceOut[i];
-        r.val = parseInt(r.val);
+        r.val = math.complex(parseInt(r.val), 0);
         if (r.val == NaN) {
             alert("電阻不可以是小數")
         }
@@ -1453,7 +1453,7 @@ function getFullGraph(graph) {
         graph[r.node2].push(e);
     }
 
-    let capacitances = getCapacitances(omega);
+    let capacitances = getCapacitances();
     for (let i = 0; i < capacitances.length; i++) {
         let r = capacitances[i];
         let e = new Edge(r.node1, r.node2, "capacitance", r.val);
@@ -1473,34 +1473,21 @@ function getFullGraph(graph) {
 
 
 
-    let curr_eid = -1;
-    if (meter2_mode == 5) {
-        //安培計要串聯
-        let e = new Edge(7, 8, "ammeter", 0);
-        edge_list.push(e);
-        graph[7].push(e);
-        graph[8].push(e);
-        curr_eid = e.id;
-    }else if(meter2_mode != 0){
-        let e = new Edge(8, 9, "ammeter", 0);
-        edge_list.push(e);
-        graph[8].push(e);
-        graph[9].push(e);
-        curr_eid = e.id;
-    }
 
     //加電壓計
-    let vol_eid = -1;
-    if (meter1_mode != 0) {
-        let e = new Edge(4, 5, "voltmeter", 100000000);
-        edge_list.push(e);
-        graph[4].push(e);
-        graph[5].push(e);
-        vol_eid = e.id;
-    }
+    
+    let e = new Edge(3, 2, "voltmeter", math.complex(100000000, 0));
+    edge_list.push(e);
+    graph[2].push(e);
+    graph[3].push(e);
+
+    let e2 = new Edge(5, 4, "voltmeter", math.complex(100000000, 0));
+    edge_list.push(e2);
+    graph[4].push(e2);
+    graph[5].push(e2);
 
     console.log(edge_list);
-    return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
+    return { graph: graph, voltage_edgeid1: e.id, voltage_edgeid2: e2.id };
 }
 
 function getFullGraphVoltageVoltage() {
@@ -1511,16 +1498,12 @@ function getFullGraphVoltageVoltage() {
         graph[i] = [];
     }
 
-    //加電供
-    let e = new Edge(0, 1, "voltage source", math.complex(voltage1, 0));
+    //加 wave generator
+    let e = new Edge(0, 1, "voltage source", math.complex(1, 0));
     edge_list.push(e);
     graph[0].push(e);
     graph[1].push(e);
 
-    e = new Edge(2, 3, "voltage source", math.complex(voltage2, 0));
-    edge_list.push(e);
-    graph[2].push(e);
-    graph[3].push(e);
 
     return getFullGraph(graph);
 }
@@ -1576,6 +1559,9 @@ function find_loop(goal, node, graph, loop_length) {
 function equationVoltageVoltage(demo) {
     let FG = getFullGraphVoltageVoltage();
     graph = FG.graph;
+    // console.log("graph in equationVoltageVoltage")
+    // console.log(graph);
+
     equations = [];
     equation_cnt = 0;
     vis_edge = [];
@@ -1587,7 +1573,8 @@ function equationVoltageVoltage(demo) {
         }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
-            equations[equation_cnt][j] = math.complex(0, 0);
+            equations[equation_cnt][j] = 0;
+            equations[equation_cnt][j] = math.complex(equations[equation_cnt][j])
         }
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
@@ -1608,10 +1595,12 @@ function equationVoltageVoltage(demo) {
         path = [];
         find_loop(i, i, graph, 0);
     }
+    //console.log("show equation in equationVoltageVoltage=====================")
     for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
+        //console.log(equations[i]);
         equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
+
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     console.log(x);
@@ -1692,6 +1681,7 @@ function testGuassion(){
         path = [];
         find_loop(i, i, graph, 0);
     }
+    console.log("show equation in testGuassian=====================")
     for (let i = 0; i < equation_cnt; i++) {
         console.log(equations[i]);
         // if(equations[i][edge_cnt] == 0)continue
@@ -1957,20 +1947,17 @@ var osi = new Oscillator();
 
 
 function checkMeter(FG, x) {
-    let result = { voltage: "", current: "" };
+    let result = { voltage1: "", voltage2: "" };
     for (let i = 0; i < this.n; i++) {//存答案
         if (x[i] == NaN) {
-            result.voltage = "ERR";
-            result.current = "ERR";
+            result.voltage1 = "ERR";
+            result.voltage2 = "ERR";
             return result;
         }
     }
-    if (FG.current_edgeid != -1) {
-        result.current = x[FG.current_edgeid];
-    }
-    if (FG.voltage_edgeid != -1) {
-        result.voltage = x[FG.voltage_edgeid] * edge_list[FG.voltage_edgeid].ohm;
-    }
+    result.voltage1 = x[FG.voltage_edgeid1] * edge_list[FG.voltage_edgeid1].ohm.re;
+    result.voltage2 = x[FG.voltage_edgeid2] * edge_list[FG.voltage_edgeid2].ohm.re;
+    
     return result;
 }
 
@@ -1991,27 +1978,22 @@ function checkCircuit() {
     let FGx = equationVoltageVoltage(false);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
-    if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
-        console.log("電供 case 是 voltage, voltage");
-        let res_meter = checkMeter(FG, x);
-        let res_power1 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage1, current:x[0]})
-        let res_power2 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage2, current:x[1]})
-        if(checkResitanceBurn(x)){
-            let ERR = {voltage:"ERR", current:"ERR"}
-            return {meter:ERR, power1:ERR, power2:ERR};
-        }
-        return {meter : res_meter, power1 : res_power1, power2 : res_power2};
+    let res_meter = checkMeter(FG, x);
+    if(checkResitanceBurn(x)){
+        res_meter.voltage1 = res_meter.voltage1 = "ERR"
+        return {meter:ERR, power1:ERR, power2:ERR};
     }
+    return res_meter;
 
     //兩邊的電流有至少存在一邊超過最大電流
-    show_error("電源供應器的最大電流給得太小了<br>max current is too small")
-    if(current1 < current2){
+    // show_error("電源供應器的最大電流給得太小了<br>max current is too small")
+    // if(current1 < current2){
 
-    }else{
+    // }else{
 
-    }
-    let ERR = {voltage:"ERR", current:"ERR"}
-    return {meter:ERR, power1:ERR, power2:ERR};
+    // }
+    // let ERR = {voltage:"ERR", current:"ERR"}
+    // return {meter:ERR, power1:ERR, power2:ERR};
     // FGx = equationCurrentCurrent();
     // FG = FGx.FullGraph;
     // x = FGx.ans;
@@ -2035,80 +2017,8 @@ function check() {
         return;
     }
     let res = checkCircuit();
-    let va = res.meter;
-    
-    vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
-    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
-    vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
-    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : res.power2.current.toFixed(2)
-    if (meter1_mode == 0) {
-        $("#multimeter1_3").text('');
-    }
-    else if (va.voltage == 'ERR') {
-        $("#multimeter1_3").text(va.voltage);
-    }
-    else if (meter1_mode == 1) {
-        let v = va.voltage.toFixed(0);
-        if (v > 600) v = 'OverFlow'
-        $("#multimeter1_3").text(v);
-    }
-    else if (meter1_mode == 2) {
-        let v = va.voltage.toFixed(0);
-        if (v > 200) v = 'OverFlow'
-        $("#multimeter1_3").text(v);
-    }
-    else if (meter1_mode == 3) {
-        let v = va.voltage.toFixed(1);
-        if (v > 20) v = 'OverFlow'
-        $("#multimeter1_3").text(v);
-    }
-    else if (meter1_mode == 4) {
-        let v = va.voltage.toFixed(2);
-        if (v > 2) v = 'OverFlow'
-        $("#multimeter1_3").text(v);
-    }
-
-    if (meter2_mode == 0 || meter2On == 0) {
-        $("#multimeter2_3").text('');
-    }
-    else if (va.current == 'ERR') {
-        $("#multimeter2_3").text(va.current);
-    }
-    else if (meter2_mode == 1) {
-        let c = va.current;
-        c *= 1000000;
-        c = c.toFixed(0);
-        if (c > 200) c = 'OverFlow';
-        $("#multimeter2_3").text(c);
-    }
-    else if (meter2_mode == 2) {
-        let c = va.current;
-        c *= 1000;
-        c = c.toFixed(2);
-        if (c > 2) c = 'OverFlow';
-        $("#multimeter2_3").text(c);
-    }
-    else if (meter2_mode == 3) {
-        let c = va.current;
-        c *= 1000;
-        c = c.toFixed(1);
-        if (c > 20) c = 'OverFlow';
-        $("#multimeter2_3").text(c);
-    }
-    else if (meter2_mode == 4) {
-        let c = va.current;
-        c *= 1000;
-        c = c.toFixed(0);
-        if (c > 200) c = 'OverFlow';
-        $("#multimeter2_3").text(c);
-    }
-    else if (meter2_mode == 5) {
-        let c = va.current;
-        c = c.toFixed(1);
-        if (c > 10) c = 'OverFlow';
-        $("#multimeter2_3").text(c);
-    }
-    return;
+    console.log(res)
+    return ;
 }
 
 function undo(){
