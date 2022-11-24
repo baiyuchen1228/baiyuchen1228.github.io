@@ -237,7 +237,7 @@ function drawDashedLine2() {
         if (drawAlligator == 1) {
             x2 = approx_x(e.pageX);
             y2 = approx_x(e.pageY);
-            x2 += 10;
+            x2 += 0;
             mode = true;
         }
         if (mode) {
@@ -521,7 +521,7 @@ $("#container").mouseup(function (e) {
         y1 = AlligatorY1;
         x2 = approx_x(AlligatorFinal.pageX);
         y2 = approx_x(AlligatorFinal.pageY);
-        x2 += 10;
+        x2 += 0;
         for (let i = 0; i < pointarray.length; i++) {
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 - 550 == pointarray[i][0] && y2 - 300 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
@@ -532,7 +532,8 @@ $("#container").mouseup(function (e) {
             alert('(請先點按鈕)please click button first');
             return;
         }
-        if (x2 < 595 || x2 > 855 || y2 < 325 || y2 > 645) {
+        console.log(x2,y2);
+        if (y2 < 445 || y2 > 765 || x2 < 145 || x2 > 405) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
@@ -2271,7 +2272,11 @@ function add_generator_AMPL(){
     }
     evaluate_generator_AMPL();
 }
+
 function generator_output_switch(){
+    if(generator_output_on)return;
+    $("#generator").removeClass('generator_bg0').addClass('generator_bg1');
+    generator_output_on = true;
     if(generator_output_on){
         $("#generator_output_switch").css("backgroundColor", "white");
         generator_output_on = false;
@@ -2282,7 +2287,28 @@ function generator_output_switch(){
         drawWave()
     }
 }
-
+function generator_drawline1() {
+    colorNo = 0;
+    if (drawAlligator) {
+        AlligatorX1 = 430;
+        AlligatorY1 = 400;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [430, 400];
+    }
+}
+function generator_drawline2() {
+    colorNo = 6;
+    if (drawAlligator) {
+        AlligatorX1 = 480;
+        AlligatorY1 = 400;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [490, 400];
+    }
+}
 function minus_vertical_v_outer1(){
     osi.set_vertical_v(0, osi.vertical_v[0] - 0.1)
     osi.draw()
@@ -2401,4 +2427,71 @@ function vertical_mode_add(){
     $("#vertical_mode_ch2").css("backgroundColor", "white");
     $("#vertical_mode_dual").css("backgroundColor", "white");
     $("#vertical_mode_add").css("backgroundColor", "green");
+}
+var vertical_ch1_input_on = 0;
+var vertical_ch2_input_on = 0;
+function vertical_ch1_input(){
+    if(vertical_ch1_input_on)return;
+    if(vertical_ch2_input_on){
+        $("#oscilloscope").removeClass('oscilloscope-bg01').addClass('oscilloscope-bg11');
+    }
+    else{
+        $("#oscilloscope").removeClass('oscilloscope-bg00').addClass('oscilloscope-bg10');
+    }
+    vertical_ch1_input_on = 1;
+}
+function vertical_ch2_input(){
+    if(vertical_ch2_input_on)return;
+    if(vertical_ch1_input_on){
+        $("#oscilloscope").removeClass('oscilloscope-bg10').addClass('oscilloscope-bg11');
+    }
+    else{
+        $("#oscilloscope").removeClass('oscilloscope-bg00').addClass('oscilloscope-bg01');
+    }
+    vertical_ch2_input_on = 1;
+}
+
+function vertical_drawline1() {
+    colorNo = 0;
+    if (drawAlligator) {
+        AlligatorX1 = 1020;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1020, 530];
+    }
+}
+function vertical_drawline2() {
+    colorNo = 6;
+    if (drawAlligator) {
+        AlligatorX1 = 1070;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1070, 530];
+    }
+}
+function vertical_drawline3() {
+    colorNo = 0;
+    if (drawAlligator) {
+        AlligatorX1 = 1350;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1350, 530];
+    }
+}
+function vertical_drawline4() {
+    colorNo = 6;
+    if (drawAlligator) {
+        AlligatorX1 = 1390;
+        AlligatorY1 = 530;
+        document.onmousemove = drawDashedLine2();
+    }
+    if (deletemode) {
+        delALLalligator = [1390, 530];
+    }
 }

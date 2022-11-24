@@ -68,10 +68,16 @@ div#generator{
     height: 190px;
     width: 520px;
     border: 5px solid black;
-    background-image:url('../../images/waveform_generator.jpg');
     background-size: 520px ;
     background-repeat: no-repeat;
 }
+.generator_bg0{
+    background-image:url('../../images/waveform_generator.jpg');
+}
+.generator_bg1{
+    background-image:url('../../images/waveform_generator1.jpg');
+}
+
 div#oscilloscope{
     position: absolute;
     left: 630px;
@@ -79,7 +85,6 @@ div#oscilloscope{
     height: 360px;
     width: 800px;
     border: 5px solid black;
-    background-image:url('../../images/oscilloscope.jpg');
     background-size: 800px ;
     background-repeat: no-repeat;
 }
@@ -443,6 +448,26 @@ div#oscilloscope{
     left: 600px;
     width: 40px;
 }
+#vertical_drawline1{
+    top: 290px;
+    left: 320px;
+    width: 30px;
+}
+#vertical_drawline2{
+    top: 290px;
+    left: 370px;
+    width: 30px;
+}
+#vertical_drawline3{
+    top: 290px;
+    left: 650px;
+    width: 30px;
+}
+#vertical_drawline4{
+    top: 290px;
+    left: 690px;
+    width: 30px;
+}
 
 
 
@@ -646,6 +671,17 @@ div#oscilloscopeScreen{
     left: 275px;
     width: 30px;
 }
+#generator_drawline1{
+    top: 170px;
+    left: 380px;
+    width: 30px;
+}
+#generator_drawline2{
+    top: 170px;
+    left: 430px;
+    width: 30px;
+}
+
 #generator_output50{
     height: 15px;
     width: 40px;
@@ -665,9 +701,21 @@ div#oscilloscope{
     height: 360px;
     width: 800px;
     border: 5px solid black;
-    background-image:url('../../images/oscilloscope.jpg');
     background-size: 800px ;
     background-repeat: no-repeat;
+}
+
+.oscilloscope-bg00{
+    background-image:url('../../images/oscilloscope.jpg');
+}
+.oscilloscope-bg01{
+    background-image:url('../../images/oscilloscope01.jpg');
+}
+.oscilloscope-bg10{
+    background-image:url('../../images/oscilloscope10.jpg');
+}
+.oscilloscope-bg11{
+    background-image:url('../../images/oscilloscope11.jpg');
 }
 div#oscilloscopeScreen{
     position: absolute;

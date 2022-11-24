@@ -42,7 +42,7 @@
             style="position: relative; left: 100px; top: 270px; z-index: 0; float: left;"></canvas>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
             style="left: 100px; top: 270px; z-index:0; position:absolute" id="svgline"></svg>
-        <div id="oscilloscope">
+        <div id="oscilloscope" class="oscilloscope-bg00">
             <div id="oscilloscopeScreen">
                 <canvas id="oscilloscopeScreenCanvas"></canvas>
                 <p id="oscilloscope_inten_text" class="oscilloscope-text">inten</p>
@@ -92,7 +92,6 @@
                 <button id="vertical_mode_dual" type="button" class="oscilloscope-button" onclick="vertical_mode_dual()">DUAL</button>
                 <button id="vertical_mode_add" type="button" class="oscilloscope-button" onclick="vertical_mode_add()">ADD</button>
                 
-
                 <p id="vertical_v_text2" class="oscilloscope-text">VOLTS/DIV</p>
                 <p id="vertical_v2" class="oscilloscope-text">2V</p>
                 <button id="minus_vertical_v_outer2" type="button" class="oscilloscope-button" onclick="minus_vertical_v_outer2()">＜</button>
@@ -107,9 +106,14 @@
                 <button id="vertical_GND2" type="button" class="oscilloscope-button" onclick="vertical_GND2()">GND</button>
                 <button id="vertical_DC2" type="button" class="oscilloscope-button" onclick="vertical_DC2()">DC</button>
                 
+
+                <button id="vertical_drawline1" type="button" class="oscilloscope-button" onmousedown="vertical_drawline1()">＋</button>
+                <button id="vertical_drawline2" type="button" class="oscilloscope-button" onmousedown="vertical_drawline2()">－</button>
+                <button id="vertical_drawline3" type="button" class="oscilloscope-button" onmousedown="vertical_drawline3()">＋</button>
+                <button id="vertical_drawline4" type="button" class="oscilloscope-button" onmousedown="vertical_drawline4()">－</button>
             </div>
         </div>
-        <div id="generator">
+        <div id="generator" class="generator_bg0">
             <button id="minus_generator_frequency" type="button" class="generator-button" onclick="minus_generator_frequency()">＜－</button>
             <button id="add_generator_frequency" type="button" class="generator-button" onclick="add_generator_frequency()">－＞</button>
             <p id="generator_frequency" class="generator-text">1</p>
@@ -143,6 +147,8 @@
             <button id="add_generator_AMPL" type="button" class="generator-button" onclick="add_generator_AMPL()">＞</button>
             <p id="generator_output50" class="generator-text">output</p>
             <button id="generator_output_switch" type="button" class="generator-button" onclick="generator_output_switch()"></button>
+            <button id="generator_drawline1" type="button" class="generator-button" onmousedown="generator_drawline1()">＋</button>
+            <button id="generator_drawline2" type="button" class="generator-button" onmousedown="generator_drawline2()">－</button>
 
 
         </div>
