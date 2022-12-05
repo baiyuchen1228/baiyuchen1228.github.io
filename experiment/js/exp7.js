@@ -1486,6 +1486,20 @@ function getFullGraph(graph) {
     graph[4].push(e2);
     graph[5].push(e2);
 
+    
+    {   //接地要 short
+        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+        graph[1].push(tmp)
+        graph[3].push(tmp)
+        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+        graph[3].push(tmp)
+        graph[5].push(tmp)
+        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+        graph[1].push(tmp)
+        graph[5].push(tmp)
+    } 
+    
+
     console.log(edge_list);
     return { graph: graph, voltage_edgeid1: e.id, voltage_edgeid2: e2.id };
 }
@@ -2014,10 +2028,10 @@ function check() {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
     }
-    if(powersupplyOutputStatus == 0){
-        show_error("記得開 output")
-        return;
-    }
+    // if(powersupplyOutputStatus == 0){
+    //     show_error("記得開 output")
+    //     return;
+    // }
     let res = checkCircuit();
     console.log(res)
     return ;
