@@ -687,9 +687,8 @@ $("#container").mouseup(function (e) {
         if (delALLalligator != null) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
-            x2 += 540;
-            y2 += 300;
-            x2 += 10;
+            x2 += 100;
+            y2 += 420;
             console.log([x1, y1, x2, y2]);
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1) {
