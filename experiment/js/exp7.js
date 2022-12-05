@@ -1955,8 +1955,8 @@ function checkMeter(FG, x) {
             return result;
         }
     }
-    result.voltage1 = x[FG.voltage_edgeid1] * edge_list[FG.voltage_edgeid1].ohm.re;
-    result.voltage2 = x[FG.voltage_edgeid2] * edge_list[FG.voltage_edgeid2].ohm.re;
+    result.voltage1 = x[FG.voltage_edgeid1].mul(edge_list[FG.voltage_edgeid1].ohm);
+    result.voltage2 = x[FG.voltage_edgeid2].mul(edge_list[FG.voltage_edgeid2].ohm);
     
     return result;
 }
@@ -1978,6 +1978,8 @@ function checkCircuit() {
     let FGx = equationVoltageVoltage(false);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
+    //console.log("the edge_id of voltage1 is ", FG.voltage_edgeid1)
+    //console.log("the edge_id of voltage2 is ", FG.voltage_edgeid2)
     let res_meter = checkMeter(FG, x);
     if(checkResitanceBurn(x)){
         res_meter.voltage1 = res_meter.voltage1 = "ERR"
