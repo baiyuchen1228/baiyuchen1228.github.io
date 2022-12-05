@@ -525,7 +525,7 @@ $("#container").mouseup(function (e) {
         y2 = approx_x(AlligatorFinal.pageY);
         x2 += 0;
         for (let i = 0; i < pointarray.length; i++) {
-            if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 - 550 == pointarray[i][0] && y2 - 300 == pointarray[i][1])) {
+            if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 - 100 == pointarray[i][0] && y2 - 420 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
                 return;
             }
@@ -554,7 +554,7 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
         }
         pointarray.push([x1, y1]);
-        pointarray.push([x2, y2]);
+        pointarray.push([x2-100, y2-420]);
         alligatorNo++;
         AlligatorInitial = null;
         colorNo = (colorNo + 1) % colorlist.length;
@@ -746,6 +746,7 @@ $("#container").mouseup(function (e) {
             }
         }
     }
+    console.log(pointarray);
     check();
 });
 $(document).ready(function () {
