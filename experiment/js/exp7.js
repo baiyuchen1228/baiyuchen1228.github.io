@@ -689,9 +689,7 @@ $("#container").mouseup(function (e) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
             x2 += 100;
-            y2 += 420;
-            console.log([x1, y1, x2, y2]);
-            console.log(pointarray);
+            y2 += 420
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1) {
                     if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
@@ -699,17 +697,14 @@ $("#container").mouseup(function (e) {
                             if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                                 // pointarray = deleteRow(pointarray, j);
                                 pointarray[j] = [0,0];
-                                console.log(pointarray);
                             }
                         }
                         for (let j = 0; j < pointarray.length; j++) {
                             if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
                                 // pointarray = deleteRow(pointarray, j);
                                 pointarray[j] = [0,0];
-                                console.log(pointarray);
                             }
                         }
-                        console.log(Things[i].id[0]);
                         pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
                         pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
                         if (Things[i].id[0] == "a") {

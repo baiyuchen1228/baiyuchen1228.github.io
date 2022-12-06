@@ -1003,12 +1003,14 @@ $("#container").mouseup(function (e) {
                     console.log(Things[i].id[0]);
                     for (let j = 0; j < pointarray.length; j++) {
                         if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
+                            // pointarray = deleteRow(pointarray, j);
+                            pointarray[j] = [0,0];
                         }
                     }
                     for (let j = 0; j < pointarray.length; j++) {
                         if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
+                            // pointarray = deleteRow(pointarray, j);
+                            pointarray[j] = [0,0];
                         }
                     }
                     if (Things[i].id[0] == "w") {
