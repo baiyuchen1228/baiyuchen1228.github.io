@@ -485,6 +485,7 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of capacitance!");
             return;
         }
+        ufarad = ufarad / 1e6;
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -564,10 +565,10 @@ $("#container").mouseup(function (e) {
         turnOffMode();
     }
     if (deletemode == 1) {
-        console.log(delIni);
+        //console.log(delIni);
 
         var delFin = e;
-        console.log(delFin);
+        //console.log(delFin);
         x1 = approx_x(delIni.pageX);
         y1 = approx_x(delIni.pageY);
         x2 = approx_x(delFin.pageX);
@@ -690,43 +691,22 @@ $("#container").mouseup(function (e) {
             x2 += 100;
             y2 += 420;
             console.log([x1, y1, x2, y2]);
+            console.log(pointarray);
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1) {
                     if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
                         for (let j = 0; j < pointarray.length; j++) {
                             if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                                pointarray = deleteRow(pointarray, j);
+                                // pointarray = deleteRow(pointarray, j);
+                                pointarray[j] = [0,0];
+                                console.log(pointarray);
                             }
                         }
                         for (let j = 0; j < pointarray.length; j++) {
                             if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                                pointarray = deleteRow(pointarray, j);
-                            }
-                        }
-                        console.log(Things[i].id[0]);
-                        pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
-                        pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
-                        if (Things[i].id[0] == "a") {
-                            $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                            $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                            $("#" + Things[i].id).remove();
-                            delALLalligator = null;
-                        }
-                        check();
-                        turnOffMode();
-                        return;
-                    }
-                }
-                if (Things[i].x2.baseVal.value == x1) {
-                    if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
-                        for (let j = 0; j < pointarray.length; j++) {
-                            if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                                pointarray = deleteRow(pointarray, j);
-                            }
-                        }
-                        for (let j = 0; j < pointarray.length; j++) {
-                            if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                                pointarray = deleteRow(pointarray, j);
+                                // pointarray = deleteRow(pointarray, j);
+                                pointarray[j] = [0,0];
+                                console.log(pointarray);
                             }
                         }
                         console.log(Things[i].id[0]);

@@ -906,6 +906,7 @@ $("#container").mouseup(function (e) {
             alert("(非正常數值)Invalid value of capacitance!");
             return;
         }
+        ufarad = ufarad / 1e6;
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
