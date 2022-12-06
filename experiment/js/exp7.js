@@ -1203,11 +1203,8 @@ function getCapacitances() {
 
     for (let i = 0; i < capacitanceOut.length; i++) {
         var r = capacitanceOut[i];
-        r.val = parseInt(r.val);
+        r.val = parseFloat(r.val);
         r.val = math.complex(0, -1/omega/r.val)
-        if (r.val == NaN) {
-            alert("電阻不可以是小數")
-        }
         //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return capacitanceOut;
@@ -1236,11 +1233,8 @@ function getInductances(ohmaga) {
 
     for (let i = 0; i < inductanceOut.length; i++) {
         var r = inductanceOut[i];
-        r.val = parseInt(r.val);
+        r.val = parseFloat(r.val);
         r.val = math.complex(0, omega * r.val)
-        if (r.val == NaN) {
-            alert("電阻不可以是小數")
-        }
         //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return inductanceOut;
@@ -1295,7 +1289,8 @@ class Edge {
         return this._ohm.mul(math.complex(-1, 0));
     }
 }
-
+var debug = 0
+var test = 0
 class GuassionElimination {
     constructor(R, C, A) {
         this.m = R;
@@ -1348,11 +1343,14 @@ class GuassionElimination {
             }
             
             this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));//把開頭變成1
+            if(test){this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));}//把開頭變成1
             for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
                 this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));
+                if(test){this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));}
             }
 
         }
+
 
         for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
             for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
@@ -1363,18 +1361,23 @@ class GuassionElimination {
 
         //after guassian elimination
         console.log("Guassian Elimination")
+        console.log("m", this.m)
+        console.log("n", this.n)
         console.log(this.M);
         
         //檢查是不是無解
-        for(let i=this.n;i<this.m;i++){
-            if(this.M[i][this.n].re > 1e-10){
-                console.log("無解");
-                show_error("可能短路了<br> short!")
-                let x = [];
-                for (let i = 0; i < this.n; i++) {//存答案
-                    x[i] = NaN;
+        if(debug){
+            for(let i=this.n;i<this.m;i++){
+                if(this.M[i][this.n].re > 1e-9 || this.M[i][this.n].re < -1e-9){
+                    console.log("無解");
+                    show_error("可能短路了<br> short!")
+                    show_error("i 是" + i)
+                    let x = [];
+                    for (let i = 0; i < this.n; i++) {//存答案
+                        x[i] = NaN;
+                    }
+                    return x;
                 }
-                return x;
             }
         }
 
@@ -1462,19 +1465,19 @@ function getFullGraph(graph) {
     graph[5].push(e2);
 
     
-    {   //接地要 short
-        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-        graph[1].push(tmp)
-        graph[3].push(tmp)
-        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
-        graph[3].push(tmp)
-        graph[5].push(tmp)
-        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-        graph[1].push(tmp)
-        graph[5].push(tmp)
-    } 
+    // {   //接地要 short
+    //     let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+    //     graph[1].push(tmp)
+    //     graph[3].push(tmp)
+    //     tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+    //     graph[3].push(tmp)
+    //     graph[5].push(tmp)
+    //     tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+    //     graph[1].push(tmp)
+    //     graph[5].push(tmp)
+    // } 
     
-
+    console.log("edge_list : ")
     console.log(edge_list);
     return { graph: graph, voltage_edgeid1: e.id, voltage_edgeid2: e2.id };
 }
@@ -1507,10 +1510,10 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
-        // console.log("loop:");
-        // for (let i = 0; i < loop_length; i++) {
-        //     console.log(path[i].edgeid, path[i].par);
-        // }
+        console.log("loop:");
+        for (let i = 0; i < loop_length; i++) {
+            console.log(path[i].edgeid, path[i].par);
+        }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = math.complex(0, 0);
@@ -1545,7 +1548,7 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage(demo) {
+function equationVoltageVoltage() {
     let FG = getFullGraphVoltageVoltage();
     graph = FG.graph;
     // console.log("graph in equationVoltageVoltage")
