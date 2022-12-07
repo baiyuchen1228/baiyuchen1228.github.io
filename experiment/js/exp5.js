@@ -735,11 +735,13 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            linestack.push("wire0"+wireNo);
         }
         else {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            linestack.push("wire"+wireNo);
         }
         pointarray.push([x1, y1]);
         pointarray.push([x2, y2]);
@@ -799,12 +801,14 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'Ohms</title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>'));
+            linestack.push("resistance0"+resistanceNo);
         }
         else {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'Ohms</title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>'));
+            linestack.push("resistance"+resistanceNo);
         }
         pointarray.push([x1, y1]);
         pointarray.push([x2, y2]);
@@ -2007,44 +2011,45 @@ function check() {
     return;
 }
 
+linestack = [];
 function undo(){
-    Things = $("line");
-    console.log(Things);
-    console.log(Things.length);
-    let target = Things.length - 1;
+    let target = linestack.length - 1;
     pointarray = deleteRow(pointarray, pointarray.length-1);
     pointarray = deleteRow(pointarray, pointarray.length-1);
-    if (Things[target].id[0] == "w") {
-        $("#wireCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#wireCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#" + Things[target].id).remove();
+    if (linestack[target][0] == "w") {
+        $("#wireCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#wireCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#" + linestack[target]).remove();
     }
 
-    if (Things[target].id[0] == "r") {
-        $("#resistanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#resistanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#resistanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#" + Things[target].id).remove();
-        switchResistance();
+    if (linestack[target][0] == "r") {
+        $("#resistanceCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#resistanceCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#resistanceBox" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#" + linestack[target]).remove();
+        resistanceOn = 1;
     }
-    if (Things[target].id[0] == "i") {
-        $("#inductanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#inductanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#inductanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#" + Things[target].id).remove();
+    if (linestack[target][0] == "i") {
+        $("#inductanceCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#inductanceCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#inductanceBox" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#" + linestack[target]).remove();
+        inductanceOn = 1;
     }
-    if (Things[target].id[0] == "c") {
-        $("#capacitanceCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#capacitanceCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#capacitanceBox" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#" + Things[target].id).remove();
+    if (linestack[target][0] == "c") {
+        $("#capacitanceCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#capacitanceCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#capacitanceBox" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#" + linestack[target]).remove();
+        capacitanceOn = 1;
     }
-    if (Things[target].id[0] == "a") {
-        $("#alligatorCircle1_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#alligatorCircle2_" + Things[target].id[Things[target].id.length - 2] + Things[target].id[Things[target].id.length - 1]).remove();
-        $("#" + Things[target].id).remove();
+    if (linestack[target][0] == "a") {
+        $("#alligatorCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#alligatorCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
+        $("#" + linestack[target]).remove();
         delALLalligator = null;
     }
+    linestack.pop();
     check();
 }
 function KeyPress(e) {
