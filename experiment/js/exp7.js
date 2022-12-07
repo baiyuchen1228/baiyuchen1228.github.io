@@ -2027,6 +2027,9 @@ function check() {
 
 linestack = [];
 function undo(){
+    if(linestack.length == 0){
+        return;
+    }
     let target = linestack.length - 1;
     pointarray = deleteRow(pointarray, pointarray.length-1);
     pointarray = deleteRow(pointarray, pointarray.length-1);
