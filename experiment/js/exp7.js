@@ -1455,17 +1455,20 @@ function getFullGraph(graph, meter_idx) {
     }
 
 
-    // {   //接地要 short
-    //     let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-    //     graph[1].push(tmp)
-    //     graph[3].push(tmp)
-    //     tmp = new Edge(3, 5, "wire", math.complex(0, 0))
-    //     graph[3].push(tmp)
-    //     graph[5].push(tmp)
-    //     tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-    //     graph[1].push(tmp)
-    //     graph[5].push(tmp)
-    // } 
+    {   //接地要 short
+        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+        edge_list.push(tmp);
+        graph[1].push(tmp)
+        graph[3].push(tmp)
+        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+        edge_list.push(tmp);
+        graph[3].push(tmp)
+        graph[5].push(tmp)
+        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+        edge_list.push(tmp);
+        graph[1].push(tmp)
+        graph[5].push(tmp)
+    } 
 
 
     //加電壓計
