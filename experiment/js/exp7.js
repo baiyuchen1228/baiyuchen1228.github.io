@@ -1130,10 +1130,10 @@ function getWires() {
             node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
-    for (let i = 0; i < wiresOut.length; i++) {
-        var wire = wiresOut[i];
-        console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    }
+    // for (let i = 0; i < wiresOut.length; i++) {
+    //     var wire = wiresOut[i];
+    //     console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
+    // }
     return wiresOut;
 }
 
@@ -1153,10 +1153,10 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    for (let i = 0; i < alligatorOut.length; i++) {
-        var alligator = alligatorOut[i];
-        console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    }
+    // for (let i = 0; i < alligatorOut.length; i++) {
+    //     var alligator = alligatorOut[i];
+    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
+    // }
     return alligatorOut;
 }
 
@@ -1215,7 +1215,6 @@ function getCapacitances() {
         var r = capacitanceOut[i];
         r.val = parseFloat(r.val);
         r.val = math.complex(0, -1/omega/r.val)
-        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return capacitanceOut;
 }
@@ -1245,7 +1244,6 @@ function getInductances(ohmaga) {
         var r = inductanceOut[i];
         r.val = parseFloat(r.val);
         r.val = math.complex(0, omega * r.val)
-        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return inductanceOut;
 }
@@ -1371,10 +1369,7 @@ class GuassionElimination {
 
         //after guassian elimination
         console.log("Guassian Elimination")
-        console.log("m", this.m)
-        console.log("n", this.n)
-        console.log(this.M);
-        
+    
         //檢查是不是無解
         if(debug){
             for(let i=this.n;i<this.m;i++){
@@ -1412,7 +1407,7 @@ class GuassionElimination {
     }
 }
 
-function getFullGraph(graph) {
+function getFullGraph(graph, meter_idx) {
 
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
@@ -1460,21 +1455,6 @@ function getFullGraph(graph) {
     }
 
 
-
-
-    //加電壓計
-    
-    let e = new Edge(3, 2, "voltmeter", math.complex(100000000, 0));
-    edge_list.push(e);
-    graph[2].push(e);
-    graph[3].push(e);
-
-    let e2 = new Edge(5, 4, "voltmeter", math.complex(100000000, 0));
-    edge_list.push(e2);
-    graph[4].push(e2);
-    graph[5].push(e2);
-
-    
     // {   //接地要 short
     //     let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
     //     graph[1].push(tmp)
@@ -1486,13 +1466,28 @@ function getFullGraph(graph) {
     //     graph[1].push(tmp)
     //     graph[5].push(tmp)
     // } 
+
+
+    //加電壓計
+    if(meter_idx == 0){
+        let e = new Edge(3, 2, "voltmeter", math.complex(100000000, 0));
+        edge_list.push(e);
+        graph[2].push(e);
+        graph[3].push(e);
+        return { graph: graph, voltage_edgeid: e.id};
+    }
+    else{
+        let e = new Edge(5, 4, "voltmeter", math.complex(100000000, 0));
+        edge_list.push(e);
+        graph[4].push(e);
+        graph[5].push(e);
+        return { graph: graph, voltage_edgeid: e.id};
+    }
     
-    console.log("edge_list : ")
-    console.log(edge_list);
-    return { graph: graph, voltage_edgeid1: e.id, voltage_edgeid2: e2.id };
+    
 }
 
-function getFullGraphVoltageVoltage() {
+function getFullGraphVoltageVoltage(meter_idx) {
     edge_cnt = 0;
     var graph = [];
     edge_list = [];
@@ -1507,7 +1502,7 @@ function getFullGraphVoltageVoltage() {
     graph[1].push(e);
 
 
-    return getFullGraph(graph);
+    return getFullGraph(graph, meter_idx);
 }
 
 
@@ -1520,10 +1515,10 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
-        console.log("loop:");
-        for (let i = 0; i < loop_length; i++) {
-            console.log(path[i].edgeid, path[i].par);
-        }
+        // console.log("loop:");
+        // for (let i = 0; i < loop_length; i++) {
+        //     console.log(path[i].edgeid, path[i].par);
+        // }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = math.complex(0, 0);
@@ -1558,11 +1553,9 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage() {
-    let FG = getFullGraphVoltageVoltage();
+function equationVoltageVoltage(meter_idx) {
+    let FG = getFullGraphVoltageVoltage(meter_idx);
     graph = FG.graph;
-    // console.log("graph in equationVoltageVoltage")
-    // console.log(graph);
 
     equations = [];
     equation_cnt = 0;
@@ -1646,7 +1639,7 @@ function testGuassion(){
     graph[21].push(e);
     graph[24].push(e);
 
-    console.log(graph);
+    //console.log(graph);
 
     equations = [];
     equation_cnt = 0;
@@ -1847,8 +1840,8 @@ class Oscillator{
                 this._datapoints1[i] = wg.voltage_at(i + this._time_offset);
             }   
         }
-        console.log(this._datapoints0);
-        console.log(this._datapoints1);
+        //console.log(this._datapoints0);
+        //console.log(this._datapoints1);
     }
     draw(){
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
@@ -1866,8 +1859,8 @@ class Oscillator{
             datapoints1[i] = this._datapoints1[i] * this._vertical_v[1];
             datapoints1[i] += this._vertical_offset[1];
         }
-        console.log(datapoints0);
-        console.log(datapoints1);
+        //console.log(datapoints0);
+        //console.log(datapoints1);
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();
@@ -1948,19 +1941,13 @@ var osi = new Oscillator();
 
 
 
-function checkMeter(FG, x) {
-    let result = { voltage1: "", voltage2: "" };
+function checkMeter(x) {
     for (let i = 0; i < this.n; i++) {//存答案
         if (x[i] == NaN) {
-            result.voltage1 = "ERR";
-            result.voltage2 = "ERR";
-            return result;
+            return false;
         }
     }
-    result.voltage1 = x[FG.voltage_edgeid1].mul(edge_list[FG.voltage_edgeid1].ohm);
-    result.voltage2 = x[FG.voltage_edgeid2].mul(edge_list[FG.voltage_edgeid2].ohm);
-    
-    return result;
+    return true;
 }
 
 function checkResitanceBurn(x){
@@ -1977,16 +1964,31 @@ function checkResitanceBurn(x){
 
 
 function checkCircuit() {
-    let FGx = equationVoltageVoltage(false);
+    let res_meter = {voltage1:"ERR", voltage2:"ERR"}
+    
+    let FGx = equationVoltageVoltage(0);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
-    //console.log("the edge_id of voltage1 is ", FG.voltage_edgeid1)
-    //console.log("the edge_id of voltage2 is ", FG.voltage_edgeid2)
-    let res_meter = checkMeter(FG, x);
-    if(checkResitanceBurn(x)){
-        res_meter.voltage1 = res_meter.voltage1 = "ERR"
-        return {meter:ERR, power1:ERR, power2:ERR};
+    if(checkMeter(x)){
+        res_meter.voltage1 = x[FG.voltage_edgeid].mul(edge_list[FG.voltage_edgeid].ohm);
     }
+
+    let FGx2 = equationVoltageVoltage(1);
+    let FG2 = FGx2.FullGraph;
+    let x2 = FGx2.ans;
+    if(checkMeter(x2)){
+        res_meter.voltage2 = x2[FG2.voltage_edgeid].mul(edge_list[FG2.voltage_edgeid].ohm);
+    }
+
+
+
+
+    // if(checkResitanceBurn(x)){
+    //     res_meter.voltage1 = res_meter.voltage1 = "ERR"
+    //     return {meter:ERR, power1:ERR, power2:ERR};
+    // }
+    show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
+           "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)))
     return res_meter;
 
     //兩邊的電流有至少存在一邊超過最大電流

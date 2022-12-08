@@ -777,3 +777,8 @@ div#oscilloscopeScreen{
     border-radius: 5px;
     background-color: #e7dc8f;
 }
+#checkCircuitbutton{
+    width: 60px;
+    border-radius: 5px;
+    background-color: #e7dc8f;
+}
