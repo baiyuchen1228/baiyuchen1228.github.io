@@ -1752,6 +1752,7 @@ class WaveGenerator{
         let type = this._type
         t *= 0.003
         if(type == "square_wave"){
+            return square_wave(frequency,t,10);
             let pos = 1.0 * t - cycle * Math.floor(t / cycle);
             if(pos < cycle / 2){
                 return inv * amplitude;
@@ -2258,6 +2259,15 @@ function generator_square(){
     $("#generator_wave_text").text(wave_type);
     wg.set_type("square_wave")
     osi.draw()
+}
+
+function square_wave(frequency, time, loop){
+    var result = 0;
+    for (var i = 0; i < loop; i++){
+        result += (1 / (2 * i + 1)) * math.sin((2 * i + 1) * 2 * math.PI * frequency * time);
+    }
+    result *= (4 / Math.PI);
+    return result;
 }
 
 function generator_triangle(){
