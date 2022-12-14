@@ -1741,7 +1741,7 @@ class WaveGenerator{
     get type(){
         return this._type;
     }
-    voltage(t){
+    voltage(t, res, index){
         // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
         // let frequency = this._frequencys[i], type = this._types[i];
         // let inv = this._inv[i];
@@ -1749,10 +1749,40 @@ class WaveGenerator{
         let amplitude = this._amplitude;
         let frequency = this._frequency;
         let inv = this._inv;
-        let type = this._type
-        t *= 0.003
+        let type = this._type;
+        t *= 0.003;
+        let phase;
+        let a,b;
+        if(index == 0){
+            a = res.voltage1.re;
+            b = res.voltage1.im;
+        }
+        else{
+            a = res.voltage2.re;
+            b = res.voltage2.im;
+        }
+        if(a > 0){
+            if(b >= 0){
+                phase = Math.atan(b/a);
+            }
+            else if(b < 0){
+                phase = Math.atan(b/a);
+                phase += 2 * math.PI;
+            }
+        }
+        else if(a < 0){
+            phase = Math.atan(b/a);
+            phase += math.PI;
+        }
+        else{ // a == 0
+            phase = math.PI / 2;
+        }
+        amplitude = math.sqrt(a * a + b * b);
         if(type == "square_wave"){
-            return square_wave(frequency,t,10);
+            let result = inv * amplitude * square_wave(frequency,t,100,phase);
+            if(result > amplitude) return amplitude;
+            if(result < -amplitude) return -amplitude;
+            return result;
             let pos = 1.0 * t - cycle * Math.floor(t / cycle);
             if(pos < cycle / 2){
                 return inv * amplitude;
@@ -1760,7 +1790,7 @@ class WaveGenerator{
                 return inv * -amplitude;
             }
         }else if(type == "sin_wave"){
-            return inv * amplitude * Math.sin(2*Math.PI*frequency * t);
+            return inv * amplitude * Math.sin(2*Math.PI*frequency * t + phase);
         }else if(type == "triangle_wave"){
             let pos = t - cycle * Math.floor(t / cycle);
             if(pos < cycle/4){
@@ -1778,11 +1808,11 @@ class WaveGenerator{
         }
         return 0;
     }
-    voltage_at(t){
+    voltage_at(t, res, index){
         if(generator_offset_on){
-            return this._offset + this.voltage(t);
+            return this._offset + this.voltage(t, res, index);
         }
-        return this.voltage(t);
+        return this.voltage(t, res, index);
     }
     
 }
@@ -1831,31 +1861,32 @@ class Oscillator{
     get vertical_AC_GND_DC(){
         return this._vertical_AC_GND_DC;
     }
-    get_data(){
+    get_data(res){
         for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
             if(this.vertical_AC_GND_DC[0] == "GND"){
                 this._datapoints0[i] = 0
             }else{
-                this._datapoints0[i] = wg.voltage_at(i + this._time_offset);
+                this._datapoints0[i] = wg.voltage_at(i + this._time_offset, res, 0);
             }
             if(this.vertical_AC_GND_DC[1] == "GND"){
                 this._datapoints1[i] = 0
             }else{
-                this._datapoints1[i] = wg.voltage_at(i + this._time_offset);
+                this._datapoints1[i] = wg.voltage_at(i + this._time_offset, res, 1);
             }   
         }
         //console.log(this._datapoints0);
         //console.log(this._datapoints1);
     }
-    draw(){
+    draw(res){
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
         document.getElementById("demo_amplitude1").value = wg.amplitude;
         document.getElementById("demo_wave_type1").value = wg.type;
         document.getElementById("demo_wave_offset1").value = wg.offset;
         document.getElementById("demo_wave_inv1").value = wg.inv;
-        this.get_data();
+        this.get_data(res);
         let datapoints0 = []
         let datapoints1 = []
+
         for(let i=1;i <(this.WAVE_DATA_COUNT * this._time_mul);i++){
             datapoints0[i] = this._datapoints0[i] * this._vertical_v[0];
             datapoints0[i] += this._vertical_offset[0];
@@ -1863,7 +1894,7 @@ class Oscillator{
             datapoints1[i] = this._datapoints1[i] * this._vertical_v[1];
             datapoints1[i] += this._vertical_offset[1];
         }
-        //console.log(datapoints0);
+        // console.log(datapoints0);
         //console.log(datapoints1);
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
@@ -2028,6 +2059,7 @@ function check() {
     // }
     let res = checkCircuit();
     console.log(res)
+    osi.draw(res);
     return ;
 }
 
@@ -2118,7 +2150,7 @@ function drawWave(){
     wg.set_inv(generator_inv_on?-1:1);
     wg.set_offset(generator_offset);
     
-    console.log(osi.draw());
+    console.log(check());
 }
 
 
@@ -2147,7 +2179,6 @@ function evaluate_generator_frequency(){
     $("#generator_frequency").text(generator_frequency1.toFixed(1));
     $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
     wg.set_frequency(generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0)))
-    osi.draw()
     return generator_frequency;
 }
 
@@ -2243,7 +2274,7 @@ function generator_inv(){
         generator_inv_on = true;
     }
     wg.set_inv(wg.inv * (-1))
-    osi.draw()
+    check()
 }
 
 function clear_generator_wave(){
@@ -2258,13 +2289,13 @@ function generator_square(){
     wave_type = "square_wave";
     $("#generator_wave_text").text(wave_type);
     wg.set_type("square_wave")
-    osi.draw()
+    check()
 }
 
-function square_wave(frequency, time, loop){
+function square_wave(frequency, time, loop, phase){
     var result = 0;
     for (var i = 0; i < loop; i++){
-        result += (1 / (2 * i + 1)) * math.sin((2 * i + 1) * 2 * math.PI * frequency * time);
+        result += (1 / (2 * i + 1)) * math.sin((2 * i + 1) * 2 * math.PI * frequency * time + phase);
     }
     result *= (4 / Math.PI);
     return result;
@@ -2276,7 +2307,7 @@ function generator_triangle(){
     wave_type = "triangle_wave";
     $("#generator_wave_text").text(wave_type);
     wg.set_type("triangle_wave")
-    osi.draw()
+    check()
 }
 
 function generator_sin(){
@@ -2285,7 +2316,7 @@ function generator_sin(){
     wave_type = "sin_wave";
     $("#generator_wave_text").text(wave_type);
     wg.set_type("sin_wave")
-    osi.draw()
+    check()
 }
 
 function minus_generator_duty(){
@@ -2312,36 +2343,36 @@ function generator_offset_switch(){
         generator_offset = 0;
         generator_offset_on = true;
     }
-    osi.draw()
+    check()
 }
 
 function minus_generator_offset(){
     if(generator_offset_on){
         if(wg.offset < -30){
-            osi.draw()
+            check()
             return;
         }
         wg.set_offset(wg.offset - 1)
         generator_offset -= 1;
     }
-    osi.draw()
+    check()
 }
 
 function add_generator_offset(){
     if(generator_offset_on){
         if(wg.offset > 30){
-            osi.draw()
+            check()
             return;
         }
         wg.set_offset(wg.offset + 1)
         generator_offset += 1;
     }
-    osi.draw()
+    check()
 }
 
 function evaluate_generator_AMPL(){
     wg.set_amplitude(generator_AMPL_base * pow(10, generator_AMPL_pow));
-    osi.draw();
+    check();
     generator_AMPL = generator_AMPL_base * pow(10, generator_AMPL_pow);
 }
 
@@ -2425,73 +2456,73 @@ function generator_drawline2() {
 }
 function minus_vertical_v_outer1(){
     osi.set_vertical_v(0, osi.vertical_v[0] - 0.1)
-    osi.draw()
+    check()
 }
 function add_vertical_v_outer1(){
     osi.set_vertical_v(0, osi.vertical_v[0] + 0.1)
-    osi.draw()
+    check()
 }
 function minus_vertical_v_outer2(){
     osi.set_vertical_v(1, osi.vertical_v[1] - 0.1)
-    osi.draw()
+    check()
 }
 function add_vertical_v_outer2(){
     osi.set_vertical_v(1, osi.vertical_v[1] + 0.1)
-    osi.draw()
+    check()
 }
 
 function minus_vertical_position1(){
     osi.set_vertical_offset(0, osi.vertical_offset[0] - 0.1)
-    osi.draw()
+    check()
 }
 function add_vertical_position1(){
     osi.set_vertical_offset(0, osi.vertical_offset[0] + 0.1)
-    osi.draw()
+    check()
 }
 function minus_vertical_position2(){
     osi.set_vertical_offset(1, osi.vertical_offset[1] - 0.1)
-    osi.draw()
+    check()
 }
 function add_vertical_position2(){
     osi.set_vertical_offset(1, osi.vertical_offset[1] + 0.1)
-    osi.draw()
+    check()
 }
 
 function minus_horizonal_time(){
     osi.set_time_mul(osi.time_mul-0.1)
-    osi.draw()
+    check()
 }
 function add_horizonal_time(){
     osi.set_time_mul(osi.time_mul+0.1)
-    osi.draw()
+    check()
 }
 
 function minus_horizonal_position(){
     osi.set_time_offset(osi.time_offset-100)
-    osi.draw()
+    check()
 }
 function add_horizonal_position(){
     osi.set_time_offset(osi.time_offset+100)
-    osi.draw()
+    check()
 }
 
 function vertical_AC1(){
     osi.set_vertical_AC_GND_DC(0, "AC")
-    osi.draw()
+    check()
     $("#vertical_AC1").css("backgroundColor", "green");
     $("#vertical_GND1").css("backgroundColor", "white");
     $("#vertical_DC1").css("backgroundColor", "white");
 }
 function vertical_GND1(){
     osi.set_vertical_AC_GND_DC(0, "GND")
-    osi.draw()
+    check()
     $("#vertical_AC1").css("backgroundColor", "white");
     $("#vertical_GND1").css("backgroundColor", "green");
     $("#vertical_DC1").css("backgroundColor", "white");
 }
 function vertical_DC1(){
     osi.set_vertical_AC_GND_DC(0, "DC")
-    osi.draw()
+    check()
     $("#vertical_AC1").css("backgroundColor", "white");
     $("#vertical_GND1").css("backgroundColor", "white");
     $("#vertical_DC1").css("backgroundColor", "green");
@@ -2499,21 +2530,21 @@ function vertical_DC1(){
 
 function vertical_AC2(){
     osi.set_vertical_AC_GND_DC(1, "AC")
-    osi.draw()
+    check()
     $("#vertical_AC2").css("backgroundColor", "green");
     $("#vertical_GND2").css("backgroundColor", "white");
     $("#vertical_DC2").css("backgroundColor", "white");
 }
 function vertical_GND2(){
     osi.set_vertical_AC_GND_DC(1, "GND")
-    osi.draw()
+    check()
     $("#vertical_AC2").css("backgroundColor", "white");
     $("#vertical_GND2").css("backgroundColor", "green");
     $("#vertical_DC2").css("backgroundColor", "white");
 }
 function vertical_DC2(){
     osi.set_vertical_AC_GND_DC(1, "DC")
-    osi.draw()
+    check()
     $("#vertical_AC2").css("backgroundColor", "white");
     $("#vertical_GND2").css("backgroundColor", "white");
     $("#vertical_DC2").css("backgroundColor", "green");
