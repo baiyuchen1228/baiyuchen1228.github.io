@@ -1190,9 +1190,9 @@ function getResistance() {
     return resistanceOut;
 }
 
-function getCapacitances() {
+function getCapacitances(omega) {
 
-    let omega = 2 * math.PI * evaluate_generator_frequency()
+    
 
     //find all resistance in the html
     var capacitances = $("line[id^='capacitance']");
@@ -1219,9 +1219,9 @@ function getCapacitances() {
     return capacitanceOut;
 }
 
-function getInductances(ohmaga) {
+function getInductances(omega) {
 
-    let omega = 2 * math.PI * evaluate_generator_frequency()
+
 
     //find all resistance in the html
     var inductances = $("line[id^='inductance']");
@@ -1407,7 +1407,7 @@ class GuassionElimination {
     }
 }
 
-function getFullGraph(graph, meter_idx) {
+function getFullGraph(graph, meter_idx, omega) {
 
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
@@ -1436,7 +1436,7 @@ function getFullGraph(graph, meter_idx) {
         graph[r.node2].push(e);
     }
 
-    let capacitances = getCapacitances();
+    let capacitances = getCapacitances(omega);
     for (let i = 0; i < capacitances.length; i++) {
         let r = capacitances[i];
         let e = new Edge(r.node1, r.node2, "capacitance", r.val);
@@ -1445,7 +1445,7 @@ function getFullGraph(graph, meter_idx) {
         graph[r.node2].push(e);
     }
 
-    let inductances = getInductances();
+    let inductances = getInductances(omega);
     for (let i = 0; i < inductances.length; i++) {
         let r = inductances[i];
         let e = new Edge(r.node1, r.node2, "inductance", r.val);
@@ -1490,7 +1490,7 @@ function getFullGraph(graph, meter_idx) {
     
 }
 
-function getFullGraphVoltageVoltage(meter_idx) {
+function getFullGraphVoltageVoltage(meter_idx, omega) {
     edge_cnt = 0;
     var graph = [];
     edge_list = [];
@@ -1505,7 +1505,7 @@ function getFullGraphVoltageVoltage(meter_idx) {
     graph[1].push(e);
 
 
-    return getFullGraph(graph, meter_idx);
+    return getFullGraph(graph, meter_idx, omega);
 }
 
 
@@ -1556,8 +1556,8 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage(meter_idx) {
-    let FG = getFullGraphVoltageVoltage(meter_idx);
+function equationVoltageVoltage(meter_idx, omega) {
+    let FG = getFullGraphVoltageVoltage(meter_idx, omega);
     graph = FG.graph;
 
     equations = [];
@@ -1741,18 +1741,9 @@ class WaveGenerator{
     get type(){
         return this._type;
     }
-    voltage(t, res, index){
-        // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
-        // let frequency = this._frequencys[i], type = this._types[i];
-        // let inv = this._inv[i];
-        let cycle = this._cycle
-        let amplitude = this._amplitude;
-        let frequency = this._frequency;
-        let inv = this._inv;
-        let type = this._type;
-        t *= 0.003;
-        let phase;
+    calculate_phase(res, index){
         let a,b;
+        let phase;
         if(index == 0){
             a = res.voltage1.re;
             b = res.voltage1.im;
@@ -1761,19 +1752,6 @@ class WaveGenerator{
             a = res.voltage2.re;
             b = res.voltage2.im;
         }
-        /*if(a > 0){
-            if(b >= 0){
-                phase = Math.atan(b/a);
-            }
-            else if(b < 0){
-                phase = Math.atan(b/a);
-                phase += 2 * math.PI;
-            }
-        }
-        else if(a < 0){
-            phase = Math.atan(b/a);
-            phase += math.PI;
-        }*/
         if(a != 0){
             phase = Math.atan(b/a);
         }
@@ -1783,20 +1761,52 @@ class WaveGenerator{
         if(phase < 0){
             phase += 2 * math.PI;
         }
-        amplitude = math.sqrt(a * a + b * b);
+        return phase;
+    }
+    calculate_amplitude(res, index){
+        let a,b;
+        let amplitude;
+        if(index == 0){
+            a = res.voltage1.re;
+            b = res.voltage1.im;
+        }
+        else{
+            a = res.voltage2.re;
+            b = res.voltage2.im;
+        }
+        amplitude =  math.sqrt(a * a + b * b);
+        return amplitude;
+    }
+    voltage(t, index){
+        // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
+        // let frequency = this._frequencys[i], type = this._types[i];
+        // let inv = this._inv[i];
+        let cycle = this._cycle
+        let amplitude = this._amplitude;
+        let frequency = this._frequency;
+        let inv = this._inv;
+        let type = this._type;
+        t *= 0.003;
+        
         if(type == "square_wave"){
-            let result = inv * amplitude * square_wave(frequency,t,100,phase);
-            // if(result > amplitude) return amplitude;
-            // if(result < -amplitude) return -amplitude;
-            return result;
-            let pos = 1.0 * t - cycle * Math.floor(t / cycle);
-            if(pos < cycle / 2){
-                return inv * amplitude;
-            }else{
-                return inv * -amplitude;
+            let loop = 10;
+            let result = 0;
+            for (var i = 0; i < loop; i++){
+                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                let res = checkCircuit(omega);
+                let phase = this.calculate_phase(res, index);
+                let amplitude = this.calculate_amplitude(res, index);
+                result += amplitude * (1 / (2 * i + 1)) * math.sin((2 * i + 1) * omega * t + phase);
             }
+            result *= (4 / Math.PI);
+            result *= inv;
+            return result;
         }else if(type == "sin_wave"){
-            return inv * amplitude * Math.sin(2*Math.PI*frequency * t + phase);
+            let omega = 2 * math.PI * evaluate_generator_frequency();
+            let res = checkCircuit(omega);
+            let phase = this.calculate_phase(res, index);
+            let amplitude = this.calculate_amplitude(res, index);
+            return inv * amplitude * Math.sin(omega * t + phase);
         }else if(type == "triangle_wave"){
             let pos = t - cycle * Math.floor(t / cycle);
             if(pos < cycle/4){
@@ -1814,11 +1824,11 @@ class WaveGenerator{
         }
         return 0;
     }
-    voltage_at(t, res, index){
+    voltage_at(t, index){
         if(generator_offset_on){
-            return this._offset + this.voltage(t, res, index);
+            return this._offset + this.voltage(t, index);
         }
-        return this.voltage(t, res, index);
+        return this.voltage(t, index);
     }
     
 }
@@ -1867,29 +1877,29 @@ class Oscillator{
     get vertical_AC_GND_DC(){
         return this._vertical_AC_GND_DC;
     }
-    get_data(res){
+    get_data(){
         for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
             if(this.vertical_AC_GND_DC[0] == "GND"){
                 this._datapoints0[i] = 0
             }else{
-                this._datapoints0[i] = wg.voltage_at(i + this._time_offset, res, 0);
+                this._datapoints0[i] = wg.voltage_at(i + this._time_offset, 0);
             }
             if(this.vertical_AC_GND_DC[1] == "GND"){
                 this._datapoints1[i] = 0
             }else{
-                this._datapoints1[i] = wg.voltage_at(i + this._time_offset, res, 1);
+                this._datapoints1[i] = wg.voltage_at(i + this._time_offset, 1);
             }   
         }
         //console.log(this._datapoints0);
         //console.log(this._datapoints1);
     }
-    draw(res){
+    draw(){
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
         document.getElementById("demo_amplitude1").value = wg.amplitude;
         document.getElementById("demo_wave_type1").value = wg.type;
         document.getElementById("demo_wave_offset1").value = wg.offset;
         document.getElementById("demo_wave_inv1").value = wg.inv;
-        this.get_data(res);
+        this.get_data();
         let datapoints0 = []
         let datapoints1 = []
 
@@ -2004,17 +2014,17 @@ function checkResitanceBurn(x){
 }
 
 
-function checkCircuit() {
+function checkCircuit(omega) {
     let res_meter = {voltage1:"ERR", voltage2:"ERR"}
     
-    let FGx = equationVoltageVoltage(0);
+    let FGx = equationVoltageVoltage(0, omega);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
     if(checkMeter(x)){
         res_meter.voltage1 = x[FG.voltage_edgeid].mul(edge_list[FG.voltage_edgeid].ohm);
     }
 
-    let FGx2 = equationVoltageVoltage(1);
+    let FGx2 = equationVoltageVoltage(1, omega);
     let FG2 = FGx2.FullGraph;
     let x2 = FGx2.ans;
     if(checkMeter(x2)){
@@ -2063,9 +2073,9 @@ function check() {
     //     show_error("記得開 output")
     //     return;
     // }
-    let res = checkCircuit();
-    console.log(res)
-    osi.draw(res);
+    
+    console.log()
+    osi.draw();
     return ;
 }
 
@@ -2296,15 +2306,6 @@ function generator_square(){
     $("#generator_wave_text").text(wave_type);
     wg.set_type("square_wave")
     check()
-}
-
-function square_wave(frequency, time, loop, phase){
-    var result = 0;
-    for (var i = 0; i < loop; i++){
-        result += (1 / (2 * i + 1)) * math.sin((2 * i + 1) * 2 * math.PI * frequency * time + phase);
-    }
-    result *= (4 / Math.PI);
-    return result;
 }
 
 function generator_triangle(){
