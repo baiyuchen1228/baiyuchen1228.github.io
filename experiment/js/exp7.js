@@ -1761,7 +1761,7 @@ class WaveGenerator{
             a = res.voltage2.re;
             b = res.voltage2.im;
         }
-        if(a > 0){
+        /*if(a > 0){
             if(b >= 0){
                 phase = Math.atan(b/a);
             }
@@ -1773,15 +1773,21 @@ class WaveGenerator{
         else if(a < 0){
             phase = Math.atan(b/a);
             phase += math.PI;
+        }*/
+        if(a != 0){
+            phase = Math.atan(b/a);
         }
         else{ // a == 0
             phase = math.PI / 2;
         }
+        if(phase < 0){
+            phase += 2 * math.PI;
+        }
         amplitude = math.sqrt(a * a + b * b);
         if(type == "square_wave"){
             let result = inv * amplitude * square_wave(frequency,t,100,phase);
-            if(result > amplitude) return amplitude;
-            if(result < -amplitude) return -amplitude;
+            // if(result > amplitude) return amplitude;
+            // if(result < -amplitude) return -amplitude;
             return result;
             let pos = 1.0 * t - cycle * Math.floor(t / cycle);
             if(pos < cycle / 2){
