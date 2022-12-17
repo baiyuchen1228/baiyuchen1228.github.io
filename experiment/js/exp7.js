@@ -1777,7 +1777,7 @@ class WaveGenerator{
         amplitude =  math.sqrt(a * a + b * b);
         return amplitude;
     }
-    voltage(t, index){
+    voltage(t, index, coefficient, res, omega){
         // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
         // let frequency = this._frequencys[i], type = this._types[i];
         // let inv = this._inv[i];
@@ -1787,27 +1787,21 @@ class WaveGenerator{
         let inv = this._inv;
         let type = this._type;
         t *= 0.003;
-        
         if(type == "square_wave"){
-            let loop = 10;
             let result = 0;
-            for (var i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
-                let res = checkCircuit(omega);
-                let phase = this.calculate_phase(res, index);
-                let amplitude = this.calculate_amplitude(res, index);
-                result += amplitude * (1 / (2 * i + 1)) * math.sin((2 * i + 1) * omega * t + phase);
-            }
+            let phase = this.calculate_phase(res, index);
+            let amplitude = this.calculate_amplitude(res, index);
+            result += amplitude * (1 / coefficient) * math.sin(omega * t + phase);
             result *= (4 / Math.PI);
             result *= inv;
             return result;
-        }else if(type == "sin_wave"){
-            let omega = 2 * math.PI * evaluate_generator_frequency();
-            let res = checkCircuit(omega);
+        }
+        else if(type == "sin_wave"){
             let phase = this.calculate_phase(res, index);
             let amplitude = this.calculate_amplitude(res, index);
             return inv * amplitude * Math.sin(omega * t + phase);
-        }else if(type == "triangle_wave"){
+        }
+        else if(type == "triangle_wave"){
             let pos = t - cycle * Math.floor(t / cycle);
             if(pos < cycle/4){
                 return inv * (pos * 4 / cycle * amplitude);
@@ -1824,11 +1818,11 @@ class WaveGenerator{
         }
         return 0;
     }
-    voltage_at(t, index){
+    voltage_at(t, index, coefficient, res, omega){
         if(generator_offset_on){
-            return this._offset + this.voltage(t, index);
+            return this._offset + this.voltage(t, index, coefficient, res, omega);
         }
-        return this.voltage(t, index);
+        return this.voltage(t, index, coefficient, res, omega);
     }
     
 }
@@ -1878,19 +1872,61 @@ class Oscillator{
         return this._vertical_AC_GND_DC;
     }
     get_data(){
-        for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
-            if(this.vertical_AC_GND_DC[0] == "GND"){
-                this._datapoints0[i] = 0
-            }else{
-                this._datapoints0[i] = wg.voltage_at(i + this._time_offset, 0);
+        let type = wg.type;
+        if(type == "square_wave"){
+            let loop = 100;
+            let omega = 2 * math.PI * evaluate_generator_frequency();
+            let res = checkCircuit(omega);
+            for(let j=0;j<(this.WAVE_DATA_COUNT * this._time_mul);j++){
+                this._datapoints0[j] = 0;
+                this._datapoints1[j] = 0;
             }
-            if(this.vertical_AC_GND_DC[1] == "GND"){
-                this._datapoints1[i] = 0
-            }else{
-                this._datapoints1[i] = wg.voltage_at(i + this._time_offset, 1);
-            }   
+            for(let j=0;j<(this.WAVE_DATA_COUNT * this._time_mul);j++){
+                if(this.vertical_AC_GND_DC[0] == "GND"){
+                    this._datapoints0[j] = 0;
+                }else{
+                    this._datapoints0[j] += wg.voltage_at(j + this._time_offset, 0, 1, res, omega);
+                }
+                if(this.vertical_AC_GND_DC[1] == "GND"){
+                    this._datapoints1[j] = 0;
+                }else{
+                    this._datapoints1[j] += wg.voltage_at(j + this._time_offset, 1, 1, res, omega);
+                }   
+            }
+            for (let i = 1; i < loop; i++){
+                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                let res = checkCircuit(omega);
+                for(let j=0;j<(this.WAVE_DATA_COUNT * this._time_mul);j++){
+                    if(this.vertical_AC_GND_DC[0] == "GND"){
+                        this._datapoints0[j] = 0;
+                    }else{
+                        this._datapoints0[j] += wg.voltage_at(j + this._time_offset, 0, 2 * i + 1, res, omega);
+                    }
+                    if(this.vertical_AC_GND_DC[1] == "GND"){
+                        this._datapoints1[j] = 0;
+                    }else{
+                        this._datapoints1[j] += wg.voltage_at(j + this._time_offset, 1, 2 * i + 1, res, omega);
+                    }   
+                }
+            }
         }
-        //console.log(this._datapoints0);
+        else if(type == "sin_wave"){
+            let omega = 2 * math.PI * evaluate_generator_frequency();
+            let res = checkCircuit(omega);
+            for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
+                if(this.vertical_AC_GND_DC[0] == "GND"){
+                    this._datapoints0[i] = 0;
+                }else{
+                    this._datapoints0[i] = wg.voltage_at(i + this._time_offset, 0, 1, res, omega);
+                }
+                if(this.vertical_AC_GND_DC[1] == "GND"){
+                    this._datapoints1[i] = 0;
+                }else{
+                    this._datapoints1[i] = wg.voltage_at(i + this._time_offset, 1, 1, res, omega);
+                }   
+            }
+        }
+        // console.log(this._datapoints0);
         //console.log(this._datapoints1);
     }
     draw(){
