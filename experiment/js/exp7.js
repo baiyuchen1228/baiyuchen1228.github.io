@@ -1752,11 +1752,20 @@ class WaveGenerator{
             a = res.voltage2.re;
             b = res.voltage2.im;
         }
-        if(a != 0){
+        if(a > 0){
             phase = Math.atan(b/a);
         }
+        else if(a < 0){
+            phase = Math.atan(b/a);
+            phase += Math.PI;
+        }
         else{ // a == 0
-            phase = math.PI / 2;
+            if(b > 0){
+                phase = math.PI / 2;
+            }
+            if(b <= 0){
+                phase = math.PI * 3 / 2;
+            }
         }
         if(phase < 0){
             phase += 2 * math.PI;
