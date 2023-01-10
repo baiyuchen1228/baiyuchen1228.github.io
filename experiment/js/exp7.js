@@ -1297,7 +1297,7 @@ class Edge {
         return this._ohm.mul(math.complex(-1, 0));
     }
 }
-var debug = 0
+var debug = 1
 var test = 0
 class GuassionElimination {
     constructor(R, C, A) {
@@ -1344,8 +1344,8 @@ class GuassionElimination {
                 }
             }
             if (math.isZero(this.M[i][i])) {
-                //console.log("無唯一解/無解", i);
-                //console.log(this.M);
+                console.log("無唯一解/無解", i);
+                console.log(this.M);
                 single.push(i);
                 continue;
             }
@@ -2088,6 +2088,7 @@ function checkCircuit(omega) {
     let FGx2 = equationVoltageVoltage(1, omega);
     let FG2 = FGx2.FullGraph;
     let x2 = FGx2.ans;
+    console.log(x2);
     if(checkMeter(x2)){
         res_meter.voltage2 = x2[FG2.voltage_edgeid].mul(edge_list[FG2.voltage_edgeid].ohm);
     }
