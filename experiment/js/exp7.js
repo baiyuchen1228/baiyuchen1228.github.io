@@ -1362,7 +1362,7 @@ class GuassionElimination {
 
         for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
             for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
-                //if(i == j)continue;
+                if(math.isZero(this.M[i][i])){continue}
                 this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));
             }
         }
