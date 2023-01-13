@@ -1963,7 +1963,7 @@ class Oscillator{
         let datapoints0 = [];
         let datapoints1 = [];
 
-        for(let i=1;i <(this.WAVE_DATA_COUNT * this._time_mul);i++){
+        for(let i=1;i <(this.WAVE_DATA_COUNT);i++){
             datapoints0[i] = this._datapoints0[i] * this._vertical_v[0];
             datapoints0[i] += this._vertical_offset[0];
 
@@ -1977,7 +1977,7 @@ class Oscillator{
             chartStatus.destroy();
         }
         const labels = [];
-        for(let i=1;i<(this.WAVE_DATA_COUNT * this.time_mul);i++){
+        for(let i=1;i<(this.WAVE_DATA_COUNT);i++){
             labels[i] = i;
         }
         const data = {
@@ -2521,20 +2521,39 @@ function generator_drawline2() {
         delALLalligator = [490, 400];
     }
 }
+v_outer_dis = [5,2,1,0.5,0.2,0.1,0.05,0.02,0.01];
+v_outer_ind_1 = 4;
+v_outer_ind_2 = 4;
 function minus_vertical_v_outer1(){
-    osi.set_vertical_v(0, osi.vertical_v[0] - 0.1);
+    if(v_outer_ind_1 == 0) return;
+    v_outer_ind_1--;
+    osi.set_vertical_v(0, v_outer_dis[v_outer_ind_1]);
+    let text = v_outer_dis[v_outer_ind_1] + "V";
+    $("#vertical_v1").text(text);
     check();
 }
 function add_vertical_v_outer1(){
-    osi.set_vertical_v(0, osi.vertical_v[0] + 0.1);
+    if(v_outer_ind_1 == v_outer_dis.length - 1) return;
+    v_outer_ind_1++;
+    osi.set_vertical_v(0, v_outer_dis[v_outer_ind_1]);
+    let text = v_outer_dis[v_outer_ind_1] + "V";
+    $("#vertical_v1").text(text);
     check();
 }
 function minus_vertical_v_outer2(){
-    osi.set_vertical_v(1, osi.vertical_v[1] - 0.1);
+    if(v_outer_ind_2 == 0) return;
+    v_outer_ind_2--;
+    osi.set_vertical_v(1, v_outer_dis[v_outer_ind_2]);
+    let text = v_outer_dis[v_outer_ind_2] + "V";
+    $("#vertical_v2").text(text);
     check();
 }
 function add_vertical_v_outer2(){
-    osi.set_vertical_v(1, osi.vertical_v[1] + 0.1);
+    if(v_outer_ind_2 == v_outer_dis.length - 1) return;
+    v_outer_ind_2++;
+    osi.set_vertical_v(1, v_outer_dis[v_outer_ind_2]);
+    let text = v_outer_dis[v_outer_ind_2] + "V";
+    $("#vertical_v2").text(text);
     check();
 }
 
@@ -2560,15 +2579,19 @@ time_mul_des = [500,200,100,50,20,10,5,2,1,0.5,0.2,0.1,0.05,0.02,0.01,0.005,0.00
 time_mul_ind = 7;
 
 function minus_horizonal_time(){
-    if(time_mul_ind == time_mul_ind.size() - 1) return;
-    time_mul_ind++;
-    osi.set_time_mul(time_mul_des[time_mul_ind]);
-    check();
-}
-function add_horizonal_time(){
     if(time_mul_ind == 0) return;
     time_mul_ind--;
     osi.set_time_mul(time_mul_des[time_mul_ind]);
+    let text = time_mul_des[time_mul_ind] + "ms";
+    $("#horizonal_time").text(text);
+    check();
+}
+function add_horizonal_time(){
+    if(time_mul_ind == time_mul_des.length - 1) return;
+    time_mul_ind++;
+    osi.set_time_mul(time_mul_des[time_mul_ind]);
+    let text = time_mul_des[time_mul_ind] + "ms";
+    $("#horizonal_time").text(text);
     check();
 }
 
