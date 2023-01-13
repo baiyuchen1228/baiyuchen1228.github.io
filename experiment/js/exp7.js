@@ -1362,7 +1362,7 @@ class GuassionElimination {
 
         for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
             for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
-                if(math.isZero(this.M[i][i])){continue}
+                //if(math.isZero(this.M[i][i])){continue}
                 this.add(i, j, math.complex(-1.0, 0).mul(this.M[j][i]));
             }
         }
@@ -1458,32 +1458,32 @@ function getFullGraph(graph, meter_idx, omega) {
     }
 
 
-    {   //接地要 short
-        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-        edge_list.push(tmp);
-        graph[1].push(tmp)
-        graph[3].push(tmp)
-        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
-        edge_list.push(tmp);
-        graph[3].push(tmp)
-        graph[5].push(tmp)
-        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-        edge_list.push(tmp);
-        graph[1].push(tmp)
-        graph[5].push(tmp)
-    } 
+    // {   //接地要 short
+    //     let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+    //     edge_list.push(tmp);
+    //     graph[1].push(tmp)
+    //     graph[3].push(tmp)
+    //     tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+    //     edge_list.push(tmp);
+    //     graph[3].push(tmp)
+    //     graph[5].push(tmp)
+    //     tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+    //     edge_list.push(tmp);
+    //     graph[1].push(tmp)
+    //     graph[5].push(tmp)
+    // } 
 
 
     //加電壓計
     if(meter_idx == 0){
-        let e = new Edge(3, 2, "voltmeter", math.complex(100000000, 100000000));
+        let e = new Edge(3, 2, "voltmeter", math.complex(100000000, 0));
         edge_list.push(e);
         graph[2].push(e);
         graph[3].push(e);
         return { graph: graph, voltage_edgeid: e.id};
     }
     else{
-        let e = new Edge(5, 4, "voltmeter", math.complex(100000000, 100000000));
+        let e = new Edge(5, 4, "voltmeter", math.complex(100000000, 0));
         edge_list.push(e);
         graph[4].push(e);
         graph[5].push(e);
@@ -1601,7 +1601,7 @@ function equationVoltageVoltage(meter_idx, omega) {
         //console.log(equations[i]);
         equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
-
+    
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     //console.log(x);
