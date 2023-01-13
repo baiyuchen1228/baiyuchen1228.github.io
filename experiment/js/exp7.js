@@ -1,5 +1,4 @@
 
-
 var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
 
 var startbool = false;
@@ -8,10 +7,10 @@ var meter1_mode = 0;
 var meter2_mode = 0;
 const meter_1_mode = [0, 1, 2, 3, 4];
 const meter_2_mode = [0, 1, 2, 3, 4, 5];
-const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V']
-const meter_2_Mode = ['Hz', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A']
+const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V'];
+const meter_2_Mode = ['Hz', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A'];
 
-const colorlist = ['Red', 'DarkRed', 'FireBrick', 'LightCoral', 'OrangeRed', 'Chocolate', 'Black', 'Indigo', 'Navy', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod']
+const colorlist = ['Red', 'DarkRed', 'FireBrick', 'LightCoral', 'OrangeRed', 'Chocolate', 'Black', 'Indigo', 'Navy', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod'];
 var colorNo = 11;
 
 var delALLalligator = null;
@@ -699,7 +698,7 @@ $("#container").mouseup(function (e) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
             x2 += 100;
-            y2 += 420
+            y2 += 420;
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1) {
                     if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
@@ -1183,7 +1182,7 @@ function getResistance() {
         var r = resistanceOut[i];
         r.val = math.complex(parseInt(r.val), 0);
         if (r.val == NaN) {
-            alert("電阻不可以是小數")
+            alert("電阻不可以是小數");
         }
         //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
@@ -1214,7 +1213,7 @@ function getCapacitances(omega) {
     for (let i = 0; i < capacitanceOut.length; i++) {
         var r = capacitanceOut[i];
         r.val = parseFloat(r.val);
-        r.val = math.complex(0, -1/omega/r.val)
+        r.val = math.complex(0, -1/omega/r.val);
     }
     return capacitanceOut;
 }
@@ -1243,7 +1242,7 @@ function getInductances(omega) {
     for (let i = 0; i < inductanceOut.length; i++) {
         var r = inductanceOut[i];
         r.val = parseFloat(r.val);
-        r.val = math.complex(0, omega * r.val)
+        r.val = math.complex(0, omega * r.val);
     }
     return inductanceOut;
 }
@@ -1297,8 +1296,8 @@ class Edge {
         return this._ohm.mul(math.complex(-1, 0));
     }
 }
-var debug = 1
-var test = 0
+var debug = 1;
+var test = 0;
 class GuassionElimination {
     constructor(R, C, A) {
         this.m = R;
@@ -1458,20 +1457,20 @@ function getFullGraph(graph, meter_idx, omega) {
     }
 
 
-    {   //接地要 short
-        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-        edge_list.push(tmp);
-        graph[1].push(tmp)
-        graph[3].push(tmp)
-        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
-        edge_list.push(tmp);
-        graph[3].push(tmp)
-        graph[5].push(tmp)
-        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-        edge_list.push(tmp);
-        graph[1].push(tmp)
-        graph[5].push(tmp)
-    } 
+    // {   //接地要 short
+    //     let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+    //     edge_list.push(tmp);
+    //     graph[1].push(tmp)
+    //     graph[3].push(tmp)
+    //     tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+    //     edge_list.push(tmp);
+    //     graph[3].push(tmp)
+    //     graph[5].push(tmp)
+    //     tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+    //     edge_list.push(tmp);
+    //     graph[1].push(tmp)
+    //     graph[5].push(tmp)
+    // } 
 
 
     //加電壓計
@@ -1575,7 +1574,7 @@ function equationVoltageVoltage(meter_idx, omega) {
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
-            equations[equation_cnt][j] = math.complex(equations[equation_cnt][j])
+            equations[equation_cnt][j] = math.complex(equations[equation_cnt][j]);
         }
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
@@ -1612,11 +1611,11 @@ function equationVoltageVoltage(meter_idx, omega) {
 
 
 function testGuassion(){
-    let ohmaga = 100
-    let ohm = 10
-    let fala = 0.012
-    let homos = 8
-    let voltage = 13
+    let ohmaga = 100;
+    let ohm = 10;
+    let fala = 0.012;
+    let homos = 8;
+    let voltage = 13;
 
     edge_cnt = 0;
     var graph = [];
@@ -1659,7 +1658,7 @@ function testGuassion(){
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
-            equations[equation_cnt][j] = math.complex(equations[equation_cnt][j])
+            equations[equation_cnt][j] = math.complex(equations[equation_cnt][j]);
         }
         
         for (let j = 0; j < graph[i].length; j++) {
@@ -1713,21 +1712,21 @@ class WaveGenerator{
         return "triangle_wave";
     }
     set_frequency(freq_val){
-        this._frequency = freq_val / 1000.0       //調參
+        this._frequency = freq_val / 1000.0;       //調參
         //this._frequency = freq_val
-        this._cycle = 1 / this._frequency
+        this._cycle = 1 / this._frequency;
     }
     set_amplitude(val){
-        this._amplitude = val
+        this._amplitude = val;
     }
     set_inv(val){
-        this._inv = val
+        this._inv = val;
     }
     set_offset(val){
-        this._offset = val
+        this._offset = val;
     }
     set_type(val){
-        this._type = val
+        this._type = val;
     }
     get frequency(){
         return this._frequency;
@@ -1739,7 +1738,7 @@ class WaveGenerator{
         return this._inv;
     }
     get offset(){
-        return this._offset
+        return this._offset;
     }
     get type(){
         return this._type;
@@ -1793,7 +1792,7 @@ class WaveGenerator{
         // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
         // let frequency = this._frequencys[i], type = this._types[i];
         // let inv = this._inv[i];
-        let cycle = this._cycle
+        let cycle = this._cycle;
         let inv = this._inv;
         let type = this._type;
         t *= 0.003;
@@ -1840,19 +1839,19 @@ class Oscillator{
     constructor(){
         this._vertical_v = [1, 1];
         this._vertical_offset = [0, 0];
-        this._datapoints0 = []
-        this._datapoints1 = []
+        this._datapoints0 = [];
+        this._datapoints1 = [];
         this._time_mul = 1;
         this._time_offset = 0;
-        this.WAVE_DATA_COUNT = 1000
+        this.WAVE_DATA_COUNT = 1000;
         this._vertical_AC_GND_DC = ["AC", "AC"];  //AC, GND, DC
     }
 
     set_vertical_v(i, val){
-        this._vertical_v[i] = val
+        this._vertical_v[i] = val;
     }
     set_vertical_offset(i, val){
-        this._vertical_offset[i] = val
+        this._vertical_offset[i] = val;
     }
     set_time_mul(val){
         this._time_mul = val;
@@ -1861,13 +1860,13 @@ class Oscillator{
         this._time_offset = val;
     }
     set_vertical_AC_GND_DC(i, val){
-        this._vertical_AC_GND_DC[i] = val
+        this._vertical_AC_GND_DC[i] = val;
     }
     get vertical_v(){
-        return this._vertical_v
+        return this._vertical_v;
     }
     get vertical_offset(){
-        return this._vertical_offset
+        return this._vertical_offset;
     }
     get time_mul(){
         return this._time_mul;
@@ -1890,20 +1889,20 @@ class Oscillator{
             let amplitude1 = wg.calculate_amplitude(res, 1);
             console.log(res);
             console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-            for(let j=0;j<(this.WAVE_DATA_COUNT * this._time_mul);j++){
+            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
                 this._datapoints1[j] = 0;
             }
-            for(let j=0;j<(this.WAVE_DATA_COUNT * this._time_mul);j++){
+            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[j] = 0;
                 }else{
-                    this._datapoints0[j] += wg.voltage_at(j + this._time_offset, 1, omega, phase0, amplitude0);
+                    this._datapoints0[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 1, omega, phase0, amplitude0);
                 }
                 if(this.vertical_AC_GND_DC[1] == "GND"){
                     this._datapoints1[j] = 0;
                 }else{
-                    this._datapoints1[j] += wg.voltage_at(j + this._time_offset, 1, omega, phase1, amplitude1);
+                    this._datapoints1[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 1, omega, phase1, amplitude1);
                 }   
             }
             for (let i = 1; i < loop; i++){
@@ -1915,16 +1914,16 @@ class Oscillator{
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 console.log(res);
                 console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-                for(let j=0;j<(this.WAVE_DATA_COUNT * this._time_mul);j++){
+                for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
                     }else{
-                        this._datapoints0[j] += wg.voltage_at(j + this._time_offset, 2 * i + 1, omega, phase0, amplitude0);
+                        this._datapoints0[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 2 * i + 1, omega, phase0, amplitude0);
                     }
                     if(this.vertical_AC_GND_DC[1] == "GND"){
                         this._datapoints1[j] = 0;
                     }else{
-                        this._datapoints1[j] += wg.voltage_at(j + this._time_offset, 2 * i + 1, omega, phase1, amplitude1);
+                        this._datapoints1[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 2 * i + 1, omega, phase1, amplitude1);
                     }   
                 }
             }
@@ -1938,16 +1937,16 @@ class Oscillator{
             let amplitude1 = wg.calculate_amplitude(res, 1);
             console.log(res);
             console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-            for(let i=0;i<(this.WAVE_DATA_COUNT * this._time_mul);i++){
+            for(let i=0;i<(this.WAVE_DATA_COUNT);i++){
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[i] = 0;
                 }else{
-                    this._datapoints0[i] = wg.voltage_at(i + this._time_offset, 1, omega, phase0, amplitude0);
+                    this._datapoints0[i] = wg.voltage_at(i * this._time_mul + this._time_offset, 1, omega, phase0, amplitude0);
                 }
                 if(this.vertical_AC_GND_DC[1] == "GND"){
                     this._datapoints1[i] = 0;
                 }else{
-                    this._datapoints1[i] = wg.voltage_at(i + this._time_offset, 1, omega, phase1, amplitude1);
+                    this._datapoints1[i] = wg.voltage_at(i * this._time_mul + this._time_offset, 1, omega, phase1, amplitude1);
                 }   
             }
         }
@@ -1961,8 +1960,8 @@ class Oscillator{
         document.getElementById("demo_wave_offset1").value = wg.offset;
         document.getElementById("demo_wave_inv1").value = wg.inv;
         this.get_data();
-        let datapoints0 = []
-        let datapoints1 = []
+        let datapoints0 = [];
+        let datapoints1 = [];
 
         for(let i=1;i <(this.WAVE_DATA_COUNT * this._time_mul);i++){
             datapoints0[i] = this._datapoints0[i] * this._vertical_v[0];
@@ -2101,7 +2100,7 @@ function checkCircuit(omega) {
     //     return {meter:ERR, power1:ERR, power2:ERR};
     // }
     show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
-           "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)))
+           "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
     return res_meter;
 
     //兩邊的電流有至少存在一邊超過最大電流
@@ -2135,8 +2134,6 @@ function check() {
     //     show_error("記得開 output")
     //     return;
     // }
-    
-    console.log()
     osi.draw();
     return ;
 }
@@ -2202,7 +2199,7 @@ function reload(){
 }
 
 window.onbeforeunload = () => {
-    return confirm('確定要離開?')
+    return confirm('確定要離開?');
 }
 
 function start(){
@@ -2257,7 +2254,7 @@ function evaluate_generator_frequency(){
     generator_frequency = generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0));
     $("#generator_frequency").text(generator_frequency1.toFixed(1));
     $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
-    wg.set_frequency(generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0)))
+    wg.set_frequency(generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0)));
     return generator_frequency;
 }
 
@@ -2352,8 +2349,8 @@ function generator_inv(){
         $("#generator_inv").css("backgroundColor", "green");
         generator_inv_on = true;
     }
-    wg.set_inv(wg.inv * (-1))
-    check()
+    wg.set_inv(wg.inv * (-1));
+    check();
 }
 
 function clear_generator_wave(){
@@ -2367,8 +2364,8 @@ function generator_square(){
     $("#generator_square").css("backgroundColor", "green");
     wave_type = "square_wave";
     $("#generator_wave_text").text(wave_type);
-    wg.set_type("square_wave")
-    check()
+    wg.set_type("square_wave");
+    check();
 }
 
 function generator_triangle(){
@@ -2376,8 +2373,8 @@ function generator_triangle(){
     $("#generator_triangle").css("backgroundColor", "green");
     wave_type = "triangle_wave";
     $("#generator_wave_text").text(wave_type);
-    wg.set_type("triangle_wave")
-    check()
+    wg.set_type("triangle_wave");
+    check();
 }
 
 function generator_sin(){
@@ -2385,8 +2382,8 @@ function generator_sin(){
     $("#generator_sin").css("backgroundColor", "green");
     wave_type = "sin_wave";
     $("#generator_wave_text").text(wave_type);
-    wg.set_type("sin_wave")
-    check()
+    wg.set_type("sin_wave");
+    check();
 }
 
 function minus_generator_duty(){
@@ -2413,31 +2410,31 @@ function generator_offset_switch(){
         generator_offset = 0;
         generator_offset_on = true;
     }
-    check()
+    check();
 }
 
 function minus_generator_offset(){
     if(generator_offset_on){
         if(wg.offset < -30){
-            check()
+            check();
             return;
         }
-        wg.set_offset(wg.offset - 1)
+        wg.set_offset(wg.offset - 1);
         generator_offset -= 1;
     }
-    check()
+    check();
 }
 
 function add_generator_offset(){
     if(generator_offset_on){
         if(wg.offset > 30){
-            check()
+            check();
             return;
         }
-        wg.set_offset(wg.offset + 1)
+        wg.set_offset(wg.offset + 1);
         generator_offset += 1;
     }
-    check()
+    check();
 }
 
 function evaluate_generator_AMPL(){
@@ -2499,7 +2496,7 @@ function generator_output_switch(){
     else{
         $("#generator_output_switch").css("backgroundColor", "green");
         generator_output_on = true;
-        drawWave()
+        drawWave();
     }
 }
 function generator_drawline1() {
@@ -2525,96 +2522,104 @@ function generator_drawline2() {
     }
 }
 function minus_vertical_v_outer1(){
-    osi.set_vertical_v(0, osi.vertical_v[0] - 0.1)
-    check()
+    osi.set_vertical_v(0, osi.vertical_v[0] - 0.1);
+    check();
 }
 function add_vertical_v_outer1(){
-    osi.set_vertical_v(0, osi.vertical_v[0] + 0.1)
-    check()
+    osi.set_vertical_v(0, osi.vertical_v[0] + 0.1);
+    check();
 }
 function minus_vertical_v_outer2(){
-    osi.set_vertical_v(1, osi.vertical_v[1] - 0.1)
-    check()
+    osi.set_vertical_v(1, osi.vertical_v[1] - 0.1);
+    check();
 }
 function add_vertical_v_outer2(){
-    osi.set_vertical_v(1, osi.vertical_v[1] + 0.1)
-    check()
+    osi.set_vertical_v(1, osi.vertical_v[1] + 0.1);
+    check();
 }
 
 function minus_vertical_position1(){
-    osi.set_vertical_offset(0, osi.vertical_offset[0] - 0.1)
-    check()
+    osi.set_vertical_offset(0, osi.vertical_offset[0] - 0.1);
+    check();
 }
 function add_vertical_position1(){
-    osi.set_vertical_offset(0, osi.vertical_offset[0] + 0.1)
-    check()
+    osi.set_vertical_offset(0, osi.vertical_offset[0] + 0.1);
+    check();
 }
 function minus_vertical_position2(){
-    osi.set_vertical_offset(1, osi.vertical_offset[1] - 0.1)
-    check()
+    osi.set_vertical_offset(1, osi.vertical_offset[1] - 0.1);
+    check();
 }
 function add_vertical_position2(){
-    osi.set_vertical_offset(1, osi.vertical_offset[1] + 0.1)
-    check()
+    osi.set_vertical_offset(1, osi.vertical_offset[1] + 0.1);
+    check();
 }
 
+
+time_mul_des = [500,200,100,50,20,10,5,2,1,0.5,0.2,0.1,0.05,0.02,0.01,0.005,0.002,0.001,0.0005,0.0002];
+time_mul_ind = 7;
+
 function minus_horizonal_time(){
-    osi.set_time_mul(osi.time_mul-0.1)
-    check()
+    if(time_mul_ind == time_mul_ind.size() - 1) return;
+    time_mul_ind++;
+    osi.set_time_mul(time_mul_des[time_mul_ind]);
+    check();
 }
 function add_horizonal_time(){
-    osi.set_time_mul(osi.time_mul+0.1)
-    check()
+    if(time_mul_ind == 0) return;
+    time_mul_ind--;
+    osi.set_time_mul(time_mul_des[time_mul_ind]);
+    check();
 }
 
 function minus_horizonal_position(){
-    osi.set_time_offset(osi.time_offset-100)
-    check()
+    osi.set_time_offset(osi.time_offset-100);
+    check();
 }
 function add_horizonal_position(){
-    osi.set_time_offset(osi.time_offset+100)
-    check()
+    osi.set_time_offset(osi.time_offset+100);
+    check();
 }
 
 function vertical_AC1(){
-    osi.set_vertical_AC_GND_DC(0, "AC")
-    check()
+    osi.set_vertical_AC_GND_DC(0, "AC");
+    check();
     $("#vertical_AC1").css("backgroundColor", "green");
     $("#vertical_GND1").css("backgroundColor", "white");
     $("#vertical_DC1").css("backgroundColor", "white");
 }
 function vertical_GND1(){
-    osi.set_vertical_AC_GND_DC(0, "GND")
-    check()
+    osi.set_vertical_AC_GND_DC(0, "GND");
+    check();
     $("#vertical_AC1").css("backgroundColor", "white");
     $("#vertical_GND1").css("backgroundColor", "green");
     $("#vertical_DC1").css("backgroundColor", "white");
 }
 function vertical_DC1(){
-    osi.set_vertical_AC_GND_DC(0, "DC")
-    check()
+    osi.set_vertical_AC_GND_DC(0, "DC");
+    check();
     $("#vertical_AC1").css("backgroundColor", "white");
     $("#vertical_GND1").css("backgroundColor", "white");
     $("#vertical_DC1").css("backgroundColor", "green");
 }
 
 function vertical_AC2(){
-    osi.set_vertical_AC_GND_DC(1, "AC")
-    check()
+    osi.set_vertical_AC_GND_DC(1, "AC");
+    check();
     $("#vertical_AC2").css("backgroundColor", "green");
     $("#vertical_GND2").css("backgroundColor", "white");
     $("#vertical_DC2").css("backgroundColor", "white");
 }
 function vertical_GND2(){
-    osi.set_vertical_AC_GND_DC(1, "GND")
-    check()
+    osi.set_vertical_AC_GND_DC(1, "GND");
+    check();
     $("#vertical_AC2").css("backgroundColor", "white");
     $("#vertical_GND2").css("backgroundColor", "green");
     $("#vertical_DC2").css("backgroundColor", "white");
 }
 function vertical_DC2(){
-    osi.set_vertical_AC_GND_DC(1, "DC")
-    check()
+    osi.set_vertical_AC_GND_DC(1, "DC");
+    check();
     $("#vertical_AC2").css("backgroundColor", "white");
     $("#vertical_GND2").css("backgroundColor", "white");
     $("#vertical_DC2").css("backgroundColor", "green");
