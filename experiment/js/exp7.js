@@ -1824,7 +1824,7 @@ class WaveGenerator{
         return 0;
     }
     voltage_at(t, coefficient, omega, phase, amplitude){
-        if(amplitude > 5) return 0;
+        //if(amplitude > 5) return 0;
         if(generator_offset_on){
             return this._offset + this.voltage(t, coefficient, omega, phase, amplitude);
         }
@@ -1841,7 +1841,7 @@ class Oscillator{
         this._vertical_offset = [0, 0];
         this._datapoints0 = [];
         this._datapoints1 = [];
-        this._time_mul = 1;
+        this._time_mul = 2/300;
         this._time_offset = 0;
         this.WAVE_DATA_COUNT = 1000;
         this._vertical_AC_GND_DC = ["AC", "AC"];  //AC, GND, DC
@@ -2581,7 +2581,7 @@ time_mul_ind = 7;
 function minus_horizonal_time(){
     if(time_mul_ind == 0) return;
     time_mul_ind--;
-    osi.set_time_mul(time_mul_des[time_mul_ind]);
+    osi.set_time_mul(time_mul_des[time_mul_ind]/300);
     let text = time_mul_des[time_mul_ind] + "ms";
     $("#horizonal_time").text(text);
     check();
@@ -2589,7 +2589,7 @@ function minus_horizonal_time(){
 function add_horizonal_time(){
     if(time_mul_ind == time_mul_des.length - 1) return;
     time_mul_ind++;
-    osi.set_time_mul(time_mul_des[time_mul_ind]);
+    osi.set_time_mul(time_mul_des[time_mul_ind]/300);
     let text = time_mul_des[time_mul_ind] + "ms";
     $("#horizonal_time").text(text);
     check();
