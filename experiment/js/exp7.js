@@ -1284,6 +1284,9 @@ class Edge {
         return this._ohm;
     }
     go_next(node) {
+        if(this._node1 != node && this._node2 != node){
+            return -1;
+        }
         if (this._node1 == node) {
             return this._node2;
         }
@@ -1378,7 +1381,7 @@ class GuassionElimination {
                     show_error("i 是" + i)
                     let x = [];
                     for (let i = 0; i < this.n; i++) {//存答案
-                        x[i] = NaN;
+                        x[i] = math.complex(0, 0);
                     }
                     return x;
                 }
@@ -1406,7 +1409,7 @@ class GuassionElimination {
     }
 }
 
-function getFullGraph(graph, meter_idx, omega) {
+function getFullGraph(graph, meter_idx, omega, checkUser) {
 
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
@@ -1420,6 +1423,12 @@ function getFullGraph(graph, meter_idx, omega) {
     let alligators = getAlligator();
     for (let i = 0; i < alligators.length; i++) {
         let alli = alligators[i];
+        if(meter_idx == 0 && (alli.node1 == 4 || alli.node1 == 5)){
+           continue;
+        }
+        if(meter_idx == 1 && (alli.node1 == 2 || alli.node1 == 3)){
+            continue;
+         }
         let e = new Edge(alli.node1, alli.node2, "wire", math.complex(0, 0));
         edge_list.push(e);
         graph[alli.node1].push(e);
@@ -1457,20 +1466,25 @@ function getFullGraph(graph, meter_idx, omega) {
     }
 
 
-    // {   //接地要 short
-    //     let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-    //     edge_list.push(tmp);
-    //     graph[1].push(tmp)
-    //     graph[3].push(tmp)
-    //     tmp = new Edge(3, 5, "wire", math.complex(0, 0))
-    //     edge_list.push(tmp);
-    //     graph[3].push(tmp)
-    //     graph[5].push(tmp)
-    //     tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-    //     edge_list.push(tmp);
-    //     graph[1].push(tmp)
-    //     graph[5].push(tmp)
-    // } 
+    if(checkUser == false){   //接地要 short
+        //if(meter_idx == 0){
+            let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+            edge_list.push(tmp);
+            graph[1].push(tmp)
+            graph[3].push(tmp)
+        //}
+        
+        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+        edge_list.push(tmp);
+        graph[3].push(tmp)
+        graph[5].push(tmp)
+        //if(meter_idx == 1){
+            tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+            edge_list.push(tmp);
+            graph[1].push(tmp)
+            graph[5].push(tmp)
+        //}
+    } 
 
 
     //加電壓計
@@ -1492,7 +1506,7 @@ function getFullGraph(graph, meter_idx, omega) {
     
 }
 
-function getFullGraphVoltageVoltage(meter_idx, omega) {
+function getFullGraphVoltageVoltage(meter_idx, omega, checkUser) {
     edge_cnt = 0;
     var graph = [];
     edge_list = [];
@@ -1507,7 +1521,7 @@ function getFullGraphVoltageVoltage(meter_idx, omega) {
     graph[1].push(e);
 
 
-    return getFullGraph(graph, meter_idx, omega);
+    return getFullGraph(graph, meter_idx, omega, checkUser);
 }
 
 
@@ -1558,8 +1572,8 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage(meter_idx, omega) {
-    let FG = getFullGraphVoltageVoltage(meter_idx, omega);
+function equationVoltageVoltage(meter_idx, omega, checkUser) {
+    let FG = getFullGraphVoltageVoltage(meter_idx, omega, checkUser);
     graph = FG.graph;
 
     equations = [];
@@ -1690,6 +1704,62 @@ function testGuassion(){
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     //console.log(x);
+}
+
+function checkConnected(){
+    let res = {voltage1:1, voltage2:1}
+    let FG = getFullGraphVoltageVoltage(0, 1, true);
+    graph = FG.graph;
+    let top = 0;
+    let stack = [];
+    let vis = [];
+    for(let i = 0;i<MaxNodeNum;i++){
+        vis[i] = 0;
+    }
+    //Are 2 and 3 connected?
+    stack[top++] = 2;
+    while(top != 0){
+        let node = stack[--top];
+        for (let j = 0; j < graph[node].length; j++) {
+            let edge = graph[node][j];
+            if (edge.go_next(2) == 3 || edge.go_next(4) == 5){
+                continue;
+            }
+            if(vis[edge.go_next(node)] == 0){
+                vis[edge.go_next(node)] = 1;
+                stack[top++] = edge.go_next(node);
+            }
+        }
+    }
+    if(vis[3] == 0){
+        res.voltage1 = 0;
+    }
+
+    FG = getFullGraphVoltageVoltage(1, 1, true);
+    graph = FG.graph;
+    for(let i = 0;i<MaxNodeNum;i++){
+        vis[i] = 0;
+    }
+
+    //Are 4 and 5 connected?
+    stack[top++] = 4;
+    while(top != 0){
+        let node = stack[--top];
+        for (let j = 0; j < graph[node].length; j++) {
+            let edge = graph[node][j];
+            if (edge.go_next(2) == 3 || edge.go_next(4) == 5){
+                continue;
+            }
+            if(vis[edge.go_next(node)] == 0){
+                vis[edge.go_next(node)] = 1;
+                stack[top++] = edge.go_next(node);
+            }
+        }
+    }
+    if(vis[5] == 0){
+        res.voltage2 = 0;
+    }
+    return res;
 }
 
 
@@ -1882,7 +1952,11 @@ class Oscillator{
         if(type == "square_wave"){
             let loop = 100;
             let omega = 2 * math.PI * evaluate_generator_frequency();
-            let res = checkCircuit(omega);
+            let res = checkCircuit(omega, true);
+
+            res = checkCircuit(omega, false);
+
+
             let phase0 = wg.calculate_phase(res, 0);
             let amplitude0 = wg.calculate_amplitude(res, 0);
             let phase1 = wg.calculate_phase(res, 1);
@@ -1907,7 +1981,7 @@ class Oscillator{
             }
             for (let i = 1; i < loop; i++){
                 let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
-                let res = checkCircuit(omega);
+                let res = checkCircuit(omega, false);
                 let phase0 = wg.calculate_phase(res, 0);
                 let amplitude0 = wg.calculate_amplitude(res, 0);
                 let phase1 = wg.calculate_phase(res, 1);
@@ -1930,7 +2004,7 @@ class Oscillator{
         }
         else if(type == "sin_wave"){
             let omega = 2 * math.PI * evaluate_generator_frequency();
-            let res = checkCircuit(omega);
+            let res = checkCircuit(omega, false);
             let phase0 = wg.calculate_phase(res, 0);
             let amplitude0 = wg.calculate_amplitude(res, 0);
             let phase1 = wg.calculate_phase(res, 1);
@@ -1952,6 +2026,18 @@ class Oscillator{
         }
         // console.log(this._datapoints0);
         //console.log(this._datapoints1);
+        //確定使用者真的有接對
+        let conn = checkConnected();
+        if(conn.voltage1 == 0){
+            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+                this._datapoints0[j] = 0;
+            }
+        }
+        if(conn.voltage2 == 0){
+            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+                this._datapoints1[j] = 0;
+            }
+        }
     }
     draw(){
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
@@ -2054,7 +2140,7 @@ var osi = new Oscillator();
 
 function checkMeter(x) {
     for (let i = 0; i < this.n; i++) {//存答案
-        if (x[i] == NaN) {
+        if (x[i] != x[i]) {
             return false;
         }
     }
@@ -2074,17 +2160,17 @@ function checkResitanceBurn(x){
 }
 
 
-function checkCircuit(omega) {
-    let res_meter = {voltage1:"ERR", voltage2:"ERR"}
+function checkCircuit(omega, checkUser) {
+    let res_meter = {voltage1:0, voltage2:0}
     
-    let FGx = equationVoltageVoltage(0, omega);
+    let FGx = equationVoltageVoltage(0, omega, checkUser);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
     if(checkMeter(x)){
         res_meter.voltage1 = x[FG.voltage_edgeid].mul(edge_list[FG.voltage_edgeid].ohm);
     }
 
-    let FGx2 = equationVoltageVoltage(1, omega);
+    let FGx2 = equationVoltageVoltage(1, omega, checkUser);
     let FG2 = FGx2.FullGraph;
     let x2 = FGx2.ans;
     console.log(x2);
