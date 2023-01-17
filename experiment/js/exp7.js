@@ -1467,23 +1467,22 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
 
 
     if(checkUser == false){   //接地要 short
-        //if(meter_idx == 0){
-            let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-            edge_list.push(tmp);
-            graph[1].push(tmp)
-            graph[3].push(tmp)
-        //}
+        
+        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+        edge_list.push(tmp);
+        graph[1].push(tmp)
+        graph[3].push(tmp)
         
         tmp = new Edge(3, 5, "wire", math.complex(0, 0))
         edge_list.push(tmp);
         graph[3].push(tmp)
         graph[5].push(tmp)
-        //if(meter_idx == 1){
-            tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-            edge_list.push(tmp);
-            graph[1].push(tmp)
-            graph[5].push(tmp)
-        //}
+
+        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+        edge_list.push(tmp);
+        graph[1].push(tmp)
+        graph[5].push(tmp)
+
     } 
 
 
@@ -1572,8 +1571,8 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage(meter_idx, omega, checkUser) {
-    let FG = getFullGraphVoltageVoltage(meter_idx, omega, checkUser);
+function equationVoltageVoltage(meter_idx, omega) {
+    let FG = getFullGraphVoltageVoltage(meter_idx, omega, false);
     graph = FG.graph;
 
     equations = [];
@@ -1952,9 +1951,9 @@ class Oscillator{
         if(type == "square_wave"){
             let loop = 100;
             let omega = 2 * math.PI * evaluate_generator_frequency();
-            let res = checkCircuit(omega, true);
+            let res = checkCircuit(omega);
 
-            res = checkCircuit(omega, false);
+            res = checkCircuit(omega);
 
 
             let phase0 = wg.calculate_phase(res, 0);
@@ -1981,7 +1980,7 @@ class Oscillator{
             }
             for (let i = 1; i < loop; i++){
                 let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
-                let res = checkCircuit(omega, false);
+                let res = checkCircuit(omega);
                 let phase0 = wg.calculate_phase(res, 0);
                 let amplitude0 = wg.calculate_amplitude(res, 0);
                 let phase1 = wg.calculate_phase(res, 1);
@@ -2004,7 +2003,7 @@ class Oscillator{
         }
         else if(type == "sin_wave"){
             let omega = 2 * math.PI * evaluate_generator_frequency();
-            let res = checkCircuit(omega, false);
+            let res = checkCircuit(omega);
             let phase0 = wg.calculate_phase(res, 0);
             let amplitude0 = wg.calculate_amplitude(res, 0);
             let phase1 = wg.calculate_phase(res, 1);
@@ -2160,17 +2159,17 @@ function checkResitanceBurn(x){
 }
 
 
-function checkCircuit(omega, checkUser) {
+function checkCircuit(omega) {
     let res_meter = {voltage1:0, voltage2:0}
     
-    let FGx = equationVoltageVoltage(0, omega, checkUser);
+    let FGx = equationVoltageVoltage(0, omega);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
     if(checkMeter(x)){
         res_meter.voltage1 = x[FG.voltage_edgeid].mul(edge_list[FG.voltage_edgeid].ohm);
     }
 
-    let FGx2 = equationVoltageVoltage(1, omega, checkUser);
+    let FGx2 = equationVoltageVoltage(1, omega);
     let FG2 = FGx2.FullGraph;
     let x2 = FGx2.ans;
     console.log(x2);
