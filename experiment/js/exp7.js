@@ -2055,10 +2055,10 @@ class Oscillator{
         let datapoints1 = [];
 
         for(let i=1;i <(this.WAVE_DATA_COUNT);i++){
-            datapoints0[i] = this._datapoints0[i] * this._vertical_v[0];
+            datapoints0[i] = this._datapoints0[i] / this._vertical_v[0];
             datapoints0[i] += this._vertical_offset[0];
 
-            datapoints1[i] = this._datapoints1[i] * this._vertical_v[1];
+            datapoints1[i] = this._datapoints1[i] / this._vertical_v[1];
             datapoints1[i] += this._vertical_offset[1];
         }
         // console.log(datapoints0);
