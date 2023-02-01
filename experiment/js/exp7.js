@@ -1430,7 +1430,7 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         if(meter_idx == 1 && (alli.node1 == 2 || alli.node1 == 3)){
             continue;
          }
-        let e = new Edge(alli.node1, alli.node2, "wire", math.complex(0, 0));
+        let e = new Edge(alli.node1, alli.node2, "wire", math.complex(1, 0));
         edge_list.push(e);
         graph[alli.node1].push(e);
         graph[alli.node2].push(e);
@@ -1471,17 +1471,17 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
 
     if(checkUser == false){   //接地要 short
         
-        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+        let tmp = new Edge(1, 3, "wire", math.complex(1, 0));
         edge_list.push(tmp);
         graph[1].push(tmp)
         graph[3].push(tmp)
         
-        tmp = new Edge(3, 5, "wire", math.complex(0, 0))
+        tmp = new Edge(3, 5, "wire", math.complex(1, 0))
         edge_list.push(tmp);
         graph[3].push(tmp)
         graph[5].push(tmp)
 
-        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+        tmp = new Edge(1, 5, "wire", math.complex(1, 0))
         edge_list.push(tmp);
         graph[1].push(tmp)
         graph[5].push(tmp)
