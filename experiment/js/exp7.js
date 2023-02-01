@@ -1899,9 +1899,9 @@ class WaveGenerator{
     }
     voltage_at(t, coefficient, omega, phase, amplitude){
         //if(amplitude > 5) return 0;
-        if(generator_offset_on){
-            return this._offset + this.voltage(t, coefficient, omega, phase, amplitude);
-        }
+        // if(generator_offset_on){
+        //     return this._offset + this.voltage(t, coefficient, omega, phase, amplitude);
+        // }
         return this.voltage(t, coefficient, omega, phase, amplitude);
     }
     
@@ -2003,7 +2003,15 @@ class Oscillator{
                         this._datapoints1[j] = 0;
                     }else{
                         this._datapoints1[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 2 * i + 1, omega, phase1, amplitude1);
-                    }   
+                    }
+                }
+            }
+            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                    this._datapoints0[j] += wg.offset;
+                }
+                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                    this._datapoints1[j] += wg.offset;
                 }
             }
         }
@@ -2027,6 +2035,12 @@ class Oscillator{
                 }else{
                     this._datapoints1[i] = wg.voltage_at(i * this._time_mul + this._time_offset, 1, omega, phase1, amplitude1);
                 }   
+                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                    this._datapoints0[i] += wg.offset;
+                }
+                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                    this._datapoints1[i] += wg.offset;
+                }
             }
         }
         // console.log(this._datapoints0);
@@ -2093,7 +2107,7 @@ class Oscillator{
             data: data,
             options: {
               responsive: true,
-              aspectRatio: 1.2,
+              aspectRatio: 1.25,
               plugins: {
                 legend: {
                     display: false //要不要顯示 lable
@@ -2513,31 +2527,31 @@ function generator_offset_switch(){
         generator_offset = 0;
         generator_offset_on = true;
     }
-    check();
+    osi.draw();
 }
 
 function minus_generator_offset(){
     if(generator_offset_on){
         if(wg.offset < -30){
-            check();
+            osi.draw();
             return;
         }
         wg.set_offset(wg.offset - 1);
         generator_offset -= 1;
     }
-    check();
+    osi.draw();
 }
 
 function add_generator_offset(){
     if(generator_offset_on){
         if(wg.offset > 30){
-            check();
+            osi.draw();
             return;
         }
         wg.set_offset(wg.offset + 1);
         generator_offset += 1;
     }
-    check();
+    osi.draw();
 }
 
 function evaluate_generator_AMPL(){
