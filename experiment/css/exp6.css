@@ -156,28 +156,28 @@ div#powersupply{
     cursor: pointer;
 }
 #powersupply5{
-    left: 70px;
-}
-#powersupply6{
     left: 95px;
 }
-#powersupply7{
-    left: 145px;
+#powersupply6{
+    left: 70px;
 }
-#powersupply8{
+#powersupply7{
     left: 170px;
 }
-#powersupply9{
-    left: 250px;
+#powersupply8{
+    left: 145px;
 }
-#powersupply10{
+#powersupply9{
     left: 275px;
 }
+#powersupply10{
+    left: 250px;
+}
 #powersupply11{
-    left: 320px;
+    left: 345px;
 }
 #powersupply12{
-    left: 345px;
+    left: 320px;
 }
 #powersupply13{
     top: 150px;
