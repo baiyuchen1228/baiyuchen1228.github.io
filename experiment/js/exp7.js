@@ -1415,7 +1415,7 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
         let wire = wires[i];
-        let e = new Edge(wire.node1, wire.node2, "wire", math.complex(0, 0));
+        let e = new Edge(wire.node1, wire.node2, "wire", math.complex(1, 0));
         edge_list.push(e);
         graph[wire.node1].push(e);
         graph[wire.node2].push(e);
@@ -1997,12 +1997,12 @@ class Oscillator{
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
                     }else{
-                        this._datapoints0[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 2 * i + 1, omega, phase0, amplitude0);
+                        this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul , 2 * i + 1, omega, phase0, amplitude0);
                     }
                     if(this.vertical_AC_GND_DC[1] == "GND"){
                         this._datapoints1[j] = 0;
                     }else{
-                        this._datapoints1[j] += wg.voltage_at(j * this._time_mul + this._time_offset, 2 * i + 1, omega, phase1, amplitude1);
+                        this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase1, amplitude1);
                     }
                 }
             }
@@ -2028,12 +2028,12 @@ class Oscillator{
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[i] = 0;
                 }else{
-                    this._datapoints0[i] = wg.voltage_at(i * this._time_mul + this._time_offset, 1, omega, phase0, amplitude0);
+                    this._datapoints0[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase0, amplitude0);
                 }
                 if(this.vertical_AC_GND_DC[1] == "GND"){
                     this._datapoints1[i] = 0;
                 }else{
-                    this._datapoints1[i] = wg.voltage_at(i * this._time_mul + this._time_offset, 1, omega, phase1, amplitude1);
+                    this._datapoints1[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase1, amplitude1);
                 }   
                 if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[i] += wg.offset;
