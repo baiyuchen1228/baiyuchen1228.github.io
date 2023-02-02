@@ -2125,6 +2125,9 @@ function undo(){
         $("#resistanceBox" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#" + linestack[target]).remove();
         resistanceOn = 1;
+        $this = $("#addResistance");
+        $this.css('background-color', 'white');
+        drawResistance = 0;
     }
     if (linestack[target][0] == "i") {
         $("#inductanceCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
