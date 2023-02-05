@@ -590,109 +590,110 @@ $("#container").mouseup(function (e) {
         var id;
         Things = $("line");
         for (var i = Things.length - 1; i >= 0; i--) {
-            if (Things[i].x1.baseVal.value == x1) {
-                if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
-                    //console.log(Things[i].id[0]);
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
-                        }
+            if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
                     }
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
-                        }
-                    }
-                    if (Things[i].id[0] == "w") {
-                        $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-
-                    if (Things[i].id[0] == "r") {
-                        $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                        resistanceOn = 1;
-                    }
-                    if (Things[i].id[0] == "i") {
-                        $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                        inductanceOn = 1;
-                    }
-                    if (Things[i].id[0] == "c") {
-                        $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                        capacitanceOn = 1;
-                    }
-                    if (Things[i].id[0] == "L") {
-
-                        $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-
-                    }
-                    check();
-                    turnOffMode();
-                    return;
                 }
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
+                    }
+                }
+                pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+                pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+                if (Things[i].id[0] == "w") {
+                    $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+
+                if (Things[i].id[0] == "r") {
+                    $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                    resistanceOn = 1;
+                }
+                if (Things[i].id[0] == "i") {
+                    $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                    inductanceOn = 1;
+                }
+                if (Things[i].id[0] == "c") {
+                    $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                    capacitanceOn = 1;
+                }
+                if (Things[i].id[0] == "L") {
+
+                    $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+
+                }
+                check();
+                turnOffMode();
+                return;
             }
-            if (Things[i].x2.baseVal.value == x1) {
-                if (Things[i].y2.baseVal.value == y1 && Things[i].x1.baseVal.value == x2 && Things[i].y1.baseVal.value == y2) {
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
-                        }
+            if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
                     }
-                    for (let j = 0; j < pointarray.length; j++) {
-                        if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                            pointarray = deleteRow(pointarray, j);
-                        }
-                    }
-                    //console.log(Things[i].id[0]);
-                    pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
-                    pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
-                    if (Things[i].id[0] == "w") {
-                        $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-
-                    if (Things[i].id[0] == "r") {
-                        resistanceOn = 1;
-                        $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-                    if (Things[i].id[0] == "i") {
-                        inductanceOn = 1;
-                        $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-                    if (Things[i].id[0] == "c") {
-                        capacitanceOn = 1;
-                        $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-                    }
-                    if (Things[i].id[0] == "L") {
-                        //  console.log("#LEdcircle"+Things[i].id[Things[i].id.length -1]);
-                        $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                        $("#" + Things[i].id).remove();
-
-                    }
-                    check();
-                    turnOffMode();
-                    return;
                 }
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
+                    }
+                }
+                //console.log(Things[i].id[0]);
+                pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+                pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+                if (Things[i].id[0] == "w") {
+                    $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+
+                if (Things[i].id[0] == "r") {
+                    resistanceOn = 1;
+                    $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+                if (Things[i].id[0] == "i") {
+                    inductanceOn = 1;
+                    $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+                if (Things[i].id[0] == "c") {
+                    capacitanceOn = 1;
+                    $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+                if (Things[i].id[0] == "L") {
+                    //  console.log("#LEdcircle"+Things[i].id[Things[i].id.length -1]);
+                    $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+
+                }
+                check();
+                turnOffMode();
+                return;
             }
         }
         if (delALLalligator != null) {
@@ -701,32 +702,30 @@ $("#container").mouseup(function (e) {
             x2 += 100;
             y2 += 420;
             for (var i = Things.length - 1; i >= 0; i--) {
-                if (Things[i].x1.baseVal.value == x1) {
-                    if (Things[i].y1.baseVal.value == y1 && Things[i].x2.baseVal.value == x2 && Things[i].y2.baseVal.value == y2) {
-                        for (let j = 0; j < pointarray.length; j++) {
-                            if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                                // pointarray = deleteRow(pointarray, j);
-                                pointarray[j] = [0,0];
-                            }
+                if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                    for (let j = 0; j < pointarray.length; j++) {
+                        if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                            // pointarray = deleteRow(pointarray, j);
+                            pointarray[j] = [0,0];
                         }
-                        for (let j = 0; j < pointarray.length; j++) {
-                            if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                                // pointarray = deleteRow(pointarray, j);
-                                pointarray[j] = [0,0];
-                            }
-                        }
-                        pointarray.splice(jQuery.inArray([x1, y1], pointarray), 1);
-                        pointarray.splice(jQuery.inArray([x2, y2], pointarray), 1);
-                        if (Things[i].id[0] == "a") {
-                            $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                            $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-                            $("#" + Things[i].id).remove();
-                            delALLalligator = null;
-                        }
-                        check();
-                        turnOffMode();
-                        return;
                     }
+                    for (let j = 0; j < pointarray.length; j++) {
+                        if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                            // pointarray = deleteRow(pointarray, j);
+                            pointarray[j] = [0,0];
+                        }
+                    }
+                    pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+                    pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+                    if (Things[i].id[0] == "a") {
+                        $("#alligatorCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#alligatorCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                        $("#" + Things[i].id).remove();
+                        delALLalligator = null;
+                    }
+                    check();
+                    turnOffMode();
+                    return;
                 }
             }
         }
