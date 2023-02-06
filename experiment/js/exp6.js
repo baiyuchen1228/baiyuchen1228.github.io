@@ -99,8 +99,8 @@ document.getElementById("powersupply14").onclick = function () {
     if (power == 0) {
         cur1.innerHTML = current1.toFixed(2);
         cur2.innerHTML = current2.toFixed(2);
-        vol1.innerHTML = voltage1.toFixed(1);
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
+        vol2.innerHTML = voltage2.toFixed(2);
         power = 1;
     } else {
         current1 = current2 = 0;
@@ -207,7 +207,7 @@ $(powersupply7).mousedown(function (){
         turnOffMode();
         if (power == 1 && voltage1 <= 30) {
             voltage1 += 0.1;
-            vol1.innerHTML = voltage1.toFixed(1);
+            vol1.innerHTML = voltage1.toFixed(2);
         }
         check();
     }, 200 );
@@ -223,7 +223,7 @@ $(powersupply8).mousedown(function (){
         if (voltage1 < 0) {
             voltage1 = 0;
         }
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }, 200 );
@@ -263,7 +263,7 @@ $(powersupply11).mousedown(function (){
     turnOffMode();
     if (power == 1 && voltage2 <= 30) {
         voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }, 200 );
@@ -278,7 +278,7 @@ $(powersupply12).mousedown(function (){
         if (voltage2 < 0) {
             voltage2 = 0;
         }
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }, 200 );
@@ -299,7 +299,7 @@ addvoltage1.onclick = function () {
     turnOffMode();
     if (power == 1 && voltage1 <= 30) {
         voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }
@@ -317,7 +317,7 @@ addvoltage2.onclick = function () {
     turnOffMode();
     if (power == 1 && current2 <= 30) {
         voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }
@@ -341,7 +341,7 @@ decvoltage1.onclick = function () {
         if (voltage1 < 0) {
             voltage1 = 0;
         }
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }
@@ -365,7 +365,7 @@ decvoltage2.onclick = function () {
         if (voltage2 < 0) {
             voltage2 = 0;
         }
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }

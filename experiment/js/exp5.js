@@ -99,8 +99,8 @@ document.getElementById("powersupply14").onclick = function () {
     if (power == 0) {
         cur1.innerHTML = current1.toFixed(2);
         cur2.innerHTML = current2.toFixed(2);
-        vol1.innerHTML = voltage1.toFixed(1);
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
+        vol2.innerHTML = voltage2.toFixed(2);
         power = 1;
     } else {
         current1 = current2 = 0;
@@ -204,7 +204,7 @@ $(powersupply7).mousedown(function (){
     turnOffMode();
     if (power == 1 && voltage1 <= 30) {
         voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }, 200 );
@@ -219,7 +219,7 @@ $(powersupply8).mousedown(function (){
         if (voltage1 < 0) {
             voltage1 = 0;
         }
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }, 200 );
@@ -258,7 +258,7 @@ $(powersupply11).mousedown(function (){
     turnOffMode();
     if (power == 1 && voltage2 <= 30) {
         voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }, 200 );
@@ -273,7 +273,7 @@ $(powersupply12).mousedown(function (){
         if (voltage2 < 0) {
             voltage2 = 0;
         }
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }, 200 );
@@ -294,7 +294,7 @@ addvoltage1.onclick = function () {
     turnOffMode();
     if (power == 1 && voltage1 <= 30) {
         voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }
@@ -312,7 +312,7 @@ addvoltage2.onclick = function () {
     turnOffMode();
     if (power == 1 && current2 <= 30) {
         voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }
@@ -336,7 +336,7 @@ decvoltage1.onclick = function () {
         if (voltage1 < 0) {
             voltage1 = 0;
         }
-        vol1.innerHTML = voltage1.toFixed(1);
+        vol1.innerHTML = voltage1.toFixed(2);
     }
     check();
 }
@@ -360,7 +360,7 @@ decvoltage2.onclick = function () {
         if (voltage2 < 0) {
             voltage2 = 0;
         }
-        vol2.innerHTML = voltage2.toFixed(1);
+        vol2.innerHTML = voltage2.toFixed(2);
     }
     check();
 }
@@ -1034,6 +1034,10 @@ $("#container").mouseup(function (e) {
                     $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#" + Things[i].id).remove();
+                    resistanceOn = 1;
+                    $this = $("#addResistance");
+                    $this.css('background-color', 'white');
+                    drawResistance = 0;
                 }
                 if (Things[i].id[0] == "i") {
                     $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -1081,6 +1085,10 @@ $("#container").mouseup(function (e) {
                     $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#" + Things[i].id).remove();
+                    resistanceOn = 1;
+                    $this = $("#addResistance");
+                    $this.css('background-color', 'white');
+                    drawResistance = 0;
                 }
                 if (Things[i].id[0] == "i") {
                     $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -1774,14 +1782,21 @@ function getGraph() {
 
 function getPowerUseStatus() {
     let powerUseStatus = 0;             //確定 powersupply 狀態
-    if (voltage1 != 0 && voltage2 != 0) {
+    let useState1 = 0,useState2 = 0;
+    if (voltage1 != 0 || current1 != 0){
+        useState1 = 1;
+    }
+    if (voltage2 != 0 || current2 != 0){
+        useState2 = 1;
+    }
+    if (useState1 != 0 && useState2 != 0) {
         //alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
         show_error("本實驗不須用兩個電供<br>This experiment is not allow to use two ouput of powersupply.<br>需要兩組輸出者，請右轉到 exp6");
         return 3;
     }
-    if (voltage1 != 0) {
+    if (useState1 != 0) {
         powerUseStatus = 1;
-    } else if (voltage2 != 0) {
+    } else if (useState2 != 0) {
         powerUseStatus = 2;
     }
     if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
@@ -1978,6 +1993,17 @@ function check() {
         c = c.toFixed(1);
         if (c > 10) c = 'OverFlow';
         $("#multimeter2_3").text(c);
+    }
+    if(res.voltage == "ERR" && res.current == "ERR"){
+        let zero = 0;
+        if (getPowerUseStatus() == 1) {
+            $("#powersupply1").text(zero.toFixed(2));
+            $("#powersupply2").text(zero.toFixed(2));
+        }
+        else if (getPowerUseStatus() == 2) {
+            $("#powersupply3").text(zero.toFixed(2));
+            $("#powersupply4").text(zero.toFixed(2));
+        }
     }
     return;
 }
