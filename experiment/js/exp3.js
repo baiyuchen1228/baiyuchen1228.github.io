@@ -385,7 +385,7 @@ power_drowline2.onmousedown = function (e) {
     }
 }
 power_drowline3.onmousedown = function (e) {
-    alert("本實驗不開放使用這一組電功");
+    alert("本實驗不開放使用這一組電功，請用左邊的電功");
     return;
     colorNo = 1;
     if (drawAlligator) {
@@ -398,7 +398,7 @@ power_drowline3.onmousedown = function (e) {
     }
 }
 power_drowline4.onmousedown = function (e) {
-    alert("本實驗不開放使用這一組電功");
+    alert("本實驗不開放使用這一組電功，請用左邊的電功");
     return;
     colorNo = 7;
     if (drawAlligator) {
