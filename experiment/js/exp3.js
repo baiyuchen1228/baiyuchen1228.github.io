@@ -509,12 +509,6 @@ $("#container").mouseup(function (e) {
         x2 += 10;
         x2 += 2;
         y2 += 2;
-        for (let i = 0; i < pointarray.length; i++) {
-            if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 - 550 == pointarray[i][0] && y2 - 300 == pointarray[i][1])) {
-                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
-                return;
-            }
-        }
         if (x1 == 0 || y1 == 0) {
             alert('(請先點按鈕)please click button first');
             return;
@@ -524,6 +518,13 @@ $("#container").mouseup(function (e) {
             if(((x2 == 577 && y2 == 427) || (x2 == 877 && y2 == 427)));
             else{
                 alert('(請畫在麵包版上)please draw on breadboard');
+                return;
+            }
+        }
+        console.log(x2);
+        if (findNodeNum(x1, y1) == 1 || findNodeNum(x1, y1) == 0) {
+            if(x2 == 877 || x2 == 577) {}else {
+                alert('正負極只能接在左右兩個點');
                 return;
             }
         }
@@ -950,6 +951,10 @@ function checkCircuit() {
     console.log(multer_neg.x, multer_neg.y);
     if(power_pos.x == -1 || power_neg.x == -1 || multer_neg.x == -1 || multer_pos.x == -1){
         show_error("電功或電壓計沒有夾到鱷魚夾");
+        return {meter:meter, power1:power1, power2:power2};
+    }
+    if(power_neg.x != multer_neg.x || power_neg.y != multer_neg.y){
+        show_error("電功與電錶的負極要接再一起");
         return {meter:meter, power1:power1, power2:power2};
     }
     power1.voltage = voltage1;
