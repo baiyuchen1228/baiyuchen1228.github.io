@@ -385,6 +385,8 @@ power_drowline2.onmousedown = function (e) {
     }
 }
 power_drowline3.onmousedown = function (e) {
+    alert("本實驗不開放使用這一組電功");
+    return;
     colorNo = 1;
     if (drawAlligator) {
         AlligatorX1 = 1385;
@@ -396,6 +398,8 @@ power_drowline3.onmousedown = function (e) {
     }
 }
 power_drowline4.onmousedown = function (e) {
+    alert("本實驗不開放使用這一組電功");
+    return;
     colorNo = 7;
     if (drawAlligator) {
         AlligatorX1 = 1350;
@@ -842,26 +846,7 @@ function findNodeNum(x, y) {
 }
 
 
-function getWires() {
-    //find all wires in the html
-    var wires = $("line[id^='wire']");
-    var wiresOut = $.map(wires, function (wire) {
-        return {
-            id: wire.id,
-            x1: wire.x1.baseVal.value,
-            y1: wire.y1.baseVal.value,
-            x2: wire.x2.baseVal.value,
-            y2: wire.y2.baseVal.value,
-            node1: findNodeNum(wire.x1.baseVal.value, wire.y1.baseVal.value),
-            node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
-        };
-    });
-    for (let i = 0; i < wiresOut.length; i++) {
-        var wire = wiresOut[i];
-        console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    }
-    return wiresOut;
-}
+
 
 function getAlligator() {
     //find all alligators in the html
@@ -887,343 +872,11 @@ function getAlligator() {
 }
 
 
-function getResistance() {
-    //find all resistance in the html
-    var resistances = $("line[id^='resistance']");
-    var resistanceOut = $.map(resistances, function (resistance) {
-        var rval = $("#" + resistance.id).attr("dataohm");
-        return {
-
-            id: resistance.id,
-            val: rval,
-            x1: resistance.x1.baseVal.value,
-            y1: resistance.y1.baseVal.value,
-            x2: resistance.x2.baseVal.value,
-            y2: resistance.y2.baseVal.value,
-            node1: findNodeNum(resistance.x1.baseVal.value, resistance.y1.baseVal.value),
-            node2: findNodeNum(resistance.x2.baseVal.value, resistance.y2.baseVal.value),
-        };
-    });
-
-    for (let i = 0; i < resistanceOut.length; i++) {
-        var r = resistanceOut[i];
-        r.val = parseInt(r.val);
-        if (r.val == NaN) {
-            alert("電阻不可以是小數")
-        }
-        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
-    }
-    return resistanceOut;
-}
 
 function abs(x) {
     if (x < 0) { return -x; }
     return x;
 }
-
-
-let edge_cnt = 0;
-let edge_list = [];
-class Edge {
-    constructor(node1, node2, type, ohm) {
-        //電流從 node1 流到 node2
-        this._id = edge_cnt++;
-        this._node1 = node1;
-        this._node2 = node2;
-        this._type = type;
-        this._ohm = ohm;
-    }
-    get id() {
-        return this._id;
-    }
-
-    get node1() {
-        return this._node1;
-    }
-
-    get node2() {
-        return this._node2;
-    }
-    get type() {
-        return this._type;
-    }
-    get ohm() {
-        return this._ohm;
-    }
-    go_next(node) {
-        if (this._node1 == node) {
-            return this._node2;
-        }
-        return this._node1;
-    }
-    get_par(node) {
-        if (this._node1 == node) {
-            return this._ohm;
-        }
-        return -this._ohm;
-    }
-}
-
-class GuassionElimination {
-    constructor(R, C, A) {
-        this.m = R;
-        this.n = C;
-        this.M = A;
-    }
-
-    // row operation 的加法，把一行乘一個數字加到另一行
-    add(add_index, added_index, scalar) {
-        for (let i = 0; i <= this.n; i++) {
-            this.M[added_index][i] += this.M[add_index][i] * scalar;
-        }
-    }
-
-
-    // row operation 的交換，兩行互換
-    swap(swap_index1, swap_index2) {
-        //把指標指的位置互換
-        let tmp = this.M[swap_index1];
-        this.M[swap_index1] = this.M[swap_index2];
-        this.M[swap_index2] = tmp;
-    }
-
-
-    // row operation 的乘法，把一整行同乘一個常數
-    multiple(index, scalar) {
-        for (let i = 0; i <= this.n; i++) {
-            this.M[index][i] *= scalar;
-        }
-    }
-
-    Gaussian_Jordan_elimination() {
-        let single = [];
-        for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
-            if (this.M[i][i] == 0) {
-                for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
-                    if (this.M[j][i] != 0) {
-                        this.swap(i, j);
-                        break;
-                    }
-                }
-            }
-            if (this.M[i][i] == 0) {
-                console.log("無唯一解/無解", i);
-                console.log(this.M);
-                single.push(i);
-                continue;
-            }
-            this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
-            for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
-                this.add(i, j, -1 * this.M[j][i]);
-            }
-        }
-        for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
-            for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
-                //if(i == j)continue;
-                this.add(i, j, -1 * this.M[j][i]);
-            }
-        }
-
-        //after guassian elimination
-        console.log("Guassian Elimination")
-        console.log(this.M);
-        
-        //檢查是不是無解
-        for(let i=this.n;i<this.m;i++){
-            if(this.M[i][this.n] > 1e-10){
-                console.log("無解");
-                show_error("可能短路了<br> short!")
-                let x = [];
-                for (let i = 0; i < this.n; i++) {//存答案
-                    x[i] = NaN;
-                }
-                return x;
-            }
-        }
-
-        //我忘記這段在做什麼了QQ
-        // for(let j=0;j<single.length;j++){
-        //     let i = single[j];     // 123456789
-        //     if(this.M[i][this.n] != 0){
-        //         console.log("無解");
-        //         let x = [];
-        //         for (let i = 0; i < this.n; i++) {//存答案
-        //             x[i] = NaN;
-        //         }
-        //         return x;
-        //     }
-        // }
-
-        let x = [];
-        for (let i = 0; i < this.n; i++) {//存答案
-            x[i] = this.M[i][this.n];
-        }
-        return x;
-    }
-}
-
-function getFullGraph(graph) {
-
-    let wires = getWires();
-    for (let i = 0; i < wires.length; i++) {
-        let wire = wires[i];
-        let e = new Edge(wire.node1, wire.node2, "wire", 0);
-        edge_list.push(e);
-        graph[wire.node1].push(e);
-        graph[wire.node2].push(e);
-    }
-
-    let alligators = getAlligator();
-    for (let i = 0; i < alligators.length; i++) {
-        let alli = alligators[i];
-        let e = new Edge(alli.node1, alli.node2, "wire", 0);
-        edge_list.push(e);
-        graph[alli.node1].push(e);
-        graph[alli.node2].push(e);
-    }
-
-    let resistances = getResistance();
-    for (let i = 0; i < resistances.length; i++) {
-        let r = resistances[i];
-        let e = new Edge(r.node1, r.node2, "resistance", r.val);
-        edge_list.push(e);
-        graph[r.node1].push(e);
-        graph[r.node2].push(e);
-    }
-
-    let curr_eid = -1;
-
-    //加電壓計
-    let vol_eid = -1;
-    if (meter1_mode != 0) {
-        let e = new Edge(4, 5, "voltmeter", 100000000);
-        edge_list.push(e);
-        graph[4].push(e);
-        graph[5].push(e);
-        vol_eid = e.id;
-    }
-
-    console.log(edge_list);
-    return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
-}
-
-function getFullGraphVoltageVoltage() {
-    edge_cnt = 0;
-    var graph = [];
-    edge_list = [];
-    for (let i = 0; i <= MaxNodeNum; i++) {
-        graph[i] = [];
-    }
-
-    //加電供
-    let e = new Edge(0, 1, "voltage source", voltage1);
-    edge_list.push(e);
-    graph[0].push(e);
-    graph[1].push(e);
-
-    e = new Edge(2, 3, "voltage source", voltage2);
-    edge_list.push(e);
-    graph[2].push(e);
-    graph[3].push(e);
-
-    return getFullGraph(graph);
-}
-
-
-let equations = [];
-let equation_cnt = 0;
-let vis_edge = [];
-let path = [];
-
-//challenge : v0 不能給變數當電流，但連接時要當有連到
-function find_loop(goal, node, graph, loop_length) {
-    if (loop_length != 0 && goal == node) {
-        //find loop
-        // console.log("loop:");
-        // for (let i = 0; i < loop_length; i++) {
-        //     console.log(path[i].edgeid, path[i].par);
-        // }
-        equations[equation_cnt] = [];
-        for (let j = 0; j <= edge_cnt; j++) {
-            equations[equation_cnt][j] = 0;
-        }
-        for (let j = 0; j < loop_length; j++) {
-            equations[equation_cnt][path[j].edgeid] += path[j].par;
-        }
-        equation_cnt++;
-        return;
-    }
-
-    for (let i = 0; i < graph[node].length; i++) {
-        let edge = graph[node][i];
-        if (vis_edge[edge.id] == 0) {
-            vis_edge[edge.id] = 1;
-            if (edge.type == "voltage source") {
-                path[loop_length] = { edgeid: edge_cnt, par: edge.get_par(node) };
-                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
-            } else if(edge.type == "current source"){
-                let _par = 1;
-                if(node != 0 && node != 2){
-                    _par *= -1;
-                }
-                path[loop_length] = {edgeid:edge.id, par:_par};
-                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
-            } else {
-                path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
-                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
-            }
-            vis_edge[edge.id] = 0;
-        }
-    }
-}
-
-function equationVoltageVoltage() {
-    let FG = getFullGraphVoltageVoltage();
-    graph = FG.graph;
-    equations = [];
-    equation_cnt = 0;
-    vis_edge = [];
-    path = [];
-
-    for (let i = 0; i < MaxNodeNum; i++) {//流入等於流出
-        if (graph[i].length == 0) {
-            continue;
-        }
-        equations[equation_cnt] = [];
-        for (let j = 0; j <= edge_cnt; j++) {
-            equations[equation_cnt][j] = 0;
-        }
-        for (let j = 0; j < graph[i].length; j++) {
-            let edge = graph[i][j];
-            if (edge.node1 == i) {
-                //流出
-                equations[equation_cnt][edge.id] = 1;
-            } else {
-                equations[equation_cnt][edge.id] = -1;
-            }
-        }
-        equation_cnt++;
-    }
-
-    for (let i = 4; i < MaxNodeNum; i++) {
-        for (let j = 0; j < edge_cnt; j++) {
-            vis_edge[j] = 0;
-        }
-        path = [];
-        find_loop(i, i, graph, 0);
-    }
-    for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
-        equations[i][edge_cnt] *= -1;
-    }
-    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
-    let x = gua.Gaussian_Jordan_elimination();
-    console.log(x);
-    return { FullGraph: FG, ans: x };
-
-}
-
-
 
 
 function checkMeter(FG, x) {
@@ -1256,36 +909,58 @@ function checkResitanceBurn(x){
     return false;
 }
 
+function distance(point1, point2){
+    let delta_x = point1.x - point2.x;
+    let delta_y = point1.y - point2.y;
+    return  Math.sqrt(delta_x * delta_x + delta_y * delta_y)
+}
+
 
 function checkCircuit() {
-    let FGx = equationVoltageVoltage();
-    let FG = FGx.FullGraph;
-    let x = FGx.ans;
-    if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
-        console.log("電供 case 是 voltage, voltage");
-        let res_meter = checkMeter(FG, x);
-        let res_power1 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage1, current:x[0]})
-        let res_power2 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage2, current:x[1]})
-        if(checkResitanceBurn(x)){
-            let ERR = {voltage:"ERR", current:"ERR"}
-            return {meter:ERR, power1:ERR, power2:ERR};
+    alli = getAlligator();
+    console.log(alli);
+    let power_pos = {x : -1, y : -1}, power_neg = {x : -1, y : -1};
+    let multer_pos = {x : -1, y : -1}, multer_neg = {x : -1, y : -1};
+    let power1 = {voltage:"ERR", current:"ERR"};
+    let power2 = {voltage:0, current:0};
+    let meter = {voltage:"ERR"};
+    for(let i=0;i<alli.length;i++){
+        tmp = alli[i];
+        console.log(tmp)
+        if(tmp.node1 == 4){
+            multer_pos.x = tmp.x2;
+            multer_pos.y = tmp.y2;
+        }else if(tmp.node1 == 5){
+            multer_neg.x = tmp.x2;
+            multer_neg.y = tmp.y2;
+        }else if(tmp.node1 == 1){
+            power_neg.x = tmp.x2;
+            power_neg.y = tmp.y2;
+        }else if(tmp.node1 == 0){
+            power_pos.x = tmp.x2;
+            power_pos.y = tmp.y2;
+        }else{
+            show_error("電壓計的正極放錯了。");
+            return {meter:meter, power1:power1, power2:power2};
         }
-        return {meter : res_meter, power1 : res_power1, power2 : res_power2};
     }
-
-    //兩邊的電流有至少存在一邊超過最大電流
-    show_error("電源供應器的最大電流給得太小了<br>max current is too small")
-    if(current1 < current2){
-
-    }else{
-
+    console.log(power_pos.x, power_pos.y);
+    console.log(power_neg.x, power_neg.y);
+    console.log(multer_pos.x, multer_pos.y);
+    console.log(multer_neg.x, multer_neg.y);
+    if(power_pos.x == -1 || power_neg.x == -1 || multer_neg.x == -1 || multer_pos.x == -1){
+        show_error("電功或電壓計沒有夾到鱷魚夾");
+        return {meter:meter, power1:power1, power2:power2};
     }
-    let ERR = {voltage:"ERR", current:"ERR"}
-    return {meter:ERR, power1:ERR, power2:ERR};
-    // FGx = equationCurrentCurrent();
-    // FG = FGx.FullGraph;
-    // x = FGx.ans;
-
+    power1.voltage = voltage1;
+    power1.current = current1;
+    let dis_multer = distance(multer_pos, multer_neg);
+    let dis_power = distance(power_pos, power_neg);
+    meter.voltage = power1.voltage * dis_multer / dis_power;
+    if(distance(power_pos, multer_pos) > distance(power_pos, multer_neg)){
+        meter.voltage *= -1;
+    }
+    return {meter:meter, power1:power1, power2:power2};
 }
 
 function check() {
