@@ -117,10 +117,10 @@ document.getElementById("powersupply14").onclick = function () {
 
 function turnOffMode() {
     if (drawResistance == 1) {
-        if (resistanceOn == 1) {
+        //if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
-        }
+        //}
         drawResistance = 0;
     }
     else if (deletemode == 1) {
@@ -156,7 +156,7 @@ document.getElementById("powersupply13").onclick = function () {
     if (power == 1 && powersupplyOutputStatus == 0) {
         powersupplyOutputStatus = 1;
         $("#powersupply13").css("background-color", "Lightgreen");
-        //console.log("output on!");
+        console.log("output on!");
         check();
     } else {
         powersupplyOutputStatus = 0;
@@ -165,7 +165,7 @@ document.getElementById("powersupply13").onclick = function () {
         cur2.innerHTML = current2.toFixed(2);
         vol1.innerHTML = voltage1.toFixed(2);
         vol2.innerHTML = voltage2.toFixed(2);
-        //console.log("power off!");
+        console.log("power off!");
         check();
     }
 }
@@ -173,17 +173,19 @@ document.getElementById("powersupply13").onclick = function () {
 
 var intervalID;
 $(powersupply5).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && current1 <= 3) {
-        current1 += 0.01;
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}, 200 );
+    intervalID = setInterval(function (){
+        turnOffMode();
+        if (power == 1 && current1 <= 3) {
+            current1 += 0.01;
+            cur1.innerHTML = current1.toFixed(2);
+        }
+        check();
+        }, 200
+    );
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply6).mousedown(function (){
     intervalID = setInterval( function (){
     turnOffMode();
@@ -199,18 +201,20 @@ $(powersupply6).mousedown(function (){
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply7).mousedown(function (){
     intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && voltage1 <= 30) {
-        voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}, 200 );
+        turnOffMode();
+        if (power == 1 && voltage1 <= 30) {
+            voltage1 += 0.1;
+            vol1.innerHTML = voltage1.toFixed(2);
+        }
+        check();
+    }, 200 );
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply8).mousedown(function (){
     intervalID = setInterval( function (){
     turnOffMode();
@@ -226,6 +230,7 @@ $(powersupply8).mousedown(function (){
 }).mouseup(function () {
     clearInterval(intervalID);
 });
+
 $(powersupply9).mousedown(function (){
     intervalID = setInterval( function (){
     turnOffMode();
@@ -432,7 +437,7 @@ var CapacitanceInitial;
 var chipNo = 1;
 var wireNo = 1;
 var resistanceNo = 1;
-var resistanceOn = 1;
+//var resistanceOn = 1;
 var inductanceNo = 1;
 var alligatorNo = 1;
 var capacitanceNo = 1;
@@ -567,16 +572,6 @@ function switchMeter2() {
     }
 }
 
-function switchResistance() {
-    if (resistanceOn == 1) {
-        $("#addResistance").css('background-color', '#CCCCCC');
-        resistanceOn = 0;
-    }
-    else {
-        $("#addResistance").css('background-color', 'white');
-        resistanceOn = 1;
-    }
-}
 
 function approx_x(x) {
     return (Math.floor(x / 20) * 20 + 5);
@@ -674,12 +669,12 @@ function drawDashedLine2() {
         if (mode) {
             if ($("#dashline").length > 0) {
                 $("#dashline").remove();
-                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + '; stroke-width:5px;" stroke-dasharray="5"></line>'));
+                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
             else {
-                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + '; stroke-width:5px;" stroke-dasharray="5"></line>'));
+                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
-        }
+        }   
     }
     return draw;
 }
@@ -814,7 +809,6 @@ $("#container").mouseup(function (e) {
         pointarray.push([x2, y2]);
         resistanceNo++;
         colorNo = (colorNo + 1) % colorlist.length;
-        switchResistance();
         turnOffMode();
     }
     if (drawInductance == 1) {
@@ -846,9 +840,9 @@ $("#container").mouseup(function (e) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        var mhos = prompt("(輸入電感單位)Enter the value of Inductance in mhos", "Inductance in mhos");
-        mhos = parseFloat(mhos);
-        if (isNaN(mhos) || mhos == '' || mhos <= 0) {
+        var henry = prompt("(輸入電感單位)Enter the value of Inductance in Henry", "Inductance in Henry");
+        henry = parseFloat(henry);
+        if (isNaN(henry) || henry == '' || henry <= 0) {
             alert("(非正常數值)Invalid value of inductance!");
             return;
         }
@@ -867,14 +861,16 @@ $("#container").mouseup(function (e) {
         if (inductanceNo < 10) {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + henry + 'Henry</title></polygon>'));
+            linestack.push("inductance0"+inductanceNo);
         }
         else {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line datamho="' + mhos + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + mhos + 'mhos</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + mhos + 'mhos</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + henry + 'Henry</title></polygon>'));
+            linestack.push("inductance"+inductanceNo);
         }
         pointarray.push([x1, y1]);
         pointarray.push([x2, y2]);
@@ -910,12 +906,13 @@ $("#container").mouseup(function (e) {
             alert('(請畫在麵包版上)please draw on breadboard');
             return;
         }
-        var ufarad = prompt("(輸入電容單位)Enter the value of Capacitance in micro-farad", "Capacitance in micro-farad");
+        var ufarad = prompt("(輸入電容單位)Enter the value of Capacitance in micro-Farad", "Capacitance in micro-Farad");
         ufarad = parseFloat(ufarad);
         if (isNaN(ufarad) || ufarad == '' || ufarad <= 0) {
             alert("(非正常數值)Invalid value of capacitance!");
             return;
         }
+        ufarad = ufarad / 1e6;
         //to draw the box of the resistor
         var centerX = x1 - (x1 - x2) / 2;
         var centerY = y1 - (y1 - y2) / 2;
@@ -931,14 +928,16 @@ $("#container").mouseup(function (e) {
         if (capacitanceNo < 10) {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'uFarad</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'uFarad</title></polygon>'));
+            linestack.push("capacitance0"+capacitanceNo);
         }
         else {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'ufarad</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'ufarad</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad + 'uFarad</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad + 'uFarad</title></polygon>'));
+            linestack.push("capacitance"+capacitanceNo);
         }
         pointarray.push([x1, y1]);
         pointarray.push([x2, y2]);
@@ -1034,10 +1033,6 @@ $("#container").mouseup(function (e) {
                     $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#" + Things[i].id).remove();
-                    resistanceOn = 1;
-                    $this = $("#addResistance");
-                    $this.css('background-color', 'white');
-                    drawResistance = 0;
                 }
                 if (Things[i].id[0] == "i") {
                     $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -1085,10 +1080,6 @@ $("#container").mouseup(function (e) {
                     $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#" + Things[i].id).remove();
-                    resistanceOn = 1;
-                    $this = $("#addResistance");
-                    $this.css('background-color', 'white');
-                    drawResistance = 0;
                 }
                 if (Things[i].id[0] == "i") {
                     $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -1118,6 +1109,7 @@ $("#container").mouseup(function (e) {
             x2 += 540;
             y2 += 300;
             x2 += 10;
+            console.log([x1, y1, x2, y2]);
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
                     for (let j = 0; j < pointarray.length; j++) {
@@ -1144,35 +1136,11 @@ $("#container").mouseup(function (e) {
                     check();
                     return;
                 }
-           }
+            }
         }
     }
     check();
 });
-
-function deleteBurnedResistance(){
-    Things = $("line");
-    for (var i = Things.length - 1; i >= 0; i--) {
-        if (Things[i].id[0] == "r") {
-            for (let j = 0; j < pointarray.length; j++) {
-                if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-                    pointarray = deleteRow(pointarray, j);
-                }
-            }
-            for (let j = 0; j < pointarray.length; j++) {
-                if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-                    pointarray = deleteRow(pointarray, j);
-                }
-            }
-            $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-            $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-            $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-            $("#" + Things[i].id).remove();
-            switchResistance();
-        }
-    }
-}
-
 $(document).ready(function () {
 
     var canvas = $("#myCanvas");
@@ -1287,10 +1255,8 @@ function toggleDelButton() {
         drawInductance = 0;
     }
     else if (drawResistance == 1) {
-        if (resistanceOn == 1) {
-            $this = $("#addResistance");
-            $this.css('background-color', 'white');
-        }
+        $this = $("#addResistance");
+        $this.css('background-color', 'white');
         drawResistance = 0;
     }
     else if (drawWire == 1) {
@@ -1396,7 +1362,7 @@ function toggleWireButton() {
 };
 
 function toggleResistanceButton() {
-    if (resistanceOn == 0) return;
+    //if (resistanceOn == 0) return;
     if (drawInductance == 1) {
         $this = $("#addInductance");
         $this.css('background-color', 'white');
@@ -1473,10 +1439,10 @@ function toggleInductanceButton() {
 };
 function toggleAlligatorButton() {
     if (drawResistance == 1) {
-        if (resistanceOn == 1) {
+        //if (resistanceOn == 1) {
             $this = $("#addResistance");
             $this.css('background-color', 'white');
-        }
+        //}
         drawResistance = 0;
     }
     else if (deletemode == 1) {
@@ -1569,10 +1535,10 @@ function getWires() {
             node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
-    /*for (let i = 0; i < wiresOut.length; i++) {
+    for (let i = 0; i < wiresOut.length; i++) {
         var wire = wiresOut[i];
         console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    }*/
+    }
     return wiresOut;
 }
 
@@ -1592,10 +1558,10 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    /*for (let i = 0; i < alligatorOut.length; i++) {
-        var alligator = alligatorOut[i];
-        console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    }*/
+    // for (let i = 0; i < alligatorOut.length; i++) {
+    //     var alligator = alligatorOut[i];
+    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
+    // }
     return alligatorOut;
 }
 
@@ -1618,290 +1584,402 @@ function getResistance() {
         };
     });
 
-    /*for (let i = 0; i < resistanceOut.length; i++) {
-        var resistance = resistanceOut[i];
-        console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
-    }*/
+    for (let i = 0; i < resistanceOut.length; i++) {
+        var r = resistanceOut[i];
+        r.val = parseInt(r.val);
+        if (r.val == NaN) {
+            alert("電阻不可以是小數")
+        }
+        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
+    }
     return resistanceOut;
 }
 
+function abs(x) {
+    if (x < 0) { return -x; }
+    return x;
+}
 
 
-var vis = [];
+let edge_cnt = 0;
+let edge_list = [];
+class Edge {
+    constructor(node1, node2, type, ohm) {
+        //電流從 node1 流到 node2
+        this._id = edge_cnt++;
+        this._node1 = node1;
+        this._node2 = node2;
+        this._type = type;
+        this._ohm = ohm;
+    }
+    get id() {
+        return this._id;
+    }
 
-function dfs(graph, node, color) {
-    if (vis[node] != 0) return;
-    vis[node] = color;
-    for (let i = 0; i < graph[node].length; i++) {
-        var u = graph[node][i].nxt;
-        dfs(graph, u, color);
+    get node1() {
+        return this._node1;
+    }
+
+    get node2() {
+        return this._node2;
+    }
+    get type() {
+        return this._type;
+    }
+    get ohm() {
+        return this._ohm;
+    }
+    go_next(node) {
+        if (this._node1 == node) {
+            return this._node2;
+        }
+        return this._node1;
+    }
+    get_par(node) {
+        if (this._node1 == node) {
+            return this._ohm;
+        }
+        return -this._ohm;
     }
 }
 
-function findConnected(graph) {
-
-    var color = 1;
-    vis = [];
-    for (let i = 0; i < MaxNodeNum; i++) {
-        vis.push(0);
+class GuassionElimination {
+    constructor(R, C, A) {
+        this.m = R;
+        this.n = C;
+        this.M = A;
     }
-    for (let i = 0; i < MaxNodeNum; i++) {
-        if (vis[i] == 0) {
-            dfs(graph, i, color++);
+
+    // row operation 的加法，把一行乘一個數字加到另一行
+    add(add_index, added_index, scalar) {
+        for (let i = 0; i <= this.n; i++) {
+            this.M[added_index][i] += this.M[add_index][i] * scalar;
         }
     }
+
+
+    // row operation 的交換，兩行互換
+    swap(swap_index1, swap_index2) {
+        //把指標指的位置互換
+        let tmp = this.M[swap_index1];
+        this.M[swap_index1] = this.M[swap_index2];
+        this.M[swap_index2] = tmp;
+    }
+
+
+    // row operation 的乘法，把一整行同乘一個常數
+    multiple(index, scalar) {
+        for (let i = 0; i <= this.n; i++) {
+            this.M[index][i] *= scalar;
+        }
+    }
+
+    Gaussian_Jordan_elimination() {
+        let single = [];
+        for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
+            if (this.M[i][i] == 0) {
+                for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
+                    if (this.M[j][i] != 0) {
+                        this.swap(i, j);
+                        break;
+                    }
+                }
+            }
+            if (this.M[i][i] == 0) {
+                console.log("無唯一解/無解", i);
+                console.log(this.M);
+                single.push(i);
+                continue;
+            }
+            this.multiple(i, 1.0 / this.M[i][i]);//把開頭變成1
+            for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
+                this.add(i, j, -1 * this.M[j][i]);
+            }
+        }
+        for (let i = this.n - 1; i >= 0; i--) {//Jordan把上三角變0
+            for (let j = 0; j < i; j++) {// 往上把同column中所有非0的值消成0
+                //if(i == j)continue;
+                this.add(i, j, -1 * this.M[j][i]);
+            }
+        }
+
+        //after guassian elimination
+        console.log("Guassian Elimination")
+        console.log(this.M);
+        
+        //檢查是不是無解
+        for(let i=this.n;i<this.m;i++){
+            if(this.M[i][this.n] > 1e-10){
+                console.log("無解");
+                show_error("可能短路了<br> short!")
+                let x = [];
+                for (let i = 0; i < this.n; i++) {//存答案
+                    x[i] = NaN;
+                }
+                return x;
+            }
+        }
+
+        //我忘記這段在做什麼了QQ
+        // for(let j=0;j<single.length;j++){
+        //     let i = single[j];     // 123456789
+        //     if(this.M[i][this.n] != 0){
+        //         console.log("無解");
+        //         let x = [];
+        //         for (let i = 0; i < this.n; i++) {//存答案
+        //             x[i] = NaN;
+        //         }
+        //         return x;
+        //     }
+        // }
+
+        let x = [];
+        for (let i = 0; i < this.n; i++) {//存答案
+            x[i] = this.M[i][this.n];
+        }
+        return x;
+    }
 }
 
+function getFullGraph(graph) {
 
-function checkCurrent(powerUseStatus, resistances) {
-    //安培計要和電阻串聯 -> 把安培計拿掉之後電阻 + 電線不會連通
-    let graph = getGraph();
-
-    //加電阻
-    for (let i = 0; i < resistances.length; i++) {
-        let r = resistances[i];
-        graph[r.node1].push({ nxt: r.node2, wei: r.val });
-        graph[r.node2].push({ nxt: r.node1, wei: r.val });
-    }
-
-    findConnected(graph);
-    //確認連通
-    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
-        //確定電壓有跟正負極連接
-        //留電線、電壓計、電阻後有connect --> 安培計沒有串聯
-        return 0;
-    }
-    return 1;
-}
-
-function checkVoltage(powerUseStatus) {
-    //確認電壓計有連通
-    //電壓計與電阻並聯 --> 電阻拔掉電路要連通
-    let graph = getGraph();
-    //加電壓計
-    if (meter1_mode != 0) {
-        graph[4].push({ nxt: 5, wei: 1000000 });
-        graph[5].push({ nxt: 4, wei: 1000000 });
-    }
-
-    // 安培計要串聯 --> 安培計當電線用
-    if (meter2_mode == 5) {
-        //安培計要串聯
-        graph[7].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 7, wei: 0 });
-    }else if(meter2_mode != 0){
-        graph[9].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 9, wei: 0 });
-    }
-    findConnected(graph);
-    //確認電壓計連通
-    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
-        //確定電壓有跟正負極連接
-        //留電線、電壓計、安培計後有connect
-        return 1;
-    }
-    return 0;
-}
-function checkShort(powerUseStatus) {
-    //parameter
-    //      graph : only contain wires and alligators
-    //      powerUseStatus : the status of powersupply(choose output)
-    // check the circuit is short or not
-    // 只有一個電阻的情況有 short : 把電阻拔掉還有電路可以從 + 連到 - 
-    let graph = getGraph();
-    if (meter2_mode == 5) {
-        //安培計要串聯
-        graph[7].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 7, wei: 0 });
-    }else if(meter2_mode != 0){
-        graph[9].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 9, wei: 0 });
-    }
-
-    findConnected(graph);
-
-    if ((powerUseStatus == 1 && vis[0] == vis[1]) || (powerUseStatus == 2 && vis[2] == vis[3])) {
-        //alert("short!");
-        return 1;
-    }
-    return 0;
-}
-
-function checkOpen(powerUseStatus, resistances) {
-    //parameter
-    //      graph : only contain wires and alligators
-    //      powerUseStatus : the status of powersupply(choose output)
-    // check the circuit is open or not
-    // 電線 + 電阻 + 安培計都加確定有連通 
-    let graph = getGraph();
-    if (meter2_mode == 5) {
-        //安培計要串聯
-        graph[7].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 7, wei: 0 });
-    }else if(meter2_mode != 0){
-        graph[9].push({ nxt: 8, wei: 0 });
-        graph[8].push({ nxt: 9, wei: 0 });
-    }
-
-    for (let i = 0; i < resistances.length; i++) {
-        let r = resistances[i];
-        graph[r.node1].push({ nxt: r.node2, wei: r.val });
-        graph[r.node2].push({ nxt: r.node1, wei: r.val });
-    }
-
-    findConnected(graph);
-
-    if ((powerUseStatus == 1 && vis[0] != vis[1]) || (powerUseStatus == 2 && vis[2] != vis[3])) {
-        //alert("open");
-        show_error("open");
-        return 1;
-    }
-    return 0;
-}
-
-function getGraph() {
-    var graph = [];
-    for (let i = 0; i <= MaxNodeNum; i++) {
-        graph[i] = [];
-    }
     let wires = getWires();
     for (let i = 0; i < wires.length; i++) {
-        var wire = wires[i];
-        graph[wire.node1].push({ nxt: wire.node2, wei: 0 });
-        graph[wire.node2].push({ nxt: wire.node1, wei: 0 });
+        let wire = wires[i];
+        let e = new Edge(wire.node1, wire.node2, "wire", 0);
+        edge_list.push(e);
+        graph[wire.node1].push(e);
+        graph[wire.node2].push(e);
     }
 
     let alligators = getAlligator();
     for (let i = 0; i < alligators.length; i++) {
         let alli = alligators[i];
-        graph[alli.node1].push({ nxt: alli.node2, wei: 0 });
-        graph[alli.node2].push({ nxt: alli.node1, wei: 0 });
+        let e = new Edge(alli.node1, alli.node2, "wire", 0);
+        edge_list.push(e);
+        graph[alli.node1].push(e);
+        graph[alli.node2].push(e);
     }
-    return graph;
-}
 
-function getPowerUseStatus() {
-    let powerUseStatus = 0;             //確定 powersupply 狀態
-    let useState1 = 0,useState2 = 0;
-    if (voltage1 != 0 || current1 != 0){
-        useState1 = 1;
-    }
-    if (voltage2 != 0 || current2 != 0){
-        useState2 = 1;
-    }
-    if (useState1 != 0 && useState2 != 0) {
-        //alert("本實驗不須用兩個電供\n This experiment is not allow to use two ouput of powersupply.")
-        show_error("本實驗不須用兩個電供<br>This experiment is not allow to use two ouput of powersupply.<br>需要兩組輸出者，請右轉到 exp6");
-        return 3;
-    }
-    if (useState1 != 0) {
-        powerUseStatus = 1;
-    } else if (useState2 != 0) {
-        powerUseStatus = 2;
-    }
-    if (powersupplyOutputStatus == 0 || powerUseStatus == 0) {
-        //alert("電供沒開 ouput 或電壓沒有設定");
-        show_error("電供沒開 ouput 或電壓沒有設定");
-        return 0;
-    }
-    return powerUseStatus;
-}
-
-
-function checkCircuit() {
-    // 檢查電路連通而且沒有 short --> unfinished
-    // check the positive and negative are connected(resistance, multimeter should also be concerned)
-    // make it to a graph and run dfs
-    //var graph = getGraph();
-
-    let powerUseStatus = getPowerUseStatus();             //確定 powersupply 狀態
-    if (powerUseStatus == 3) {
-        return { voltage: "ERR", current: "ERR" };
-    }else if(powerUseStatus == 0){
-        return { voltage: 0, current: 0 };
-    }
-    if (checkShort(powerUseStatus) == 1) {
-        return { voltage: "ERR", current: "ERR" };
-    }
     let resistances = getResistance();
-    if (checkOpen(powerUseStatus, resistances) == 1) {
-        return { voltage: 0, current: 0 };
+    for (let i = 0; i < resistances.length; i++) {
+        let r = resistances[i];
+        let e = new Edge(r.node1, r.node2, "resistance", r.val);
+        edge_list.push(e);
+        graph[r.node1].push(e);
+        graph[r.node2].push(e);
     }
 
-    let multimeterCurrentUseState = checkCurrent(powerUseStatus, resistances);   //確定安培計使用狀態
-    let multimeterVoltageUseState = checkVoltage(powerUseStatus);       //確認電壓計有連通
+    let curr_eid = -1;
+    if (meter2_mode == 5) {
+        //安培計要串聯
+        let e = new Edge(7, 8, "ammeter", 0);
+        edge_list.push(e);
+        graph[7].push(e);
+        graph[8].push(e);
+        curr_eid = e.id;
+    }else if(meter2_mode != 0){
+        let e = new Edge(8, 9, "ammeter", 0);
+        edge_list.push(e);
+        graph[8].push(e);
+        graph[9].push(e);
+        curr_eid = e.id;
+    }
+
+    //加電壓計
+    let vol_eid = -1;
+    if (meter1_mode != 0) {
+        let e = new Edge(4, 5, "voltmeter", 100000000);
+        edge_list.push(e);
+        graph[4].push(e);
+        graph[5].push(e);
+        vol_eid = e.id;
+    }
+
+    console.log(edge_list);
+    return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
+}
+
+function getFullGraphVoltageVoltage() {
+    edge_cnt = 0;
+    var graph = [];
+    edge_list = [];
+    for (let i = 0; i <= MaxNodeNum; i++) {
+        graph[i] = [];
+    }
+
+    //加電供
+    let e = new Edge(0, 1, "voltage source", voltage1);
+    edge_list.push(e);
+    graph[0].push(e);
+    graph[1].push(e);
+
+    e = new Edge(2, 3, "voltage source", voltage2);
+    edge_list.push(e);
+    graph[2].push(e);
+    graph[3].push(e);
+
+    return getFullGraph(graph);
+}
 
 
+let equations = [];
+let equation_cnt = 0;
+let vis_edge = [];
+let path = [];
 
-    let result = { voltage: 0, current: "ERR" };
-    let ans_voltage, ans_current;
-    if (powerUseStatus == 1) {
-        if (voltage1 > current1 * resistances[0].val) {
-            ans_voltage = current1 * resistances[0].val;
-            ans_current = current1;
-        } else {
-            ans_voltage = voltage1;
-            ans_current = voltage1 / resistances[0].val;
+//challenge : v0 不能給變數當電流，但連接時要當有連到
+function find_loop(goal, node, graph, loop_length) {
+    if (loop_length != 0 && goal == node) {
+        //find loop
+        // console.log("loop:");
+        // for (let i = 0; i < loop_length; i++) {
+        //     console.log(path[i].edgeid, path[i].par);
+        // }
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
         }
-    } else {
-        if (voltage2 > current2 * resistances[0].val) {
-            ans_voltage = current2 * resistances[0].val;
-            ans_current = current2;
-        } else {
-            ans_voltage = voltage2;
-            ans_current = voltage2 / resistances[0].val;
+        for (let j = 0; j < loop_length; j++) {
+            equations[equation_cnt][path[j].edgeid] += path[j].par;
+        }
+        equation_cnt++;
+        return;
+    }
+
+    for (let i = 0; i < graph[node].length; i++) {
+        let edge = graph[node][i];
+        if (vis_edge[edge.id] == 0) {
+            vis_edge[edge.id] = 1;
+            if (edge.type == "voltage source") {
+                path[loop_length] = { edgeid: edge_cnt, par: edge.get_par(node) };
+                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            } else if(edge.type == "current source"){
+                let _par = 1;
+                if(node != 0 && node != 2){
+                    _par *= -1;
+                }
+                path[loop_length] = {edgeid:edge.id, par:_par};
+                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            } else {
+                path[loop_length] = { edgeid: edge.id, par: edge.get_par(node) };
+                find_loop(goal, edge.go_next(node), graph, loop_length + 1);
+            }
+            vis_edge[edge.id] = 0;
         }
     }
-    if (multimeterVoltageUseState == 1) {
-        result.voltage = ans_voltage;
+}
+
+function equationVoltageVoltage() {
+    let FG = getFullGraphVoltageVoltage();
+    graph = FG.graph;
+    equations = [];
+    equation_cnt = 0;
+    vis_edge = [];
+    path = [];
+
+    for (let i = 0; i < MaxNodeNum; i++) {//流入等於流出
+        if (graph[i].length == 0) {
+            continue;
+        }
+        equations[equation_cnt] = [];
+        for (let j = 0; j <= edge_cnt; j++) {
+            equations[equation_cnt][j] = 0;
+        }
+        for (let j = 0; j < graph[i].length; j++) {
+            let edge = graph[i][j];
+            if (edge.node1 == i) {
+                //流出
+                equations[equation_cnt][edge.id] = 1;
+            } else {
+                equations[equation_cnt][edge.id] = -1;
+            }
+        }
+        equation_cnt++;
     }
-    if (multimeterCurrentUseState == 1) {
-        result.current = ans_current;
+
+    for (let i = 4; i < MaxNodeNum; i++) {
+        for (let j = 0; j < edge_cnt; j++) {
+            vis_edge[j] = 0;
+        }
+        path = [];
+        find_loop(i, i, graph, 0);
+    }
+    for (let i = 0; i < equation_cnt; i++) {
+        console.log(equations[i]);
+        equations[i][edge_cnt] *= -1;
+    }
+    let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
+    let x = gua.Gaussian_Jordan_elimination();
+    console.log(x);
+    return { FullGraph: FG, ans: x };
+
+}
+
+
+
+
+function checkMeter(FG, x) {
+    let result = { voltage: "", current: "" };
+    for (let i = 0; i < this.n; i++) {//存答案
+        if (x[i] == NaN) {
+            result.voltage = "ERR";
+            result.current = "ERR";
+            return result;
+        }
+    }
+    if (FG.current_edgeid != -1) {
+        result.current = x[FG.current_edgeid];
+    }
+    if (FG.voltage_edgeid != -1) {
+        result.voltage = x[FG.voltage_edgeid] * edge_list[FG.voltage_edgeid].ohm;
     }
     return result;
 }
 
-function checkPowerSupply() {
-    let powerUseStatus = getPowerUseStatus();             //確定 powersupply 狀態
-    if (powerUseStatus == 0) {
-        return { voltage: "ERR", current: "ERR" };
-    }
-    if (checkShort(powerUseStatus) == 1) {
-        if (powerUseStatus == 1) {
-            return { voltage: voltage1, current: current1 };
-        } else {
-            return { voltage: voltage2, current: current2 };
+function checkResitanceBurn(x){
+    //return false;
+    for(let i=0; i < edge_list.length;i++){
+        let e = edge_list[i];
+        if(e.type == "resistance" && x[e.id] * x[e.id] * e.ohm > 0.125){
+            show_error("電阻燒壞了<br> at least one resistor burned");
+            return true;
         }
     }
-    let resistances = getResistance();
-    if (checkOpen(powerUseStatus, resistances) == 1) {
-        if (powerUseStatus == 1) {
-            return { voltage: 0, current: 0 };
-        } else {
-            return { voltage: 0, current: 0 };
-        }
-    }
-    let ans_current = 0, ans_voltage = 0;
-    if (powerUseStatus == 1) {
-        if (voltage1 > current1 * resistances[0].val) {
-            ans_voltage = current1 * resistances[0].val;
-            ans_current = current1;
-        } else {
-            ans_voltage = voltage1;
-            ans_current = voltage1 / resistances[0].val;
-        }
-    } else {
-        if (voltage2 > current2 * resistances[0].val) {
-            ans_voltage = current2 * resistances[0].val;
-            ans_current = current2;
-        } else {
-            ans_voltage = voltage2;
-            ans_current = voltage2 / resistances[0].val;
-        }
-    }
-    return { voltage: ans_voltage, current: ans_current };
+    return false;
 }
 
+
+function checkCircuit() {
+    let FGx = equationVoltageVoltage();
+    let FG = FGx.FullGraph;
+    let x = FGx.ans;
+    if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
+        console.log("電供 case 是 voltage, voltage");
+        let res_meter = checkMeter(FG, x);
+        let res_power1 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage1, current:x[0]})
+        let res_power2 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage2, current:x[1]})
+        if(checkResitanceBurn(x)){
+            let ERR = {voltage:"ERR", current:"ERR"}
+            return {meter:ERR, power1:ERR, power2:ERR};
+        }
+        return {meter : res_meter, power1 : res_power1, power2 : res_power2};
+    }
+
+    //兩邊的電流有至少存在一邊超過最大電流
+    show_error("電源供應器的最大電流給得太小了<br>max current is too small")
+    if(current1 < current2){
+
+    }else{
+
+    }
+    let ERR = {voltage:"ERR", current:"ERR"}
+    return {meter:ERR, power1:ERR, power2:ERR};
+    // FGx = equationCurrentCurrent();
+    // FG = FGx.FullGraph;
+    // x = FGx.ans;
+
+}
 
 function check() {
     show_error("");
@@ -1909,24 +1987,25 @@ function check() {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
     }
-    let va = checkCircuit();
-    let res = checkPowerSupply();
-    if(res.voltage * res.current > 0.125){
-        alert("電阻燒掉了(resistance over 0.125w)")
-        show_error("電阻燒掉了(resistance over 0.125w)");
-        $("#multimeter1_3").text("ERR");
-        $("#multimeter2_3").text("ERR");
-        deleteBurnedResistance();
+    if(powersupplyOutputStatus == 0){
+        show_error("記得開 output")
         return;
     }
-    if (getPowerUseStatus() == 1) {
-        vol1.innerHTML = res.voltage.toFixed(2);
-        cur1.innerHTML = res.current.toFixed(2);
-    }
-    else if (getPowerUseStatus() == 2) {
-        vol2.innerHTML = res.voltage.toFixed(2);
-        cur2.innerHTML = res.current.toFixed(2);
-    }
+    let res = checkCircuit();
+    let va = res.meter;
+    
+    // 電阻燒壞檢查
+    // if(res.voltage * res.current > 0.125){
+    //     alert("電阻燒掉了(resistance over 0.125w)");
+    //     $("#multimeter1_3").text("ERR");
+    //     $("#multimeter2_3").text("ERR");
+    //     return;
+    // }
+    
+    vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
+    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
+    vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
+    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : res.power2.current.toFixed(2)
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
@@ -1993,17 +2072,6 @@ function check() {
         c = c.toFixed(1);
         if (c > 10) c = 'OverFlow';
         $("#multimeter2_3").text(c);
-    }
-    if(res.voltage == "ERR" && res.current == "ERR"){
-        let zero = 0;
-        if (getPowerUseStatus() == 1) {
-            $("#powersupply1").text(zero.toFixed(2));
-            $("#powersupply2").text(zero.toFixed(2));
-        }
-        else if (getPowerUseStatus() == 2) {
-            $("#powersupply3").text(zero.toFixed(2));
-            $("#powersupply4").text(zero.toFixed(2));
-        }
     }
     return;
 }
@@ -2075,6 +2143,7 @@ window.onbeforeunload = () => {
     return confirm('確定要離開?')
 }
 
+
 function start(){
     console.log("Starting");
     startbool = true;
@@ -2089,7 +2158,6 @@ function start(){
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
 }
-
 function show_error(s){
     document.querySelector("#error_message_content").innerHTML = s;
 }
