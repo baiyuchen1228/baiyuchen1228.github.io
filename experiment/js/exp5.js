@@ -1773,13 +1773,13 @@ function getFullGraph(graph) {
     let curr_eid = -1;
     if (meter2_mode == 5) {
         //安培計要串聯
-        let e = new Edge(7, 8, "ammeter", 0);
+        let e = new Edge(8, 7, "ammeter", 0);
         edge_list.push(e);
         graph[7].push(e);
         graph[8].push(e);
         curr_eid = e.id;
     }else if(meter2_mode != 0){
-        let e = new Edge(8, 9, "ammeter", 0);
+        let e = new Edge(9, 8, "ammeter", 0);
         edge_list.push(e);
         graph[8].push(e);
         graph[9].push(e);
