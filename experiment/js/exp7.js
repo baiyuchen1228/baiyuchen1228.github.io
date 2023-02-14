@@ -1464,9 +1464,6 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         graph[r.node1].push(e);
         graph[r.node2].push(e);
     }
-    if(checkUser == true){
-        return { graph: graph, voltage_edgeid: -1};
-    }
 
     if(checkUser == false){   //接地要 short
         
@@ -1515,13 +1512,13 @@ function getFullGraphVoltageVoltage(meter_idx, omega, checkUser) {
         graph[i] = [];
     }
 
-    if(checkUser == false){
-        //加 wave generator
-        let e = new Edge(0, 1, "voltage source", math.complex(1, 0));
-        edge_list.push(e);
-        graph[0].push(e);
-        graph[1].push(e);
-    }
+    // if(checkUser == false){
+    //加 wave generator
+    let e = new Edge(0, 1, "voltage source", math.complex(1, 0));
+    edge_list.push(e);
+    graph[0].push(e);
+    graph[1].push(e);
+    // }
 
 
     return getFullGraph(graph, meter_idx, omega, checkUser);
@@ -1921,8 +1918,16 @@ class Oscillator{
         this._vaild = false;
         this._phasor = [];
         this._loop = 100;
+        this._level = 0;
+        this._slope = 1;
     }
-
+    
+    set_slope(val){
+        this._slope = val;
+    }
+    set_level(val){
+        this._level = val;
+    }
     set_vertical_v(i, val){
         this._vertical_v[i] = val;
     }
@@ -1937,6 +1942,12 @@ class Oscillator{
     }
     set_vertical_AC_GND_DC(i, val){
         this._vertical_AC_GND_DC[i] = val;
+    }
+    get slope(){
+        return this._slope;
+    }
+    get level(){
+        return this._level;
     }
     get vertical_v(){
         return this._vertical_v;
@@ -2045,19 +2056,25 @@ class Oscillator{
             }
         }
         // console.log(this._datapoints0);
-        //console.log(this._datapoints1);
-        //確定使用者真的有接對
+        // console.log(this._datapoints1);
+        // 確定使用者真的有接對
+        
         let conn = checkConnected();
         if(conn.voltage1 == 0){
             for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
             }
+            show_error("channel 1 is open.");
         }
         if(conn.voltage2 == 0){
             for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
                 this._datapoints1[j] = 0;
             }
+            show_error("channel 2 is open.");
         }
+
+
+
     }
     draw(){
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
@@ -2205,6 +2222,7 @@ function checkCircuit(omega) {
     //     res_meter.voltage1 = res_meter.voltage1 = "ERR"
     //     return {meter:ERR, power1:ERR, power2:ERR};
     // }
+    document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
     show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
            "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
     return res_meter;
@@ -2231,7 +2249,7 @@ function checkCircuit(omega) {
 
 
 function check() {
-    show_error("");
+    document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
     if(startbool == false) {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
@@ -2338,7 +2356,8 @@ function drawWave(){
 
 
 function show_error(s){
-    document.querySelector("#error_message_content").innerHTML = s;
+    tmp = document.querySelector("#error_message_content").innerHTML;
+    document.querySelector("#error_message_content").innerHTML = tmp + "<br>" + s;
 }
 
 function pow(a, x){
@@ -2873,4 +2892,24 @@ function vertical_drawline4() {
     if (deletemode) {
         delALLalligator = [1390, 530];
     }
+}
+
+
+function trigger_slope() {
+    osi.set_slope(osi.slope * -1)
+    if(osi.slope == 1){
+        $("#trigger_slope").text("SLOPE＋");
+        $("#trigger_slope").css("backgroundColor", "white");
+    }else{
+        $("#trigger_slope").text("SLOPE－");
+        $("#trigger_slope").css("backgroundColor", "orange");
+    }
+}
+
+function minus_trigger_level() {
+    osi.set_level(osi.level - 0.5);
+}
+
+function add_trigger_level() {
+    osi.set_level(osi.level + 0.5);
 }
