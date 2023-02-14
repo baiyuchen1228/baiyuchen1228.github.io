@@ -1769,7 +1769,7 @@ function checkConnected(){
 class WaveGenerator{
     constructor(){
         this._frequency = 0;
-        this._amplitude = 1;
+        this._amplitude = 0;
         this._inv = 1;
         this._offset = 0;
         this._cycle = 100000;
@@ -2006,6 +2006,8 @@ class Oscillator{
                 }
             }
             for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+                this._datapoints0[j] *= wg.amplitude;
+                this._datapoints1[j] *= wg.amplitude;
                 if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
@@ -2589,14 +2591,14 @@ function generator_AMPL_switch(){
 
 function minus_generator_AMPL(){
     if(generator_AMPL_base > 1){
-        generator_AMPL_base -= 1;
+        generator_AMPL_base -= 0.5;
     }
     evaluate_generator_AMPL();
 }
 
 function add_generator_AMPL(){
     if(generator_AMPL_base < 14){
-        generator_AMPL_base += 1;
+        generator_AMPL_base += 0.5;
     }
     evaluate_generator_AMPL();
 }
