@@ -1913,12 +1913,12 @@ class Oscillator{
         this._datapoints1 = [];
         this._time_mul = 2/300;
         this._time_offset = 0;
-        this.WAVE_DATA_COUNT = 1000;
+        this._WAVE_DATA_COUNT = 1000;
         this._vertical_AC_GND_DC = ["AC", "AC"];  //AC, GND, DC
         this._vaild = false;
         this._phasor = [];
         this._loop = 100;
-        this._level = 0;
+        this._level = 2;
         this._slope = 1;
         this._reference = "CH1";
     }
@@ -1989,6 +1989,7 @@ class Oscillator{
     }
     get_data(){
         let type = wg.type;
+        let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
         if(this._vaild == false){
             this.get_res();
             this._vaild = true;
@@ -1996,7 +1997,7 @@ class Oscillator{
         if(type == "square_wave"){
             let loop = this._loop;
 
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
                 this._datapoints1[j] = 0;
             }
@@ -2010,7 +2011,7 @@ class Oscillator{
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 console.log(res);
                 console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-                for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+                for(let j=0;j<(WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
                     }else{
@@ -2023,7 +2024,7 @@ class Oscillator{
                     }
                 }
             }
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
                 if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
@@ -2043,7 +2044,7 @@ class Oscillator{
             let amplitude1 = wg.calculate_amplitude(res, 1);
             console.log(res);
             console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-            for(let i=0;i<(this.WAVE_DATA_COUNT);i++){
+            for(let i=0;i< (WAVE_DATA_COUNT);i++){
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[i] = 0;
                 }else{
@@ -2068,22 +2069,21 @@ class Oscillator{
         
         let conn = checkConnected();
         if(conn.voltage1 == 0){
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
             }
             show_error("channel 1 is open.");
         }
         if(conn.voltage2 == 0){
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints1[j] = 0;
             }
             show_error("channel 2 is open.");
         }
 
-
-
     }
     draw(){
+        document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
         document.getElementById("demo_amplitude1").value = wg.amplitude;
         document.getElementById("demo_wave_type1").value = wg.type;
@@ -2092,13 +2092,41 @@ class Oscillator{
         this.get_data();
         let datapoints0 = [];
         let datapoints1 = [];
+        let begin = 1;
+        let flag = false;
+        let pre = this._datapoints0[0] / this._vertical_v[0];
+        pre += this._vertical_offset[0];
+        for(;begin < this._WAVE_DATA_COUNT && flag == false;begin++){
+            let temp = 0;
+            if(this._reference == "CH1"){
+                temp = this._datapoints0[begin] / this._vertical_v[0];
+                temp += this._vertical_offset[0];
+            }else{
+                temp = this._datapoints1[begin] / this._vertical_v[1];
+                temp += this._vertical_offset[1];
+            }
+            if(this._slope == 1 && pre <= this._level && temp >= this._level){
+                flag = true;
+            }else if(this._slope == -1 && pre >= this._level && temp <= this._level){
+                flag = true;
+            }
+            pre = temp;
+        }
+        begin -= 1;
+        if(flag == false){
+            for(let i=0;i<this._WAVE_DATA_COUNT;i++){
+                datapoints0[i] = 0.008 * i - 4;
+                datapoints1[i] = 4 - 0.008 * i;
+            }
+            show_error("trigger level is out of range!");
+        }else{
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
+                datapoints0[i-begin] += this._vertical_offset[0];
 
-        for(let i=1;i <(this.WAVE_DATA_COUNT);i++){
-            datapoints0[i] = this._datapoints0[i] / this._vertical_v[0];
-            datapoints0[i] += this._vertical_offset[0];
-
-            datapoints1[i] = this._datapoints1[i] / this._vertical_v[1];
-            datapoints1[i] += this._vertical_offset[1];
+                datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
+                datapoints1[i-begin] += this._vertical_offset[1];
+            }
         }
         // console.log(datapoints0);
         //console.log(datapoints1);
@@ -2107,8 +2135,8 @@ class Oscillator{
             chartStatus.destroy();
         }
         const labels = [];
-        for(let i=1;i<(this.WAVE_DATA_COUNT);i++){
-            labels[i] = i;
+        for(let i=0;i<(this._WAVE_DATA_COUNT);i++){
+            labels[i] = i+1;
         }
         const data = {
             labels:labels,
@@ -2513,6 +2541,8 @@ function generator_square(){
 }
 
 function generator_triangle(){
+    alert("traingle wave is unimplemented!")
+    return;
     clear_generator_wave();
     $("#generator_triangle").css("backgroundColor", "green");
     wave_type = "triangle_wave";
@@ -2911,26 +2941,31 @@ function trigger_slope() {
         $("#trigger_slope").text("SLOPE－");
         $("#trigger_slope").css("backgroundColor", "green");
     }
+    osi.draw();
 }
 
 function minus_trigger_level() {
     osi.set_level(osi.level - 0.5);
+    osi.draw();
 }
 
 function add_trigger_level() {
     osi.set_level(osi.level + 0.5);
+    osi.draw();
 }
 
 function trigger_ch1() {
     osi.set_refernece("CH1");
     $("#trigger_ch1").css("backgroundColor", "green");
     $("#trigger_ch2").css("backgroundColor", "white");
+    osi.draw();
 }
 
 function trigger_ch2() {
     osi.set_refernece("CH2");
     $("#trigger_ch1").css("backgroundColor", "white");
     $("#trigger_ch2").css("backgroundColor", "green");
+    osi.draw();
 }
 
 function trigger_line() {
