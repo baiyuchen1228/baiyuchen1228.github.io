@@ -1464,9 +1464,6 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         graph[r.node1].push(e);
         graph[r.node2].push(e);
     }
-    if(checkUser == true){
-        return { graph: graph, voltage_edgeid: -1};
-    }
 
     if(checkUser == false){   //接地要 short
         
@@ -1515,13 +1512,13 @@ function getFullGraphVoltageVoltage(meter_idx, omega, checkUser) {
         graph[i] = [];
     }
 
-    if(checkUser == false){
-        //加 wave generator
-        let e = new Edge(0, 1, "voltage source", math.complex(1, 0));
-        edge_list.push(e);
-        graph[0].push(e);
-        graph[1].push(e);
-    }
+    // if(checkUser == false){
+    //加 wave generator
+    let e = new Edge(0, 1, "voltage source", math.complex(1, 0));
+    edge_list.push(e);
+    graph[0].push(e);
+    graph[1].push(e);
+    // }
 
 
     return getFullGraph(graph, meter_idx, omega, checkUser);
@@ -1916,13 +1913,25 @@ class Oscillator{
         this._datapoints1 = [];
         this._time_mul = 2/300;
         this._time_offset = 0;
-        this.WAVE_DATA_COUNT = 1000;
+        this._WAVE_DATA_COUNT = 1000;
         this._vertical_AC_GND_DC = ["AC", "AC"];  //AC, GND, DC
         this._vaild = false;
         this._phasor = [];
         this._loop = 100;
+        this._level = 2;
+        this._slope = 1;
+        this._reference = "CH1";
     }
-
+    
+    set_slope(val){
+        this._slope = val;
+    }
+    set_level(val){
+        this._level = val;
+    }
+    set_refernece(val){
+        this._reference = val;
+    }
     set_vertical_v(i, val){
         this._vertical_v[i] = val;
     }
@@ -1937,6 +1946,15 @@ class Oscillator{
     }
     set_vertical_AC_GND_DC(i, val){
         this._vertical_AC_GND_DC[i] = val;
+    }
+    get slope(){
+        return this._slope;
+    }
+    get level(){
+        return this._level;
+    }
+    get reference(){
+        return this._reference;
     }
     get vertical_v(){
         return this._vertical_v;
@@ -1971,6 +1989,7 @@ class Oscillator{
     }
     get_data(){
         let type = wg.type;
+        let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
         if(this._vaild == false){
             this.get_res();
             this._vaild = true;
@@ -1978,7 +1997,7 @@ class Oscillator{
         if(type == "square_wave"){
             let loop = this._loop;
 
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
                 this._datapoints1[j] = 0;
             }
@@ -1992,7 +2011,7 @@ class Oscillator{
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 console.log(res);
                 console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-                for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+                for(let j=0;j<(WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
                     }else{
@@ -2005,7 +2024,7 @@ class Oscillator{
                     }
                 }
             }
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
                 if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
@@ -2025,7 +2044,7 @@ class Oscillator{
             let amplitude1 = wg.calculate_amplitude(res, 1);
             console.log(res);
             console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
-            for(let i=0;i<(this.WAVE_DATA_COUNT);i++){
+            for(let i=0;i< (WAVE_DATA_COUNT);i++){
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[i] = 0;
                 }else{
@@ -2045,21 +2064,26 @@ class Oscillator{
             }
         }
         // console.log(this._datapoints0);
-        //console.log(this._datapoints1);
-        //確定使用者真的有接對
+        // console.log(this._datapoints1);
+        // 確定使用者真的有接對
+        
         let conn = checkConnected();
         if(conn.voltage1 == 0){
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
             }
+            show_error("channel 1 is open.");
         }
         if(conn.voltage2 == 0){
-            for(let j=0;j<(this.WAVE_DATA_COUNT);j++){
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints1[j] = 0;
             }
+            show_error("channel 2 is open.");
         }
+
     }
     draw(){
+        document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
         document.getElementById("demo_amplitude1").value = wg.amplitude;
         document.getElementById("demo_wave_type1").value = wg.type;
@@ -2068,13 +2092,41 @@ class Oscillator{
         this.get_data();
         let datapoints0 = [];
         let datapoints1 = [];
+        let begin = 1;
+        let flag = false;
+        let pre = this._datapoints0[0] / this._vertical_v[0];
+        pre += this._vertical_offset[0];
+        for(;begin < this._WAVE_DATA_COUNT && flag == false;begin++){
+            let temp = 0;
+            if(this._reference == "CH1"){
+                temp = this._datapoints0[begin] / this._vertical_v[0];
+                temp += this._vertical_offset[0];
+            }else{
+                temp = this._datapoints1[begin] / this._vertical_v[1];
+                temp += this._vertical_offset[1];
+            }
+            if(this._slope == 1 && pre <= this._level && temp >= this._level){
+                flag = true;
+            }else if(this._slope == -1 && pre >= this._level && temp <= this._level){
+                flag = true;
+            }
+            pre = temp;
+        }
+        begin -= 1;
+        if(flag == false){
+            for(let i=0;i<this._WAVE_DATA_COUNT;i++){
+                datapoints0[i] = 0.008 * i - 4;
+                datapoints1[i] = 4 - 0.008 * i;
+            }
+            show_error("trigger level is out of range!");
+        }else{
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
+                datapoints0[i-begin] += this._vertical_offset[0];
 
-        for(let i=1;i <(this.WAVE_DATA_COUNT);i++){
-            datapoints0[i] = this._datapoints0[i] / this._vertical_v[0];
-            datapoints0[i] += this._vertical_offset[0];
-
-            datapoints1[i] = this._datapoints1[i] / this._vertical_v[1];
-            datapoints1[i] += this._vertical_offset[1];
+                datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
+                datapoints1[i-begin] += this._vertical_offset[1];
+            }
         }
         // console.log(datapoints0);
         //console.log(datapoints1);
@@ -2083,8 +2135,8 @@ class Oscillator{
             chartStatus.destroy();
         }
         const labels = [];
-        for(let i=1;i<(this.WAVE_DATA_COUNT);i++){
-            labels[i] = i;
+        for(let i=0;i<(this._WAVE_DATA_COUNT);i++){
+            labels[i] = i+1;
         }
         const data = {
             labels:labels,
@@ -2205,6 +2257,7 @@ function checkCircuit(omega) {
     //     res_meter.voltage1 = res_meter.voltage1 = "ERR"
     //     return {meter:ERR, power1:ERR, power2:ERR};
     // }
+    document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
     show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
            "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
     return res_meter;
@@ -2231,7 +2284,7 @@ function checkCircuit(omega) {
 
 
 function check() {
-    show_error("");
+    document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
     if(startbool == false) {
         alert("請先填寫個人資料(please submit personal information first)");
         return;
@@ -2338,7 +2391,8 @@ function drawWave(){
 
 
 function show_error(s){
-    document.querySelector("#error_message_content").innerHTML = s;
+    tmp = document.querySelector("#error_message_content").innerHTML;
+    document.querySelector("#error_message_content").innerHTML = tmp + "<br>" + s;
 }
 
 function pow(a, x){
@@ -2487,6 +2541,8 @@ function generator_square(){
 }
 
 function generator_triangle(){
+    alert("traingle wave is unimplemented!")
+    return;
     clear_generator_wave();
     $("#generator_triangle").css("backgroundColor", "green");
     wave_type = "triangle_wave";
@@ -2537,8 +2593,8 @@ function minus_generator_offset(){
             osi.draw();
             return;
         }
-        wg.set_offset(wg.offset - 1);
-        generator_offset -= 1;
+        wg.set_offset(wg.offset - 0.01);
+        generator_offset -= 0.01;
     }
     osi.draw();
 }
@@ -2549,8 +2605,8 @@ function add_generator_offset(){
             osi.draw();
             return;
         }
-        wg.set_offset(wg.offset + 1);
-        generator_offset += 1;
+        wg.set_offset(wg.offset + 0.01);
+        generator_offset += 0.01;
     }
     osi.draw();
 }
@@ -2724,12 +2780,12 @@ function add_horizonal_time(){
 }
 
 function minus_horizonal_position(){
-    osi.set_time_offset(osi.time_offset-100);
+    osi.set_time_offset(osi.time_offset - 20);
     // check();
     osi.draw();
 }
 function add_horizonal_position(){
-    osi.set_time_offset(osi.time_offset+100);
+    osi.set_time_offset(osi.time_offset + 20);
     // check();
     osi.draw();
 }
@@ -2873,4 +2929,49 @@ function vertical_drawline4() {
     if (deletemode) {
         delALLalligator = [1390, 530];
     }
+}
+
+
+function trigger_slope() {
+    osi.set_slope(osi.slope * -1)
+    if(osi.slope == 1){
+        $("#trigger_slope").text("SLOPE＋");
+        $("#trigger_slope").css("backgroundColor", "white");
+    }else{
+        $("#trigger_slope").text("SLOPE－");
+        $("#trigger_slope").css("backgroundColor", "green");
+    }
+    osi.draw();
+}
+
+function minus_trigger_level() {
+    osi.set_level(osi.level - 0.5);
+    osi.draw();
+}
+
+function add_trigger_level() {
+    osi.set_level(osi.level + 0.5);
+    osi.draw();
+}
+
+function trigger_ch1() {
+    osi.set_refernece("CH1");
+    $("#trigger_ch1").css("backgroundColor", "green");
+    $("#trigger_ch2").css("backgroundColor", "white");
+    osi.draw();
+}
+
+function trigger_ch2() {
+    osi.set_refernece("CH2");
+    $("#trigger_ch1").css("backgroundColor", "white");
+    $("#trigger_ch2").css("backgroundColor", "green");
+    osi.draw();
+}
+
+function trigger_line() {
+    alert("LINE function is unimplement!");
+}
+
+function trigger_ext() {
+    alert("EXT function is unimplement!");
 }
