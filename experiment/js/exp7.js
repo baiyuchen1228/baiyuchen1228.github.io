@@ -1920,6 +1920,7 @@ class Oscillator{
         this._loop = 100;
         this._level = 0;
         this._slope = 1;
+        this._reference = "CH1";
     }
     
     set_slope(val){
@@ -1927,6 +1928,9 @@ class Oscillator{
     }
     set_level(val){
         this._level = val;
+    }
+    set_refernece(val){
+        this._reference = val;
     }
     set_vertical_v(i, val){
         this._vertical_v[i] = val;
@@ -1948,6 +1952,9 @@ class Oscillator{
     }
     get level(){
         return this._level;
+    }
+    get reference(){
+        return this._reference;
     }
     get vertical_v(){
         return this._vertical_v;
@@ -2556,8 +2563,8 @@ function minus_generator_offset(){
             osi.draw();
             return;
         }
-        wg.set_offset(wg.offset - 1);
-        generator_offset -= 1;
+        wg.set_offset(wg.offset - 0.01);
+        generator_offset -= 0.01;
     }
     osi.draw();
 }
@@ -2568,8 +2575,8 @@ function add_generator_offset(){
             osi.draw();
             return;
         }
-        wg.set_offset(wg.offset + 1);
-        generator_offset += 1;
+        wg.set_offset(wg.offset + 0.01);
+        generator_offset += 0.01;
     }
     osi.draw();
 }
@@ -2743,12 +2750,12 @@ function add_horizonal_time(){
 }
 
 function minus_horizonal_position(){
-    osi.set_time_offset(osi.time_offset-100);
+    osi.set_time_offset(osi.time_offset - 20);
     // check();
     osi.draw();
 }
 function add_horizonal_position(){
-    osi.set_time_offset(osi.time_offset+100);
+    osi.set_time_offset(osi.time_offset + 20);
     // check();
     osi.draw();
 }
@@ -2902,7 +2909,7 @@ function trigger_slope() {
         $("#trigger_slope").css("backgroundColor", "white");
     }else{
         $("#trigger_slope").text("SLOPE－");
-        $("#trigger_slope").css("backgroundColor", "orange");
+        $("#trigger_slope").css("backgroundColor", "green");
     }
 }
 
@@ -2912,4 +2919,24 @@ function minus_trigger_level() {
 
 function add_trigger_level() {
     osi.set_level(osi.level + 0.5);
+}
+
+function trigger_ch1() {
+    osi.set_refernece("CH1");
+    $("#trigger_ch1").css("backgroundColor", "green");
+    $("#trigger_ch2").css("backgroundColor", "white");
+}
+
+function trigger_ch2() {
+    osi.set_refernece("CH2");
+    $("#trigger_ch1").css("backgroundColor", "white");
+    $("#trigger_ch2").css("backgroundColor", "green");
+}
+
+function trigger_line() {
+    alert("LINE function is unimplement!");
+}
+
+function trigger_ext() {
+    alert("EXT function is unimplement!");
 }
