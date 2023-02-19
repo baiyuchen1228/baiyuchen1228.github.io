@@ -2345,6 +2345,8 @@ function undo(){
 function KeyPress(e) {
     var evtobj = window.event? event : e
     if (evtobj.keyCode == 90 && evtobj.ctrlKey) undo();
+    if (evtobj.keyCode == 65) toggleAlligatorButton();
+    if (evtobj.keyCode == 68) toggleDelButton();
 }
 
 document.onkeydown = KeyPress;
