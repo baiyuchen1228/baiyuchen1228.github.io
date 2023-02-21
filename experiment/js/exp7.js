@@ -2013,9 +2013,12 @@ class Oscillator{
             wg = new WaveGenerator();
             wg.set_amplitude(1);
             wg.set_frequency(1000);
-            wg.set_type("sin_wave");
-            this._phasor[0] = {voltage1: math.complex(1, 0), voltage2: math.complex(1, 0)};
+            wg.set_type("square_wave");
             this._vaild = false;
+            let loop = this._loop;
+            for(let i=0;i<loop;i++){
+                this._phasor[i] = {voltage1:math.complex(1, 0), voltage2:math.complex(1, 0)};
+            }
         }
         let type = wg.type;
         if(type == "square_wave"){
