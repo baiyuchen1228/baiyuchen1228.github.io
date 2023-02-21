@@ -867,6 +867,9 @@ function checkCircuit() {
         meter.voltage = power1.voltage * l2l[(multer_pos.x - 67) / 20 + 1][(multer_pos.y - 27) / 20 + 1];
     }
     console.log(meter.voltage);
+    if(power1.voltage == 0){
+        power1 = {voltage:0, current:0};
+    }
     return {meter:meter, power1:power1, power2:power2};
 }
 
