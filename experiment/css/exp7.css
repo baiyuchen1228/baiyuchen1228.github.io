@@ -469,12 +469,20 @@ div#oscilloscope{
     left: 690px;
     width: 30px;
 }
-
 #oscillosocope_init{
     top: 275px;
     left:-25px;
     width: 30px;
 }
+#level_show{
+    color: orange;
+    font-size: 36px;
+    font-weight: 900;
+    left: -27px;
+    top: 50px;
+    /*one block is 28px*/
+}
+
 
 
 div#oscilloscopeScreen{

@@ -2987,11 +2987,15 @@ function trigger_slope() {
 
 function minus_trigger_level() {
     osi.set_level(osi.level - 0.5);
+    let arrow_pos = osi.level * (-28) + 50;
+    $("#level_show").css("top", arrow_pos.toString() + "px");
     osi.draw();
 }
 
 function add_trigger_level() {
     osi.set_level(osi.level + 0.5);
+    let arrow_pos = osi.level * (-28) + 50;
+    $("#level_show").css("top", arrow_pos.toString() + "px");
     osi.draw();
 }
 
