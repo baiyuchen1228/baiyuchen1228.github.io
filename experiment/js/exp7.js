@@ -2002,21 +2002,22 @@ class Oscillator{
         }
     }
     get_data(){
-        //let tmp_wg = wg;
-        // if(this._init){
-        //     wg = new WaveGenerator();
-        //     wg.set_amplitude(1);
-        //     wg.set_frequency(1000);
-        //     wg.set_inv(0);
-        //     wg.set_offset(0);
-        //     wg.set_type("sin_wave");
-        // }
-        let type = wg.type;
         let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
         if(this._vaild == false){
             this.get_res();
             this._vaild = true;
         }
+
+        let tmp_wg = wg;
+        if(this._init){
+            wg = new WaveGenerator();
+            wg.set_amplitude(1);
+            wg.set_frequency(1000);
+            wg.set_type("sin_wave");
+            this._phasor[0] = {voltage1: math.complex(1, 0), voltage2: math.complex(1, 0)};
+            this._vaild = false;
+        }
+        let type = wg.type;
         if(type == "square_wave"){
             let loop = this._loop;
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
@@ -2025,7 +2026,7 @@ class Oscillator{
             }
             
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000
                 let res = this._phasor[i];
                 let phase0 = wg.calculate_phase(res, 0);
                 let amplitude0 = wg.calculate_amplitude(res, 0);
@@ -2058,7 +2059,7 @@ class Oscillator{
             }
         }
         else if(type == "sin_wave"){
-            let omega = 2 * math.PI * evaluate_generator_frequency();
+            let omega = 2 * math.PI * wg.frequency * 1000;
             let res = this._phasor[0];
             let phase0 = wg.calculate_phase(res, 0);
             let amplitude0 = wg.calculate_amplitude(res, 0);
@@ -2090,19 +2091,19 @@ class Oscillator{
         // 確定使用者真的有接對
         
         let conn = checkConnected();
-        if(conn.voltage1 == 0){
+        if(this.init == false && conn.voltage1 == 0){
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
             }
             show_error("channel 1 is open.");
         }
-        if(conn.voltage2 == 0){
+        if(this.init == false && conn.voltage2 == 0){
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints1[j] = 0;
             }
             show_error("channel 2 is open.");
         }
-        //wg = tmp_wg;
+        wg = tmp_wg;
 
     }
     draw(){
