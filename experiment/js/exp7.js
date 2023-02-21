@@ -1918,11 +1918,16 @@ class Oscillator{
         this._vaild = false;
         this._phasor = [];
         this._loop = 100;
-        this._level = 2;
+        this._level = 0;
         this._slope = 1;
         this._reference = "CH1";
+        this._show_mode = "CH1";
+        this._init = false;
     }
     
+    set_init(){
+        this._init = !this._init;
+    }
     set_slope(val){
         this._slope = val;
     }
@@ -1931,6 +1936,9 @@ class Oscillator{
     }
     set_refernece(val){
         this._reference = val;
+    }
+    set_show_mode(val){
+        this._show_mode = val;
     }
     set_vertical_v(i, val){
         this._vertical_v[i] = val;
@@ -1947,6 +1955,9 @@ class Oscillator{
     set_vertical_AC_GND_DC(i, val){
         this._vertical_AC_GND_DC[i] = val;
     }
+    get init(){
+        return this._init;
+    }
     get slope(){
         return this._slope;
     }
@@ -1955,6 +1966,9 @@ class Oscillator{
     }
     get reference(){
         return this._reference;
+    }
+    get show_mode(){
+        return this._show_mode;
     }
     get vertical_v(){
         return this._vertical_v;
@@ -1988,6 +2002,15 @@ class Oscillator{
         }
     }
     get_data(){
+        //let tmp_wg = wg;
+        // if(this._init){
+        //     wg = new WaveGenerator();
+        //     wg.set_amplitude(1);
+        //     wg.set_frequency(1000);
+        //     wg.set_inv(0);
+        //     wg.set_offset(0);
+        //     wg.set_type("sin_wave");
+        // }
         let type = wg.type;
         let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
         if(this._vaild == false){
@@ -1996,7 +2019,6 @@ class Oscillator{
         }
         if(type == "square_wave"){
             let loop = this._loop;
-
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] = 0;
                 this._datapoints1[j] = 0;
@@ -2080,6 +2102,7 @@ class Oscillator{
             }
             show_error("channel 2 is open.");
         }
+        //wg = tmp_wg;
 
     }
     draw(){
@@ -2121,11 +2144,20 @@ class Oscillator{
             show_error("trigger level is out of range!");
         }else{
             for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
-                datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
-                datapoints0[i-begin] += this._vertical_offset[0];
+                if(this._show_mode != 'CH2'){
+                    datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
+                    datapoints0[i-begin] += this._vertical_offset[0];
+                }else{
+                    datapoints0[i-begin] = NaN;
+                }
 
-                datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
-                datapoints1[i-begin] += this._vertical_offset[1];
+                if(this._show_mode != 'CH1'){
+                    datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
+                    datapoints1[i-begin] += this._vertical_offset[1];
+                }else{
+                    datapoints1[i-begin] = NaN;
+                }
+
             }
         }
         // console.log(datapoints0);
@@ -2140,20 +2172,20 @@ class Oscillator{
         }
         const data = {
             labels:labels,
-        datasets: [
-            {
-                data: datapoints1,
-                borderColor: 'rgb(255, 255, 0)',
-                //backgroundColor: 'rgb(255, 255, 0)',
-                tension: 0.4
-            },
-            {
-                data: datapoints0,
-                borderColor: 'rgb(0, 255, 0)',
-                //backgroundColor: 'rgb(255, 255, 0)',
-                tension: 0.4
-            },
-        ]
+            datasets: [
+                {
+                    data: datapoints1,
+                    borderColor: 'rgb(255, 255, 0)',
+                    //backgroundColor: 'rgb(255, 255, 0)',
+                    tension: 0.4
+                },
+                {
+                    data: datapoints0,
+                    borderColor: 'rgb(0, 255, 0)',
+                    //backgroundColor: 'rgb(255, 255, 0)',
+                    tension: 0.4
+                },
+            ]
         };
         const config = {
             type: 'line',
@@ -2842,22 +2874,28 @@ function vertical_DC2(){
     $("#vertical_DC2").css("backgroundColor", "green");
 }
 function vertical_mode_ch1(){
+    osi.set_show_mode("CH1");
     $("#vertical_mode_ch1").css("backgroundColor", "green");
     $("#vertical_mode_ch2").css("backgroundColor", "white");
     $("#vertical_mode_dual").css("backgroundColor", "white");
     $("#vertical_mode_add").css("backgroundColor", "white");
+    osi.draw();
 }
 function vertical_mode_ch2(){
+    osi.set_show_mode("CH2");
     $("#vertical_mode_ch1").css("backgroundColor", "white");
     $("#vertical_mode_ch2").css("backgroundColor", "green");
     $("#vertical_mode_dual").css("backgroundColor", "white");
     $("#vertical_mode_add").css("backgroundColor", "white");
+    osi.draw();
 }
 function vertical_mode_dual(){
+    osi.set_show_mode("DUAL");
     $("#vertical_mode_ch1").css("backgroundColor", "white");
     $("#vertical_mode_ch2").css("backgroundColor", "white");
     $("#vertical_mode_dual").css("backgroundColor", "green");
     $("#vertical_mode_add").css("backgroundColor", "white");
+    osi.draw();
 }
 function vertical_mode_add(){
     $("#vertical_mode_ch1").css("backgroundColor", "white");
@@ -2976,4 +3014,18 @@ function trigger_line() {
 
 function trigger_ext() {
     alert("EXT function is unimplement!");
+}
+
+function unimplemented() {
+    alert("This function is unimplement!")
+}
+
+function oscillosocope_init() {
+    osi.set_init();
+    if(osi.init){
+        $("#oscillosocope_init").css("backgroundColor", "green");
+    }else{
+        $("#oscillosocope_init").css("backgroundColor", "white");
+    }
+    osi.draw();
 }

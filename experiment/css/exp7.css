@@ -470,6 +470,11 @@ div#oscilloscope{
     width: 30px;
 }
 
+#oscillosocope_init{
+    top: 275px;
+    left:-25px;
+    width: 30px;
+}
 
 
 div#oscilloscopeScreen{
