@@ -2085,6 +2085,16 @@ class Oscillator{
                     this._datapoints1[i] += wg.offset;
                 }
             }
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
+                this._datapoints0[j] *= wg.amplitude;
+                this._datapoints1[j] *= wg.amplitude;
+                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                    this._datapoints0[j] += wg.offset;
+                }
+                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                    this._datapoints1[j] += wg.offset;
+                }
+            }
         }
         // console.log(this._datapoints0);
         // console.log(this._datapoints1);
@@ -2628,8 +2638,8 @@ function minus_generator_offset(){
             osi.draw();
             return;
         }
-        wg.set_offset(wg.offset - 0.01);
-        generator_offset -= 0.01;
+        wg.set_offset(wg.offset - 0.1);
+        generator_offset -= 0.1;
     }
     osi.draw();
 }
@@ -2640,8 +2650,8 @@ function add_generator_offset(){
             osi.draw();
             return;
         }
-        wg.set_offset(wg.offset + 0.01);
-        generator_offset += 0.01;
+        wg.set_offset(wg.offset + 0.1);
+        generator_offset += 0.1;
     }
     osi.draw();
 }
