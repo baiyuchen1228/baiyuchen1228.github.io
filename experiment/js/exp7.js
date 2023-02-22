@@ -543,10 +543,16 @@ $("#container").mouseup(function (e) {
             alert('(請先點按鈕)please click button first');
             return;
         }
-        //console.log(x2,y2);
+        // console.log(x2,y2);
         if (y2 < 445 || y2 > 765 || x2 < 145 || x2 > 405) {
-            alert('(請畫在麵包版上)please draw on breadboard');
-            return;
+            if(x2 == 665 && y2 == 525 && x1 == 1020 && y1 == 530){
+                osi.set_init();
+                osi.draw();
+            }
+            else{
+                alert('(請畫在麵包版上)please draw on breadboard');
+                return;
+            }
         }
         if (x1 == x2 && y1 == y2) {
             alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
@@ -699,6 +705,10 @@ $("#container").mouseup(function (e) {
         if (delALLalligator != null) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
+            if(osi._init){
+                osi.set_init();
+                osi.draw();
+            }
             x2 += 100;
             y2 += 420;
             for (var i = Things.length - 1; i >= 0; i--) {
@@ -2380,6 +2390,11 @@ function undo(){
         capacitanceOn = 1;
     }
     if (linestack[target][0] == "a") {
+        if(osi._init){
+            osi.set_init();
+            osi.draw();
+        }
+        // console.log(linestack[target]);
         $("#alligatorCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#alligatorCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#" + linestack[target]).remove();
