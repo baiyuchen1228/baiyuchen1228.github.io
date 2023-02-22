@@ -547,7 +547,7 @@ $("#container").mouseup(function (e) {
         if (y2 < 445 || y2 > 765 || x2 < 145 || x2 > 405) {
             if(x2 == 665 && y2 == 525 && x1 == 1020 && y1 == 530){
                 osi.set_init();
-                osi.draw();
+                // osi.draw();
             }
             else{
                 alert('(請畫在麵包版上)please draw on breadboard');
@@ -2013,7 +2013,7 @@ class Oscillator{
     }
     get_data(){
         let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
-        if(this._vaild == false){
+        if(!this._init && this._vaild == false){
             this.get_res();
             this._vaild = true;
         }
@@ -2113,18 +2113,20 @@ class Oscillator{
         // console.log(this._datapoints1);
         // 確定使用者真的有接對
         
-        let conn = checkConnected();
-        if(this.init == false && conn.voltage1 == 0){
-            for(let j=0;j<(WAVE_DATA_COUNT);j++){
-                this._datapoints0[j] = 0;
+        if(this._init == false){
+            let conn = checkConnected();
+            if(conn.voltage1 == 0){
+                for(let j=0;j<(WAVE_DATA_COUNT);j++){
+                    this._datapoints0[j] = 0;
+                }
+                show_error("channel 1 is open.");
             }
-            show_error("channel 1 is open.");
-        }
-        if(this.init == false && conn.voltage2 == 0){
-            for(let j=0;j<(WAVE_DATA_COUNT);j++){
-                this._datapoints1[j] = 0;
+            if(conn.voltage2 == 0){
+                for(let j=0;j<(WAVE_DATA_COUNT);j++){
+                    this._datapoints1[j] = 0;
+                }
+                show_error("channel 2 is open.");
             }
-            show_error("channel 2 is open.");
         }
         wg = tmp_wg;
 
@@ -2392,7 +2394,7 @@ function undo(){
     if (linestack[target][0] == "a") {
         if(osi._init){
             osi.set_init();
-            osi.draw();
+            // osi.draw();
         }
         // console.log(linestack[target]);
         $("#alligatorCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
@@ -2438,6 +2440,7 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    check();
 }
 
 function drawWave(){
