@@ -1,9 +1,9 @@
 import numpy as np
 
-ans = np.zeros((13,13,2))
+ans = np.zeros((14,14,2))
 
-negpoint = [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10],[0,11],[0,12]]
-pospoint = [[12,0],[12,1],[12,2],[12,3],[12,4],[12,5],[12,6],[12,7],[12,8],[12,9],[12,10],[12,11],[12,12]]
+negpoint = [[0,6]]
+pospoint = [[13,6]]
 
 for neg in negpoint:
     ans[neg[0]][neg[1]][0] = 0
@@ -15,8 +15,8 @@ for pos in pospoint:
 
 
 for ind in range(10000):
-    for i in range(13):
-        for j in range(13):
+    for i in range(14):
+        for j in range(14):
             negtive = False
             for neg in negpoint:
                 if(i == neg[0] and j == neg[1]):
@@ -35,29 +35,29 @@ for ind in range(10000):
             if i == 0:
                 if j == 0:
                     tmp += 2 * ans[i + 1][j][ind % 2] + 2 * ans[i][j + 1][ind % 2]
-                elif j == 12:
+                elif j == 13:
                     tmp += 2 * ans[i + 1][j][ind % 2] + 2 * ans[i][j - 1][ind % 2]
                 else:
                     tmp += 2 * ans[i + 1][j][ind % 2] + ans[i][j + 1][ind % 2] + ans[i][j - 1][ind % 2]
-            elif i == 12:
+            elif i == 13:
                 if j == 0:
                     tmp += 2 * ans[i - 1][j][ind % 2] + 2 * ans[i][j + 1][ind % 2]
-                elif j == 12:
+                elif j == 13:
                     tmp += 2 * ans[i - 1][j][ind % 2] + 2 * ans[i][j - 1][ind % 2]
                 else:
                     tmp += 2 * ans[i - 1][j][ind % 2] + ans[i][j + 1][ind % 2] + ans[i][j - 1][ind % 2]
             else:
                 if j == 0:
                     tmp += ans[i + 1][j][ind % 2] + ans[i - 1][j][ind % 2] + 2 * ans[i][j + 1][ind % 2]
-                elif j == 12:
+                elif j == 13:
                     tmp += ans[i + 1][j][ind % 2] + ans[i - 1][j][ind % 2] + 2 * ans[i][j - 1][ind % 2]
                 else:
                     tmp += ans[i + 1][j][ind % 2] + ans[i - 1][j][ind % 2]+ ans[i][j + 1][ind % 2] + ans[i][j - 1][ind % 2]
             ans[i][j][(ind + 1) % 2] = tmp / 4
-for i in range(13):
+for i in range(14):
     print("[",end='')
-    for j in range(13):
-        if j == 12:
+    for j in range(14):
+        if j == 13:
             print(ans[i][j][0],end="],")
         else:
             print(ans[i][j][0],end=',')

@@ -3114,3 +3114,31 @@ function oscillosocope_init() {
     }
     osi.draw();
 }
+
+const mediaStreamConstraints = {
+    video: true
+};
+
+function handleMediaStreamError(error) {
+    console.log('navigator.getUserMedia error: ', error);
+}
+
+function gotLocalMediaStream(mediaStream) {
+    // console.log(mediaStream)
+    const localStream = mediaStream;
+
+    // 取的video html element( HTMLMediaElement ).
+    const localVideo = document.querySelector('video');
+    // Older browsers may not have srcObject.
+    if ("srcObject" in localVideo) {
+        localVideo.srcObject = localStream;
+    } else {
+        // Avoid using this in new browsers, as it is going away.
+        localVideo.src = window.URL.createObjectURL(localStream);
+    }
+}
+
+navigator.mediaDevices
+    .getUserMedia(mediaStreamConstraints)
+    .then(gotLocalMediaStream)
+    .catch(handleMediaStreamError)
