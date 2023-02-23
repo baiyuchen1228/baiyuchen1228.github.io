@@ -566,13 +566,23 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
-            linestack.push("alligator0"+alligatorNo);
+            if((x1 == 1020 || x1 == 1350) && y1 == 530){
+                linestack.push("aalligator0"+alligatorNo);
+            }
+            else{
+                linestack.push("alligator0"+alligatorNo);
+            }
         }
         else {
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
-            linestack.push("alligator"+alligatorNo);
+            if((x1 == 1020 || x1 == 1350) && y1 == 530){
+                linestack.push("aalligator"+alligatorNo);
+            }
+            else{
+                linestack.push("alligator"+alligatorNo);
+            }
         }
         pointarray.push([x1, y1]);
         pointarray.push([x2-100, y2-420]);
@@ -709,9 +719,11 @@ $("#container").mouseup(function (e) {
         if (delALLalligator != null) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
-            if(osi._init){
+            if(osi._init == 1 && x1 == 1020 && y1 == 530){
                 osi.set_init(0);
-                // osi.draw();
+            }
+            if(osi._init == 2 && x1 == 1350 && y1 == 530){
+                osi.set_init(0);
             }
             x2 += 100;
             y2 += 420;
@@ -2429,14 +2441,14 @@ function undo(){
         capacitanceOn = 1;
     }
     if (linestack[target][0] == "a") {
-        if(osi._init){
+        if(linestack[target][1] == "a"){
             osi.set_init(0);
             // osi.draw();
         }
         // console.log(linestack[target]);
         $("#alligatorCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#alligatorCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
-        $("#" + linestack[target]).remove();
+        $("#alligator" + + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         delALLalligator = null;
     }
     linestack.pop();
