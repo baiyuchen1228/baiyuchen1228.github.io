@@ -1887,19 +1887,11 @@ class WaveGenerator{
             return inv * amplitude * Math.sin(omega * t + phase);
         }
         else if(type == "triangle_wave"){
-            let pos = t - cycle * Math.floor(t / cycle);
-            if(pos < cycle/4){
-                return inv * (pos * 4 / cycle * amplitude);
-            }else if(pos < cycle / 2){
-                pos -= cycle / 4;
-                return inv * (amplitude - pos * 4 / cycle * amplitude);
-            }else if(pos < 3 * cycle/4){
-                pos -= cycle / 2;
-                return inv * (- pos * 4 / cycle * amplitude);
-            }else{
-                pos -= cycle*3 / 4;
-                return inv * (-amplitude + pos * 4 / cycle * amplitude);
-            }
+            let result = 0;
+            result += amplitude * (1 / coefficient) * math.sin(omega * t + phase);
+            result *= (8 / Math.PI / Math.PI);
+            result *= inv;
+            return result;
         }
         return 0;
     }
@@ -2039,7 +2031,7 @@ class Oscillator{
             }
             
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
                 let res = this._phasor[i];
                 let phase0 = wg.calculate_phase(res, 0);
                 let amplitude0 = wg.calculate_amplitude(res, 0);
@@ -2051,12 +2043,52 @@ class Oscillator{
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
                     }else{
-                        this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul , 2 * i + 1, omega, phase0, amplitude0);
+                        this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase0, amplitude0);
                     }
                     if(this.vertical_AC_GND_DC[1] == "GND"){
                         this._datapoints1[j] = 0;
                     }else{
                         this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase1, amplitude1);
+                    }
+                }
+            }
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
+                this._datapoints0[j] *= wg.amplitude;
+                this._datapoints1[j] *= wg.amplitude;
+                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                    this._datapoints0[j] += wg.offset;
+                }
+                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                    this._datapoints1[j] += wg.offset;
+                }
+            }
+        }
+        else if(type == "triangle_wave"){
+            let loop = this._loop;
+            for(let j=0;j<(WAVE_DATA_COUNT);j++){
+                this._datapoints0[j] = 0;
+                this._datapoints1[j] = 0;
+            }
+            
+            for (let i = 0; i < loop; i++){
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
+                let res = this._phasor[i];
+                let phase0 = wg.calculate_phase(res, 0);
+                let amplitude0 = wg.calculate_amplitude(res, 0);
+                let phase1 = wg.calculate_phase(res, 1);
+                let amplitude1 = wg.calculate_amplitude(res, 1);
+                console.log(res);
+                console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
+                for(let j=0;j<(WAVE_DATA_COUNT);j++){
+                    if(this.vertical_AC_GND_DC[0] == "GND"){
+                        this._datapoints0[j] = 0;
+                    }else{
+                        this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
+                    }
+                    if(this.vertical_AC_GND_DC[1] == "GND"){
+                        this._datapoints1[j] = 0;
+                    }else{
+                        this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
                     }
                 }
             }
@@ -2607,8 +2639,8 @@ function generator_square(){
 }
 
 function generator_triangle(){
-    alert("traingle wave is unimplemented!")
-    return;
+    // alert("traingle wave is unimplemented!")
+    // return;
     clear_generator_wave();
     $("#generator_triangle").css("backgroundColor", "green");
     wave_type = "triangle_wave";
