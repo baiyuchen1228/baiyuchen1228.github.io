@@ -545,8 +545,12 @@ $("#container").mouseup(function (e) {
         }
         // console.log(x2,y2);
         if (y2 < 445 || y2 > 765 || x2 < 145 || x2 > 405) {
-            if(x2 == 665 && y2 == 525 && x1 == 1020 && y1 == 530){
-                osi.set_init();
+            if(x2 == 665 && y2 == 525 && (x1 == 1020 || x1 == 1350) && y1 == 530){
+                if(x1 == 1020){
+                    osi.set_init(1);
+                }else{
+                    osi.set_init(2);
+                }
                 // osi.draw();
             }
             else{
@@ -706,8 +710,8 @@ $("#container").mouseup(function (e) {
             x1 = delALLalligator[0];
             y1 = delALLalligator[1];
             if(osi._init){
-                osi.set_init();
-                osi.draw();
+                osi.set_init(0);
+                // osi.draw();
             }
             x2 += 100;
             y2 += 420;
@@ -1935,8 +1939,8 @@ class Oscillator{
         this._init = false;
     }
     
-    set_init(){
-        this._init = !this._init;
+    set_init(val){
+        this._init = val;
     }
     set_slope(val){
         this._slope = val;
@@ -2013,13 +2017,13 @@ class Oscillator{
     }
     get_data(){
         let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
-        if(!this._init && this._vaild == false){
+        if(this._init == 0 && this._vaild == false){
             this.get_res();
             this._vaild = true;
         }
 
         let tmp_wg = wg;
-        if(this._init){
+        if(this._init != 0){
             wg = new WaveGenerator();
             wg.set_amplitude(1);
             wg.set_frequency(1000);
@@ -2027,7 +2031,8 @@ class Oscillator{
             this._vaild = false;
             let loop = this._loop;
             for(let i=0;i<loop;i++){
-                this._phasor[i] = {voltage1:math.complex(1, 0), voltage2:math.complex(1, 0)};
+                if(this._init == 1) this._phasor[i] = {voltage1:math.complex(1, 0), voltage2:math.complex(0, 0)};
+                else this._phasor[i] = {voltage1:math.complex(0, 0), voltage2:math.complex(1, 0)};
             }
         }
         let type = wg.type;
@@ -2113,7 +2118,7 @@ class Oscillator{
         // console.log(this._datapoints1);
         // 確定使用者真的有接對
         
-        if(this._init == false){
+        if(this._init == 0){
             let conn = checkConnected();
             if(conn.voltage1 == 0){
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
@@ -2393,7 +2398,7 @@ function undo(){
     }
     if (linestack[target][0] == "a") {
         if(osi._init){
-            osi.set_init();
+            osi.set_init(0);
             // osi.draw();
         }
         // console.log(linestack[target]);
