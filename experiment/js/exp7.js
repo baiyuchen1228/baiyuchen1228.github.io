@@ -1941,8 +1941,12 @@ class Oscillator{
         this._reference = "CH1";
         this._show_mode = "CH1";
         this._init = false;
+        this._SWP = 1;
     }
     
+    set_SWP(val){
+        this._SWP = val;
+    }
     set_init(val){
         this._init = val;
     }
@@ -2003,6 +2007,9 @@ class Oscillator{
     get vertical_AC_GND_DC(){
         return this._vertical_AC_GND_DC;
     }
+    get SWP(){
+        return this._SWP;
+    }
     get_res(){
         let type = wg.type;
         let loop = this._loop;
@@ -2048,14 +2055,14 @@ class Oscillator{
             }
             
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
                 let res = this._phasor[i];
                 let phase0 = wg.calculate_phase(res, 0);
                 let amplitude0 = wg.calculate_amplitude(res, 0);
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
-                console.log(res);
-                console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
+                // console.log(res);
+                // console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
@@ -2088,14 +2095,14 @@ class Oscillator{
             }
             
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
                 let res = this._phasor[i];
                 let phase0 = wg.calculate_phase(res, 0);
                 let amplitude0 = wg.calculate_amplitude(res, 0);
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
-                console.log(res);
-                console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
+                // console.log(res);
+                // console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
@@ -2121,14 +2128,14 @@ class Oscillator{
             }
         }
         else if(type == "sin_wave"){
-            let omega = 2 * math.PI * wg.frequency * 1000;
+            let omega = 2 * math.PI * wg.frequency * 1000 * this._SWP;
             let res = this._phasor[0];
             let phase0 = wg.calculate_phase(res, 0);
             let amplitude0 = wg.calculate_amplitude(res, 0);
             let phase1 = wg.calculate_phase(res, 1);
             let amplitude1 = wg.calculate_amplitude(res, 1);
-            console.log(res);
-            console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
+            // console.log(res);
+            // console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
             for(let i=0;i< (WAVE_DATA_COUNT);i++){
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[i] = 0;
@@ -2503,6 +2510,7 @@ window.onbeforeunload = () => {
 
 function start(){
     console.log("Starting");
+    osi.set_SWP(0.04 * (getRandomInteger(10) - 5) + 1);
     startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
@@ -3142,6 +3150,18 @@ const mediaStreamConstraints = {
     video: true
 };
 
+function minus_horizonal_SWP(){
+    if(osi._SWP < 0.8) return;
+    osi._SWP -= 0.04;
+    osi.draw();
+}
+
+function add_horizonal_SWP(){
+    if(osi._SWP > 1.2) return;
+    osi._SWP += 0.04;
+    osi.draw();
+}
+
 function handleMediaStreamError(error) {
     console.log('navigator.getUserMedia error: ', error);
 }
@@ -3164,4 +3184,8 @@ function gotLocalMediaStream(mediaStream) {
 navigator.mediaDevices
     .getUserMedia(mediaStreamConstraints)
     .then(gotLocalMediaStream)
-    .catch(handleMediaStreamError)
+    .catch(handleMediaStreamError);
+
+function getRandomInteger(max) {
+    return Math.floor(Math.random() * max);
+}
