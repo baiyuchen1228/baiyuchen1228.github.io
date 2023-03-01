@@ -18,16 +18,8 @@ const cur2 = document.querySelector("#powersupply3");
 const vol2 = document.querySelector("#powersupply4");
 const meter1_value = document.querySelector("#multimeter1_3");
 
-const addcurrent1 = document.querySelector("#powersupply5");
-const addvoltage1 = document.querySelector("#powersupply7");
-const addcurrent2 = document.querySelector("#powersupply9");
-const addvoltage2 = document.querySelector("#powersupply11");
 const meter1_clockwise = document.querySelector("#multimeter1_1");
 
-const deccurrent1 = document.querySelector("#powersupply6");
-const decvoltage1 = document.querySelector("#powersupply8");
-const deccurrent2 = document.querySelector("#powersupply10");
-const decvoltage2 = document.querySelector("#powersupply12");
 const meter1_counterclockwise = document.querySelector("#multimeter1_2");
 
 
@@ -58,36 +50,6 @@ function hideMenu() {
     VisibleMenu = '';
 }
 
-document.getElementById("powersupply14").onclick = function () {
-    if (deletemode == 1) {
-        $this = $("#del");
-        $this.css('background-color', 'white');
-        deletemode = 0;
-        delALLalligator = null;
-    }
-    else if (drawAlligator == 1) {
-        $this = $("#addAlligator");
-        $this.css('background-color', 'white');
-        drawAlligator = 0;
-    }
-    if (power == 0) {
-        cur1.innerHTML = current1.toFixed(2);
-        cur2.innerHTML = current2.toFixed(2);
-        vol1.innerHTML = voltage1.toFixed(2);
-        vol2.innerHTML = voltage2.toFixed(2);
-        power = 1;
-    } else {
-        current1 = current2 = 0;
-        voltage1 = voltage2 = 0;
-        cur1.innerHTML = "";
-        cur2.innerHTML = "";
-        vol1.innerHTML = "";
-        vol2.innerHTML = "";
-        power = 0;
-        powersupplyOutputStatus = 0;
-        $("#powersupply13").css("background-color", "White");
-    }
-}
 
 function turnOffMode() {
     if (deletemode == 1) {
@@ -103,225 +65,8 @@ function turnOffMode() {
     }
 }
 
-document.getElementById("powersupply13").onclick = function () {
-    turnOffMode();
-    if (power == 1 && powersupplyOutputStatus == 0) {
-        powersupplyOutputStatus = 1;
-        $("#powersupply13").css("background-color", "Lightgreen");
-        console.log("output on!");
-        check();
-    } else {
-        powersupplyOutputStatus = 0;
-        $("#powersupply13").css("background-color", "White");
-        cur1.innerHTML = current1.toFixed(2);
-        cur2.innerHTML = current2.toFixed(2);
-        vol1.innerHTML = voltage1.toFixed(2);
-        vol2.innerHTML = voltage2.toFixed(2);
-        console.log("power off!");
-        check();
-    }
-}
-
 
 var intervalID;
-$(powersupply5).mousedown(function (){
-    intervalID = setInterval(function (){
-        turnOffMode();
-        if (power == 1 && current1 <= 3) {
-            current1 += 0.01;
-            cur1.innerHTML = current1.toFixed(2);
-        }
-        check();
-        }, 200
-    );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply6).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        current1 -= 0.01;
-        if (current1 < 0) {
-            current1 = 0;
-        }
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply7).mousedown(function (){
-    intervalID = setInterval( function (){
-        turnOffMode();
-        if (power == 1 && voltage1 <= 30) {
-            voltage1 += 0.1;
-            vol1.innerHTML = voltage1.toFixed(2);
-        }
-        check();
-    }, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply8).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        voltage1 -= 0.1;
-        if (voltage1 < 0) {
-            voltage1 = 0;
-        }
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply9).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && current2 <= 3) {
-        current2 += 0.01;
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-$(powersupply10).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        current2 -= 0.01;
-        if (current2 < 0) {
-            current2 = 0;
-        }
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-$(powersupply11).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && voltage2 <= 30) {
-        voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-$(powersupply12).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        voltage2 -= 0.1;
-        if (voltage2 < 0) {
-            voltage2 = 0;
-        }
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-addcurrent1.onclick = function () {
-    turnOffMode();
-    if (power == 1 && current1 <= 3) {
-        current1 += 0.01;
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}
-
-addvoltage1.onclick = function () {
-    turnOffMode();
-    if (power == 1 && voltage1 <= 30) {
-        voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}
-
-addcurrent2.onclick = function () {
-    turnOffMode();
-    if (power == 1 && current2 <= 3) {
-        current2 += 0.01;
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}
-
-addvoltage2.onclick = function () {
-    turnOffMode();
-    if (power == 1 && current2 <= 30) {
-        voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}
-
-deccurrent1.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        current1 -= 0.01;
-        if (current1 < 0) {
-            current1 = 0;
-        }
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}
-
-decvoltage1.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        voltage1 -= 0.1;
-        if (voltage1 < 0) {
-            voltage1 = 0;
-        }
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}
-
-deccurrent2.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        current2 -= 0.01;
-        if (current2 < 0) {
-            current2 = 0;
-        }
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}
-
-decvoltage2.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        voltage2 -= 0.1;
-        if (voltage2 < 0) {
-            voltage2 = 0;
-        }
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}
-
 
 
 meter1_clockwise.onclick = function () {
@@ -979,6 +724,24 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    power = 1;
+    powersupplyOutputStatus = 1;
+    let id = parseInt($("#id1")[0].value,10);
+    id %= 100;
+    current1 = 0.1;
+    voltage1 = (id / 2 + 50) / 10;
+    cur1.innerHTML = current1.toFixed(2);
+    vol1.innerHTML = voltage1.toFixed(2);
+}
+function checkAns(){
+    $("#anstext1").text($("#ans1")[0].value);
+    $("#anstext2").text($("#ans2")[0].value);
+    $("#anstext3").text($("#ans3")[0].value);
+    $("#ans1").css("display", "none");
+    $("#ans2").css("display", "none");
+    $("#ans3").css("display", "none");
+    $("#ansStatus").text("通過");
+
 }
 function show_error(s){
     document.querySelector("#error_message_content").innerHTML = s;
@@ -1031,8 +794,8 @@ function oneRed(){
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
     
-    context.fillStyle = "red";
-    context.strokeStyle = "red";
+    context.fillStyle = "silver";
+    context.strokeStyle = "silver";
     context.beginPath(); // Start the path
     context.moveTo(325, 0); // Set the path origin
     context.lineTo(325, 270); // Set the path destination
@@ -1055,7 +818,7 @@ function twoRed(){
     context.fillStyle = "rgb(88, 88, 88)";
     current_x = 0;
     context.lineWidth = 3;
-    context.strokeStyle = "red";
+    context.strokeStyle = "silver";
     context.beginPath(); // Start the path
     context.moveTo(25, 0); // Set the path origin
     context.lineTo(25, 270); // Set the path destination

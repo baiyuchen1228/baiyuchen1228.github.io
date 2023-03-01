@@ -331,7 +331,14 @@ div#powersupply{
 }
 #form1{
     position: relative;
+    width: 300px;
     left: 800px;
+}
+#form2{
+    position: relative;
+    width: 300px;
+    top: -100px;
+    left: 0px;
 }
 #error_message{
     background-color : PaleGreen;
@@ -343,6 +350,11 @@ div#powersupply{
     z-index: 1;
 }
 #submitbuttom{
+    width: 30px;
+    border-radius: 5px;
+    background-color: #e7dc8f;
+}
+#submitAnswerbuttom{
     width: 30px;
     border-radius: 5px;
     background-color: #e7dc8f;

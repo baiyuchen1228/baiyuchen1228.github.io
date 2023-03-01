@@ -1031,8 +1031,8 @@ function oneRed(){
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
     
-    context.fillStyle = "red";
-    context.strokeStyle = "red";
+    context.fillStyle = "silver";
+    context.strokeStyle = "silver";
     context.beginPath(); // Start the path
     context.moveTo(325, 0); // Set the path origin
     context.lineTo(325, 270); // Set the path destination
@@ -1055,7 +1055,7 @@ function twoRed(){
     context.fillStyle = "rgb(88, 88, 88)";
     current_x = 0;
     context.lineWidth = 3;
-    context.strokeStyle = "red";
+    context.strokeStyle = "silver";
     context.beginPath(); // Start the path
     context.moveTo(25, 0); // Set the path origin
     context.lineTo(25, 270); // Set the path destination
