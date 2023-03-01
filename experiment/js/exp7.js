@@ -2020,7 +2020,7 @@ class Oscillator{
         }
     }
     get_data(){
-        let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 2;
+        let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 3;
         if(this._init == 0 && this._vaild == false){
             this.get_res();
             this._vaild = true;
@@ -2187,21 +2187,32 @@ class Oscillator{
         document.getElementById("demo_wave_type1").value = wg.type;
         document.getElementById("demo_wave_offset1").value = wg.offset;
         document.getElementById("demo_wave_inv1").value = wg.inv;
+        
+        let arrow_pos = this._level;
+        if(this._reference == "CH1"){
+            arrow_pos += this._vertical_offset[0];
+        }else{
+            arrow_pos += this._vertical_offset[1];
+        }
+        arrow_pos = arrow_pos * (-28) + 50;
+        $("#level_show").css("top", arrow_pos.toString() + "px");
+        
         this.get_data();
         let datapoints0 = [];
         let datapoints1 = [];
-        let begin = 1;
+        let begin = this._WAVE_DATA_COUNT;
         let flag = false;
-        let pre = this._datapoints0[0] / this._vertical_v[0];
-        pre += this._vertical_offset[0];
-        for(;begin < this._WAVE_DATA_COUNT && flag == false;begin++){
+        let pre = this._datapoints0[begin] / this._vertical_v[0];
+        // pre += this._vertical_offset[0];
+        for(;begin < 2 * this._WAVE_DATA_COUNT && flag == false;begin++){
             let temp = 0;
+            // let temp_level = this._level;
             if(this._reference == "CH1"){
                 temp = this._datapoints0[begin] / this._vertical_v[0];
-                temp += this._vertical_offset[0];
+                // temp += this._vertical_offset[0];
             }else{
                 temp = this._datapoints1[begin] / this._vertical_v[1];
-                temp += this._vertical_offset[1];
+                // temp += this._vertical_offset[1];
             }
             if(this._slope == 1 && pre <= this._level && temp >= this._level){
                 flag = true;
@@ -2210,7 +2221,7 @@ class Oscillator{
             }
             pre = temp;
         }
-        begin -= 1;
+        begin -= this._time_offset;
         if(flag == false){
             for(let i=0;i<this._WAVE_DATA_COUNT;i++){
                 datapoints0[i] = 0.008 * i - 4;
@@ -2232,9 +2243,23 @@ class Oscillator{
                 }else{
                     datapoints1[i-begin] = NaN;
                 }
-
             }
         }
+
+        if(this._show_mode != "CH2" && this._vertical_AC_GND_DC[0] == "GND"){
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
+                datapoints0[i-begin] += this._vertical_offset[0];
+            }
+        }
+
+        if(this._show_mode != "CH1" && this._vertical_AC_GND_DC[1] == "GND"){
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
+                datapoints1[i-begin] += this._vertical_offset[1];
+            }
+        }
+
         // console.log(datapoints0);
         //console.log(datapoints1);
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
@@ -3074,8 +3099,6 @@ function minus_trigger_level() {
 
 function add_trigger_level() {
     osi.set_level(osi.level + 0.5);
-    let arrow_pos = osi.level * (-28) + 50;
-    $("#level_show").css("top", arrow_pos.toString() + "px");
     osi.draw();
 }
 
