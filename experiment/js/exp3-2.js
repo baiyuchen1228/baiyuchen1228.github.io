@@ -734,13 +734,25 @@ function start(){
     vol1.innerHTML = voltage1.toFixed(2);
 }
 function checkAns(){
-    $("#anstext1").text($("#ans1")[0].value);
-    $("#anstext2").text($("#ans2")[0].value);
-    $("#anstext3").text($("#ans3")[0].value);
-    $("#ans1").css("display", "none");
-    $("#ans2").css("display", "none");
-    $("#ans3").css("display", "none");
-    $("#ansStatus").text("通過");
+    let ans1 = parseFloat($("#ans1")[0].value);
+    let ans2 = parseFloat($("#ans2")[0].value);
+    let ans3 = parseFloat($("#ans3")[0].value);
+    let answer1 = (voltage1 * p2p[4][9]).toFixed(1);
+    let answer2 = (voltage1 * p2p[6][9]).toFixed(1);
+    let answer3 = (voltage1 * p2p[8][9]).toFixed(1);
+    console.log(answer1,answer2,answer3);
+    if(ans1 == answer1 && ans2 == answer2 && ans3 == answer3){
+        $("#anstext1").text($("#ans1")[0].value);
+        $("#anstext2").text($("#ans2")[0].value);
+        $("#anstext3").text($("#ans3")[0].value);
+        $("#ansStatus").text("通過");
+        $("#ans1").css("display", "none");
+        $("#ans2").css("display", "none");
+        $("#ans3").css("display", "none");
+    }
+    else{
+        $("#ansStatus").text("錯誤");
+    }
 
 }
 function show_error(s){
