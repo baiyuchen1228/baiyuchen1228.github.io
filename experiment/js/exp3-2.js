@@ -737,11 +737,42 @@ function checkAns(){
     let ans1 = parseFloat($("#ans1")[0].value);
     let ans2 = parseFloat($("#ans2")[0].value);
     let ans3 = parseFloat($("#ans3")[0].value);
-    let answer1 = (voltage1 * p2p[4][9]).toFixed(1);
-    let answer2 = (voltage1 * p2p[6][9]).toFixed(1);
-    let answer3 = (voltage1 * p2p[8][9]).toFixed(1);
-    console.log(answer1,answer2,answer3);
-    if(ans1 == answer1 && ans2 == answer2 && ans3 == answer3){
+    let answer1 = (voltage1 * p2p[4][9]);
+    let answer2 = (voltage1 * p2p[6][9]);
+    let answer3 = (voltage1 * p2p[8][9]);
+    let done = true;
+    console.log(answer1, answer2, answer3);
+    if(answer1 > 2){
+        if(abs(ans1 - answer1) > 0.05){
+            done = false;
+        }
+    }
+    else{
+        if(abs(ans1 - answer1) > 0.005){
+            done = false;
+        }
+    }
+    if(answer2 > 2){
+        if(abs(ans2 - answer2) > 0.05){
+            done = false;
+        }
+    }
+    else{
+        if(abs(ans2 - answer2) > 0.005){
+            done = false;
+        }
+    }
+    if(answer3 > 2){
+        if(abs(ans3 - answer3) > 0.05){
+            done = false;
+        }
+    }
+    else{
+        if(abs(ans3 - answer3) > 0.005){
+            done = false;
+        }
+    }
+    if(done){
         $("#anstext1").text($("#ans1")[0].value);
         $("#anstext2").text($("#ans2")[0].value);
         $("#anstext3").text($("#ans3")[0].value);
