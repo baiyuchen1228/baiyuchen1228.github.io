@@ -734,6 +734,7 @@ function start(){
     vol1.innerHTML = voltage1.toFixed(2);
 }
 function checkAns(){
+    if(!startbool)return;
     let ans1 = parseFloat($("#ans1")[0].value);
     let ans2 = parseFloat($("#ans2")[0].value);
     let ans3 = parseFloat($("#ans3")[0].value);
@@ -741,7 +742,9 @@ function checkAns(){
     let answer2 = (voltage1 * p2p[6][9]);
     let answer3 = (voltage1 * p2p[8][9]);
     let done = true;
-    console.log(answer1, answer2, answer3);
+    if(isNaN(ans1) || isNaN(ans2) || isNaN(ans3)){
+        done = false;
+    }
     if(answer1 > 2){
         if(abs(ans1 - answer1) > 0.05){
             done = false;
