@@ -334,6 +334,12 @@ div#powersupply{
     left: 800px;
     /* top: 100px; */
 }
+#form2{
+    position: relative;
+    width: 300px;
+    top: -100px;
+    left: -100px;
+}
 #error_message{
     background-color : PaleGreen;
     position: absolute;
@@ -347,9 +353,21 @@ div#powersupply{
     border-radius: 5px;
     background-color: #e7dc8f;
 }
+#submitAnswerbuttom{
+    width: 30px;
+    border-radius: 5px;
+    background-color: #e7dc8f;
+}
 #clear{
     position: absolute;
     background-color: rgb(255, 145, 145);
     left: 1200px;
     top: 700px;
+}
+
+#camera{
+    position: absolute;
+    width: 200px;
+    left: 1200px;
+    top: 110px;
 }

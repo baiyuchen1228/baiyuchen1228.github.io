@@ -2539,8 +2539,7 @@ function drawWave(){
 
 
 function show_error(s){
-    tmp = document.querySelector("#error_message_content").innerHTML;
-    document.querySelector("#error_message_content").innerHTML = tmp + "<br>" + s;
+    document.querySelector("#error_message_content").innerHTML = s;
 }
 
 function pow(a, x){
@@ -3146,10 +3145,6 @@ function oscillosocope_init() {
     osi.draw();
 }
 
-const mediaStreamConstraints = {
-    video: true
-};
-
 function minus_horizonal_SWP(){
     if(osi._SWP < 0.8) return;
     osi._SWP -= 0.04;
@@ -3162,32 +3157,13 @@ function add_horizonal_SWP(){
     osi.draw();
 }
 
+
+const mediaStreamConstraints = {
+    video: true
+};
+
 function handleMediaStreamError(error) {
     console.log('navigator.getUserMedia error: ', error);
-}
-
-function gotLocalMediaStream(mediaStream) {
-    // console.log(mediaStream)
-    const localStream = mediaStream;
-
-    // 取的video html element( HTMLMediaElement ).
-    const localVideo = document.querySelector('video');
-    // Older browsers may not have srcObject.
-    if ("srcObject" in localVideo) {
-        localVideo.srcObject = localStream;
-    } else {
-        // Avoid using this in new browsers, as it is going away.
-        localVideo.src = window.URL.createObjectURL(localStream);
-    }
-}
-
-navigator.mediaDevices
-    .getUserMedia(mediaStreamConstraints)
-    .then(gotLocalMediaStream)
-    .catch(handleMediaStreamError);
-
-function getRandomInteger(max) {
-    return Math.floor(Math.random() * max);
 }
 
 function gotLocalMediaStream(mediaStream) {

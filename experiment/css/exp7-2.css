@@ -786,7 +786,18 @@ div#oscilloscopeScreen{
     top : 800px;
     z-index: 1;
 }
+#form2{
+    position: relative;
+    width: 300px;
+    top: -100px;
+    left: 0px;
+}
 #submitbuttom{
+    width: 30px;
+    border-radius: 5px;
+    background-color: #e7dc8f;
+}
+#submitAnswerbuttom{
     width: 30px;
     border-radius: 5px;
     background-color: #e7dc8f;
@@ -797,6 +808,9 @@ div#oscilloscopeScreen{
     background-color: #e7dc8f;
 }
 
-/* #camera{
-    width: ;
-} */
+#camera{
+    position: absolute;
+    width: 200px;
+    left: 1200px;
+    top: 110px;
+}

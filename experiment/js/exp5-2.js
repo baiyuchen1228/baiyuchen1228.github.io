@@ -1177,14 +1177,14 @@ $(document).ready(function () {
     current_x = 0;
     context.lineWidth = 3;
     context.strokeStyle = "red";
-    context.beginPath(); // Start the path
+    context.beginPath();
     context.moveTo(35, 0); // Set the path origin
     context.lineTo(35, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
     context.strokeStyle = "black";
-    context.beginPath(); // Start the path
+    context.beginPath();
     context.moveTo(75, 0); // Set the path origin
     context.lineTo(75, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1202,7 +1202,7 @@ $(document).ready(function () {
 
     context.lineWidth = 3;
     context.strokeStyle = "blue";
-    context.beginPath(); // Start the path
+    context.beginPath();
     context.moveTo(175, 0); // Set the path origin
     context.lineTo(175, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1222,7 +1222,7 @@ $(document).ready(function () {
     current_x = 0;
     context.lineWidth = 3;
     context.strokeStyle = "black";
-    context.beginPath(); // Start the path
+    context.beginPath();
     context.moveTo(275, 0); // Set the path origin
     context.lineTo(275, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1250,7 +1250,7 @@ $(document).ready(function () {
 
     context.lineWidth = 3;
     context.strokeStyle = "red";
-    context.beginPath(); // Start the path
+    context.beginPath();
     context.moveTo(315, 0); // Set the path origin
     context.lineTo(315, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -2154,6 +2154,7 @@ window.onbeforeunload = () => {
     return confirm('確定要離開?')
 }
 
+var abc;
 
 function start(){
     console.log("Starting");
@@ -2168,9 +2169,59 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    let id = parseInt($("#id1")[0].value,10);
+    id %= 100;
+    let ohms = (id / 4) * 13 + 50;
+    abc = ohms;
+    let x1 = 225;
+    let y1 = 125;
+    let x2 = 225;
+    let y2 = 185;
+    let centerX = x1 - (x1 - x2) / 2;
+    let centerY = y1 - (y1 - y2) / 2;
+    let slope = Math.atan((y2 - y1) / (x2 - x1));
+    let rectX1 = centerX - 5 * Math.sin(slope) + 10 * Math.cos(slope);
+    let rectY1 = centerY + 5 * Math.cos(slope) + 10 * Math.sin(slope);
+    let rectX2 = centerX + 10 * Math.cos(slope) + 5 * Math.sin(slope);
+    let rectY2 = centerY + 10 * Math.sin(slope) - 5 * Math.cos(slope);
+    let rectX3 = centerX + 5 * Math.sin(slope) - 10 * Math.cos(slope);
+    let rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
+    let rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
+    let rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
+    let resistanceNo = 2;
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"></polygon>'));
 }
-function show_error(s){
-    document.querySelector("#error_message_content").innerHTML = s;
+function checkAns(){
+    if(!startbool)return;
+    let ans1 = parseFloat($("#ans1")[0].value);
+    let answer1 = abc;
+    let done = true;
+    if(isNaN(ans1)){
+        done = false;
+    }
+    if(abs(ans1 - answer1) > 10){
+        done = false;
+    }
+    if(done){
+        $("#anstext1").text($("#ans1")[0].value);
+        $("#ansStatus").text("通過");
+        $("#ans1").css("display", "none");
+    }
+    else{
+        $("#ansStatus").text("錯誤");
+    }
+
+}
+
+const mediaStreamConstraints = {
+    video: true
+};
+
+function handleMediaStreamError(error) {
+    console.log('navigator.getUserMedia error: ', error);
 }
 
 function gotLocalMediaStream(mediaStream) {
@@ -2191,4 +2242,8 @@ function gotLocalMediaStream(mediaStream) {
 navigator.mediaDevices
     .getUserMedia(mediaStreamConstraints)
     .then(gotLocalMediaStream)
-    .catch(handleMediaStreamError)
+    .catch(handleMediaStreamError);
+
+function show_error(s){
+    document.querySelector("#error_message_content").innerHTML = s;
+}

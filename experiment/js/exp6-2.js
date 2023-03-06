@@ -2160,8 +2160,13 @@ function start(){
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
 }
-function show_error(s){
-    document.querySelector("#error_message_content").innerHTML = s;
+
+const mediaStreamConstraints = {
+    video: true
+};
+
+function handleMediaStreamError(error) {
+    console.log('navigator.getUserMedia error: ', error);
 }
 
 function gotLocalMediaStream(mediaStream) {
@@ -2183,3 +2188,7 @@ navigator.mediaDevices
     .getUserMedia(mediaStreamConstraints)
     .then(gotLocalMediaStream)
     .catch(handleMediaStreamError)
+
+function show_error(s){
+    document.querySelector("#error_message_content").innerHTML = s;
+}

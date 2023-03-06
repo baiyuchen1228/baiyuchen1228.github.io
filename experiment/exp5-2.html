@@ -14,8 +14,8 @@
 </head>
 
 <body>
-    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px"
-        style="left: 0px; top: 0px; position:absolute"></svg>
+    <video autoplay id="camera"></video>
+    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute"><circle id="alligatorCircle1_01" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_01" cx="815" cy="525" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator01" x1="1250" y1="545" x2="815" y2="525" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_02" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_02" cx="815" cy="345" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator02" x1="1285" y1="545" x2="815" y2="345" style="stroke:Red;stroke-width:5px;"></line></svg>
         <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
             <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
@@ -46,7 +46,7 @@
             </span>
         </h1>
     <h2>
-        我的課程 / 普通物理實驗 / 測驗五：歐姆定律及電容實驗
+        我的課程 / 普通物理實驗 / 測驗五：歐姆定律實驗
     </h2>
     <!-- <img id="breadboard" class="breadboard-icon" title="breadboard" src="../images/breadboard.png" alt="" width="500px"
         style="position:absolute; top:300px; left: 550px;"> -->
@@ -95,18 +95,17 @@
         </div>
         <canvas id="myCanvas" width="500" height="360"
             style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
-            style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"><circle id="resistanceCircle1_01" cx="205" cy="125" r="5" style="fill:Brown;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_01" cx="205" cy="45" r="5" style="fill:Brown;stroke-width:2"><title></title></circle><line dataohm="100" id="resistance01" x1="205" y1="125" x2="205" y2="45" style="stroke:Brown;stroke-width:2"><title>100Ohms</title></line><polygon id="resistanceBox01" points="210,75 200,75 200,95 210,95" style="fill:blue; stroke:lime; stroke-width:1"><title>100Ohms</title></polygon></svg>
 
     </div>
     <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
         Wire(單芯線)</button>
-    <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
-        Resistor(電阻)</button>
-    <button type="button" class="buttonInactive" id="addInductance" href="#">Add
+    <!-- <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
+        Resistor(電阻)</button> -->
+    <!-- <button type="button" class="buttonInactive" id="addInductance" href="#">Add
         Inductor(電感)</button>
     <button type="button" class="buttonInactive" id="addCapacitance" href="#">Add
-        Capacitance(電容)</button>
+        Capacitance(電容)</button> -->
     <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
         Alligator Clip(鱷魚夾)</button>
     <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
@@ -124,30 +123,11 @@
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
-    
-    <!-- <script type="text/javascript">
-    function move (target) {
-        function moveTarget (e) {
-            var intX = e.pageX;
-            var intY = e.pageY;
-            target.style.left = intX - (target.width)/2 + "px";
-            target.style.top = intY - (target.height)/2 + "px";
-        }
-        return moveTarget;
-    }
-    document.getElementById("apple").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    document.getElementById("banana").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    </script> -->
+    <form id="form2">
+        請回答以下問題(測量到最精準)<br>
+        下面那顆電阻值為(ohms):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
+        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
+    </form>
     <script type="text/javascript" src="js\exp5-2.js"></script>
 </body>
 
