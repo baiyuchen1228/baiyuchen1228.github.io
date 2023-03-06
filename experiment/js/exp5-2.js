@@ -2169,6 +2169,7 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    show_error("請別刪除已經存在的元件");
     let id = parseInt($("#id1")[0].value,10);
     id %= 100;
     let ohms = (id / 4) * 13 + 50;
