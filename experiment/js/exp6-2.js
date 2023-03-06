@@ -172,203 +172,6 @@ document.getElementById("powersupply13").onclick = function () {
 
 
 var intervalID;
-$(powersupply5).mousedown(function (){
-    intervalID = setInterval(function (){
-        turnOffMode();
-        if (power == 1 && current1 <= 3) {
-            current1 += 0.01;
-            cur1.innerHTML = current1.toFixed(2);
-        }
-        check();
-        }, 200
-    );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply6).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        current1 -= 0.01;
-        if (current1 < 0) {
-            current1 = 0;
-        }
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply7).mousedown(function (){
-    intervalID = setInterval( function (){
-        turnOffMode();
-        if (power == 1 && voltage1 <= 30) {
-            voltage1 += 0.1;
-            vol1.innerHTML = voltage1.toFixed(2);
-        }
-        check();
-    }, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply8).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        voltage1 -= 0.1;
-        if (voltage1 < 0) {
-            voltage1 = 0;
-        }
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-$(powersupply9).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && current2 <= 3) {
-        current2 += 0.01;
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-$(powersupply10).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        current2 -= 0.01;
-        if (current2 < 0) {
-            current2 = 0;
-        }
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-$(powersupply11).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1 && voltage2 <= 30) {
-        voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-$(powersupply12).mousedown(function (){
-    intervalID = setInterval( function (){
-    turnOffMode();
-    if (power == 1) {
-        voltage2 -= 0.1;
-        if (voltage2 < 0) {
-            voltage2 = 0;
-        }
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}, 200 );
-}).mouseup(function () {
-    clearInterval(intervalID);
-});
-
-addcurrent1.onclick = function () {
-    turnOffMode();
-    if (power == 1 && current1 <= 3) {
-        current1 += 0.01;
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}
-
-addvoltage1.onclick = function () {
-    turnOffMode();
-    if (power == 1 && voltage1 <= 30) {
-        voltage1 += 0.1;
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}
-
-addcurrent2.onclick = function () {
-    turnOffMode();
-    if (power == 1 && current2 <= 3) {
-        current2 += 0.01;
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}
-
-addvoltage2.onclick = function () {
-    turnOffMode();
-    if (power == 1 && current2 <= 30) {
-        voltage2 += 0.1;
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}
-
-deccurrent1.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        current1 -= 0.01;
-        if (current1 < 0) {
-            current1 = 0;
-        }
-        cur1.innerHTML = current1.toFixed(2);
-    }
-    check();
-}
-
-decvoltage1.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        voltage1 -= 0.1;
-        if (voltage1 < 0) {
-            voltage1 = 0;
-        }
-        vol1.innerHTML = voltage1.toFixed(2);
-    }
-    check();
-}
-
-deccurrent2.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        current2 -= 0.01;
-        if (current2 < 0) {
-            current2 = 0;
-        }
-        cur2.innerHTML = current2.toFixed(2);
-    }
-    check();
-}
-
-decvoltage2.onclick = function () {
-    turnOffMode();
-    if (power == 1) {
-        voltage2 -= 0.1;
-        if (voltage2 < 0) {
-            voltage2 = 0;
-        }
-        vol2.innerHTML = voltage2.toFixed(2);
-    }
-    check();
-}
 
 
 
@@ -435,7 +238,7 @@ var drawCapacitance = 0;;
 var CapacitanceInitial;
 
 var chipNo = 1;
-var wireNo = 1;
+var wireNo = 2;
 var resistanceNo = 1;
 //var resistanceOn = 1;
 var inductanceNo = 1;
@@ -1168,14 +971,14 @@ $(document).ready(function () {
     current_x = 0;
     context.lineWidth = 3;
     context.strokeStyle = "red";
-    context.beginPath(); // Start the path
+    context.beginPath(); 
     context.moveTo(35, 0); // Set the path origin
     context.lineTo(35, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
     context.strokeStyle = "black";
-    context.beginPath(); // Start the path
+    context.beginPath(); 
     context.moveTo(75, 0); // Set the path origin
     context.lineTo(75, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1193,7 +996,7 @@ $(document).ready(function () {
 
     context.lineWidth = 3;
     context.strokeStyle = "blue";
-    context.beginPath(); // Start the path
+    context.beginPath(); 
     context.moveTo(175, 0); // Set the path origin
     context.lineTo(175, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1213,7 +1016,7 @@ $(document).ready(function () {
     current_x = 0;
     context.lineWidth = 3;
     context.strokeStyle = "black";
-    context.beginPath(); // Start the path
+    context.beginPath(); 
     context.moveTo(275, 0); // Set the path origin
     context.lineTo(275, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1241,7 +1044,7 @@ $(document).ready(function () {
 
     context.lineWidth = 3;
     context.strokeStyle = "red";
-    context.beginPath(); // Start the path
+    context.beginPath(); 
     context.moveTo(315, 0); // Set the path origin
     context.lineTo(315, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -2128,6 +1931,7 @@ function KeyPress(e) {
     if (evtobj.keyCode == 90 && evtobj.ctrlKey) undo();
     if (evtobj.keyCode == 65) toggleAlligatorButton();
     if (evtobj.keyCode == 68) toggleDelButton();
+    if (evtobj.keyCode == 87) toggleWireButton();
 }
 
 document.onkeydown = KeyPress;
@@ -2145,6 +1949,7 @@ window.onbeforeunload = () => {
     return confirm('確定要離開?')
 }
 
+var abc;
 
 function start(){
     console.log("Starting");
@@ -2159,6 +1964,40 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    show_error("請別刪除已經存在的元件");
+    let id = parseInt($("#id1")[0].value,10);
+    id %= 100;
+    power = 1;
+    let ohms = (id / 4) * 13 + 50;
+    current1 = 0.1;
+    voltage1 = (id / 2 + 50) / 10;
+    cur1.innerHTML = current1.toFixed(2);
+    vol1.innerHTML = voltage1.toFixed(2);
+    current2 = 0.1;
+    voltage2 = (id / 2 + 100) / 10;
+    cur2.innerHTML = current2.toFixed(2);
+    vol2.innerHTML = voltage2.toFixed(2);
+}
+function checkAns(){
+    if(!startbool)return;
+    let ans1 = parseFloat($("#ans1")[0].value);
+    let answer1 = abc;
+    let done = true;
+    if(isNaN(ans1)){
+        done = false;
+    }
+    if(abs(ans1 - answer1) > 10){
+        done = false;
+    }
+    if(done){
+        $("#anstext1").text($("#ans1")[0].value);
+        $("#ansStatus").text("通過");
+        $("#ans1").css("display", "none");
+    }
+    else{
+        $("#ansStatus").text("錯誤");
+    }
+
 }
 
 const mediaStreamConstraints = {
@@ -2187,7 +2026,7 @@ function gotLocalMediaStream(mediaStream) {
 navigator.mediaDevices
     .getUserMedia(mediaStreamConstraints)
     .then(gotLocalMediaStream)
-    .catch(handleMediaStreamError)
+    .catch(handleMediaStreamError);
 
 function show_error(s){
     document.querySelector("#error_message_content").innerHTML = s;

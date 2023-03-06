@@ -352,14 +352,14 @@ $(document).ready(function () {
     current_x = 0;
     // context.lineWidth = 3;
     // context.strokeStyle = "red";
-    // context.beginPath(); // Start the path
+    // context.beginPath(); 
     // context.moveTo(15, 0); // Set the path origin
     // context.lineTo(15, 270); // Set the path destination
     // context.closePath(); // Close the path
     // context.stroke(); // Outline the path
 
     // context.strokeStyle = "black";
-    // context.beginPath(); // Start the path
+    // context.beginPath(); 
     // context.moveTo(75, 0); // Set the path origin
     // context.lineTo(75, 50 * 11 - 5); // Set the path destination
     // context.closePath(); // Close the path
@@ -400,7 +400,7 @@ $(document).ready(function () {
     context.fillRect(320, 120, 10, 10);
     // context.lineWidth = 3;
     // context.strokeStyle = "red";
-    // context.beginPath(); // Start the path
+    // context.beginPath(); 
     // context.moveTo(325, 0); // Set the path origin
     // context.lineTo(325, 270); // Set the path destination
     // context.closePath(); // Close the path

@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px"
-        style="left: 0px; top: 0px; position:absolute"></svg>
+    <video autoplay id="camera"></video>
+    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute"><circle id="alligatorCircle1_01" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_01" cx="835" cy="365" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator01" x1="1250" y1="545" x2="835" y2="365" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_02" cx="1350" cy="545" r="5" style="fill:Indigo;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_02" cx="835" cy="325" r="5" style="fill:Indigo;stroke-width:2"><title></title></circle><line id="alligator02" x1="1350" y1="545" x2="835" y2="325" style="stroke:Indigo;stroke-width:5px;"></line><circle id="alligatorCircle1_03" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_03" cx="675" cy="325" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator03" x1="1285" y1="545" x2="675" y2="325" style="stroke:Red;stroke-width:5px;"></line><circle id="alligatorCircle1_04" cx="1385" cy="545" r="5" style="fill:DarkRed;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_04" cx="775" cy="325" r="5" style="fill:DarkRed;stroke-width:2"><title></title></circle><line id="alligator04" x1="1385" y1="545" x2="775" y2="325" style="stroke:DarkRed;stroke-width:5px;"></line></svg>
     <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
             <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
@@ -55,14 +55,14 @@
             <p id="powersupply2" class="powersupply-text"></p>
             <p id="powersupply3" class="powersupply-text"></p>
             <p id="powersupply4" class="powersupply-text"></p>
-            <button type="button" id="powersupply5" class="powersupply-button">＋</button>
+            <!-- <button type="button" id="powersupply5" class="powersupply-button">＋</button>
             <button type="button" id="powersupply6" class="powersupply-button">－</button>
             <button type="button" id="powersupply7" class="powersupply-button">＋</button>
             <button type="button" id="powersupply8" class="powersupply-button">－</button>
             <button type="button" id="powersupply9" class="powersupply-button">＋</button>
             <button type="button" id="powersupply10" class="powersupply-button">－</button>
             <button type="button" id="powersupply11" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply12" class="powersupply-button">－</button>
+            <button type="button" id="powersupply12" class="powersupply-button">－</button> -->
             <button type="button" id="powersupply13" class="powersupply-button">output</button>
             <button type="button" id="powersupply14" class="powersupply-button">power</button>
             <button type="button" id="powersupply15" class="powersupply-button">＋</button>
@@ -91,18 +91,16 @@
         </div>
         <canvas id="myCanvas" width="500" height="360"
             style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
-            style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"></svg>
-
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"><circle id="resistanceCircle1_01" cx="105" cy="25" r="5" style="fill:FireBrick;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_01" cx="105" cy="105" r="5" style="fill:FireBrick;stroke-width:2"><title></title></circle><line dataohm="100" id="resistance01" x1="105" y1="25" x2="105" y2="105" style="stroke:FireBrick;stroke-width:2"><title>100Ohms</title></line><polygon id="resistanceBox01" points="100,75 110,75 110,55 100,55" style="fill:blue; stroke:lime; stroke-width:1"><title>100Ohms</title></polygon><circle id="resistanceCircle1_02" cx="205" cy="25" r="5" style="fill:LightCoral;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_02" cx="205" cy="105" r="5" style="fill:LightCoral;stroke-width:2"><title></title></circle><line dataohm="200" id="resistance02" x1="205" y1="25" x2="205" y2="105" style="stroke:LightCoral;stroke-width:2"><title>200Ohms</title></line><polygon id="resistanceBox02" points="200,75 210,75 210,55 200,55" style="fill:blue; stroke:lime; stroke-width:1"><title>200Ohms</title></polygon><circle id="resistanceCircle1_03" cx="145" cy="165" r="5" style="fill:OrangeRed;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_03" cx="145" cy="245" r="5" style="fill:OrangeRed;stroke-width:2"><title></title></circle><line dataohm="300" id="resistance03" x1="145" y1="165" x2="145" y2="245" style="stroke:OrangeRed;stroke-width:2"><title>300Ohms</title></line><polygon id="resistanceBox03" points="140,215 150,215 150,195 140,195" style="fill:blue; stroke:lime; stroke-width:1"><title>300Ohms</title></polygon><circle id="wireCircle1_01" cx="165" cy="245" r="5" style="fill:Chocolate;stroke-width:2"><title></title></circle><circle id="wireCircle2_01" cx="285" cy="225" r="5" style="fill:Chocolate;stroke-width:2"><title></title></circle><line id="wire01" x1="165" y1="245" x2="285" y2="225" style="stroke:Chocolate;stroke-width:2"><title></title></line></svg>
     </div>
     <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
         Wire(單芯線)</button>
-    <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
+    <!-- <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
         Resistor(電阻)</button>
     <button type="button" class="buttonInactive" id="addInductance" href="#">Add
         Inductor(電感)</button>
     <button type="button" class="buttonInactive" id="addCapacitance" href="#">Add
-        Capacitance(電容)</button>
+        Capacitance(電容)</button> -->
     <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
         Alligator Clip(鱷魚夾)</button>
     <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
@@ -113,14 +111,22 @@
         小提示，卡關了可以偷看，但僅供參考
         <p id="error_message_content"></p>
     </div>
-    <form id="form1">
+    <form id="form2">
         時間:<a id="time1"></a><br>
         姓名:<input class="input" value="" id="name1"></input><a id="name2"></a><br>
         學號:<input class="input" value="" id="id1"></input><a id="id2"></a><br>
         系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
-    <script type="text/javascript" src="js\exp6.js"></script>
+    <form id="form1">
+        請回答以下問題(測量到最精準)<br>
+        右邊那顆電阻電壓差值為(V):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
+        左邊那顆電阻電壓差值為(V):<input class="input" value="" id="ans2"></input><a id="anstext2"></a><br>
+        下面那顆電阻電流值為(mA):<input class="input" value="" id="ans3"></input><a id="anstext3"></a><br>
+        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
+    </form>
+    <img id="circuit" src="images/circuit.png">
+    <script type="text/javascript" src="js\exp6-2.js"></script>
 </body>
 
 </html>
