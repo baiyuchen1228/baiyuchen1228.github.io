@@ -1925,6 +1925,7 @@ var wg = new WaveGenerator();
 
 class Oscillator{
     constructor(){
+        this._power = 0;
         this._vertical_v = [1, 1];
         this._vertical_offset = [0, 0];
         this._datapoints0 = [];
@@ -1942,6 +1943,7 @@ class Oscillator{
         this._show_mode = "CH1";
         this._init = false;
         this._SWP = 1;
+        this._begin = -1;
     }
     
     set_SWP(val){
@@ -2013,17 +2015,17 @@ class Oscillator{
     get_res(){
         let type = wg.type;
         let loop = this._loop;
-        if(type == "square_wave"){
-            for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
-                this._phasor[i] = checkCircuit(omega);
-            }
-        }else if(type == "sin_wave"){
+        if(type == "sin_wave"){
             for (let i = 0; i < loop; i++){
                 this._phasor[i] = 0;
             }
             let omega = 2 * math.PI * evaluate_generator_frequency();
             this._phasor[0] = checkCircuit(omega);
+        }else{//square and triangle wave
+            for (let i = 0; i < loop; i++){
+                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                this._phasor[i] = checkCircuit(omega);
+            }
         }
     }
     get_data(){
@@ -2187,6 +2189,16 @@ class Oscillator{
         wg = tmp_wg;
 
     }
+    power_control(){
+        if(this._power == 0){
+            this._power = 1;
+            $("#oscilloscope_power").css("backgroundColor", "green");
+        }else{
+            this._power = 0;
+            $("#oscilloscope_power").css("backgroundColor", "white");
+        }
+        check();
+    }
     draw(){
         document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
@@ -2211,6 +2223,9 @@ class Oscillator{
         let flag = false;
         let pre = this._datapoints0[begin] / this._vertical_v[0];
         // pre += this._vertical_offset[0];
+
+
+
         for(;begin < 2 * this._WAVE_DATA_COUNT && flag == false;begin++){
             let temp = 0;
             // let temp_level = this._level;
@@ -2229,6 +2244,11 @@ class Oscillator{
             pre = temp;
         }
         begin -= this._time_offset;
+
+        if(flag == false && this._begin != -1){
+            flag = true;
+            begin = this._begin;
+        }
         if(flag == false){
             for(let i=0;i<this._WAVE_DATA_COUNT;i++){
                 datapoints0[i] = 0.008 * i - 4;
@@ -2236,6 +2256,7 @@ class Oscillator{
             }
             show_error("trigger level is out of range!");
         }else{
+            this._begin = begin;
             for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
                 if(this._show_mode != 'CH2'){
                     datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
@@ -2258,6 +2279,10 @@ class Oscillator{
                 datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
                 datapoints0[i-begin] += this._vertical_offset[0];
             }
+        }else if(this._show_mode == "CH2"){
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints0[i-begin] = NaN;
+            }
         }
 
         if(this._show_mode != "CH1" && this._vertical_AC_GND_DC[1] == "GND"){
@@ -2265,7 +2290,20 @@ class Oscillator{
                 datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
                 datapoints1[i-begin] += this._vertical_offset[1];
             }
+        }else if(this._show_mode == "CH1"){
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints1[i-begin] = NaN;
+            }
         }
+
+        if(this._power == 0){
+            show_error("示波器的 power 沒有打開");
+            for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
+                datapoints0[i-begin] = NaN;
+                datapoints1[i-begin] = NaN;
+            }
+        }
+
 
         // console.log(datapoints0);
         //console.log(datapoints1);
@@ -2389,6 +2427,11 @@ function checkCircuit(omega) {
         res_meter.voltage2 = x2[FG2.voltage_edgeid].mul(edge_list[FG2.voltage_edgeid].ohm);
     }
 
+    if(generator_power_on == false){
+        res_meter.voltage1 = math.complex(0, 0);
+        res_meter.voltage2 = math.complex(0, 0);
+        show_error("波型產生器的 power 沒有打開");
+    }
 
 
 

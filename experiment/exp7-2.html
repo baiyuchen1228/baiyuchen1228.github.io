@@ -67,7 +67,7 @@
                 <button id="minus_oscilloscope_focus" type="button" class="oscilloscope-button" onclick="minus_oscilloscope_focus()">＜</button> -->
                 <!-- <button id="add_oscilloscope_focus" type="button" class="oscilloscope-button" onclick="add_oscilloscope_focus()">＞</button> -->
                 <p id="oscilloscope_power_text" class="oscilloscope-text">power</p>
-                <button id="oscilloscope_power" type="button" class="oscilloscope-button" onclick="oscilloscope_power()"></button>
+                <button id="oscilloscope_power" type="button" class="oscilloscope-button" onclick="osi.power_control()"></button>
                 <p id="horizonal_position_text" class="oscilloscope-text">position</p>
                 <button id="minus_horizonal_position" type="button" class="oscilloscope-button" onclick="minus_horizonal_position()">＜</button>
                 <button id="add_horizonal_position" type="button" class="oscilloscope-button" onclick="add_horizonal_position()">＞</button>
@@ -208,7 +208,7 @@
         &emsp;偏移:<input class="input" value="" id="demo_wave_offset1"></input><br>
         類型有 sin_wave, square_wave, triangle_wave<br>
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
-        <input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="checkCircuit()"></input><br>
+        <input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="check()"></input><br>
     </form>
     <!-- <form class="demo_wave" id="demo_wave2">
         oscilloscope<br>
