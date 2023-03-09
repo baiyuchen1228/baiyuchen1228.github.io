@@ -1950,6 +1950,8 @@ function checkResitanceBurn(x){
 }
 
 
+
+
 function checkCircuit() {
     let FGx = equationVoltageVoltage();
     let FG = FGx.FullGraph;

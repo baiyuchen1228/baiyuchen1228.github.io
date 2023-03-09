@@ -1340,7 +1340,6 @@ function getWires() {
     });
     for (let i = 0; i < wiresOut.length; i++) {
         var wire = wiresOut[i];
-        console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
     }
     return wiresOut;
 }
@@ -1603,7 +1602,7 @@ function getFullGraph(graph) {
     return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
 }
 
-function getFullGraphVoltageVoltage() {
+function getFullGraphVoltageVoltage(check_answer) {
     edge_cnt = 0;
     var graph = [];
     edge_list = [];
@@ -1621,6 +1620,20 @@ function getFullGraphVoltageVoltage() {
     edge_list.push(e);
     graph[2].push(e);
     graph[3].push(e);
+
+    if(check_answer){
+        // 算正解加的線
+        e = new Edge(51, 28, "wire", 0);
+        edge_list.push(e);
+        graph[51].push(e);
+        graph[28].push(e);
+
+        e = new Edge(28, 31, "wire", 0);
+        edge_list.push(e);
+        graph[28].push(e);
+        graph[31].push(e);
+    }
+
 
     return getFullGraph(graph);
 }
@@ -1673,8 +1686,8 @@ function find_loop(goal, node, graph, loop_length) {
     }
 }
 
-function equationVoltageVoltage() {
-    let FG = getFullGraphVoltageVoltage();
+function equationVoltageVoltage(check_answer) {
+    let FG = getFullGraphVoltageVoltage(check_answer);
     graph = FG.graph;
     equations = [];
     equation_cnt = 0;
@@ -1753,8 +1766,36 @@ function checkResitanceBurn(x){
 }
 
 
+function get_question_answer() {
+    let FGx = equationVoltageVoltage(true);
+    let FG = FGx.FullGraph;
+    let x = FGx.ans;
+    let left = {voltage: 0, current: 0};
+    let right = {voltage: 0, current: 0};
+    let down = {voltage: 0, current: 0};
+    for(let i=0; i < edge_list.length;i++){
+        let e = edge_list[i];
+        if(e.type != "resistance"){
+            continue;
+        }
+        if(e.ohm == 100){
+            left.voltage = x[e.id] * e.ohm;
+            left.current = x[e.id];
+        }else if(e.ohm == 200){
+            right.voltage = x[e.id] * e.ohm;
+            right.current = x[e.id];
+        }else{
+            down.voltage = x[e.id] * e.ohm;
+            down.current = x[e.id];
+        }
+    }
+    return {left:left, right: right, down:down};
+}
+
+
+
 function checkCircuit() {
-    let FGx = equationVoltageVoltage();
+    let FGx = equationVoltageVoltage(false);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
     if (abs(x[0]) <= current1.toFixed(2) && abs(x[1]) <= current2.toFixed(2)) {
@@ -1977,7 +2018,11 @@ function start(){
     voltage2 = (id / 2 + 100) / 10;
     cur2.innerHTML = current2.toFixed(2);
     vol2.innerHTML = voltage2.toFixed(2);
+    student_pre_test_ans = get_question_answer();
 }
+
+var student_pre_test_ans;
+
 function checkAns(){
     if(!startbool)return;
     let ans1 = parseFloat($("#ans1")[0].value);
