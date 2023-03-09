@@ -2012,21 +2012,28 @@ function start(){
 
 var student_pre_test_ans;
 
+function checkEqual(a, b){
+    if(isNaN(a) || isNaN(b))    return false;
+    return a == 0;
+}
+
 function checkAns(){
     if(!startbool)return;
     let ans1 = parseFloat($("#ans1")[0].value);
-    let answer1 = abc;
+    let ans2 = parseFloat($("#ans2")[0].value);
+    let ans3 = parseFloat($("#ans3")[0].value) * 0.001;
     let done = true;
-    if(isNaN(ans1)){
-        done = false;
-    }
-    if(abs(ans1 - answer1) > 10){
-        done = false;
-    }
+    done = done && checkEqual(ans1, student_pre_test_ans.right.voltage);
+    done = done && checkEqual(ans2, student_pre_test_ans.left.voltage);
+    done = done && checkEqual(ans3, student_pre_test_ans.down.current); 
     if(done){
         $("#anstext1").text($("#ans1")[0].value);
+        $("#anstext2").text($("#ans2")[0].value);
+        $("#anstext3").text($("#ans3")[0].value);
         $("#ansStatus").text("通過");
         $("#ans1").css("display", "none");
+        $("#ans2").css("display", "none");
+        $("#ans3").css("display", "none");
     }
     else{
         $("#ansStatus").text("錯誤");
