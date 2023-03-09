@@ -1537,7 +1537,6 @@ function getWires() {
     });
     for (let i = 0; i < wiresOut.length; i++) {
         var wire = wiresOut[i];
-        console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
     }
     return wiresOut;
 }
@@ -1558,10 +1557,6 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    // for (let i = 0; i < alligatorOut.length; i++) {
-    //     var alligator = alligatorOut[i];
-    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    // }
     return alligatorOut;
 }
 
@@ -1590,7 +1585,6 @@ function getResistance() {
         if (r.val == NaN) {
             alert("電阻不可以是小數")
         }
-        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return resistanceOut;
 }
@@ -1687,7 +1681,6 @@ class GuassionElimination {
             }
             if (this.M[i][i] == 0) {
                 console.log("無唯一解/無解", i);
-                console.log(this.M);
                 single.push(i);
                 continue;
             }
@@ -1704,8 +1697,7 @@ class GuassionElimination {
         }
 
         //after guassian elimination
-        console.log("Guassian Elimination")
-        console.log(this.M);
+        
         
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
@@ -1796,7 +1788,6 @@ function getFullGraph(graph) {
         vol_eid = e.id;
     }
 
-    console.log(edge_list);
     return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
 }
 
@@ -1831,11 +1822,7 @@ let path = [];
 //challenge : v0 不能給變數當電流，但連接時要當有連到
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
-        //find loop
-        // console.log("loop:");
-        // for (let i = 0; i < loop_length; i++) {
-        //     console.log(path[i].edgeid, path[i].par);
-        // }
+        
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
@@ -1906,12 +1893,10 @@ function equationVoltageVoltage() {
         find_loop(i, i, graph, 0);
     }
     for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
         equations[i][edge_cnt] *= -1;
     }
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
-    console.log(x);
     return { FullGraph: FG, ans: x };
 
 }
