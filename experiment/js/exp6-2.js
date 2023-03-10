@@ -2013,8 +2013,10 @@ function start(){
 var student_pre_test_ans;
 
 function checkEqual(a, b){
+    console.log(a,b);
     if(isNaN(a) || isNaN(b))    return false;
-    return a == 0;
+    console.log(abs(a-b),b*0.1);
+    return abs(a - b) < b * 0.1;
 }
 
 function checkAns(){
@@ -2023,8 +2025,8 @@ function checkAns(){
     let ans2 = parseFloat($("#ans2")[0].value);
     let ans3 = parseFloat($("#ans3")[0].value) * 0.001;
     let done = true;
-    done = done && checkEqual(ans1, student_pre_test_ans.right.voltage);
-    done = done && checkEqual(ans2, student_pre_test_ans.left.voltage);
+    done = done && checkEqual(ans1, abs(student_pre_test_ans.right.voltage));
+    done = done && checkEqual(ans2, abs(student_pre_test_ans.left.voltage));
     done = done && checkEqual(ans3, student_pre_test_ans.down.current); 
     if(done){
         $("#anstext1").text($("#ans1")[0].value);
