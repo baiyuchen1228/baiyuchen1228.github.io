@@ -1792,10 +1792,10 @@ function checkCircuit() {
         let res_meter = checkMeter(FG, x);
         let res_power1 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage1, current:x[0]})
         let res_power2 = (res_meter.current == "ERR" ? res_meter : {voltage:voltage2, current:x[1]})
-        if(checkResitanceBurn(x)){
-            let ERR = {voltage:"ERR", current:"ERR"}
-            return {meter:ERR, power1:ERR, power2:ERR};
-        }
+        // if(checkResitanceBurn(x)){
+        //     let ERR = {voltage:"ERR", current:"ERR"}
+        //     return {meter:ERR, power1:ERR, power2:ERR};
+        // }
         return {meter : res_meter, power1 : res_power1, power2 : res_power2};
     }
 
