@@ -2015,13 +2015,18 @@ class Oscillator{
     get_res(){
         let type = wg.type;
         let loop = this._loop;
-        if(type == "sin_wave"){
+        if(type == "square_wave"){
+            for (let i = 0; i < loop; i++){
+                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                this._phasor[i] = checkCircuit(omega);
+            }
+        }else if(type == "sin_wave"){
             for (let i = 0; i < loop; i++){
                 this._phasor[i] = 0;
             }
             let omega = 2 * math.PI * evaluate_generator_frequency();
             this._phasor[0] = checkCircuit(omega);
-        }else{//square and triangle wave
+        }else if(type == "triangle_wave"){
             for (let i = 0; i < loop; i++){
                 let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
                 this._phasor[i] = checkCircuit(omega);
@@ -2438,8 +2443,8 @@ function checkCircuit(omega) {
     //     return {meter:ERR, power1:ERR, power2:ERR};
     // }
     document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
-    show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
-           "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
+    // show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
+    //        "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
     return res_meter;
 
     //兩邊的電流有至少存在一邊超過最大電流

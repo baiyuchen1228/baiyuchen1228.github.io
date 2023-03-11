@@ -521,6 +521,7 @@ div#oscilloscopeScreen{
     left : 1200px;
     top : 800px;
     z-index: 1;
+    visibility: hidden;
 }
 #minus_generator_frequency{
     top: 120px;
