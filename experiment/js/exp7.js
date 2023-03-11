@@ -2430,7 +2430,9 @@ function checkCircuit(omega) {
     if(generator_power_on == false){
         res_meter.voltage1 = math.complex(0, 0);
         res_meter.voltage2 = math.complex(0, 0);
+        document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
         show_error("波型產生器的 power 沒有打開");
+        return res_meter;
     }
 
 
