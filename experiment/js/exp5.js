@@ -1544,10 +1544,6 @@ function getWires() {
             node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
-    for (let i = 0; i < wiresOut.length; i++) {
-        var wire = wiresOut[i];
-        console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    }
     return wiresOut;
 }
 
@@ -1696,7 +1692,7 @@ class GuassionElimination {
             }
             if (this.M[i][i] == 0) {
                 console.log("無唯一解/無解", i);
-                console.log(this.M);
+                // console.log(this.M);
                 single.push(i);
                 continue;
             }
@@ -1713,8 +1709,8 @@ class GuassionElimination {
         }
 
         //after guassian elimination
-        console.log("Guassian Elimination")
-        console.log(this.M);
+        // console.log("Guassian Elimination")
+        // console.log(this.M);
         
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
@@ -1805,7 +1801,7 @@ function getFullGraph(graph) {
         vol_eid = e.id;
     }
 
-    console.log(edge_list);
+    // console.log(edge_list);
     return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
 }
 
@@ -1915,12 +1911,12 @@ function equationVoltageVoltage() {
         find_loop(i, i, graph, 0);
     }
     for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
+        // console.log(equations[i]);
         equations[i][edge_cnt] *= -1;
     }
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
-    console.log(x);
+    // console.log(x);
     return { FullGraph: FG, ans: x };
 
 }
