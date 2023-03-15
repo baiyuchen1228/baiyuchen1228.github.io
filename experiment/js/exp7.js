@@ -61,7 +61,7 @@ var generator_offset_on = false;
 var generator_offset = 0;
 var generator_AMPL2_on = false;
 var generator_AMPL = 1; // 1 * 10 ^ 0
-var generator_AMPL_base = 1; 
+var generator_AMPL_base = 0; 
 var generator_AMPL_pow = 0;
 var generator_output_on = false;
 
@@ -1155,10 +1155,6 @@ function getWires() {
             node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
-    // for (let i = 0; i < wiresOut.length; i++) {
-    //     var wire = wiresOut[i];
-    //     console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    // }
     return wiresOut;
 }
 
@@ -1178,10 +1174,6 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    // for (let i = 0; i < alligatorOut.length; i++) {
-    //     var alligator = alligatorOut[i];
-    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    // }
     return alligatorOut;
 }
 
@@ -1210,7 +1202,6 @@ function getResistance() {
         if (r.val == NaN) {
             alert("電阻不可以是小數");
         }
-        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return resistanceOut;
 }
@@ -1373,7 +1364,6 @@ class GuassionElimination {
             }
             if (math.isZero(this.M[i][i])) {
                 console.log("無唯一解/無解", i);
-                console.log(this.M);
                 single.push(i);
                 continue;
             }
@@ -1465,7 +1455,6 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
     for (let i = 0; i < resistances.length; i++) {
         let r = resistances[i];
         let e = new Edge(r.node1, r.node2, "resistance", r.val);
-        console.log(r.val);
         edge_list.push(e);
         graph[r.node1].push(e);
         graph[r.node2].push(e);
@@ -1475,7 +1464,6 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
     for (let i = 0; i < capacitances.length; i++) {
         let r = capacitances[i];
         let e = new Edge(r.node1, r.node2, "capacitance", r.val);
-        console.log(r.val);
         edge_list.push(e);
         graph[r.node1].push(e);
         graph[r.node2].push(e);
@@ -1485,34 +1473,28 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
     for (let i = 0; i < inductances.length; i++) {
         let r = inductances[i];
         let e = new Edge(r.node1, r.node2, "inductance", r.val);
-        console.log(r.val);
         edge_list.push(e);
         graph[r.node1].push(e);
         graph[r.node2].push(e);
     }
 
     if(checkUser == false){   //接地要 short
-        
-        let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
-        edge_list.push(tmp);
-        graph[1].push(tmp)
-        graph[3].push(tmp)
-        
         tmp = new Edge(3, 5, "wire", math.complex(0, 0))
         edge_list.push(tmp);
-        graph[3].push(tmp)
-        graph[5].push(tmp)
-
-        tmp = new Edge(1, 5, "wire", math.complex(0, 0))
-        edge_list.push(tmp);
-        graph[1].push(tmp)
-        graph[5].push(tmp)
-
+        graph[3].push(tmp);
+        graph[5].push(tmp);
     } 
 
 
     //加電壓計
     if(meter_idx == 0){
+        if(checkUser == false){ //接地要 short
+            let tmp = new Edge(1, 3, "wire", math.complex(0, 0));
+            edge_list.push(tmp);
+            graph[1].push(tmp);
+            graph[3].push(tmp);
+        }
+
         let e = new Edge(3, 2, "voltmeter", math.complex(100000000, 0));
         edge_list.push(e);
         graph[2].push(e);
@@ -1520,13 +1502,19 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         return { graph: graph, voltage_edgeid: e.id};
     }
     else{
+        if(checkUser == false){ //接地要 short
+            tmp = new Edge(1, 5, "wire", math.complex(0, 0))
+            edge_list.push(tmp);
+            graph[1].push(tmp);
+            graph[5].push(tmp);
+        }
+
         let e = new Edge(5, 4, "voltmeter", math.complex(100000000, 0));
         edge_list.push(e);
         graph[4].push(e);
         graph[5].push(e);
         return { graph: graph, voltage_edgeid: e.id};
     }
-    
     
 }
 
@@ -1559,11 +1547,6 @@ let path = [];
 //challenge : v0 不能給變數當電流，但連接時要當有連到
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
-        //find loop
-        // console.log("loop:");
-        // for (let i = 0; i < loop_length; i++) {
-        //     console.log(path[i].edgeid, path[i].par);
-        // }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = math.complex(0, 0);
@@ -1637,13 +1620,11 @@ function equationVoltageVoltage(meter_idx, omega) {
     }
     //console.log("show equation in equationVoltageVoltage=====================")
     for (let i = 0; i < equation_cnt; i++) {
-        //console.log(equations[i]);
         equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
     
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
-    //console.log(x);
     return { FullGraph: FG, ans: x };
 
 }
@@ -1684,8 +1665,6 @@ function testGuassion(){
     graph[21].push(e);
     graph[24].push(e);
 
-    //console.log(graph);
-
     equations = [];
     equation_cnt = 0;
     vis_edge = [];
@@ -1710,7 +1689,6 @@ function testGuassion(){
                 equations[equation_cnt][edge.id] = math.complex(-1, 0);
             }
         }
-        //console.log(equations[equation_cnt])
         equation_cnt++;
     }
     
@@ -1721,15 +1699,13 @@ function testGuassion(){
         path = [];
         find_loop(i, i, graph, 0);
     }
-    //console.log("show equation in testGuassian=====================")
+
     for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
-        // if(equations[i][edge_cnt] == 0)continue
         equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
+
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
-    //console.log(x);
 }
 
 function checkConnected(){
@@ -2021,9 +1997,6 @@ class Oscillator{
                 this._phasor[i] = checkCircuit(omega);
             }
         }else if(type == "sin_wave"){
-            for (let i = 0; i < loop; i++){
-                this._phasor[i] = 0;
-            }
             let omega = 2 * math.PI * evaluate_generator_frequency();
             this._phasor[0] = checkCircuit(omega);
         }else if(type == "triangle_wave"){
@@ -2068,8 +2041,6 @@ class Oscillator{
                 let amplitude0 = wg.calculate_amplitude(res, 0);
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
-                // console.log(res);
-                // console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
@@ -2108,8 +2079,6 @@ class Oscillator{
                 let amplitude0 = wg.calculate_amplitude(res, 0);
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
-                // console.log(res);
-                // console.log(i,"phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
                     if(this.vertical_AC_GND_DC[0] == "GND"){
                         this._datapoints0[j] = 0;
@@ -2141,8 +2110,6 @@ class Oscillator{
             let amplitude0 = wg.calculate_amplitude(res, 0);
             let phase1 = wg.calculate_phase(res, 1);
             let amplitude1 = wg.calculate_amplitude(res, 1);
-            // console.log(res);
-            // console.log("0phase0",phase0, "phase1" ,phase1, "amplitudes0", amplitude0, "amplitude1", amplitude1);
             for(let i=0;i< (WAVE_DATA_COUNT);i++){
                 if(this.vertical_AC_GND_DC[0] == "GND"){
                     this._datapoints0[i] = 0;
@@ -2172,8 +2139,7 @@ class Oscillator{
                 }
             }
         }
-        // console.log(this._datapoints0);
-        // console.log(this._datapoints1);
+        
         // 確定使用者真的有接對
         
         if(this._init == 0){
@@ -2194,6 +2160,7 @@ class Oscillator{
         wg = tmp_wg;
 
     }
+    
     power_control(){
         if(this._power == 0){
             this._power = 1;
@@ -2310,8 +2277,7 @@ class Oscillator{
         }
 
 
-        // console.log(datapoints0);
-        //console.log(datapoints1);
+        
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();
@@ -2427,7 +2393,6 @@ function checkCircuit(omega) {
     let FGx2 = equationVoltageVoltage(1, omega);
     let FG2 = FGx2.FullGraph;
     let x2 = FGx2.ans;
-    console.log(x2);
     if(checkMeter(x2)){
         res_meter.voltage2 = x2[FG2.voltage_edgeid].mul(edge_list[FG2.voltage_edgeid].ohm);
     }
@@ -2527,7 +2492,6 @@ function undo(){
             osi.set_init(0);
             // osi.draw();
         }
-        // console.log(linestack[target]);
         $("#alligatorCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#alligatorCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#alligator" + + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
