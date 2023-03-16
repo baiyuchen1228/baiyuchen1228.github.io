@@ -57,7 +57,6 @@ var wave_type;
 var generator_inv_on = false;
 var generator_AMPL1_on = false;
 var generator_duty = 0.5;
-var generator_offset_on = false;
 var generator_offset = 0;
 var generator_AMPL2_on = false;
 var generator_AMPL = 1; // 1 * 10 ^ 0
@@ -1773,6 +1772,7 @@ class WaveGenerator{
         this._offset = 0;
         this._cycle = 100000;
         this._type = "";
+        this._offset_on = false;
     }
     static get square_wave(){
         return "square_wave";
@@ -1800,6 +1800,18 @@ class WaveGenerator{
     set_type(val){
         this._type = val;
     }
+    set_offset_on(drawing){
+        if(this._offset_on){
+            $("#generator_offset_switch").css("backgroundColor", "white");
+            this._offset_on = false;
+        }
+        else{
+            $("#generator_offset_switch").css("backgroundColor", "green");
+            this._offset = 0;
+            this._offset_on = true;
+        }
+        if(drawing) osi.draw();
+    }
     get frequency(){
         return this._frequency;
     }
@@ -1814,6 +1826,9 @@ class WaveGenerator{
     }
     get type(){
         return this._type;
+    }
+    get offset_on(){
+        return this._offset_on;
     }
     calculate_phase(res, index){
         let a,b;
@@ -2018,6 +2033,9 @@ class Oscillator{
             wg = new WaveGenerator();
             wg.set_amplitude(1);
             wg.set_frequency(1000);
+            wg.set_offset_on(false);
+            wg.set_offset(1);
+            $("#generator_offset_switch").css("backgroundColor", "white");
             wg.set_type("square_wave");
             this._vaild = false;
             let loop = this._loop;
@@ -2057,10 +2075,10 @@ class Oscillator{
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
@@ -2736,39 +2754,27 @@ function add_generator_duty(){
     generator_duty += 0.05;
 }
 
-function generator_offset_switch(){
-    if(generator_offset_on){
-        $("#generator_offset_switch").css("backgroundColor", "white");
-        generator_offset_on = false;
-    }
-    else{
-        $("#generator_offset_switch").css("backgroundColor", "green");
-        generator_offset = 0;
-        generator_offset_on = true;
-    }
-    osi.draw();
-}
 
 function minus_generator_offset(){
-    if(generator_offset_on){
+    if(wg.offset_on){
         if(wg.offset < -30){
             osi.draw();
             return;
         }
         wg.set_offset(wg.offset - 0.1);
-        generator_offset -= 0.1;
+        // generator_offset -= 0.1;
     }
     osi.draw();
 }
 
 function add_generator_offset(){
-    if(generator_offset_on){
+    if(wg.offset_on){
         if(wg.offset > 30){
             osi.draw();
             return;
         }
         wg.set_offset(wg.offset + 0.1);
-        generator_offset += 0.1;
+        // generator_offset += 0.1;
     }
     osi.draw();
 }
