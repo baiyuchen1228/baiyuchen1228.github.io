@@ -2113,10 +2113,10 @@ class Oscillator{
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
@@ -2139,20 +2139,20 @@ class Oscillator{
                 }else{
                     this._datapoints1[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase1, amplitude1);
                 }   
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[i] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[i] += wg.offset;
                 }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
