@@ -1928,7 +1928,7 @@ class Oscillator{
         this._vaild = false;
         this._phasor = [];
         this._loop = 100;
-        this._level = 0;
+        this._level = 0.05;
         this._slope = 1;
         this._reference = "CH1";
         this._show_mode = "CH1";
