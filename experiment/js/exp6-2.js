@@ -2025,9 +2025,9 @@ function checkAns(){
     let ans2 = parseFloat($("#ans2")[0].value);
     let ans3 = parseFloat($("#ans3")[0].value) * 0.001;
     let done = true;
-    done = done && checkEqual(ans1, abs(student_pre_test_ans.right.voltage));
-    done = done && checkEqual(ans2, abs(student_pre_test_ans.left.voltage));
-    done = done && checkEqual(ans3, student_pre_test_ans.down.current); 
+    done = done && checkEqual(ans1, abs(student_pre_test_ans.right.voltage.toFixed(2)));
+    done = done && checkEqual(ans2, abs(student_pre_test_ans.left.voltage.toFixed(2)));
+    done = done && checkEqual(ans3, student_pre_test_ans.down.current.toFixed(5)); 
     if(done){
         $("#anstext1").text($("#ans1")[0].value);
         $("#anstext2").text($("#ans2")[0].value);
