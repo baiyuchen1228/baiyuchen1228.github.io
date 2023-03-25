@@ -3199,7 +3199,7 @@ function minus_horizonal_SWP(){
 function add_horizonal_SWP(){
     if(osi._SWP > 1.2) return;
     if(osi._SWP > -0.96 && osi._SWP < 1){
-        osi._SWP = 0;
+        osi._SWP = 1;
     }else{
         osi._SWP += 0.04;
     }
