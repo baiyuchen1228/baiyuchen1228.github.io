@@ -2201,9 +2201,9 @@ class Oscillator{
                 temp = this._datapoints1[begin] / this._vertical_v[1];
                 // temp += this._vertical_offset[1];
             }
-            if(this._slope == 1 && pre <= this._level && temp >= this._level){
+            if(this._slope == 1 && pre <= this._level+0.05 && temp >= this._level-0.05){
                 flag = true;
-            }else if(this._slope == -1 && pre >= this._level && temp <= this._level){
+            }else if(this._slope == -1 && pre >= this._level-0.05 && temp <= this._level+0.05){
                 flag = true;
             }
             pre = temp;
@@ -2524,10 +2524,11 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    generator_AMPL_base = getRandomInteger(6) + 1;
+    let id = parseInt($("#id1")[0].value,10);
+    generator_AMPL_base = (id % 6) + 1;
     evaluate_generator_AMPL();
     generator_square();
-    let mode = getRandomInteger(3);
+    let mode = (id * 5) % 4;
     if (mode == 1){
         generator_frequency_2();
     }
@@ -2546,7 +2547,7 @@ function start(){
 function checkAns(){
     if(!startbool)return;
     let ans1 = parseFloat($("#ans1")[0].value);
-    let answer1 = generator_AMPL;
+    let answer1 = generator_AMPL * 2;
     let ans2 = parseFloat($("#ans2")[0].value);
     let answer2 = generator_frequency;
     let done = true;
@@ -3183,13 +3184,29 @@ function oscillosocope_init() {
 
 function minus_horizonal_SWP(){
     if(osi._SWP < 0.8) return;
-    osi._SWP -= 0.04;
+    if(osi._SWP < 1.04 && osi._SWP > 1){
+        osi._SWP = 1;
+    }else{
+        osi._SWP -= 0.04;
+    }
+    if(osi.SWP == 1){
+        $("#check_Correction").css("color", "#0000FF");
+        $("#check_Correction").text("完成");
+    }
     osi.draw();
 }
 
 function add_horizonal_SWP(){
     if(osi._SWP > 1.2) return;
-    osi._SWP += 0.04;
+    if(osi._SWP > -0.96 && osi._SWP < 1){
+        osi._SWP = 0;
+    }else{
+        osi._SWP += 0.04;
+    }
+    if(osi.SWP == 1){
+        $("#check_Correction").css("color", "#0000FF");
+        $("#check_Correction").text("完成");
+    }
     osi.draw();
 }
 
