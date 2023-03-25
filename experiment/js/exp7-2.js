@@ -2224,9 +2224,9 @@ class Oscillator{
                 temp = this._datapoints1[begin] / this._vertical_v[1];
                 // temp += this._vertical_offset[1];
             }
-            if(this._slope == 1 && pre <= this._level && temp >= this._level){
+            if(this._slope == 1 && pre <= this._level+0.05 && temp >= this._level-0.05){
                 flag = true;
-            }else if(this._slope == -1 && pre >= this._level && temp <= this._level){
+            }else if(this._slope == -1 && pre >= this._level-0.05 && temp <= this._level+0.05){
                 flag = true;
             }
             pre = temp;
