@@ -2201,9 +2201,9 @@ class Oscillator{
                 temp = this._datapoints1[begin] / this._vertical_v[1];
                 // temp += this._vertical_offset[1];
             }
-            if(this._slope == 1 && pre <= this._level && temp >= this._level){
+            if(this._slope == 1 && pre <= this._level+0.05 && temp >= this._level-0.05){
                 flag = true;
-            }else if(this._slope == -1 && pre >= this._level && temp <= this._level){
+            }else if(this._slope == -1 && pre >= this._level-0.05 && temp <= this._level+0.05){
                 flag = true;
             }
             pre = temp;
@@ -3142,13 +3142,21 @@ const mediaStreamConstraints = {
 
 function minus_horizonal_SWP(){
     if(osi._SWP < 0.8) return;
-    osi._SWP -= 0.04;
+    if(osi._SWP < 1.04 && osi._SWP > 1){
+        osi._SWP = 1;
+    }else{
+        osi._SWP -= 0.04;
+    }
     osi.draw();
 }
 
 function add_horizonal_SWP(){
     if(osi._SWP > 1.2) return;
-    osi._SWP += 0.04;
+    if(osi._SWP > -0.96 && osi._SWP < 1){
+        osi._SWP = 1;
+    }else{
+        osi._SWP += 0.04;
+    }
     osi.draw();
 }
 
