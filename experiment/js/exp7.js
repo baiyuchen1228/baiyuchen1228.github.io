@@ -2272,7 +2272,7 @@ class Oscillator{
         }
         const labels = [];
         for(let i=0;i<(this._WAVE_DATA_COUNT);i++){
-            labels[i] = i+1;
+            labels[i] = ((i + this._time_offset) * this._time_mul/300).toFixed(4);
         }
         const data = {
             labels:labels,
