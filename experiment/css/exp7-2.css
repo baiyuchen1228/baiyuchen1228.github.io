@@ -527,11 +527,13 @@ div#oscilloscopeScreen{
     top: 120px;
     left: 30px;
     width: 40px;
+    visibility: hidden;
 }
 #add_generator_frequency{
     top: 120px;
     left: 70px;
     width: 40px;
+    visibility: hidden;
 }
 #generator_frequency{
     height: 20px;
@@ -539,6 +541,8 @@ div#oscilloscopeScreen{
     background-color: #000000;
     top: 80px;
     left: 50px;
+    color: #000000;
+    visibility: hidden;
 }
 #generator_frequency_menu{
     height: 15px;
@@ -751,11 +755,6 @@ div#oscilloscopeScreen{
 #addCapacitance{
     background-color: #CCCCCC;
 } */
-#form1{
-    position: relative;
-    left: 800px;
-    /* top: 100px; */
-}
 #demo_wave1{
     position: absolute;
     left: 1200px;
@@ -774,7 +773,7 @@ div#oscilloscopeScreen{
     width : 350px;
     height : 250px;
     left : 600px;
-    top : 800px;
+    top : 600px;
     z-index: 1;
 }
 #form1{
@@ -784,14 +783,18 @@ div#oscilloscopeScreen{
     width : 350px;
     height : 250px;
     left : 900px;
-    top : 800px;
+    top : 600px;
     z-index: 1;
 }
 #form2{
-    position: relative;
-    width: 300px;
-    top: -100px;
-    left: 0px;
+    padding: 5px;
+    background-color : PaleGreen;
+    position: absolute;
+    width : 350px;
+    height : 250px;
+    left : 1200px;
+    top : 600px;
+    z-index: 1;
 }
 #submitbuttom{
     width: 30px;
@@ -812,6 +815,6 @@ div#oscilloscopeScreen{
 #camera{
     position: absolute;
     width: 200px;
-    left: 1200px;
-    top: 110px;
+    left: 1330px;
+    top: 30px;
 }

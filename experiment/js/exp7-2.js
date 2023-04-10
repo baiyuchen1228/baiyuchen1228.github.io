@@ -60,7 +60,7 @@ var generator_duty = 0.5;
 var generator_offset = 0;
 var generator_AMPL2_on = false;
 var generator_AMPL = 1; // 1 * 10 ^ 0
-var generator_AMPL_base = 0; 
+var generator_AMPL_base = 1; 
 var generator_AMPL_pow = 0;
 var generator_output_on = false;
 
@@ -1934,7 +1934,6 @@ class Oscillator{
         this._show_mode = "CH1";
         this._init = false;
         this._SWP = 1;
-        this._begin = -1;
     }
     
     set_SWP(val){
@@ -2060,16 +2059,8 @@ class Oscillator{
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
-                    if(this.vertical_AC_GND_DC[0] == "GND"){
-                        this._datapoints0[j] = 0;
-                    }else{
-                        this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase0, amplitude0);
-                    }
-                    if(this.vertical_AC_GND_DC[1] == "GND"){
-                        this._datapoints1[j] = 0;
-                    }else{
-                        this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase1, amplitude1);
-                    }
+                    this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase0, amplitude0);
+                    this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase1, amplitude1);
                 }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
@@ -2098,25 +2089,17 @@ class Oscillator{
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
-                    if(this.vertical_AC_GND_DC[0] == "GND"){
-                        this._datapoints0[j] = 0;
-                    }else{
-                        this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
-                    }
-                    if(this.vertical_AC_GND_DC[1] == "GND"){
-                        this._datapoints1[j] = 0;
-                    }else{
-                        this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
-                    }
+                    this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
+                    this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
                 }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
@@ -2129,30 +2112,22 @@ class Oscillator{
             let phase1 = wg.calculate_phase(res, 1);
             let amplitude1 = wg.calculate_amplitude(res, 1);
             for(let i=0;i< (WAVE_DATA_COUNT);i++){
-                if(this.vertical_AC_GND_DC[0] == "GND"){
-                    this._datapoints0[i] = 0;
-                }else{
-                    this._datapoints0[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase0, amplitude0);
-                }
-                if(this.vertical_AC_GND_DC[1] == "GND"){
-                    this._datapoints1[i] = 0;
-                }else{
-                    this._datapoints1[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase1, amplitude1);
-                }   
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                this._datapoints0[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase0, amplitude0);
+                this._datapoints1[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase1, amplitude1); 
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[i] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[i] += wg.offset;
                 }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(generator_offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(generator_offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
@@ -2178,7 +2153,7 @@ class Oscillator{
         wg = tmp_wg;
 
     }
-
+    
     power_control(){
         if(this._power == 0){
             this._power = 1;
@@ -2189,7 +2164,6 @@ class Oscillator{
         }
         check();
     }
-
     draw(){
         document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
@@ -2214,6 +2188,9 @@ class Oscillator{
         let flag = false;
         let pre = this._datapoints0[begin] / this._vertical_v[0];
         // pre += this._vertical_offset[0];
+
+
+
         for(;begin < 2 * this._WAVE_DATA_COUNT && flag == false;begin++){
             let temp = 0;
             // let temp_level = this._level;
@@ -2233,11 +2210,6 @@ class Oscillator{
         }
         begin -= this._time_offset;
 
-        if(flag == false && this._begin != -1){
-            flag = true;
-            begin = this._begin;
-        }
-
         if(flag == false){
             for(let i=0;i<this._WAVE_DATA_COUNT;i++){
                 datapoints0[i] = 0.008 * i - 4;
@@ -2245,7 +2217,6 @@ class Oscillator{
             }
             show_error("trigger level is out of range!");
         }else{
-            this._begin = begin;
             for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
                 if(this._show_mode != 'CH2'){
                     datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
@@ -2265,7 +2236,7 @@ class Oscillator{
 
         if(this._show_mode != "CH2" && this._vertical_AC_GND_DC[0] == "GND"){
             for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
-                datapoints0[i-begin] = this._datapoints0[i] / this._vertical_v[0];
+                datapoints0[i-begin] = 0;
                 datapoints0[i-begin] += this._vertical_offset[0];
             }
         }else if(this._show_mode == "CH2"){
@@ -2276,7 +2247,7 @@ class Oscillator{
 
         if(this._show_mode != "CH1" && this._vertical_AC_GND_DC[1] == "GND"){
             for(let i=begin;i < begin + (this._WAVE_DATA_COUNT);i++){
-                datapoints1[i-begin] = this._datapoints1[i] / this._vertical_v[1];
+                datapoints1[i-begin] = 0;
                 datapoints1[i-begin] += this._vertical_offset[1];
             }
         }else if(this._show_mode == "CH1"){
@@ -2293,6 +2264,7 @@ class Oscillator{
             }
         }
 
+
         
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
@@ -2300,7 +2272,7 @@ class Oscillator{
         }
         const labels = [];
         for(let i=0;i<(this._WAVE_DATA_COUNT);i++){
-            labels[i] = ((i + this._time_offset) * this._time_mul/300).toFixed(4);;
+            labels[i] = ((i + this._time_offset) * this._time_mul/300).toFixed(6);
         }
         const data = {
             labels:labels,
@@ -2420,6 +2392,7 @@ function checkCircuit(omega) {
         show_error("波型產生器的 power 沒有打開");
         return res_meter;
     }
+
 
 
     // if(checkResitanceBurn(x)){
@@ -2551,7 +2524,37 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    let id = parseInt($("#id1")[0].value,10);
+    generator_AMPL_base = 1;
+    evaluate_generator_AMPL();
+    generator_square();
+    generator_frequency_3();
+    generator_power();
+    osi.power_control();
+    vertical_mode_dual();
     check();
+}
+
+function checkAns(){
+    if(!startbool)return;
+    let ans1 = parseFloat($("#ans1")[0].value);
+    let answer1 = 0.000673-0.000598;
+    let done = true;
+    if(isNaN(ans1)){
+        done = false;
+    }
+    if(abs(ans1 - answer1) > 0.000005){
+        done = false;
+    }
+    if(done){
+        $("#anstext1").text($("#ans1")[0].value);
+        $("#ansStatus").text("通過");
+        $("#ans1").css("display", "none");
+    }
+    else{
+        $("#ansStatus").text("錯誤");
+    }
+
 }
 
 function drawWave(){
@@ -3165,15 +3168,40 @@ function oscillosocope_init() {
 
 function minus_horizonal_SWP(){
     if(osi._SWP < 0.8) return;
-    osi._SWP -= 0.04;
+    if(osi._SWP < 1.04 && osi._SWP > 1){
+        osi._SWP = 1;
+    }else{
+        osi._SWP -= 0.04;
+    }
+    if(osi.SWP == 1){
+        $("#check_Correction").css("color", "#0000FF");
+        $("#check_Correction").text("完成");
+    }
     osi.draw();
 }
 
 function add_horizonal_SWP(){
     if(osi._SWP > 1.2) return;
-    osi._SWP += 0.04;
+    if(osi._SWP > -0.96 && osi._SWP < 1){
+        osi._SWP = 1;
+    }else{
+        osi._SWP += 0.04;
+    }
+    if(osi.SWP == 1){
+        $("#check_Correction").css("color", "#0000FF");
+        $("#check_Correction").text("完成");
+    }
     osi.draw();
 }
+
+function handleMediaStreamError(error) {
+    console.log('navigator.getUserMedia error: ', error);
+}
+
+function getRandomInteger(max) {
+    return Math.floor(Math.random() * max);
+}
+
 
 
 const mediaStreamConstraints = {
