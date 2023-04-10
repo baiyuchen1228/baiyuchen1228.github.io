@@ -71,8 +71,6 @@
                 <button id="minus_horizonal_position" type="button" class="oscilloscope-button" onclick="minus_horizonal_position()">＜</button>
                 <button id="add_horizonal_position" type="button" class="oscilloscope-button" onclick="add_horizonal_position()">＞</button>
                 <p id="horizonal_SWP_text" class="oscilloscope-text">SWP.VAR.</p>
-                <button id="minus_horizonal_SWP" type="button" class="oscilloscope-button" onclick="minus_horizonal_SWP()">＜</button>
-                <button id="add_horizonal_SWP" type="button" class="oscilloscope-button" onclick="add_horizonal_SWP()">＞</button>
                 <p id="horizonal_time_text" class="oscilloscope-text">TIME/DIV</p>
                 <p id="horizonal_time" class="oscilloscope-text">2ms</p>
                 <button id="minus_horizonal_time" type="button" class="oscilloscope-button" onclick="minus_horizonal_time()">＜</button>
@@ -176,8 +174,7 @@
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
     <form id="form2">
-        請回答以下問題(請先校正)<br>
-        校正：<font id="check_Correction" color="#FF0000">未完成</font><br>
+        請回答以下問題<br>
         半衰期(s):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
         <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
     </form>

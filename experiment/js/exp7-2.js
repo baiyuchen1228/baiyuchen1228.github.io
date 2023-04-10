@@ -2512,7 +2512,7 @@ window.onbeforeunload = () => {
 
 function start(){
     console.log("Starting");
-    osi.set_SWP(0.04 * (getRandomInteger(10) - 5) + 1);
+    osi.set_SWP(1);
     startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
