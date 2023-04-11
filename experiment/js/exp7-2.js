@@ -2509,7 +2509,7 @@ function reload(){
 window.onbeforeunload = () => {
     return confirm('確定要離開?');
 }
-
+let id;
 function start(){
     console.log("Starting");
     osi.set_SWP(1);
@@ -2524,7 +2524,30 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    let id = parseInt($("#id1")[0].value,10);
+    id = parseInt($("#id1")[0].value,10);
+    let x1 = 205;
+    let y1 = 125;
+    let x2 = 205;
+    let y2 = 225;
+    let capacitanceNo = 3;
+    let ufarad = 1e-8;
+    ufarad *= (id % 6) / 5 + 1;
+    var centerX = x1 - (x1 - x2) / 2;
+    var centerY = y1 - (y1 - y2) / 2;
+    var slope = Math.atan((y2 - y1) / (x2 - x1));
+    var rectX1 = centerX - 5 * Math.sin(slope) + 10 * Math.cos(slope);
+    var rectY1 = centerY + 5 * Math.cos(slope) + 10 * Math.sin(slope);
+    var rectX2 = centerX + 10 * Math.cos(slope) + 5 * Math.sin(slope);
+    var rectY2 = centerY + 10 * Math.sin(slope) - 5 * Math.cos(slope);
+    var rectX3 = centerX + 5 * Math.sin(slope) - 10 * Math.cos(slope);
+    var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
+    var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
+    var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
+    linestack.push("capacitance0"+capacitanceNo);
     generator_AMPL_base = 1;
     evaluate_generator_AMPL();
     generator_square();
@@ -2537,8 +2560,9 @@ function start(){
 
 function checkAns(){
     if(!startbool)return;
+    let answer = [0.000077,0.000090,0.000104,0.000116,0.000126,0.000137]
     let ans1 = parseFloat($("#ans1")[0].value);
-    let answer1 = 0.000673-0.000598;
+    let answer1 = answer[id % 6];
     let done = true;
     if(isNaN(ans1)){
         done = false;
