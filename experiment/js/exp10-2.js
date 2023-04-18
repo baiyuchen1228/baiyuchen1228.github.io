@@ -20,6 +20,7 @@ var pointarray = [];
 
 var current1 = 0, voltage1 = 0, current2 = 0, voltage2 = 0, power = 0, powersupplyOutputStatus = 0;
 
+var oneresistance = 0;
 
 var x1, x2, y1, y2, drawline = true;
 var AlligatorX1 = 0, AlligatorY1 = 0;
@@ -380,6 +381,7 @@ $("#container").mouseup(function (e) {
             document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>'));
             linestack.push("resistance"+resistanceNo);
         }
+        oneresistance = 1;
         pointarray.push([x1, y1]);
         pointarray.push([x2, y2]);
         resistanceNo++;
@@ -635,6 +637,7 @@ $("#container").mouseup(function (e) {
                     $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#" + Things[i].id).remove();
+                    oneresistance = 0;
                     resistanceOn = 1;
                 }
                 if (Things[i].id[0] == "i") {
@@ -684,6 +687,7 @@ $("#container").mouseup(function (e) {
                 }
 
                 if (Things[i].id[0] == "r") {
+                    oneresistance = 0;
                     resistanceOn = 1;
                     $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
@@ -980,6 +984,7 @@ function toggleWireButton() {
 };
 
 function toggleResistanceButton() {
+    if(oneresistance == 1) return;
     if (resistanceOn == 0) return;
     if (drawInductance == 1) {
         $this = $("#addInductance");
@@ -2455,6 +2460,7 @@ function undo(){
     }
 
     if (linestack[target][0] == "r") {
+        oneresistance = 0;
         $("#resistanceCircle1_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#resistanceCircle2_" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
         $("#resistanceBox" + linestack[target][linestack[target].length - 2] + linestack[target][linestack[target].length - 1]).remove();
@@ -2510,6 +2516,8 @@ window.onbeforeunload = () => {
     return confirm('確定要離開?');
 }
 let id;
+let faradlist = [1e-6,1e-6,1e-7,1e-7]
+let henrylist = [0.1,0.01,0.1,0.01]
 function start(){
     console.log("Starting");
     osi.set_SWP(1);
@@ -2525,12 +2533,13 @@ function start(){
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
     id = parseInt($("#id1")[0].value,10);
-    let x1 = 205;
-    let y1 = 125;
+
+    let x1 = 225;
+    let y1 = 225;
     let x2 = 205;
-    let y2 = 225;
+    let y2 = 305;
     let capacitanceNo = 3;
-    let ufarad = 1e-8;
+    let ufarad = faradlist[id % 4];
     var centerX = x1 - (x1 - x2) / 2;
     var centerY = y1 - (y1 - y2) / 2;
     var slope = Math.atan((y2 - y1) / (x2 - x1));
@@ -2546,7 +2555,30 @@ function start(){
     document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
     document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
     document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
-    linestack.push("capacitance0"+capacitanceNo);
+
+    
+    x1 = 205;
+    y1 = 125;
+    x2 = 205;
+    y2 = 225;
+    let henry = henrylist[id % 4];
+    let inductanceNo = 4;
+    var centerX = x1 - (x1 - x2) / 2;
+    var centerY = y1 - (y1 - y2) / 2;
+    var slope = Math.atan((y2 - y1) / (x2 - x1));
+    var rectX1 = centerX - 5 * Math.sin(slope) + 10 * Math.cos(slope);
+    var rectY1 = centerY + 5 * Math.cos(slope) + 10 * Math.sin(slope);
+    var rectX2 = centerX + 10 * Math.cos(slope) + 5 * Math.sin(slope);
+    var rectY2 = centerY + 10 * Math.sin(slope) - 5 * Math.cos(slope);
+    var rectX3 = centerX + 5 * Math.sin(slope) - 10 * Math.cos(slope);
+    var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
+    var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
+    var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + henry + 'Henry</title></polygon>'));
+    
     generator_AMPL_base = 1;
     evaluate_generator_AMPL();
     generator_square();
@@ -2559,19 +2591,15 @@ function start(){
 
 function checkAns(){
     if(!startbool)return;
-    let ans1 = parseFloat($("#ans1")[0].value);
-    let answer1 = 0.000077;
+    let answer = 2 * Math.sqrt(henrylist[id%4] / faradlist[id%4]);
     let done = true;
-    if(isNaN(ans1)){
-        done = false;
-    }
-    if(abs(ans1 - answer1) > 0.000005){
+    let resistances = getResistance();
+    let r = resistances[0].val;
+    if(r >= answer){
         done = false;
     }
     if(done){
-        $("#anstext1").text($("#ans1")[0].value);
         $("#ansStatus").text("通過");
-        $("#ans1").css("display", "none");
     }
     else{
         $("#ansStatus").text("錯誤");

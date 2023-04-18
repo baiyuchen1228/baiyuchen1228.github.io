@@ -60,7 +60,7 @@ var generator_duty = 0.5;
 var generator_offset = 0;
 var generator_AMPL2_on = false;
 var generator_AMPL = 1; // 1 * 10 ^ 0
-var generator_AMPL_base = 1; 
+var generator_AMPL_base = 0; 
 var generator_AMPL_pow = 0;
 var generator_output_on = false;
 
@@ -2272,7 +2272,7 @@ class Oscillator{
         }
         const labels = [];
         for(let i=0;i<(this._WAVE_DATA_COUNT);i++){
-            labels[i] = ((i + this._time_offset) * this._time_mul/300).toFixed(6);
+            labels[i] = ((i + this._time_offset) * this._time_mul/300).toFixed(4);
         }
         const data = {
             labels:labels,
@@ -2509,10 +2509,10 @@ function reload(){
 window.onbeforeunload = () => {
     return confirm('確定要離開?');
 }
-let id;
+
 function start(){
     console.log("Starting");
-    osi.set_SWP(1);
+    osi.set_SWP(0.04 * (getRandomInteger(10) - 5) + 1);
     startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
@@ -2524,59 +2524,7 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    id = parseInt($("#id1")[0].value,10);
-    let x1 = 205;
-    let y1 = 125;
-    let x2 = 205;
-    let y2 = 225;
-    let capacitanceNo = 3;
-    let ufarad = 1e-8;
-    var centerX = x1 - (x1 - x2) / 2;
-    var centerY = y1 - (y1 - y2) / 2;
-    var slope = Math.atan((y2 - y1) / (x2 - x1));
-    var rectX1 = centerX - 5 * Math.sin(slope) + 10 * Math.cos(slope);
-    var rectY1 = centerY + 5 * Math.cos(slope) + 10 * Math.sin(slope);
-    var rectX2 = centerX + 10 * Math.cos(slope) + 5 * Math.sin(slope);
-    var rectY2 = centerY + 10 * Math.sin(slope) - 5 * Math.cos(slope);
-    var rectX3 = centerX + 5 * Math.sin(slope) - 10 * Math.cos(slope);
-    var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
-    var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
-    var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
-    linestack.push("capacitance0"+capacitanceNo);
-    generator_AMPL_base = 1;
-    evaluate_generator_AMPL();
-    generator_square();
-    generator_frequency_3();
-    generator_power();
-    osi.power_control();
-    vertical_mode_dual();
     check();
-}
-
-function checkAns(){
-    if(!startbool)return;
-    let ans1 = parseFloat($("#ans1")[0].value);
-    let answer1 = 0.000077;
-    let done = true;
-    if(isNaN(ans1)){
-        done = false;
-    }
-    if(abs(ans1 - answer1) > 0.000005){
-        done = false;
-    }
-    if(done){
-        $("#anstext1").text($("#ans1")[0].value);
-        $("#ansStatus").text("通過");
-        $("#ans1").css("display", "none");
-    }
-    else{
-        $("#ansStatus").text("錯誤");
-    }
-
 }
 
 function drawWave(){
@@ -3188,31 +3136,19 @@ function oscillosocope_init() {
     osi.draw();
 }
 
+const mediaStreamConstraints = {
+    video: true
+};
+
 function minus_horizonal_SWP(){
     if(osi._SWP < 0.8) return;
-    if(osi._SWP < 1.04 && osi._SWP > 1){
-        osi._SWP = 1;
-    }else{
-        osi._SWP -= 0.04;
-    }
-    if(osi.SWP == 1){
-        $("#check_Correction").css("color", "#0000FF");
-        $("#check_Correction").text("完成");
-    }
+    osi._SWP -= 0.04;
     osi.draw();
 }
 
 function add_horizonal_SWP(){
     if(osi._SWP > 1.2) return;
-    if(osi._SWP > -0.96 && osi._SWP < 1){
-        osi._SWP = 1;
-    }else{
-        osi._SWP += 0.04;
-    }
-    if(osi.SWP == 1){
-        $("#check_Correction").css("color", "#0000FF");
-        $("#check_Correction").text("完成");
-    }
+    osi._SWP += 0.04;
     osi.draw();
 }
 
@@ -3223,33 +3159,3 @@ function handleMediaStreamError(error) {
 function getRandomInteger(max) {
     return Math.floor(Math.random() * max);
 }
-
-
-
-const mediaStreamConstraints = {
-    video: true
-};
-
-function handleMediaStreamError(error) {
-    console.log('navigator.getUserMedia error: ', error);
-}
-
-function gotLocalMediaStream(mediaStream) {
-    // console.log(mediaStream)
-    const localStream = mediaStream;
-
-    // 取的video html element( HTMLMediaElement ).
-    const localVideo = document.querySelector('video');
-    // Older browsers may not have srcObject.
-    if ("srcObject" in localVideo) {
-        localVideo.srcObject = localStream;
-    } else {
-        // Avoid using this in new browsers, as it is going away.
-        localVideo.src = window.URL.createObjectURL(localStream);
-    }
-}
-
-navigator.mediaDevices
-    .getUserMedia(mediaStreamConstraints)
-    .then(gotLocalMediaStream)
-    .catch(handleMediaStreamError)

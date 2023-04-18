@@ -1,98 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>實驗十: RLC直流電路</title>
-    <link rel="stylesheet" href="../canvas.css">
+    <title>實驗十：RLC直流電路</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/exp10.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.bgiframe.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <script src="js/chart.js"></script>
+    <script src="js/math.js"></script>
 </head>
+
 <body>
-    <h1>
-        <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-        <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
+    <!-- <video autoplay id="camera"></video> -->
+    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px"
+        style="left: 0px; top: 0px; position:absolute"></svg>
+        <h1>
+            <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
+            <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
+                    style="font-size:9px;">&#9660;</span>
+                <ul id="SubMenu1" class="sub-menu" style="display:none;">
+                    <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
+                    <li><a href="exp5.html" target="_self">實驗五：歐姆定律實驗</a></li>
+                    <li><a href="exp6.html" target="_self">實驗六：克希荷夫</a></li>
+                    <li><a href="exp2.html" target="_self">實驗二：示波器與波形產生器教學</a></li>
+                    <li><a href="exp7.html" target="_self">實驗七：RC直流電路</a></li>
+                    <li><a href="exp8.html" target="_self">實驗八：磁力實驗</a></li>
+                    <li><a href="exp10.html" target="_self">實驗十：RLC直流電路</a></li>
+                    <li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
+                </ul>
+            </span>
+            <span class="main-menu" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
                 style="font-size:9px;">&#9660;</span>
-            <ul id="SubMenu1" class="sub-menu" style="display:none;">
-                <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
-                <li><a href="exp5.html" target="_self">實驗五：歐姆定律實驗</a></li>
-                <li><a href="exp6.html" target="_self">實驗六：克希荷夫</a></li>
-                <li><a href="exp2.html" target="_self">實驗二：示波器與波形產生器教學</a></li>
-                <li><a href="exp7.html" target="_self">實驗七：RC直流電路</a></li>
-                <li><a href="exp8.html" target="_self">實驗八：磁力實驗</a></li>
-                <li><a href="exp10.html" target="_self">實驗十：RLC直流電路</a></li>
-                <li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
-            </ul>
-        </span>
-        <span class="main-menu" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
-            style="font-size:9px;">&#9660;</span>
-            <ul id="SubMenu2" class="sub-menu" style="display:none;">
-                <li><a href="exp3-2.html" target="_self">測驗三：等電位實驗</a></li>
-                <li><a href="exp5-2.html" target="_self">測驗五：歐姆定律測驗</a></li>
-                <li><a href="exp6-2.html" target="_self">測驗六：克希荷夫</a></li>
-                <li><a href="exp2-2.html" target="_self">測驗二：示波器與波形產生器教學</a></li>
-                <li><a href="exp7-2.html" target="_self">測驗七：RC直流電路</a></li>
-                <li><a href="exp8-2.html" target="_self">測驗八：磁力測驗</a></li>
-                <li><a href="exp10-2.html" target="_self">測驗十：RLC直流電路</a></li>
-                <li><a href="exp11-2.html" target="_self">測驗十一：RLC交流電路</a></li>
-            </ul>
-        </span>
-    </h1>
+                <ul id="SubMenu2" class="sub-menu" style="display:none;">
+                    <li><a href="exp3-2.html" target="_self">測驗三：等電位實驗</a></li>
+                    <li><a href="exp5-2.html" target="_self">測驗五：歐姆定律測驗</a></li>
+                    <li><a href="exp6-2.html" target="_self">測驗六：克希荷夫</a></li>
+                    <li><a href="exp2-2.html" target="_self">測驗二：示波器與波形產生器教學</a></li>
+                    <li><a href="exp7-2.html" target="_self">測驗七：RC直流電路</a></li>
+                    <li><a href="exp8-2.html" target="_self">測驗八：磁力測驗</a></li>
+                    <li><a href="exp10-2.html" target="_self">測驗十：RLC直流電路</a></li>
+                    <li><a href="exp11-2.html" target="_self">測驗十一：RLC交流電路</a></li>
+                </ul>
+            </span>
+        </h1>
     <h2>
-        我的課程 / 普通物理實驗 / 實驗十: RLC直流電路
+        我的課程 / 普通物理實驗 / 實驗十：RLC直流電路
     </h2>
-    <script type="text/javascript">
-        var VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
+    <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0; height: 600px;">
+        <canvas id="myCanvas" width="500" height="360"
+            style="position: relative; left: 100px; top: 270px; z-index: 0; float: left;"></canvas>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
+            style="left: 100px; top: 270px; z-index:0; position:absolute" id="svgline"></svg>
+        <div id="oscilloscope" class="oscilloscope-bg00">
+            <div id="oscilloscopeScreen">
+                <canvas id="oscilloscopeScreenCanvas"></canvas>
+                <p id="oscilloscope_inten_text" class="oscilloscope-text">inten</p>
+                <!-- <button id="minus_oscilloscope_inten" type="button" class="oscilloscope-button" onclick="minus_oscilloscope_inten()">＜</button>
+                <button id="add_oscilloscope_inten" type="button" class="oscilloscope-button" onclick="add_oscilloscope_inten()">＞</button> -->
+                <!-- <p id="oscilloscope_focus_text" class="oscilloscope-text">focus</p>
+                <button id="minus_oscilloscope_focus" type="button" class="oscilloscope-button" onclick="minus_oscilloscope_focus()">＜</button> -->
+                <!-- <button id="add_oscilloscope_focus" type="button" class="oscilloscope-button" onclick="add_oscilloscope_focus()">＞</button> -->
+                <p id="oscilloscope_power_text" class="oscilloscope-text">power</p>
+                <button id="oscilloscope_power" type="button" class="oscilloscope-button" onclick="osi.power_control()"></button>
+                <p id="horizonal_position_text" class="oscilloscope-text">position</p>
+                <button id="minus_horizonal_position" type="button" class="oscilloscope-button" onclick="minus_horizonal_position()">＜</button>
+                <button id="add_horizonal_position" type="button" class="oscilloscope-button" onclick="add_horizonal_position()">＞</button>
+                <p id="horizonal_SWP_text" class="oscilloscope-text">SWP.VAR.</p>
+                <button id="minus_horizonal_SWP" type="button" class="oscilloscope-button" onclick="minus_horizonal_SWP()">＜</button>
+                <button id="add_horizonal_SWP" type="button" class="oscilloscope-button" onclick="add_horizonal_SWP()">＞</button>
+                <p id="horizonal_time_text" class="oscilloscope-text">TIME/DIV</p>
+                <p id="horizonal_time" class="oscilloscope-text">2ms</p>
+                <button id="minus_horizonal_time" type="button" class="oscilloscope-button" onclick="minus_horizonal_time()">＜</button>
+                <button id="add_horizonal_time" type="button" class="oscilloscope-button" onclick="add_horizonal_time()">＞</button>
+                <!-- <button id="minus_horizonal_mag" type="button" class="oscilloscope-button" onclick="horizonal_mag()">MAG</button> -->
+                <p id="trigger_level_text" class="oscilloscope-text">level</p>
+                <button id="minus_trigger_level" type="button" class="oscilloscope-button" onclick="minus_trigger_level()">＜</button>
+                <button id="add_trigger_level" type="button" class="oscilloscope-button" onclick="add_trigger_level()">＞</button>
+                <!-- <button id="trigger_alt" type="button" class="oscilloscope-button" onclick="trigger_alt()">ALT</button> -->
+                <button id="trigger_ch1" type="button" class="oscilloscope-button" onclick="trigger_ch1()">CH1</button>
+                <button id="trigger_ch2" type="button" class="oscilloscope-button" onclick="trigger_ch2()">CH2</button>
+                <!-- <button id="trigger_line" type="button" class="oscilloscope-button" onclick="trigger_line()">LINE</button>
+                <button id="trigger_ext" type="button" class="oscilloscope-button" onclick="trigger_ext()">EXT</button> -->
+                <button id="trigger_slope" type="button" class="oscilloscope-button" onclick="trigger_slope()">SLOPE＋</button>
+                <p id="vertical_v_text1" class="oscilloscope-text">VOLTS/DIV</p>
+                <p id="vertical_v1" class="oscilloscope-text">1V</p>
+                <button id="minus_vertical_v_outer1" type="button" class="oscilloscope-button" onclick="minus_vertical_v_outer1()">＜</button>
+                <button id="add_vertical_v_outer1" type="button" class="oscilloscope-button" onclick="add_vertical_v_outer1()">＞</button>
+                <!-- <button id="minus_vertical_v_inner1" type="button" class="oscilloscope-button" onclick="unimplemented()">＜</button>
+                <button id="add_vertical_v_inner1" type="button" class="oscilloscope-button" onclick="unimplemented()">＞</button> -->
+                <p id="vertical_position_text1" class="oscilloscope-text">POSITION</p>
+                <button id="minus_vertical_position1" type="button" class="oscilloscope-button" onclick="minus_vertical_position1()">＜</button>
+                <button id="add_vertical_position1" type="button" class="oscilloscope-button" onclick="add_vertical_position1()">＞</button>
+                <button id="vertical_ch1_input" type="button" class="oscilloscope-button" onclick="vertical_ch1_input()"></button>
+                <button id="vertical_AC1" type="button" class="oscilloscope-button" onclick="vertical_AC1()">AC</button>
+                <button id="vertical_GND1" type="button" class="oscilloscope-button" onclick="vertical_GND1()">GND</button>
+                <button id="vertical_DC1" type="button" class="oscilloscope-button" onclick="vertical_DC1()">DC</button>
+                
+                <button id="vertical_mode_ch1" type="button" class="oscilloscope-button" onclick="vertical_mode_ch1()">CH1</button>
+                <button id="vertical_mode_ch2" type="button" class="oscilloscope-button" onclick="vertical_mode_ch2()">CH2</button>
+                <button id="vertical_mode_dual" type="button" class="oscilloscope-button" onclick="vertical_mode_dual()">DUAL</button>
+                <!-- <button id="vertical_mode_add" type="button" class="oscilloscope-button" onclick="unimplemented()">ADD</button> -->
+                
+                <p id="vertical_v_text2" class="oscilloscope-text">VOLTS/DIV</p>
+                <p id="vertical_v2" class="oscilloscope-text">1V</p>
+                <button id="minus_vertical_v_outer2" type="button" class="oscilloscope-button" onclick="minus_vertical_v_outer2()">＜</button>
+                <button id="add_vertical_v_outer2" type="button" class="oscilloscope-button" onclick="add_vertical_v_outer2()">＞</button>
+                <!-- <button id="minus_vertical_v_inner2" type="button" class="oscilloscope-button" onclick="unimplemented()">＜</button> -->
+                <!-- <button id="add_vertical_v_inner2" type="button" class="oscilloscope-button" onclick="unimplemented()">＞</button> -->
+                <p id="vertical_position_text2" class="oscilloscope-text">POSITION</p>
+                <button id="minus_vertical_position2" type="button" class="oscilloscope-button" onclick="minus_vertical_position2()">＜</button>
+                <button id="add_vertical_position2" type="button" class="oscilloscope-button" onclick="add_vertical_position2()">＞</button>
+                <button id="vertical_ch2_input" type="button" class="oscilloscope-button" onclick="vertical_ch2_input()"></button>
+                <button id="vertical_AC2" type="button" class="oscilloscope-button" onclick="vertical_AC2()">AC</button>
+                <button id="vertical_GND2" type="button" class="oscilloscope-button" onclick="vertical_GND2()">GND</button>
+                <button id="vertical_DC2" type="button" class="oscilloscope-button" onclick="vertical_DC2()">DC</button>
+                
 
-    // 顯示或隱藏子選單
-    function switchMenu( theMainMenu, theSubMenu, theEvent ){
-        var SubMenu = document.getElementById( theSubMenu );
-        if( SubMenu.style.display == 'none' ){ // 顯示子選單
-            SubMenu.style.minWidth = theMainMenu.clientWidth; // 讓子選單的最小寬度與主選單相同 (僅為了美觀)
-            SubMenu.style.display = 'block';
-            hideMenu(); // 隱藏子選單
-            VisibleMenu = theSubMenu;
-        }
-        else{ // 隱藏子選單
-            if( theEvent != 'MouseOver' || VisibleMenu != theSubMenu ){
-                SubMenu.style.display = 'none';
-                VisibleMenu = '';
-            }
-        }
-    }
+                <button id="vertical_drawline1" type="button" class="oscilloscope-button" onmousedown="vertical_drawline1()">＋</button>
+                <button id="vertical_drawline2" type="button" class="oscilloscope-button" onmousedown="vertical_drawline2()">－</button>
+                <button id="vertical_drawline3" type="button" class="oscilloscope-button" onmousedown="vertical_drawline3()">＋</button>
+                <button id="vertical_drawline4" type="button" class="oscilloscope-button" onmousedown="vertical_drawline4()">－</button>
 
-    // 隱藏子選單
-    function hideMenu(){
-        if( VisibleMenu != '' ){
-            document.getElementById( VisibleMenu ).style.display = 'none';
-        }
-        VisibleMenu = '';
-    }
-    </script>
-    <img id="apple" src="../images/apple.png" alt="" width="300" style="position:absolute; top:200px"><br>
-    <img id="banana" src="../images/banana.png" alt=""width="300" style="position:absolute; top:500px;"><br>
-    <script type="text/javascript">
-    function move (target) {
-        function moveTarget (e) {
-            var intX = e.pageX;
-            var intY = e.pageY;
-            target.style.left = intX - (target.width)/2 + "px";
-            target.style.top = intY - (target.height)/2 + "px";
-        }
-        return moveTarget;
-    }
-    document.getElementById("apple").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    document.getElementById("banana").onclick = function (e){
-        if(!document.onmousemove)
-            document.onmousemove = move(e.target);
-        else
-            document.onmousemove = null;
-    }
-    </script>
+                <button id="oscillosocope_init" type="button" class="oscilloscope-button" >＋</button>
+                <p id="level_show" class="oscilloscope-text">＞</p>
+            </div>
+        </div>
+        <div id="generator" class="generator_bg0">
+            <button id="minus_generator_frequency" type="button" class="generator-button" onclick="minus_generator_frequency()">＜－</button>
+            <button id="add_generator_frequency" type="button" class="generator-button" onclick="add_generator_frequency()">－＞</button>
+            <p id="generator_frequency" class="generator-text">1</p>
+            <p id="generator_frequency_menu" class="generator-text"></p>
+            <button id="generator_power" type="button" class="generator-button" onclick="generator_power()"></button>
+            <button id="generator_frequency6" type="button" class="generator-button" onclick="generator_frequency_6()"></button>
+            <button id="generator_frequency5" type="button" class="generator-button" onclick="generator_frequency_5()"></button>
+            <button id="generator_frequency4" type="button" class="generator-button" onclick="generator_frequency_4()"></button>
+            <button id="generator_frequency3" type="button" class="generator-button" onclick="generator_frequency_3()"></button>
+            <button id="generator_frequency2" type="button" class="generator-button" onclick="generator_frequency_2()"></button>
+            <button id="generator_frequency1" type="button" class="generator-button" onclick="generator_frequency_1()"></button>
+            <button id="generator_frequency0" type="button" class="generator-button" onclick="generator_frequency_0()"></button>
+            <p id="generator_inv_text" class="generator-text">inv</p>
+            <button id="generator_inv" type="button" class="generator-button" onclick="generator_inv()"></button>
+            <p id="generator_wave_text" class="generator-text"></p>
+            <button id="generator_square" type="button" class="generator-button" onclick="generator_square()"></button>
+            <button id="generator_triangle" type="button" class="generator-button" onclick="generator_triangle()"></button>
+            <button id="generator_sin" type="button" class="generator-button" onclick="generator_sin()"></button>
+            <p id="generator_AMPL1_text" class="generator-text">-20dB</p>
+            <button id="generator_AMPL1" type="button" class="generator-button" onclick="generator_AMPL1()"></button>
+            <p id="generator_duty_text" class="generator-text">DUTY</p>
+            <!-- <button id="minus_generator_duty" type="button" class="generator-button" onclick="minus_generator_duty()">＜</button>
+            <button id="add_generator_duty" type="button" class="generator-button" onclick="add_generator_duty()">＞</button> -->
+            <p id="generator_offset_text" class="generator-text">OFFSET</p>
+            <button id="generator_offset_switch" type="button" class="generator-button" onclick="wg.set_offset_on(true)"></button>
+            <button id="minus_generator_offset" type="button" class="generator-button" onclick="minus_generator_offset()">＜</button>
+            <button id="add_generator_offset" type="button" class="generator-button" onclick="add_generator_offset()">＞</button>
+            <p id="generator_AMPL2" class="generator-text">AMPL</p>
+            <button id="generator_AMPL_switch" type="button" class="generator-button" onclick="generator_AMPL_switch()"></button>
+            <button id="minus_generator_AMPL" type="button" class="generator-button" onclick="minus_generator_AMPL()">＜</button>
+            <button id="add_generator_AMPL" type="button" class="generator-button" onclick="add_generator_AMPL()">＞</button>
+            <p id="generator_output50" class="generator-text">output</p>
+            <button id="generator_output_switch" type="button" class="generator-button" onclick="generator_output_switch()"></button>
+            <button id="generator_drawline1" type="button" class="generator-button" onmousedown="generator_drawline1()">＋</button>
+            <button id="generator_drawline2" type="button" class="generator-button" onmousedown="generator_drawline2()">－</button>
 
+
+
+        </div>
+    </div>
+    <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
+        Wire(單芯線)</button>
+    <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
+        Resistor(電阻)</button>
+    <button type="button" class="buttonInactive" id="addInductance" href="#" onclick="toggleInductanceButton()">Add
+        Inductor(電感)</button>
+    <button type="button" class="buttonInactive" id="addCapacitance" href="#" onclick="toggleCapacitanceButton()">Add
+        Capacitance(電容)</button>
+    <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
+        Alligator Clip(鱷魚夾)</button>
+    <button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
+    <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
+    <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
+    <a href="exp7_menu.html">使用手冊</a>
+    <!-- target="_blank" -->
+    
+    <div id = "error_message">
+        小提示，卡關了可以偷看，但僅供參考
+        <p id="error_message_content"></p>
+    </div>
+    <form id="form1">
+        時間:<a id="time1"></a><br>
+        姓名:<input class="input" value="" id="name1"></input><a id="name2"></a><br>
+        學號:<input class="input" value="" id="id1"></input><a id="id2"></a><br>
+        系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
+    </form>
+    <form class="demo_wave" id="demo_wave1">
+        wave generator<br>
+        &emsp;頻率:<input class="input" value="" id="demo_frequency1"></input><br>
+        &emsp;振幅:<input class="input" value="" id="demo_amplitude1"></input><br>
+        &emsp;類型:<input class="input" value="" id="demo_wave_type1"></input><br>
+        &emsp;反向:<input class="input" value="" id="demo_wave_inv1"></input><br>
+        &emsp;偏移:<input class="input" value="" id="demo_wave_offset1"></input><br>
+        類型有 sin_wave, square_wave, triangle_wave<br>
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
+        <input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="check()"></input><br>
+    </form>
+
+    <script type="text/javascript" src="js\exp10.js"></script>
 </body>
+
 </html>
