@@ -2516,8 +2516,8 @@ window.onbeforeunload = () => {
     return confirm('確定要離開?');
 }
 let id;
-let faradlist = [1e-6,1e-6,1e-7,1e-7]
-let henrylist = [0.1,0.01,0.1,0.01]
+let faradlist = [8e-6,8e-6,1e-7,1e-7]
+let henrylist = [0.02,0.01,0.02,0.01]
 function start(){
     console.log("Starting");
     osi.set_SWP(1);
@@ -2595,7 +2595,7 @@ function checkAns(){
     let done = true;
     let resistances = getResistance();
     let r = resistances[0].val;
-    if(r >= answer){
+    if(r >= answer * 0.8 || abs(r - answer * 0.8) > answer * 0.3){
         done = false;
     }
     if(done){

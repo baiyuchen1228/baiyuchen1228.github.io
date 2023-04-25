@@ -818,3 +818,10 @@ div#oscilloscopeScreen{
     left: 1330px;
     top: 30px;
 }
+
+#circuit{
+    position: absolute;
+    width: 200px;
+    left: 1000px;
+    top: 30px;
+}
