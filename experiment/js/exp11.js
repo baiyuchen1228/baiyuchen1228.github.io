@@ -2562,23 +2562,23 @@ function pow(a, x){
 }
 
 function evaluate_generator_frequency(){
-    generator_frequency = generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0));
-    $("#generator_frequency").text(generator_frequency1.toFixed(1));
+    generator_frequency = generator_frequency1.toFixed(2) * pow(10,generator_frequency2.toFixed(0));
+    $("#generator_frequency").text(generator_frequency1.toFixed(2));
     $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
-    wg.set_frequency(generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0)));
+    wg.set_frequency(generator_frequency1.toFixed(2) * pow(10,generator_frequency2.toFixed(0)));
     return generator_frequency;
 }
 
 function minus_generator_frequency(){
     if(generator_frequency1 < 0.2)return;
-    generator_frequency1 -= 0.1;
+    generator_frequency1 -= 0.01;
     evaluate_generator_frequency();
     check();
 }
 
 function add_generator_frequency(){
     if(generator_frequency1 > 2)return;
-    generator_frequency1 += 0.1;
+    generator_frequency1 += 0.01;
     evaluate_generator_frequency();
     check();
 }
