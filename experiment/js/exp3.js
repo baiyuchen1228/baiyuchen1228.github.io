@@ -341,23 +341,31 @@ var delIni;
 power_drowline1.onmousedown = function (e) {
     colorNo = 0;
     if (drawAlligator) {
-        AlligatorX1 = 1285;
-        AlligatorY1 = 545;
+        var rect = power_drowline1.getBoundingClientRect();
+        AlligatorX1 = (rect.left + rect.right)/2;
+        AlligatorY1 = (rect.top + rect.bottom)/2;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [1285, 545];
+        var rect = power_drowline1.getBoundingClientRect();
+        var posX = (rect.left + rect.right)/2;
+        var posY = (rect.top + rect.bottom)/2;
+        delALLalligator = [posX, posY];
     }
 }
 power_drowline2.onmousedown = function (e) {
     colorNo = 6;
     if (drawAlligator) {
-        AlligatorX1 = 1250;
-        AlligatorY1 = 545;
+        var rect = power_drowline2.getBoundingClientRect();
+        AlligatorX1 = (rect.left + rect.right)/2;
+        AlligatorY1 = (rect.top + rect.bottom)/2;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [1250, 545];
+        var rect = power_drowline2.getBoundingClientRect();
+        var posX = (rect.left + rect.right)/2;
+        var posY = (rect.top + rect.bottom)/2;
+        delALLalligator = [posX, posY];
     }
 }
 power_drowline3.onmousedown = function (e) {
@@ -389,34 +397,46 @@ power_drowline4.onmousedown = function (e) {
 meter1_drowline1.onmousedown = function (e) {
     colorNo = 2;
     if (drawAlligator) {
-        AlligatorX1 = 85;
-        AlligatorY1 = 565;
+        var rect = meter1_drowline1.getBoundingClientRect();
+        AlligatorX1 = (rect.left + rect.right)/2;
+        AlligatorY1 = (rect.top + rect.bottom)/2;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [85, 565];
+        var rect = meter1_drowline1.getBoundingClientRect();
+        var posX = (rect.left + rect.right)/2;
+        var posY = (rect.top + rect.bottom)/2;
+        delALLalligator = [posX, posY];
     }
 }
 meter1_drowline2.onmousedown = function (e) {
     colorNo = 8;
     if (drawAlligator) {
-        AlligatorX1 = 145;
-        AlligatorY1 = 565;
+        var rect = meter1_drowline2.getBoundingClientRect();
+        AlligatorX1 = (rect.left + rect.right)/2;
+        AlligatorY1 = (rect.top + rect.bottom)/2;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [145, 565];
+        var rect = meter1_drowline2.getBoundingClientRect();
+        var posX = (rect.left + rect.right)/2;
+        var posY = (rect.top + rect.bottom)/2;
+        delALLalligator = [posX, posY];
     }
 }
 meter1_drowline3.onmousedown = function (e) {
     colorNo = 3;
     if (drawAlligator) {
-        AlligatorX1 = 205;
-        AlligatorY1 = 565;
+        var rect = meter1_drowline3.getBoundingClientRect();
+        AlligatorX1 = (rect.left + rect.right)/2;
+        AlligatorY1 = (rect.top + rect.bottom)/2;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [205, 565];
+        var rect = meter1_drowline3.getBoundingClientRect();
+        var posX = (rect.left + rect.right)/2;
+        var posY = (rect.top + rect.bottom)/2;
+        delALLalligator = [posX, posY];
     }
 }
 
@@ -574,28 +594,12 @@ $("#container").mouseup(function (e) {
     check();
 });
 $(document).ready(function () {
-
     var canvas = $("#myCanvas");
     var context = canvas.get(0).getContext("2d");
     var current_x = 0;
     context.strokeStyle = "rgb(208, 208, 208)";
     context.fillStyle = "rgb(88, 88, 88)";
     current_x = 0;
-    // context.lineWidth = 3;
-    // context.strokeStyle = "red";
-    // context.beginPath(); // Start the path
-    // context.moveTo(15, 0); // Set the path origin
-    // context.lineTo(15, 270); // Set the path destination
-    // context.closePath(); // Close the path
-    // context.stroke(); // Outline the path
-
-    // context.strokeStyle = "black";
-    // context.beginPath(); // Start the path
-    // context.moveTo(75, 0); // Set the path origin
-    // context.lineTo(75, 50 * 11 - 5); // Set the path destination
-    // context.closePath(); // Close the path
-    // context.stroke(); // Outline the path
-
 
     for (var j = 0; j < 5; j++) {
 
@@ -629,13 +633,7 @@ $(document).ready(function () {
 
     context.fillRect(20, 120, 10, 10);
     context.fillRect(320, 120, 10, 10);
-    // context.lineWidth = 3;
-    // context.strokeStyle = "red";
-    // context.beginPath(); // Start the path
-    // context.moveTo(325, 0); // Set the path origin
-    // context.lineTo(325, 270); // Set the path destination
-    // context.closePath(); // Close the path
-    // context.stroke(); // Outline the path
+    zeroRed();
 
 });
 function toggleDelButton() {
@@ -963,31 +961,57 @@ function show_error(s){
 const panel_mode = ["zeroRed", "oneRed", "twoRed"];
 var panel = panel_mode[0];
 
+
+
+
+// line in board(圓點、直線)
+function updateLine(fillColor, leftpos){
+    var canvas = $("#myCanvas");
+    var context = canvas.get(0).getContext("2d");
+    context.lineWidth = 4;
+    context.fillStyle = fillColor;
+    context.strokeStyle = fillColor;
+    context.beginPath(); // Start the path
+    context.moveTo(leftpos, 0); // Set the path origin
+    context.lineTo(leftpos, 270); // Set the path destination
+    context.closePath(); // Close the path
+    context.stroke(); // Outline the path
+}
+
+// circle in board(圓點、直線)
+function updateCircle(fillColor, leftpos){
+    var canvas = $("#myCanvas");
+    var context = canvas.get(0).getContext("2d");
+    context.fillStyle = fillColor;
+    context.strokeStyle = fillColor;
+    context.beginPath();
+    context.arc(leftpos, 125, 25, 0, 2 * Math.PI);
+    context.stroke();
+    context.fill();
+
+}
+
+//rectangle(正負極)
+function updateRectangle(){
+    var canvas = $("#myCanvas");
+    var context = canvas.get(0).getContext("2d");
+    context.fillStyle = "rgb(88, 88, 88)";
+    context.fillRect(20, 120, 10, 10);
+    context.fillRect(320, 120, 10, 10);
+}
+
 function zeroRed(){
     panel = panel_mode[0];
     $("#zeroRed").css('background-color', 'rosybrown');
     $("#oneRed").css('background-color', 'white');
     $("#twoRed").css('background-color', 'white');
-    var canvas = $("#myCanvas");
-    var context = canvas.get(0).getContext("2d");
-    var current_x = 0;
-    context.lineWidth = 4;
-    context.fillStyle = "#FFF5EB";
-    context.strokeStyle = "#FFF5EB";
-    context.beginPath(); // Start the path
-    context.moveTo(25, 0); // Set the path origin
-    context.lineTo(25, 270); // Set the path destination
-    context.closePath(); // Close the path
-    context.stroke(); // Outline the path
     
-    context.beginPath(); // Start the path
-    context.moveTo(325, 0); // Set the path origin
-    context.lineTo(325, 270); // Set the path destination
-    context.closePath(); // Close the path
-    context.stroke(); // Outline the path
-    context.fillStyle = "rgb(88, 88, 88)";
-    context.fillRect(20, 120, 10, 10);
-    context.fillRect(320, 120, 10, 10);
+    updateLine("#FFF5EB", 25);
+    updateLine("#FFF5EB", 325);
+    updateCircle("silver", 25);
+    updateCircle("silver", 325);
+    updateRectangle();
+    
 }
 
 function oneRed(){
@@ -995,28 +1019,14 @@ function oneRed(){
     $("#zeroRed").css('background-color', 'white');
     $("#oneRed").css('background-color', 'rosybrown');
     $("#twoRed").css('background-color', 'white');
-    var canvas = $("#myCanvas");
-    var context = canvas.get(0).getContext("2d");
-    var current_x = 0;
-    context.lineWidth = 4;
-    context.fillStyle = "#FFF5EB";
-    context.strokeStyle = "#FFF5EB";
-    context.beginPath(); // Start the path
-    context.moveTo(25, 0); // Set the path origin
-    context.lineTo(25, 270); // Set the path destination
-    context.closePath(); // Close the path
-    context.stroke(); // Outline the path
     
-    context.fillStyle = "silver";
-    context.strokeStyle = "silver";
-    context.beginPath(); // Start the path
-    context.moveTo(325, 0); // Set the path origin
-    context.lineTo(325, 270); // Set the path destination
-    context.closePath(); // Close the path
-    context.stroke(); // Outline the path
-    context.fillStyle = "rgb(88, 88, 88)";
-    context.fillRect(20, 120, 10, 10);
-    context.fillRect(320, 120, 10, 10);
+    updateLine("#FFF5EB", 25);
+    updateCircle("#FFF5EB", 325);
+
+    updateCircle("#silver", 25);
+    updateLine("silver", 325);
+
+    updateRectangle();
 }
 
 function twoRed(){
@@ -1024,28 +1034,13 @@ function twoRed(){
     $("#zeroRed").css('background-color', 'white');
     $("#oneRed").css('background-color', 'white');
     $("#twoRed").css('background-color', 'rosybrown');
-    var canvas = $("#myCanvas");
-    var context = canvas.get(0).getContext("2d");
-    var current_x = 0;
-    context.strokeStyle = "rgb(208, 208, 208)";
-    context.fillStyle = "rgb(88, 88, 88)";
-    current_x = 0;
-    context.lineWidth = 3;
-    context.strokeStyle = "silver";
-    context.beginPath(); // Start the path
-    context.moveTo(25, 0); // Set the path origin
-    context.lineTo(25, 270); // Set the path destination
-    context.closePath(); // Close the path
-    context.stroke(); // Outline the path
     
-    context.beginPath(); // Start the path
-    context.moveTo(325, 0); // Set the path origin
-    context.lineTo(325, 270); // Set the path destination
-    context.closePath(); // Close the path
-    context.stroke(); // Outline the path
-    context.fillStyle = "rgb(88, 88, 88)";
-    context.fillRect(20, 120, 10, 10);
-    context.fillRect(320, 120, 10, 10);
+    updateCircle("#FFF5EB", 25);
+    updateCircle("#FFF5EB", 325);
+    updateLine("silver", 25);
+    updateLine("silver", 325);
+
+    updateRectangle();
 }
 
 var p2p = [[0.3728953028909902,0.36852353115519765,0.3546851406881697,0.3286786761464262,0.28334487044193357,0.19783161987672473,0.0,0.2004878624837686,0.2888218786500252,0.33732043934089906,0.3670489722245846,0.3854431874730213,0.3955972168671084,0.39885348183498653],
