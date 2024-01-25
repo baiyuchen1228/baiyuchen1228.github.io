@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css" />
     <script src="js/chart.js"></script>
     <script src="js/math.js"></script>
+    <script src="js/menu.js"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
         style="left: 0px; top: 0px; position:absolute"></svg>
         <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-            <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
+            <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
                     style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu1" class="sub-menu" style="display:none;">
                     <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
@@ -35,7 +36,7 @@
                     <li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
                 </ul>
             </span>
-            <span class="main-menu" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
+            <span class="main-menu" id="menu2" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
                 style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu2" class="sub-menu" style="display:none;">
                     <li><a href="exp3-2.html" target="_self">測驗三：等電位實驗</a></li>

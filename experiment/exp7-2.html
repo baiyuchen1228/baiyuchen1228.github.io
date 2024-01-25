@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css" />
     <script src="js/chart.js"></script>
     <script src="js/math.js"></script>
+    <script src="js/menu.js"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
     <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute"><circle id="alligatorCircle1_01" cx="430" cy="400" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_01" cx="365" cy="445" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator01" x1="430" y1="400" x2="365" y2="445" style="stroke:Red;stroke-width:5px;"></line><circle id="alligatorCircle1_02" cx="480" cy="400" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_02" cx="405" cy="445" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator02" x1="480" y1="400" x2="405" y2="445" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_03" cx="1020" cy="530" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_03" cx="345" cy="445" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator03" x1="1020" y1="530" x2="345" y2="445" style="stroke:Red;stroke-width:5px;"></line><circle id="alligatorCircle1_04" cx="1070" cy="530" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_04" cx="405" cy="525" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator04" x1="1070" y1="530" x2="405" y2="525" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_05" cx="1350" cy="530" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_05" cx="345" cy="545" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator05" x1="1350" y1="530" x2="345" y2="545" style="stroke:Red;stroke-width:5px;"></line><circle id="alligatorCircle1_06" cx="1390" cy="530" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_06" cx="405" cy="605" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator06" x1="1390" y1="530" x2="405" y2="605" style="stroke:Black;stroke-width:5px;"></line></svg>
         <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-            <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
+            <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
                     style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu1" class="sub-menu" style="display:none;">
                     <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
@@ -35,7 +36,7 @@
                     <li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
                 </ul>
             </span>
-            <span class="main-menu" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
+            <span class="main-menu" id="menu2" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
                 style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu2" class="sub-menu" style="display:none;">
                     <li><a href="exp3-2.html" target="_self">測驗三：等電位實驗</a></li>

@@ -12,6 +12,7 @@
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.bgiframe.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css" />
+    <script src="js/menu.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
     <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute"><circle id="alligatorCircle1_01" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_01" cx="835" cy="365" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator01" x1="1250" y1="545" x2="835" y2="365" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_02" cx="1350" cy="545" r="5" style="fill:Indigo;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_02" cx="835" cy="325" r="5" style="fill:Indigo;stroke-width:2"><title></title></circle><line id="alligator02" x1="1350" y1="545" x2="835" y2="325" style="stroke:Indigo;stroke-width:5px;"></line><circle id="alligatorCircle1_03" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_03" cx="675" cy="325" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator03" x1="1285" y1="545" x2="675" y2="325" style="stroke:Red;stroke-width:5px;"></line><circle id="alligatorCircle1_04" cx="1385" cy="545" r="5" style="fill:DarkRed;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_04" cx="775" cy="325" r="5" style="fill:DarkRed;stroke-width:2"><title></title></circle><line id="alligator04" x1="1385" y1="545" x2="775" y2="325" style="stroke:DarkRed;stroke-width:5px;"></line></svg>
     <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-            <span class="main-menu" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
+            <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
                     style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu1" class="sub-menu" style="display:none;">
                     <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
@@ -32,7 +33,7 @@
                     <li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
                 </ul>
             </span>
-            <span class="main-menu" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
+            <span class="main-menu" id="menu2" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
                 style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu2" class="sub-menu" style="display:none;">
                     <li><a href="exp3-2.html" target="_self">測驗三：等電位實驗</a></li>
