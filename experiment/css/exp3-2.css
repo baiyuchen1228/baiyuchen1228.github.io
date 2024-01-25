@@ -319,6 +319,12 @@ div#powersupply{
     width: 20px;
     background-color: #CCCCCC;
 }
+#power_choice_hint{
+    display: inline-block;
+    text-align: center;
+    border-style: solid;
+    padding: 7px;
+}
 .buttonInactive
 {
     background-color: white;
@@ -337,7 +343,7 @@ div#powersupply{
 #form2{
     position: relative;
     width: 300px;
-    top: -100px;
+    top: -115px;
     left: 0px;
 }
 #error_message{
@@ -346,7 +352,7 @@ div#powersupply{
     width : 350px;
     height : 100px;
     left : 550px;
-    top : 150px;
+    top : 190px;
     z-index: 1;
 }
 #submitbuttom{

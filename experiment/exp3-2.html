@@ -104,15 +104,20 @@
             style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"></svg>
 
     </div>
-    <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
-        Alligator Clip(鱷魚夾)</button>
+    
+
+    <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add Alligator Clip(鱷魚夾)</button>
     <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
     <button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
     <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
-    <button type="button" class="buttonInactive" id="zeroRed" href="#" onclick="zeroRed()" style="background-color: rosybrown;">兩圓點</button>
-    <button type="button" class="buttonInactive" id="oneRed" href="#" onclick="oneRed()">一圓點一直線</button>
-    <button type="button" class="buttonInactive" id="twoRed" href="#" onclick="twoRed()">兩直線</button>
+    <div id="power_choice_hint">
+        電源結構<br>
+        <button type="button" class="buttonInactive" id="zeroRed" href="#" onclick="zeroRed()" style="background-color: rosybrown;">兩圓點</button>
+        <button type="button" class="buttonInactive" id="oneRed" href="#" onclick="oneRed()">一圓點一直線</button>
+        <button type="button" class="buttonInactive" id="twoRed" href="#" onclick="twoRed()">兩直線</button>
+    </div>
     <a href="exp3_menu.html" target="_blank">使用手冊</a>
+    
     <div id = "error_message">
         小提示，卡關了可以偷看，但僅供參考
         <p id="error_message_content"></p>
