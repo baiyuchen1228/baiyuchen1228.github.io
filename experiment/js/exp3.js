@@ -631,8 +631,6 @@ $(document).ready(function () {
         context.fillRect(280, current_x, 10, 10);
     };
 
-    context.fillRect(20, 120, 10, 10);
-    context.fillRect(320, 120, 10, 10);
     zeroRed();
 
 });
@@ -1023,7 +1021,7 @@ function oneRed(){
     updateLine("#FFF5EB", 25);
     updateCircle("#FFF5EB", 325);
 
-    updateCircle("#silver", 25);
+    updateCircle("silver", 25);
     updateLine("silver", 325);
 
     updateRectangle();
