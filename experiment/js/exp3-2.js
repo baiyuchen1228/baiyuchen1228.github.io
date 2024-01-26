@@ -285,7 +285,7 @@ $("#container").mouseup(function (e) {
         AlligatorX1 = 0;
         AlligatorY1 = 0;
         // toggleAlligatorButton();
-        turnOffMode();
+        // turnOffMode();
     }
     if (deletemode == 1) {
         // console.log(delIni);
