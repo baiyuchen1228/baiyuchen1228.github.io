@@ -246,7 +246,7 @@ $("#container").mouseup(function (e) {
             alert('(請先點按鈕)please click button first');
             return;
         }
-        console.log(x2,y2);
+        
         if (x2 < 617 || x2 > 837 || y2 < 327 || y2 > 547) {
             if(((x2 == 577 && y2 == 427) || (x2 == 877 && y2 == 427)));
             else{
@@ -254,17 +254,27 @@ $("#container").mouseup(function (e) {
                 return;
             }
         }
-        console.log(x2);
+        
         if (findNodeNum(x1, y1) == 1 || findNodeNum(x1, y1) == 0) {
             if(x2 == 877 || x2 == 577) {}else {
                 alert('正負極只能接在左右兩個點');
                 return;
             }
         }
-        // if (x1 == x2 && y1 == y2) {
-        //     alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
-        //     return;
-        // }
+        for (let i = 0; i < pointarray.length; i++) {
+            if(pointarray[i][0] == 577 && pointarray[i][1] == 427){
+                // 負極可以接多個
+                continue;
+            }
+            if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 == pointarray[i][0] && y2 == pointarray[i][1])) {
+                alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
+                return;
+            }
+        }
+        if (x1 == x2 && y1 == y2) {
+            alert("(不能在同一點畫線)It is meaningless to insert both the ends of wire to the same point.");
+            return;
+        }
         if (alligatorNo < 10) {
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));

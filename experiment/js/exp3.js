@@ -501,7 +501,7 @@ $("#container").mouseup(function (e) {
             alert('(請先點按鈕)please click button first');
             return;
         }
-        console.log(x2,y2);
+        
         if (x2 < 617 || x2 > 837 || y2 < 327 || y2 > 547) {
             if(((x2 == 577 && y2 == 427) || (x2 == 877 && y2 == 427)));
             else{
@@ -509,7 +509,7 @@ $("#container").mouseup(function (e) {
                 return;
             }
         }
-        console.log(x2);
+        
         if (findNodeNum(x1, y1) == 1 || findNodeNum(x1, y1) == 0) {
             if(x2 == 877 || x2 == 577) {}else {
                 alert('正負極只能接在左右兩個點');
@@ -518,7 +518,7 @@ $("#container").mouseup(function (e) {
         }
 
         for (let i = 0; i < pointarray.length; i++) {
-            if(pointarray[i][0] == 577 && pointarray[i][0] == 427){
+            if(pointarray[i][0] == 577 && pointarray[i][1] == 427){
                 // 負極可以接多個
                 continue;
             }
