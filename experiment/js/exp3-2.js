@@ -705,6 +705,13 @@ function start(){
     voltage1 = (id / 2 + 50) / 10;
     cur1.innerHTML = current1.toFixed(2);
     vol1.innerHTML = voltage1.toFixed(2);
+    if(id % 3 == 0){
+        zeroRed();
+    }else if(id % 3 == 1){
+        oneRed();
+    }else{
+        twoRed();
+    }
 }
 function checkAns(){
     if(!startbool)return;
