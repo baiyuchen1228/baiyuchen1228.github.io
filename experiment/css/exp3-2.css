@@ -379,3 +379,14 @@ div#powersupply{
     left: 1200px;
     top: 110px;
 }
+#myProgress{
+    width: 285px;
+}
+#myBar{
+    width: 0%;
+    height: 5px;
+    background-color: #04AA6D;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 5px; /* To center it vertically */
+    color: white;
+}

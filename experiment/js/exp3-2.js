@@ -728,9 +728,23 @@ function checkAns(){
     let ans1 = parseFloat($("#ans1")[0].value);
     let ans2 = parseFloat($("#ans2")[0].value);
     let ans3 = parseFloat($("#ans3")[0].value);
+    move();
+    // zeroRed
     let answer1 = (voltage1 * p2p[4][9]);
     let answer2 = (voltage1 * p2p[6][9]);
     let answer3 = (voltage1 * p2p[8][9]);
+    
+    if(panel == 'oneRed'){
+        answer1 = (voltage1 * p2l[4][9]);
+        answer2 = (voltage1 * p2l[6][9]);
+        answer3 = (voltage1 * p2l[8][9]);
+    }
+    else if(panel == 'twoRed'){
+        answer1 = (voltage1 * l2l[4][9]);
+        answer2 = (voltage1 * l2l[6][9]);
+        answer3 = (voltage1 * l2l[8][9]);
+    }
+    
     let done = true;
     if(isNaN(ans1) || isNaN(ans2) || isNaN(ans3)){
         done = false;
@@ -929,6 +943,27 @@ function gotLocalMediaStream(mediaStream) {
     } else {
         // Avoid using this in new browsers, as it is going away.
         localVideo.src = window.URL.createObjectURL(localStream);
+    }
+}
+
+
+var progress_bar_i = 0;
+function move() {
+    if (progress_bar_i == 0) {
+        progress_bar_i = 1;
+        var elem = document.getElementById("myBar");
+        var width = 10;
+        var id = setInterval(frame, 10);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+                progress_bar_i = 0;
+                elem.style.width = "0%";
+            } else {
+                width++;
+                elem.style.width = width + "%";
+            }
+        }
     }
 }
 
