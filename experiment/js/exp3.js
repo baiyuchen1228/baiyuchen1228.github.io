@@ -522,10 +522,6 @@ $("#container").mouseup(function (e) {
                 // 負極可以接多個
                 continue;
             }
-            if(pointarray[i][0] == 877 && pointarray[i][0] == 427){
-                // 正極可以接多個
-                continue;
-            }
             if ((x1 == pointarray[i][0] && y1 == pointarray[i][1]) || (x2 == pointarray[i][0] && y2 == pointarray[i][1])) {
                 alert("(不能在同一點畫線)It is meaningless to insert two wire to the same point.");
                 return;
