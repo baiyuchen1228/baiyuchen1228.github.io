@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>測驗二: 示波器與波形產生器教學</title>
+    <title>測驗十一：RLC交流電路</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/exp2-2.css">
+    <link rel="stylesheet" href="css/exp11_test.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.bgiframe.js"></script>
@@ -15,13 +16,14 @@
     <script src="js/math.js"></script>
     <script src="js/menu.js"></script>
 </head>
+
 <body>
     <!-- <video autoplay id="camera"></video> -->
     <video autoplay id="camera"></video>
     <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px"
         style="left: 0px; top: 0px; position:absolute"></svg>
         <h1>
-            <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
+            <a href="index.html" target="_self">國立中正大學普通物理實驗學習平台</a>
             <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
                     style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu1" class="sub-menu" style="display:none;">
@@ -38,24 +40,24 @@
             <span class="main-menu" id="menu2" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
                 style="font-size:9px;">&#9660;</span>
                 <ul id="SubMenu2" class="sub-menu" style="display:none;">
-                    <li><a href="exp3-2.html" target="_self">測驗三：等電位實驗</a></li>
-                    <li><a href="exp5-2.html" target="_self">測驗五：歐姆定律測驗</a></li>
-                    <li><a href="exp6-2.html" target="_self">測驗六：克希荷夫</a></li>
-                    <li><a href="exp2-2.html" target="_self">測驗二：示波器與波形產生器教學</a></li>
-                    <li><a href="exp7-2.html" target="_self">測驗七：RC直流電路</a></li>
-                    <li><a href="exp8-2.html" target="_self">測驗八：磁力測驗</a></li>
-                    <li><a href="exp10-2.html" target="_self">測驗十：RLC直流電路</a></li>
-                    <li><a href="exp11-2.html" target="_self">測驗十一：RLC交流電路</a></li>
+                    <li><a href="exp3_test.html" target="_self">測驗三：等電位實驗</a></li>
+                    <li><a href="exp5_test.html" target="_self">測驗五：歐姆定律測驗</a></li>
+                    <li><a href="exp6_test.html" target="_self">測驗六：克希荷夫</a></li>
+                    <li><a href="exp2_test.html" target="_self">測驗二：示波器與波形產生器教學</a></li>
+                    <li><a href="exp7_test.html" target="_self">測驗七：RC直流電路</a></li>
+                    <li><a href="exp8_test.html" target="_self">測驗八：磁力測驗</a></li>
+                    <li><a href="exp10_test.html" target="_self">測驗十：RLC直流電路</a></li>
+                    <li><a href="exp11_test.html" target="_self">測驗十一：RLC交流電路</a></li>
                 </ul>
             </span>
         </h1>
     <h2>
-        我的課程 / 普通物理實驗 / 測驗二: 示波器與波形產生器教學
+        我的課程 / 普通物理實驗 / 測驗十一：RLC交流電路
     </h2>
     <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0; height: 600px;">
         <canvas id="myCanvas" width="500" height="360"
             style="position: relative; left: 100px; top: 270px; z-index: 0; float: left;"></canvas>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px"
             style="left: 100px; top: 270px; z-index:0; position:absolute" id="svgline"></svg>
         <div id="oscilloscope" class="oscilloscope-bg00">
             <div id="oscilloscopeScreen">
@@ -72,8 +74,6 @@
                 <button id="minus_horizonal_position" type="button" class="oscilloscope-button" onclick="minus_horizonal_position()">＜</button>
                 <button id="add_horizonal_position" type="button" class="oscilloscope-button" onclick="add_horizonal_position()">＞</button>
                 <p id="horizonal_SWP_text" class="oscilloscope-text">SWP.VAR.</p>
-                <button id="minus_horizonal_SWP" type="button" class="oscilloscope-button" onclick="minus_horizonal_SWP()">＜</button>
-                <button id="add_horizonal_SWP" type="button" class="oscilloscope-button" onclick="add_horizonal_SWP()">＞</button>
                 <p id="horizonal_time_text" class="oscilloscope-text">TIME/DIV</p>
                 <p id="horizonal_time" class="oscilloscope-text">2ms</p>
                 <button id="minus_horizonal_time" type="button" class="oscilloscope-button" onclick="minus_horizonal_time()">＜</button>
@@ -137,20 +137,19 @@
             <p id="generator_frequency" class="generator-text">1</p>
             <p id="generator_frequency_menu" class="generator-text"></p>
             <button id="generator_power" type="button" class="generator-button" onclick="generator_power()"></button>
-            <!-- <button id="generator_frequency6" type="button" class="generator-button" onclick="generator_frequency_6()"></button>
+            <button id="generator_frequency6" type="button" class="generator-button" onclick="generator_frequency_6()"></button>
             <button id="generator_frequency5" type="button" class="generator-button" onclick="generator_frequency_5()"></button>
             <button id="generator_frequency4" type="button" class="generator-button" onclick="generator_frequency_4()"></button>
             <button id="generator_frequency3" type="button" class="generator-button" onclick="generator_frequency_3()"></button>
             <button id="generator_frequency2" type="button" class="generator-button" onclick="generator_frequency_2()"></button>
             <button id="generator_frequency1" type="button" class="generator-button" onclick="generator_frequency_1()"></button>
-            <button id="generator_frequency0" type="button" class="generator-button" onclick="generator_frequency_0()"></button> -->
-            <!-- <p id="generator_inv_text" class="generator-text">inv</p>
-            <button id="generator_inv" type="button" class="generator-button" onclick="generator_inv()"></button> -->
+            <button id="generator_frequency0" type="button" class="generator-button" onclick="generator_frequency_0()"></button>
+            <p id="generator_inv_text" class="generator-text">inv</p>
+            <button id="generator_inv" type="button" class="generator-button" onclick="generator_inv()"></button>
             <p id="generator_wave_text" class="generator-text"></p>
-
             <!-- <button id="generator_square" type="button" class="generator-button" onclick="generator_square()"></button>
             <button id="generator_triangle" type="button" class="generator-button" onclick="generator_triangle()"></button>
-            <button id="generator_sin" type="button" class="generator-button" onclick="generator_sin()"></button>
+            <button id="generator_sin" type="button" class="generator-button" onclick="generator_sin()"></button> -->
             <p id="generator_AMPL1_text" class="generator-text">-20dB</p>
             <button id="generator_AMPL1" type="button" class="generator-button" onclick="generator_AMPL1()"></button>
             <p id="generator_duty_text" class="generator-text">DUTY</p>
@@ -163,8 +162,7 @@
             <p id="generator_AMPL2" class="generator-text">AMPL</p>
             <button id="generator_AMPL_switch" type="button" class="generator-button" onclick="generator_AMPL_switch()"></button>
             <button id="minus_generator_AMPL" type="button" class="generator-button" onclick="minus_generator_AMPL()">＜</button>
-            <button id="add_generator_AMPL" type="button" class="generator-button" onclick="add_generator_AMPL()">＞</button> -->
-
+            <button id="add_generator_AMPL" type="button" class="generator-button" onclick="add_generator_AMPL()">＞</button>
             <p id="generator_output50" class="generator-text">output</p>
             <button id="generator_output_switch" type="button" class="generator-button" onclick="generator_output_switch()"></button>
             <button id="generator_drawline1" type="button" class="generator-button" onmousedown="generator_drawline1()">＋</button>
@@ -178,16 +176,11 @@
         Wire(單芯線)</button>
     <button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add
         Resistor(電阻)</button>
-    <button type="button" class="buttonInactive" id="addInductance" href="#" onclick="toggleInductanceButton()">Add
-        Inductor(電感)</button>
-    <button type="button" class="buttonInactive" id="addCapacitance" href="#" onclick="toggleCapacitanceButton()">Add
-        Capacitance(電容)</button>
     <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
         Alligator Clip(鱷魚夾)</button>
     <button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
-    <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
     <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
-    <a href="exp2_menu.html">使用手冊</a>
+    <a href="exp7_menu.html">使用手冊</a>
     <!-- target="_blank" -->
     
     <div id = "error_message">
@@ -202,10 +195,8 @@
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
     <form id="form2">
-        請回答以下問題(請先校正)<br>
-        校正：<font id="check_Correction" color="#FF0000">未完成</font><br>
-        波形產生器震幅(Vpp):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
-        波形產生器頻率(Hz):<input class="input" value="" id="ans2"></input><a id="anstext2"></a><br>
+        請回答以下問題(容許誤差為3%)<br>
+        |Vr/Vin|最大值發生在頻率(Hz):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
         <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
     </form>
     <form class="demo_wave" id="demo_wave1">
@@ -216,10 +207,11 @@
         &emsp;反向:<input class="input" value="" id="demo_wave_inv1"></input><br>
         &emsp;偏移:<input class="input" value="" id="demo_wave_offset1"></input><br>
         類型有 sin_wave, square_wave, triangle_wave<br>
-        <!-- <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
-        <input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="check()"></input><br> -->
+        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
+        <input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="check()"></input><br>
     </form>
-    <script type="text/javascript" src="js\exp2-2.js"></script>
+
+    <script type="text/javascript" src="js\exp11_test.js"></script>
 </body>
 
 </html>
