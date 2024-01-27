@@ -972,10 +972,8 @@ $("#container").mouseup(function (e) {
         // turnOffMode();
     }
     if (deletemode == 1) {
-        // console.log(delIni);
 
         var delFin = e;
-        // console.log(delFin);
         x1 = approx_x(delIni.pageX);
         y1 = approx_x(delIni.pageY);
         x2 = approx_x(delFin.pageX);
@@ -988,6 +986,10 @@ $("#container").mouseup(function (e) {
         Things = $("line");
         for (var i = Things.length - 1; i >= 0; i--) {
             if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -1037,6 +1039,10 @@ $("#container").mouseup(function (e) {
                 return;
             }
             if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -1079,7 +1085,6 @@ $("#container").mouseup(function (e) {
                     $("#" + Things[i].id).remove();
                 }
                 if (Things[i].id[0] == "L") {
-                    //  console.log("#LEdcircle"+Things[i].id[Things[i].id.length -1]);
                     $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
                     $("#" + Things[i].id).remove();
 
@@ -1097,6 +1102,10 @@ $("#container").mouseup(function (e) {
             console.log([x1, y1, x2, y2]);
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                    if(Things[i].id.includes("persist")){
+                        alert("請勿刪除原有的元件");
+                        return;
+                    }
                     for (let j = 0; j < pointarray.length; j++) {
                         if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                             // pointarray = deleteRow(pointarray, j);
@@ -1109,7 +1118,6 @@ $("#container").mouseup(function (e) {
                             pointarray[j] = [0,0];
                         }
                     }
-                    // console.log(Things[i].id[0]);
                     pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
                     pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
                     if (Things[i].id[0] == "a") {
@@ -1520,10 +1528,6 @@ function getWires() {
             node2: findNodeNum(wire.x2.baseVal.value, wire.y2.baseVal.value)
         };
     });
-    for (let i = 0; i < wiresOut.length; i++) {
-        var wire = wiresOut[i];
-        console.log(wire.id, wire.x1, wire.y1, wire.x2, wire.y2);
-    }
     return wiresOut;
 }
 
@@ -1543,10 +1547,6 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    // for (let i = 0; i < alligatorOut.length; i++) {
-    //     var alligator = alligatorOut[i];
-    //     console.log(alligator.id, alligator.x1, alligator.y1, alligator.x2, alligator.y2);
-    // }
     return alligatorOut;
 }
 
@@ -1575,7 +1575,6 @@ function getResistance() {
         if (r.val == NaN) {
             alert("電阻不可以是小數")
         }
-        //console.log(resistance.id, resistance.x1, resistance.y1, resistance.x2, resistance.y2, resistance.val);
     }
     return resistanceOut;
 }
@@ -1672,7 +1671,6 @@ class GuassionElimination {
             }
             if (this.M[i][i] == 0) {
                 console.log("無唯一解/無解", i);
-                console.log(this.M);
                 single.push(i);
                 continue;
             }
@@ -1689,8 +1687,7 @@ class GuassionElimination {
         }
 
         //after guassian elimination
-        console.log("Guassian Elimination")
-        console.log(this.M);
+
         
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
@@ -1781,7 +1778,6 @@ function getFullGraph(graph) {
         vol_eid = e.id;
     }
 
-    console.log(edge_list);
     return { graph: graph, current_edgeid: curr_eid, voltage_edgeid: vol_eid };
 }
 
@@ -1817,10 +1813,6 @@ let path = [];
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
         //find loop
-        // console.log("loop:");
-        // for (let i = 0; i < loop_length; i++) {
-        //     console.log(path[i].edgeid, path[i].par);
-        // }
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
@@ -1891,12 +1883,10 @@ function equationVoltageVoltage() {
         find_loop(i, i, graph, 0);
     }
     for (let i = 0; i < equation_cnt; i++) {
-        console.log(equations[i]);
         equations[i][edge_cnt] *= -1;
     }
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
-    console.log(x);
     return { FullGraph: FG, ans: x };
 
 }
@@ -2166,10 +2156,10 @@ function start(){
     let rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
     let rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
     let resistanceNo = 2;
-    document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"></polygon>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + '_persist cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + '_persist cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + '_persist x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>電阻 B</title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + '_persist points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>電阻 B</title></polygon>'));
 }
 function checkAns(){
     if(!startbool)return;

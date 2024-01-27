@@ -16,7 +16,22 @@
 
 <body>
     <video autoplay id="camera"></video>
-    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute"><circle id="alligatorCircle1_01" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_01" cx="815" cy="525" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator01" x1="1250" y1="545" x2="815" y2="525" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_02" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_02" cx="815" cy="345" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator02" x1="1285" y1="545" x2="815" y2="345" style="stroke:Red;stroke-width:5px;"></line></svg>
+    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute">
+        <circle id="alligatorCircle1_01_persist" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2">
+            <title></title>
+        </circle>
+        <circle id="alligatorCircle2_01_persist" cx="815" cy="525" r="5" style="fill:Black;stroke-width:2">
+            <title></title>
+        </circle>
+        <line id="alligator01_persist" x1="1250" y1="545" x2="815" y2="525" style="stroke:Black;stroke-width:5px;"></line>
+        <circle id="alligatorCircle1_02_persist" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2">
+            <title></title>
+        </circle>
+        <circle id="alligatorCircle2_02_persist" cx="815" cy="345" r="5" style="fill:Red;stroke-width:2">
+            <title></title>
+        </circle>
+        <line id="alligator02_persist" x1="1285" y1="545" x2="815" y2="345" style="stroke:Red;stroke-width:5px;"></line>
+    </svg>
         <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
             <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
@@ -96,7 +111,20 @@
         </div>
         <canvas id="myCanvas" width="500" height="360"
             style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"><circle id="resistanceCircle1_01" cx="205" cy="125" r="5" style="fill:Brown;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_01" cx="205" cy="45" r="5" style="fill:Brown;stroke-width:2"><title></title></circle><line dataohm="100" id="resistance01" x1="205" y1="125" x2="205" y2="45" style="stroke:Brown;stroke-width:2"><title>100Ohms</title></line><polygon id="resistanceBox01" points="210,75 200,75 200,95 210,95" style="fill:blue; stroke:lime; stroke-width:1"><title>100Ohms</title></polygon></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline">
+                <circle id="resistanceCircle1_01_persist" cx="205" cy="125" r="5" style="fill:Brown;stroke-width:2">
+                    <title></title>
+                </circle>
+                <circle id="resistanceCircle2_01_persist" cx="205" cy="45" r="5" style="fill:Brown;stroke-width:2">
+                    <title></title>
+                </circle>
+                <line dataohm="100" id="resistance01_persist" x1="205" y1="125" x2="205" y2="45" style="stroke:Brown;stroke-width:2">
+                    <title>電阻 A： &#10;100 Ohms</title>
+                </line>
+                <polygon id="resistanceBox01_persist" points="210,75 200,75 200,95 210,95" style="fill:blue; stroke:lime; stroke-width:1">
+                    <title>電阻 A： &#10;100 Ohms</title>
+                </polygon>
+            </svg>
 
     </div>
     <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
@@ -125,8 +153,8 @@
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
     <form id="form2">
-        請回答以下問題(測量到最精準)<br>
-        下面那顆電阻值為(ohms):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
+        請用滑鼠移動到電阻上辨識電阻<br>並回答以下問題(測量到最精準)<br>
+        電阻 B 的電阻值為(ohms):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
         <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
     </form>
     <script type="text/javascript" src="js\exp5-2.js"></script>
