@@ -853,7 +853,7 @@ $(document).ready(function () {
     context.lineTo(315, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
-
+    findPersistNode();
 });
 function toggleDelButton() {
     if (drawInductance == 1) {
@@ -2501,6 +2501,27 @@ function reload(){
 window.onbeforeunload = () => {
     return confirm('確定要離開?');
 }
+
+function findPersistNode(){
+    let offsetX = 550;
+    let offsetY = 300;
+    var Things = $("line");
+    pointarray = [];
+    for (var i = 0; i < Things.length; i++) {
+        var x1 = Things[i].x1.baseVal.value;
+        var y1 = Things[i].y1.baseVal.value;
+        var x2 = Things[i].x2.baseVal.value;
+        var y2 = Things[i].y2.baseVal.value;
+        if(Things[i].id.includes("alligator")){
+            x2 -= offsetX;
+            y2 -= offsetY;
+        }
+        pointarray.push([x1, y1]);
+        pointarray.push([x2, y2]);
+    }
+}
+
+
 let id;
 let faradlist = [1e-6,1.1e-6,1.2e-6,1.3e-6]
 let henrylist = [0.02,0.01,0.02,0.01]
@@ -2596,6 +2617,7 @@ function start(){
     generator_power();
     osi.power_control();
     vertical_mode_dual();
+    findPersistNode();
     check();
 }
 

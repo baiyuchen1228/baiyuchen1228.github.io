@@ -1247,7 +1247,7 @@ $(document).ready(function () {
     context.lineTo(315, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
-
+    findPersistNode();
 });
 function toggleDelButton() {
     if (drawInductance == 1) {
