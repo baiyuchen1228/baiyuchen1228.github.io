@@ -2498,6 +2498,25 @@ window.onbeforeunload = () => {
     return confirm('確定要離開?');
 }
 
+function findPersistNode(){
+    let offsetX = 550;
+    let offsetY = 300;
+    var Things = $("line");
+    pointarray = [];
+    for (var i = 0; i < Things.length; i++) {
+        var x1 = Things[i].x1.baseVal.value;
+        var y1 = Things[i].y1.baseVal.value;
+        var x2 = Things[i].x2.baseVal.value;
+        var y2 = Things[i].y2.baseVal.value;
+        if(Things[i].id.includes("alligator")){
+            x2 -= offsetX;
+            y2 -= offsetY;
+        }
+        pointarray.push([x1, y1]);
+        pointarray.push([x2, y2]);
+    }
+}
+
 function start(){
     console.log("Starting");
     osi.set_SWP(0.04 * (getRandomInteger(10) - 5) + 1);
@@ -2529,6 +2548,7 @@ function start(){
     else{
         generator_frequency_5()
     }
+    findPersistNode();
     check();
 }
 
