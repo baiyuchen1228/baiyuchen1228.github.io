@@ -349,6 +349,7 @@ $("#container").mouseup(function (e) {
     check();
 });
 $(document).ready(function () {
+    $("#powersupply13").css("background-color", "White");
     var canvas = $("#myCanvas");
     var context = canvas.get(0).getContext("2d");
     var current_x = 0;
@@ -707,6 +708,7 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
+    $("#powersupply13").css("background-color", "Lightgreen");
     power = 1;
     powersupplyOutputStatus = 1;
     let id = parseInt($("#id1")[0].value,10);
@@ -952,7 +954,7 @@ function move() {
     if (progress_bar_i == 0) {
         progress_bar_i = 1;
         var elem = document.getElementById("myBar");
-        var width = 10;
+        var width = 0;
         var id = setInterval(frame, 10);
         function frame() {
             if (width >= 100) {
