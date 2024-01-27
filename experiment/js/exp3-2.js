@@ -86,31 +86,23 @@ var delIni;
 power_drowline1.onmousedown = function (e) {
     colorNo = 0;
     if (drawAlligator) {
-        var rect = power_drowline1.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 1285;
+        AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = power_drowline1.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [1285, 545];
     }
 }
 power_drowline2.onmousedown = function (e) {
     colorNo = 6;
     if (drawAlligator) {
-        var rect = power_drowline2.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 1250;
+        AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = power_drowline2.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [1250, 545];
     }
 }
 power_drowline3.onmousedown = function (e) {
@@ -142,48 +134,37 @@ power_drowline4.onmousedown = function (e) {
 meter1_drowline1.onmousedown = function (e) {
     colorNo = 2;
     if (drawAlligator) {
-        var rect = meter1_drowline1.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 85;
+        AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = meter1_drowline1.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [85, 565];
     }
 }
 meter1_drowline2.onmousedown = function (e) {
     colorNo = 8;
     if (drawAlligator) {
-        var rect = meter1_drowline2.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 145;
+        AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = meter1_drowline2.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [145, 565];
     }
 }
 meter1_drowline3.onmousedown = function (e) {
     colorNo = 3;
     if (drawAlligator) {
-        var rect = meter1_drowline3.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 205;
+        AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = meter1_drowline3.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [205, 565];
     }
 }
+
 
 
 function approx_x(x) {
@@ -623,9 +604,9 @@ function check() {
     // }
     
     vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
-    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
+    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : 0.00.toFixed(2)
     vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
-    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : res.power2.current.toFixed(2)
+    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : 0.00.toFixed(2)
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
@@ -715,7 +696,7 @@ function start(){
     id %= 100;
     current1 = 0.1;
     voltage1 = (id / 2 + 50) / 10;
-    cur1.innerHTML = current1.toFixed(2);
+    cur1.innerHTML = 0.00.toFixed(2);
     vol1.innerHTML = voltage1.toFixed(2);
     if(id % 3 == 0){
         zeroRed();
@@ -724,6 +705,7 @@ function start(){
     }else{
         twoRed();
     }
+    check();
 }
 function checkAns(){
     if(!startbool)return;

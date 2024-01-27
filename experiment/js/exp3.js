@@ -85,6 +85,8 @@ document.getElementById("powersupply13").onclick = function () {
         powersupplyOutputStatus = 1;
         $("#powersupply13").css("background-color", "Lightgreen");
         console.log("output on!");
+        cur1.innerHTML = 0.00.toFixed(2);
+        cur2.innerHTML = 0.00.toFixed(2);
         check();
     } else {
         powersupplyOutputStatus = 0;
@@ -101,6 +103,7 @@ document.getElementById("powersupply13").onclick = function () {
 
 var intervalID;
 $(powersupply5).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval(function (){
         turnOffMode();
         if (power == 1 && current1 <= 3) {
@@ -115,6 +118,7 @@ $(powersupply5).mousedown(function (){
 });
 
 $(powersupply6).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -131,6 +135,7 @@ $(powersupply6).mousedown(function (){
 });
 
 $(powersupply7).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
         turnOffMode();
         if (power == 1 && voltage1 <= 30) {
@@ -144,6 +149,7 @@ $(powersupply7).mousedown(function (){
 });
 
 $(powersupply8).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -160,6 +166,7 @@ $(powersupply8).mousedown(function (){
 });
 
 $(powersupply9).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1 && current2 <= 3) {
@@ -172,6 +179,7 @@ $(powersupply9).mousedown(function (){
     clearInterval(intervalID);
 });
 $(powersupply10).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -187,6 +195,7 @@ $(powersupply10).mousedown(function (){
     clearInterval(intervalID);
 });
 $(powersupply11).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1 && voltage2 <= 30) {
@@ -199,6 +208,7 @@ $(powersupply11).mousedown(function (){
     clearInterval(intervalID);
 });
 $(powersupply12).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -341,33 +351,26 @@ var delIni;
 power_drowline1.onmousedown = function (e) {
     colorNo = 0;
     if (drawAlligator) {
-        var rect = power_drowline1.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 1285;
+        AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = power_drowline1.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [1285, 545];
     }
 }
 power_drowline2.onmousedown = function (e) {
     colorNo = 6;
     if (drawAlligator) {
-        var rect = power_drowline2.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 1250;
+        AlligatorY1 = 545;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = power_drowline2.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [1250, 545];
     }
 }
+
 power_drowline3.onmousedown = function (e) {
     alert("本實驗不開放使用這一組電功，請用左邊的電功");
     return;
@@ -397,48 +400,37 @@ power_drowline4.onmousedown = function (e) {
 meter1_drowline1.onmousedown = function (e) {
     colorNo = 2;
     if (drawAlligator) {
-        var rect = meter1_drowline1.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 85;
+        AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = meter1_drowline1.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [85, 565];
     }
 }
 meter1_drowline2.onmousedown = function (e) {
     colorNo = 8;
     if (drawAlligator) {
-        var rect = meter1_drowline2.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 145;
+        AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = meter1_drowline2.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [145, 565];
     }
 }
 meter1_drowline3.onmousedown = function (e) {
     colorNo = 3;
     if (drawAlligator) {
-        var rect = meter1_drowline3.getBoundingClientRect();
-        AlligatorX1 = (rect.left + rect.right)/2;
-        AlligatorY1 = (rect.top + rect.bottom)/2;
+        AlligatorX1 = 205;
+        AlligatorY1 = 565;
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        var rect = meter1_drowline3.getBoundingClientRect();
-        var posX = (rect.left + rect.right)/2;
-        var posY = (rect.top + rect.bottom)/2;
-        delALLalligator = [posX, posY];
+        delALLalligator = [205, 565];
     }
 }
+
 
 
 function approx_x(x) {
@@ -876,10 +868,10 @@ function check() {
     //     return;
     // }
     
-    vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
-    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
-    vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
-    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : res.power2.current.toFixed(2)
+    vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2);
+    cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : 0.00.toFixed(2);
+    vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2);
+    cur2.innerHTML = res.power2.current == "ERR" ? res.power2.current : 0.00.toFixed(2);
     if (meter1_mode == 0) {
         $("#multimeter1_3").text('');
     }
