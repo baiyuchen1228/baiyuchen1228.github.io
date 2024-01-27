@@ -586,6 +586,10 @@ $("#container").mouseup(function (e) {
         Things = $("line");
         for (var i = Things.length - 1; i >= 0; i--) {
             if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -638,6 +642,10 @@ $("#container").mouseup(function (e) {
                 return;
             }
             if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -704,6 +712,10 @@ $("#container").mouseup(function (e) {
             y2 += 420;
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                    if(Things[i].id.includes("persist")){
+                        alert("請勿刪除原有的元件");
+                        return;
+                    }
                     for (let j = 0; j < pointarray.length; j++) {
                         if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                             // pointarray = deleteRow(pointarray, j);
@@ -2852,7 +2864,7 @@ function generator_drawline2() {
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [490, 400];
+        delALLalligator = [480, 400];
     }
 }
 v_outer_dis = [5,2,1,0.5,0.2,0.1,0.05,0.02,0.01];

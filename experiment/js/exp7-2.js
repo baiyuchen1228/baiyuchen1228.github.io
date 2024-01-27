@@ -586,6 +586,10 @@ $("#container").mouseup(function (e) {
         Things = $("line");
         for (var i = Things.length - 1; i >= 0; i--) {
             if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -638,6 +642,10 @@ $("#container").mouseup(function (e) {
                 return;
             }
             if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -704,6 +712,10 @@ $("#container").mouseup(function (e) {
             y2 += 420;
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                    if(Things[i].id.includes("persist")){
+                        alert("請勿刪除原有的元件");
+                        return;
+                    }
                     for (let j = 0; j < pointarray.length; j++) {
                         if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                             // pointarray = deleteRow(pointarray, j);
@@ -2518,10 +2530,10 @@ function start(){
     var rectY3 = centerY - 5 * Math.cos(slope) - 10 * Math.sin(slope);
     var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
     var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
-    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
-    document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + '_persist cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + '_persist cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + '_persist x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
+    document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + '_persist points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
     linestack.push("capacitance0"+capacitanceNo);
     generator_AMPL_base = 1;
     evaluate_generator_AMPL();
