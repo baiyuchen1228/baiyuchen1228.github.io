@@ -17,7 +17,36 @@
 
 <body>
     <video autoplay id="camera"></video>
-    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute"><circle id="alligatorCircle1_01" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_01" cx="835" cy="365" r="5" style="fill:Black;stroke-width:2"><title></title></circle><line id="alligator01" x1="1250" y1="545" x2="835" y2="365" style="stroke:Black;stroke-width:5px;"></line><circle id="alligatorCircle1_02" cx="1350" cy="545" r="5" style="fill:Indigo;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_02" cx="835" cy="325" r="5" style="fill:Indigo;stroke-width:2"><title></title></circle><line id="alligator02" x1="1350" y1="545" x2="835" y2="325" style="stroke:Indigo;stroke-width:5px;"></line><circle id="alligatorCircle1_03" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_03" cx="675" cy="325" r="5" style="fill:Red;stroke-width:2"><title></title></circle><line id="alligator03" x1="1285" y1="545" x2="675" y2="325" style="stroke:Red;stroke-width:5px;"></line><circle id="alligatorCircle1_04" cx="1385" cy="545" r="5" style="fill:DarkRed;stroke-width:2"><title></title></circle><circle id="alligatorCircle2_04" cx="775" cy="325" r="5" style="fill:DarkRed;stroke-width:2"><title></title></circle><line id="alligator04" x1="1385" y1="545" x2="775" y2="325" style="stroke:DarkRed;stroke-width:5px;"></line></svg>
+    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position:absolute">
+        <circle id="alligatorCircle1_01_persist" cx="1250" cy="545" r="5" style="fill:Black;stroke-width:2">
+            <title></title>
+        </circle>
+        <circle id="alligatorCircle2_01_persist" cx="835" cy="365" r="5" style="fill:Black;stroke-width:2">
+            <title></title>
+        </circle>
+        <line id="alligator01_persist" x1="1250" y1="545" x2="835" y2="365" style="stroke:Black;stroke-width:5px;"></line>
+        <circle id="alligatorCircle1_02_persist" cx="1350" cy="545" r="5" style="fill:Indigo;stroke-width:2">
+            <title></title>
+        </circle>
+        <circle id="alligatorCircle2_02_persist" cx="835" cy="325" r="5" style="fill:Indigo;stroke-width:2">
+            <title></title>
+        </circle>
+        <line id="alligator02_persist" x1="1350" y1="545" x2="835" y2="325" style="stroke:Indigo;stroke-width:5px;"></line>
+        <circle id="alligatorCircle1_03_persist" cx="1285" cy="545" r="5" style="fill:Red;stroke-width:2">
+            <title></title>
+        </circle>
+        <circle id="alligatorCircle2_03_persist" cx="675" cy="325" r="5" style="fill:Red;stroke-width:2">
+            <title></title>
+        </circle>
+        <line id="alligator03_persist" x1="1285" y1="545" x2="675" y2="325" style="stroke:Red;stroke-width:5px;"></line>
+        <circle id="alligatorCircle1_04_persist" cx="1385" cy="545" r="5" style="fill:DarkRed;stroke-width:2">
+            <title></title>
+        </circle>
+        <circle id="alligatorCircle2_04_persist" cx="775" cy="325" r="5" style="fill:DarkRed;stroke-width:2">
+            <title></title>
+        </circle>
+        <line id="alligator04_persist" x1="1385" y1="545" x2="775" y2="325" style="stroke:DarkRed;stroke-width:5px;"></line>
+    </svg>
     <h1>
             <a href="../canvas.html" target="_self">國立中正大學普通物理實驗學習平台</a>
             <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
@@ -92,7 +121,54 @@
         </div>
         <canvas id="myCanvas" width="500" height="360"
             style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;"></canvas>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline"><circle id="resistanceCircle1_01" cx="105" cy="25" r="5" style="fill:FireBrick;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_01" cx="105" cy="105" r="5" style="fill:FireBrick;stroke-width:2"><title></title></circle><line dataohm="100" id="resistance01" x1="105" y1="25" x2="105" y2="105" style="stroke:FireBrick;stroke-width:2"><title>100Ohms</title></line><polygon id="resistanceBox01" points="100,75 110,75 110,55 100,55" style="fill:blue; stroke:lime; stroke-width:1"><title>100Ohms</title></polygon><circle id="resistanceCircle1_02" cx="205" cy="25" r="5" style="fill:LightCoral;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_02" cx="205" cy="105" r="5" style="fill:LightCoral;stroke-width:2"><title></title></circle><line dataohm="200" id="resistance02" x1="205" y1="25" x2="205" y2="105" style="stroke:LightCoral;stroke-width:2"><title>200Ohms</title></line><polygon id="resistanceBox02" points="200,75 210,75 210,55 200,55" style="fill:blue; stroke:lime; stroke-width:1"><title>200Ohms</title></polygon><circle id="resistanceCircle1_03" cx="145" cy="165" r="5" style="fill:OrangeRed;stroke-width:2"><title></title></circle><circle id="resistanceCircle2_03" cx="145" cy="245" r="5" style="fill:OrangeRed;stroke-width:2"><title></title></circle><line dataohm="300" id="resistance03" x1="145" y1="165" x2="145" y2="245" style="stroke:OrangeRed;stroke-width:2"><title>300Ohms</title></line><polygon id="resistanceBox03" points="140,215 150,215 150,195 140,195" style="fill:blue; stroke:lime; stroke-width:1"><title>300Ohms</title></polygon><circle id="wireCircle1_01" cx="165" cy="245" r="5" style="fill:Chocolate;stroke-width:2"><title></title></circle><circle id="wireCircle2_01" cx="285" cy="225" r="5" style="fill:Chocolate;stroke-width:2"><title></title></circle><line id="wire01" x1="165" y1="245" x2="285" y2="225" style="stroke:Chocolate;stroke-width:2"><title></title></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 550px; top: 150px; z-index:0; position:absolute" id="svgline">
+            <circle id="resistanceCircle1_01_persist" cx="105" cy="25" r="5" style="fill:FireBrick;stroke-width:2">
+                <title></title>
+            </circle>
+            <circle id="resistanceCircle2_01_persist" cx="105" cy="105" r="5" style="fill:FireBrick;stroke-width:2">
+                <title></title>
+            </circle>
+            <line dataohm="100" id="resistance01_persist" x1="105" y1="25" x2="105" y2="105" style="stroke:FireBrick;stroke-width:2">
+                <title>電阻 A：&#10;100Ohms
+                </title>
+            </line>
+            <polygon id="resistanceBox01_persist" points="100,75 110,75 110,55 100,55" style="fill:blue; stroke:lime; stroke-width:1">
+                <title>電阻 A：&#10;100Ohms</title>
+            </polygon>
+            <circle id="resistanceCircle1_02_persist" cx="205" cy="25" r="5" style="fill:LightCoral;stroke-width:2">
+                <title></title>
+            </circle>
+            <circle id="resistanceCircle2_02_persist" cx="205" cy="105" r="5" style="fill:LightCoral;stroke-width:2">
+                <title></title>
+            </circle>
+            <line dataohm="200" id="resistance02_persist" x1="205" y1="25" x2="205" y2="105" style="stroke:LightCoral;stroke-width:2">
+                <title>電阻 B：&#10;200Ohms</title>
+            </line>
+            <polygon id="resistanceBox02_persist" points="200,75 210,75 210,55 200,55" style="fill:blue; stroke:lime; stroke-width:1">
+                <title>電阻 B：&#10;200Ohms</title>
+            </polygon>
+            <circle id="resistanceCircle1_03_persist" cx="145" cy="165" r="5" style="fill:OrangeRed;stroke-width:2">
+                <title></title>
+            </circle>
+            <circle id="resistanceCircle2_03_persist" cx="145" cy="245" r="5" style="fill:OrangeRed;stroke-width:2">
+                <title></title>
+            </circle>
+            <line dataohm="300" id="resistance03_persist" x1="145" y1="165" x2="145" y2="245" style="stroke:OrangeRed;stroke-width:2">
+                <title>電阻 C：&#10;300Ohms</title>
+            </line>
+            <polygon id="resistanceBox03_persist" points="140,215 150,215 150,195 140,195" style="fill:blue; stroke:lime; stroke-width:1">
+                <title>電阻 C：&#10;300Ohms</title>
+            </polygon>
+            <circle id="wireCircle1_01_persist" cx="165" cy="245" r="5" style="fill:Chocolate;stroke-width:2">
+                <title></title>
+            </circle>
+            <circle id="wireCircle2_01_persist" cx="285" cy="225" r="5" style="fill:Chocolate;stroke-width:2">
+                <title></title>
+            </circle>
+            <line id="wire01_persist" x1="165" y1="245" x2="285" y2="225" style="stroke:Chocolate;stroke-width:2">
+                <title></title>
+            </line>
+        </svg>
     </div>
     <button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add
         Wire(單芯線)</button>
@@ -120,10 +196,10 @@
         <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
     </form>
     <form id="form1">
-        請回答以下問題(測量到最精準)<br>
-        右邊那顆電阻電壓差值為(V):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
-        左邊那顆電阻電壓差值為(V):<input class="input" value="" id="ans2"></input><a id="anstext2"></a><br>
-        下面那顆電阻電流值為(mA):<input class="input" value="" id="ans3"></input><a id="anstext3"></a><br>
+        請用滑鼠移動到電阻上辨識電阻並回答以下問題<br>(先完成電路，並且測量到最精準)<br>
+        電阻 A 的電壓差值為(V):<input class="input" value="" id="ans2"></input><a id="anstext1"></a><br>
+        電阻 B 的電壓差值為(V):<input class="input" value="" id="ans1"></input><a id="anstext2"></a><br>
+        電阻 C 的電流值為(mA):<input class="input" value="" id="ans3"></input><a id="anstext3"></a><br>
         <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
     </form>
     <img id="circuit" src="images/circuit.png">

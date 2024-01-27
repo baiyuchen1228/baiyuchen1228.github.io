@@ -789,6 +789,10 @@ $("#container").mouseup(function (e) {
         Things = $("line");
         for (var i = Things.length - 1; i >= 0; i--) {
             if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -835,6 +839,10 @@ $("#container").mouseup(function (e) {
                 return;
             }
             if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+                if(Things[i].id.includes("persist")){
+                    alert("請勿刪除原有的元件");
+                    return;
+                }
                 for (let j = 0; j < pointarray.length; j++) {
                     if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                         // pointarray = deleteRow(pointarray, j);
@@ -892,6 +900,10 @@ $("#container").mouseup(function (e) {
             console.log([x1, y1, x2, y2]);
             for (var i = Things.length - 1; i >= 0; i--) {
                 if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                    if(Things[i].id.includes("persist")){
+                        alert("請勿刪除原有的元件");
+                        return;
+                    }
                     for (let j = 0; j < pointarray.length; j++) {
                         if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
                             // pointarray = deleteRow(pointarray, j);
@@ -1992,7 +2004,7 @@ var student_pre_test_ans;
 function checkEqual(a, b){
     console.log(a,b);
     if(isNaN(a) || isNaN(b))    return false;
-    console.log(abs(a-b),b*0.1);
+    // console.log(abs(a-b),b*0.1);
     return abs(a - b) < b * 0.1;
 }
 
