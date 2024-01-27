@@ -149,6 +149,7 @@ document.getElementById("powersupply13").onclick = function () {
 
 var intervalID;
 $(powersupply5).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval(function (){
         turnOffMode();
         if (power == 1 && current1 <= 3) {
@@ -163,6 +164,7 @@ $(powersupply5).mousedown(function (){
 });
 
 $(powersupply6).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -179,6 +181,7 @@ $(powersupply6).mousedown(function (){
 });
 
 $(powersupply7).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
         turnOffMode();
         if (power == 1 && voltage1 <= 30) {
@@ -192,6 +195,7 @@ $(powersupply7).mousedown(function (){
 });
 
 $(powersupply8).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -208,6 +212,7 @@ $(powersupply8).mousedown(function (){
 });
 
 $(powersupply9).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1 && current2 <= 3) {
@@ -220,6 +225,7 @@ $(powersupply9).mousedown(function (){
     clearInterval(intervalID);
 });
 $(powersupply10).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
@@ -235,6 +241,7 @@ $(powersupply10).mousedown(function (){
     clearInterval(intervalID);
 });
 $(powersupply11).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1 && voltage2 <= 30) {
@@ -247,6 +254,7 @@ $(powersupply11).mousedown(function (){
     clearInterval(intervalID);
 });
 $(powersupply12).mousedown(function (){
+    if(!startbool) return;
     intervalID = setInterval( function (){
     turnOffMode();
     if (power == 1) {
