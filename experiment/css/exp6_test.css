@@ -183,11 +183,13 @@ div#powersupply{
     top: 150px;
     left: 15px;
     width: 50px;
+    cursor: not-allowed;
 }
 #powersupply14{
     top: 230px;
     left: 15px;
     width: 50px;
+    cursor: not-allowed;
 }
 #powersupply15{
     top: 230px;
