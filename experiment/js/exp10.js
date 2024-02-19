@@ -632,7 +632,6 @@ $("#container").mouseup(function (e) {
 
                 }
                 check();
-                turnOffMode();
                 return;
             }
             if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
@@ -685,7 +684,6 @@ $("#container").mouseup(function (e) {
 
                 }
                 check();
-                turnOffMode();
                 return;
             }
         }
@@ -723,7 +721,6 @@ $("#container").mouseup(function (e) {
                         delALLalligator = null;
                     }
                     check();
-                    turnOffMode();
                     return;
                 }
             }
@@ -838,6 +835,11 @@ $(document).ready(function () {
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
+    // setting wave generator
+    startbool = true;
+    generator_sin();
+    generator_frequency_3();
+    startbool = false;
 });
 function toggleDelButton() {
     if (drawInductance == 1) {
@@ -2804,12 +2806,12 @@ function generator_drawline2() {
         document.onmousemove = drawDashedLine2();
     }
     if (deletemode) {
-        delALLalligator = [490, 400];
+        delALLalligator = [480, 400];
     }
 }
 v_outer_dis = [5,2,1,0.5,0.2,0.1,0.05,0.02,0.01];
-v_outer_ind_1 = 4;
-v_outer_ind_2 = 4;
+v_outer_ind_1 = 2;
+v_outer_ind_2 = 2;
 function minus_vertical_v_outer1(){
     if(v_outer_ind_1 == 0) return;
     v_outer_ind_1--;
