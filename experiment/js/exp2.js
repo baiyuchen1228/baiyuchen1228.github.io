@@ -514,7 +514,7 @@ $("#container").mouseup(function (e) {
             }
         }
         if (x1 == 0 || y1 == 0) {
-            alert('(請先點按鈕)please click button first');
+            // alert('(請先點按鈕)please click button first');
             return;
         }
         // console.log(x2,y2);
@@ -731,7 +731,7 @@ $("#container").mouseup(function (e) {
         }
     }
     //console.log(pointarray);
-    // check();
+    check();
 });
 $(document).ready(function () {
 
