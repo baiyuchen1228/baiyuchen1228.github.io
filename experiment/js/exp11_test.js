@@ -1921,7 +1921,7 @@ class Oscillator{
         this._vaild = false;
         this._phasor = [];
         this._loop = 100;
-        this._level = 0.05;
+        this._level = 0.00005;
         this._slope = 1;
         this._reference = "CH1";
         this._show_mode = "CH1";
@@ -2181,7 +2181,10 @@ class Oscillator{
         let flag = false;
         let pre = this._datapoints0[begin] / this._vertical_v[0];
         // pre += this._vertical_offset[0];
-
+        if(this._reference == "CH2"){
+            pre = this._datapoints1[begin] / this._vertical_v[1];
+            // pre += this._vertical_offset[1];
+        }
 
 
         for(;begin < 2 * this._WAVE_DATA_COUNT && flag == false;begin++){
@@ -2194,9 +2197,9 @@ class Oscillator{
                 temp = this._datapoints1[begin] / this._vertical_v[1];
                 // temp += this._vertical_offset[1];
             }
-            if(this._slope == 1 && pre <= this._level+0.05 && temp >= this._level-0.05){
+            if(this._slope == 1 && pre <= this._level+0.05 && temp >= this._level-0.05 && pre <= temp){
                 flag = true;
-            }else if(this._slope == -1 && pre >= this._level-0.05 && temp <= this._level+0.05){
+            }else if(this._slope == -1 && pre >= this._level-0.05 && temp <= this._level+0.05 && pre >= temp){
                 flag = true;
             }
             pre = temp;
