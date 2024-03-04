@@ -1896,15 +1896,7 @@ class WaveGenerator{
             return result;
         }
         return 0;
-    }
-    voltage_at(t, coefficient, omega, phase, amplitude){
-        //if(amplitude > 5) return 0;
-        // if(generator_offset_on){
-        //     return this._offset + this.voltage(t, coefficient, omega, phase, amplitude);
-        // }
-        return this.voltage(t, coefficient, omega, phase, amplitude);
-    }
-    
+    }    
 }
 
 var wg = new WaveGenerator();
@@ -2054,8 +2046,8 @@ class Oscillator{
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
-                    this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase0, amplitude0);
-                    this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase1, amplitude1);
+                    this._datapoints0[j] += wg.voltage((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase0, amplitude0);
+                    this._datapoints1[j] += wg.voltage((j + this._time_offset) * this._time_mul, 2 * i + 1, omega, phase1, amplitude1);
                 }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
@@ -2084,8 +2076,8 @@ class Oscillator{
                 let phase1 = wg.calculate_phase(res, 1);
                 let amplitude1 = wg.calculate_amplitude(res, 1);
                 for(let j=0;j<(WAVE_DATA_COUNT);j++){
-                    this._datapoints0[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
-                    this._datapoints1[j] += wg.voltage_at((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
+                    this._datapoints0[j] += wg.voltage((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
+                    this._datapoints1[j] += wg.voltage((j + this._time_offset) * this._time_mul, pow(-1,i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
                 }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
@@ -2107,8 +2099,8 @@ class Oscillator{
             let phase1 = wg.calculate_phase(res, 1);
             let amplitude1 = wg.calculate_amplitude(res, 1);
             for(let i=0;i< (WAVE_DATA_COUNT);i++){
-                this._datapoints0[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase0, amplitude0);
-                this._datapoints1[i] = wg.voltage_at((i + this._time_offset) * this._time_mul, 1, omega, phase1, amplitude1); 
+                this._datapoints0[i] = wg.voltage((i + this._time_offset) * this._time_mul, 1, omega, phase0, amplitude0);
+                this._datapoints1[i] = wg.voltage((i + this._time_offset) * this._time_mul, 1, omega, phase1, amplitude1); 
                 if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[i] += wg.offset;
                 }
