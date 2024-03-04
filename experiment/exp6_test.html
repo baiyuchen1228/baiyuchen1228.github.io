@@ -8,6 +8,7 @@
     <title>測驗六：克希荷夫</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/exp6_test.css">
+    <link rel="stylesheet" href="css/progree_bar.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.bgiframe.js"></script>
@@ -200,9 +201,11 @@
         電阻 A 的電壓差值為(V):<input class="input" value="" id="ans2"></input><a id="anstext1"></a><br>
         電阻 B 的電壓差值為(V):<input class="input" value="" id="ans1"></input><a id="anstext2"></a><br>
         電阻 C 的電流值為(mA):<input class="input" value="" id="ans3"></input><a id="anstext3"></a><br>
-        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
+        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="move();checkAns()"><a id="ansStatus"></a></input><br>
+        <div id="myProgress" style="width:345px;"><div id="myBar"></div></div>
     </form>
     <img id="circuit" src="images/circuit.png">
+    <script type="text/javascript" src="js\progress_bar.js"></script>
     <script type="text/javascript" src="js\exp6_test.js"></script>
 </body>
 

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>測驗五：歐姆定律及電容實驗</title>
     <link rel="stylesheet" href="css/exp5_test.css">
+    <link rel="stylesheet" href="css/progree_bar.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.bgiframe.js"></script>
@@ -155,8 +156,10 @@
     <form id="form2">
         請用滑鼠移動到電阻上辨識電阻<br>並回答以下問題(測量到最精準)<br>
         電阻 B 的電阻值為(ohms):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
-        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
+        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="move();checkAns()"><a id="ansStatus"></a></input><br>
+        <div id="myProgress" style="width:230px;"><div id="myBar"></div></div>
     </form>
+    <script type="text/javascript" src="js\progress_bar.js"></script>
     <script type="text/javascript" src="js\exp5_test.js"></script>
 </body>
 

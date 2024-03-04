@@ -7,6 +7,7 @@
     <title>測驗二: 示波器與波形產生器教學</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/exp2_test.css">
+    <link rel="stylesheet" href="css/progree_bar.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.bgiframe.js"></script>
@@ -206,7 +207,8 @@
         校正：<font id="check_Correction" color="#FF0000">未完成</font><br>
         波形產生器震幅(Vpp):<input class="input" value="" id="ans1"></input><a id="anstext1"></a><br>
         波形產生器頻率(Hz):<input class="input" value="" id="ans2"></input><a id="anstext2"></a><br>
-        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="checkAns()"><a id="ansStatus"></a></input><br>
+        <input type="buttom" id="submitAnswerbuttom" value="提交" readonly="readonly" onclick="move();checkAns()"><a id="ansStatus"></a></input><br>
+        <div id="myProgress" style="width:290px;"><div id="myBar"></div></div>
     </form>
     <form class="demo_wave" id="demo_wave1">
         wave generator<br>
@@ -219,6 +221,7 @@
         <!-- <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()"></input><br>
         <input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="check()"></input><br> -->
     </form>
+    <script type="text/javascript" src="js\progress_bar.js"></script>
     <script type="text/javascript" src="js\exp2_test.js"></script>
 </body>
 
