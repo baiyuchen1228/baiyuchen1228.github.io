@@ -106,6 +106,9 @@ class Oscillator{
         }
     }
     get_data(){
+        // this._begin == -1 --> 以週期為時間間隔依據
+        // others --> 以 time_mul 為時間間隔依據
+        
         let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 3;
         if(this._init == 0 && this._vaild == false){
             this.get_res();
@@ -131,7 +134,7 @@ class Oscillator{
         }
         let type = wg.type;
         let is_find_begin = false;
-        let timeslot = 0.4 / wg.frequency / this._WAVE_DATA_COUNT; // 用週期去切格子
+        let timeslot = 0.4 / wg.frequency / this._WAVE_DATA_COUNT; // 用週期去切格子(0.4 為調參結果，原則上只要經過的週期大致上為 1 即可)
         if(this._begin == -1){
             is_find_begin = true;
         }else{
@@ -325,7 +328,9 @@ class Oscillator{
             pre = temp;
         }
         this._begin -= 1;
+
         if(flag == false){
+            // level 的位置沒有波經過
             for(let i=0;i<this._WAVE_DATA_COUNT;i++){
                 datapoints0[i] = 0.008 * i - 4;
                 datapoints1[i] = 4 - 0.008 * i;
