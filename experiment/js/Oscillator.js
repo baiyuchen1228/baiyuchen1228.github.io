@@ -299,10 +299,10 @@ class Oscillator{
         // 開找符合條件的 begin
         this._begin = 1;
         let flag = false;
-        let pre = this._datapoints0[this._begin] / this._vertical_v[0];
+        let pre = this._datapoints0[0] / this._vertical_v[0];
         // pre += this._vertical_offset[0];
         if(this._reference == "CH2"){
-            pre = this._datapoints1[this._begin] / this._vertical_v[1];
+            pre = this._datapoints1[0] / this._vertical_v[1];
             // pre += this._vertical_offset[1];
         }
 
