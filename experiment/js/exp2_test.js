@@ -2149,6 +2149,7 @@ class Oscillator{
         }
         check();
     }
+
     draw(){
         document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
         document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
@@ -3180,15 +3181,6 @@ function unimplemented() {
     alert("This function is unimplement!")
 }
 
-function oscillosocope_init() {
-    osi.set_init();
-    if(osi.init){
-        $("#oscillosocope_init").css("backgroundColor", "green");
-    }else{
-        $("#oscillosocope_init").css("backgroundColor", "white");
-    }
-    osi.draw();
-}
 
 function minus_horizonal_SWP(){
     if(osi._SWP < 0.8) return;
