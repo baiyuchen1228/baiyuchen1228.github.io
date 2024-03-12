@@ -774,7 +774,7 @@ div#oscilloscopeScreen{
     height : 250px;
     left : 600px;
     top : 600px;
-    z-index: 1;
+    z-index: -1;
 }
 #form1{
     padding: 5px;
@@ -784,7 +784,7 @@ div#oscilloscopeScreen{
     height : 250px;
     left : 900px;
     top : 600px;
-    z-index: 1;
+    z-index: -1;
 }
 #form2{
     padding: 5px;
@@ -794,7 +794,7 @@ div#oscilloscopeScreen{
     height : 250px;
     left : 1200px;
     top : 600px;
-    z-index: 1;
+    z-index: -1;
 }
 #submitbuttom{
     width: 30px;

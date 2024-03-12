@@ -52,6 +52,9 @@ class WaveGenerator{
     set_offset_on(val){
         this._offset_on = val;
     }
+    set_AMPL_base(val){
+        this._AMPL_base = val;
+    }
     get power(){
         return this._power;
     }

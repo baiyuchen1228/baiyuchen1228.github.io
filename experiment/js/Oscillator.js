@@ -92,15 +92,15 @@ class Oscillator{
         let loop = this._loop;
         if(type == "square_wave"){
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency;
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000; //調參 
                 this._phasor[i] = checkCircuit(omega);
             }
         }else if(type == "sin_wave"){
-            let omega = 2 * math.PI * wg.frequency;
+            let omega = 2 * math.PI * wg.frequency * 1000;
             this._phasor[0] = checkCircuit(omega);
         }else if(type == "triangle_wave"){
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency;
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
                 this._phasor[i] = checkCircuit(omega);
             }
         }

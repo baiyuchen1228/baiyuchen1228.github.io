@@ -50,23 +50,8 @@ var delIni;
 
 var meter2On = 0;
 
-var generator_frequency = 1; // 1 * 10 ^ 2
-var generator_frequency1 = 1;
-var generator_frequency2 = 1;
-var generator_power_on = false;
-var wave_type;
-var generator_inv_on = false;
-var generator_AMPL1_on = false;
 var generator_duty = 0.5;
-var generator_offset = 0;
-var generator_AMPL2_on = false;
-var generator_AMPL = 1; // 1 * 10 ^ 0
-var generator_AMPL_base = 1; 
-var generator_AMPL_pow = 0;
 var generator_output_on = false;
-
-
-
 
 
 
@@ -856,7 +841,7 @@ $(document).ready(function () {
 
     // setting wave generator
     startbool = true;
-    generator_frequency_3();
+    wg.frequency_pow(3);
     startbool = false;
 });
 function toggleDelButton() {
@@ -1759,146 +1744,6 @@ function checkConnected(){
 }
 
 
-class WaveGenerator{
-    constructor(){
-        this._frequency = 0;
-        this._amplitude = 0;
-        this._inv = 1;
-        this._offset = 0;
-        this._cycle = 100000;
-        this._type = "";
-        this._offset_on = false;
-    }
-    static get square_wave(){
-        return "square_wave";
-    }
-    static get sin_wave(){
-        return "sin_wave";
-    }
-    static get triangle_wave(){
-        return "triangle_wave";
-    }
-    set_frequency(freq_val){
-        this._frequency = freq_val / 1000.0;       //調參
-        //this._frequency = freq_val
-        this._cycle = 1 / this._frequency;
-    }
-    set_amplitude(val){
-        this._amplitude = val;
-    }
-    set_inv(val){
-        this._inv = val;
-    }
-    set_offset(val){
-        this._offset = val;
-    }
-    set_type(val){
-        this._type = val;
-    }
-    set_offset_on(drawing){
-        if(this._offset_on){
-            $("#generator_offset_switch").css("backgroundColor", "white");
-            this._offset_on = false;
-        }
-        else{
-            $("#generator_offset_switch").css("backgroundColor", "green");
-            this._offset = 0;
-            this._offset_on = true;
-        }
-        if(drawing) osi.draw();
-    }
-    get frequency(){
-        return this._frequency;
-    }
-    get amplitude(){
-        return this._amplitude;
-    }
-    get inv(){
-        return this._inv;
-    }
-    get offset(){
-        return this._offset;
-    }
-    get type(){
-        return this._type;
-    }
-    get offset_on(){
-        return this._offset_on;
-    }
-    calculate_phase(res, index){
-        let a,b;
-        let phase;
-        if(index == 0){
-            a = res.voltage1.re;
-            b = res.voltage1.im;
-        }
-        else{
-            a = res.voltage2.re;
-            b = res.voltage2.im;
-        }
-        if(a > 0){
-            phase = Math.atan(b/a);
-        }
-        else if(a < 0){
-            phase = Math.atan(b/a);
-            phase += Math.PI;
-        }
-        else{ // a == 0
-            if(b > 0){
-                phase = math.PI / 2;
-            }
-            if(b <= 0){
-                phase = math.PI * 3 / 2;
-            }
-        }
-        if(phase < 0){
-            phase += 2 * math.PI;
-        }
-        return phase;
-    }
-    calculate_amplitude(res, index){
-        let a,b;
-        let amplitude;
-        if(index == 0){
-            a = res.voltage1.re;
-            b = res.voltage1.im;
-        }
-        else{
-            a = res.voltage2.re;
-            b = res.voltage2.im;
-        }
-        amplitude =  math.sqrt(a * a + b * b);
-        return amplitude;
-    }
-    voltage(t, coefficient, omega, phase, amplitude){
-        // let cycle = this._cycles[i], amplitude = this._amplitudes[i];
-        // let frequency = this._frequencys[i], type = this._types[i];
-        // let inv = this._inv[i];
-        let cycle = this._cycle;
-        let inv = this._inv;
-        let type = this._type;
-        t *= 0.003;
-        if(type == "square_wave"){
-            let result = 0;
-            result += amplitude * (1 / coefficient) * math.sin(omega * t + phase);
-            result *= (4 / Math.PI);
-            result *= inv;
-            return result;
-        }
-        else if(type == "sin_wave"){
-            return inv * amplitude * Math.sin(omega * t + phase);
-        }
-        else if(type == "triangle_wave"){
-            let result = 0;
-            result += amplitude * (1 / coefficient) * math.sin(omega * t + phase);
-            result *= (8 / Math.PI / Math.PI);
-            result *= inv;
-            return result;
-        }
-        return 0;
-    }    
-}
-
 var wg = new WaveGenerator();
 var osi = new Oscillator();
 
@@ -1943,7 +1788,7 @@ function checkCircuit(omega) {
         res_meter.voltage2 = x2[FG2.voltage_edgeid].mul(edge_list[FG2.voltage_edgeid].ohm);
     }
 
-    if(generator_power_on == false){
+    if(wg.power == false){
         res_meter.voltage1 = math.complex(0, 0);
         res_meter.voltage2 = math.complex(0, 0);
         document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
@@ -2153,11 +1998,12 @@ function start(){
     document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + '_persist x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>'));
     document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + '_persist points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + henry + 'Henry</title></polygon>'));
     
-    generator_AMPL_base = 1;
-    evaluate_generator_AMPL();
-    generator_square();
-    generator_frequency_3();
-    generator_power();
+    wg.set_AMPL_base(1);
+    wg.evaluate_AMPL();
+    wg.generator_type('square');
+    
+    wg.frequency_pow(3);
+    wg.generator_power();
     osi.power_control();
     vertical_mode_dual();
     findPersistNode();
@@ -2182,17 +2028,6 @@ function checkAns(){
 
 }
 
-function drawWave(){
-
-    wg.set_frequency(generator_frequency);
-    wg.set_amplitude(generator_AMPL);
-    wg.set_type(wave_type);
-    wg.set_inv(generator_inv_on?-1:1);
-    wg.set_offset(generator_offset);
-    
-    osi.draw();
-    //check();
-}
 
 
 function show_error(s){
@@ -2216,154 +2051,6 @@ function pow(a, x){
     return tmp;
 }
 
-function evaluate_generator_frequency(){
-    generator_frequency = generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0));
-    $("#generator_frequency").text(generator_frequency1.toFixed(1));
-    $("#generator_frequency_menu").text("10^"+generator_frequency2.toFixed(0));
-    wg.set_frequency(generator_frequency1.toFixed(1) * pow(10,generator_frequency2.toFixed(0)));
-    return generator_frequency;
-}
-
-function minus_generator_frequency(){
-    if(generator_frequency1 < 0.2)return;
-    generator_frequency1 -= 0.1;
-    evaluate_generator_frequency();
-    check();
-}
-
-function add_generator_frequency(){
-    if(generator_frequency1 > 2)return;
-    generator_frequency1 += 0.1;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_power(){
-    if(generator_power_on){
-        $("#generator_power").css("backgroundColor", "white");
-        generator_power_on = false;
-    }
-    else{
-        $("#generator_power").css("backgroundColor", "green");
-        generator_power_on = true;
-    }
-    check();
-}
-
-function clear_generator_frequency(){
-    $("#generator_frequency6").css("backgroundColor", "white");
-    $("#generator_frequency5").css("backgroundColor", "white");
-    $("#generator_frequency4").css("backgroundColor", "white");
-    $("#generator_frequency3").css("backgroundColor", "white");
-    $("#generator_frequency2").css("backgroundColor", "white");
-    $("#generator_frequency1").css("backgroundColor", "white");
-    $("#generator_frequency0").css("backgroundColor", "white");
-    check();
-}
-
-function generator_frequency_6(){
-    clear_generator_frequency();
-    $("#generator_frequency6").css("backgroundColor", "green");
-    generator_frequency2 = 6;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_frequency_5(){
-    clear_generator_frequency();
-    $("#generator_frequency5").css("backgroundColor", "green");
-    generator_frequency2 = 5;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_frequency_4(){
-    clear_generator_frequency();
-    $("#generator_frequency4").css("backgroundColor", "green");
-    generator_frequency2 = 4;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_frequency_3(){
-    clear_generator_frequency();
-    $("#generator_frequency3").css("backgroundColor", "green");
-    generator_frequency2 = 3;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_frequency_2(){
-    clear_generator_frequency();
-    $("#generator_frequency2").css("backgroundColor", "green");
-    generator_frequency2 = 2;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_frequency_1(){
-    clear_generator_frequency();
-    $("#generator_frequency1").css("backgroundColor", "green");
-    generator_frequency2 = 1;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_frequency_0(){
-    clear_generator_frequency();
-    $("#generator_frequency0").css("backgroundColor", "green");
-    generator_frequency2 = 0;
-    evaluate_generator_frequency();
-    check();
-}
-
-function generator_inv(){
-    if(generator_inv_on){
-        $("#generator_inv").css("backgroundColor", "white");
-        generator_inv_on = false;
-    }
-    else{
-        $("#generator_inv").css("backgroundColor", "green");
-        generator_inv_on = true;
-    }
-    wg.set_inv(wg.inv * (-1));
-    check();
-}
-
-function clear_generator_wave(){
-    $("#generator_square").css("backgroundColor", "white");
-    $("#generator_triangle").css("backgroundColor", "white");
-    $("#generator_sin").css("backgroundColor", "white");
-}
-
-function generator_square(){
-    clear_generator_wave();
-    $("#generator_square").css("backgroundColor", "green");
-    wave_type = "square_wave";
-    $("#generator_wave_text").text(wave_type);
-    wg.set_type("square_wave");
-    check();
-}
-
-function generator_triangle(){
-    // alert("traingle wave is unimplemented!")
-    // return;
-    clear_generator_wave();
-    $("#generator_triangle").css("backgroundColor", "green");
-    wave_type = "triangle_wave";
-    $("#generator_wave_text").text(wave_type);
-    wg.set_type("triangle_wave");
-    check();
-}
-
-function generator_sin(){
-    clear_generator_wave();
-    $("#generator_sin").css("backgroundColor", "green");
-    wave_type = "sin_wave";
-    $("#generator_wave_text").text(wave_type);
-    wg.set_type("sin_wave");
-    check();
-}
 
 function minus_generator_duty(){
     if(generator_duty < 0.55){
@@ -2380,91 +2067,10 @@ function add_generator_duty(){
 }
 
 
-function minus_generator_offset(){
-    if(wg.offset_on){
-        if(wg.offset < -30){
-            osi.draw();
-            return;
-        }
-        wg.set_offset(wg.offset - 0.1);
-        // generator_offset -= 0.1;
-    }
-    osi.draw();
-}
-
-function add_generator_offset(){
-    if(wg.offset_on){
-        if(wg.offset > 30){
-            osi.draw();
-            return;
-        }
-        wg.set_offset(wg.offset + 0.1);
-        // generator_offset += 0.1;
-    }
-    osi.draw();
-}
-
-function evaluate_generator_AMPL(){
-    wg.set_amplitude(generator_AMPL_base * pow(10, generator_AMPL_pow));
-    check();
-    generator_AMPL = generator_AMPL_base * pow(10, generator_AMPL_pow);
-}
-
-function generator_AMPL1(){
-    if(generator_AMPL1_on){
-        generator_AMPL_pow += 1;
-        $("#generator_AMPL1").css("backgroundColor", "white");
-        generator_AMPL1_on = false;
-    }
-    else{
-        generator_AMPL_pow -= 1;
-        $("#generator_AMPL1").css("backgroundColor", "green");
-        generator_AMPL1_on = true;
-    }
-    evaluate_generator_AMPL();
-}
-
-function generator_AMPL_switch(){
-    if(generator_AMPL2_on){
-        generator_AMPL_pow += 1;
-        $("#generator_AMPL_switch").css("backgroundColor", "white");
-        generator_AMPL2_on = false;
-    }
-    else{
-        generator_AMPL_pow -= 1;
-        $("#generator_AMPL_switch").css("backgroundColor", "green");
-        generator_AMPL2_on = true;
-    }
-    evaluate_generator_AMPL();
-}
-
-function minus_generator_AMPL(){
-    if(generator_AMPL_base > 1){
-        generator_AMPL_base -= 0.5;
-    }
-    evaluate_generator_AMPL();
-}
-
-function add_generator_AMPL(){
-    if(generator_AMPL_base < 14){
-        generator_AMPL_base += 0.5;
-    }
-    evaluate_generator_AMPL();
-}
-
 function generator_output_switch(){
     if(generator_output_on)return;
     $("#generator").removeClass('generator_bg0').addClass('generator_bg1');
     generator_output_on = true;
-    if(generator_output_on){
-        $("#generator_output_switch").css("backgroundColor", "white");
-        generator_output_on = false;
-    }
-    else{
-        $("#generator_output_switch").css("backgroundColor", "green");
-        generator_output_on = true;
-        drawWave();
-    }
 }
 function generator_drawline1() {
     colorNo = 0;
