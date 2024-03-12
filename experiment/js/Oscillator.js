@@ -92,15 +92,15 @@ class Oscillator{
         let loop = this._loop;
         if(type == "square_wave"){
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency;
                 this._phasor[i] = checkCircuit(omega);
             }
         }else if(type == "sin_wave"){
-            let omega = 2 * math.PI * evaluate_generator_frequency();
+            let omega = 2 * math.PI * wg.frequency;
             this._phasor[0] = checkCircuit(omega);
         }else if(type == "triangle_wave"){
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * evaluate_generator_frequency();
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency;
                 this._phasor[i] = checkCircuit(omega);
             }
         }
@@ -121,9 +121,9 @@ class Oscillator{
             wg = new WaveGenerator();
             wg.set_amplitude(1);
             wg.set_frequency(1000);
-            wg.set_offset_on(false);
+            wg.set_offset_on(true);
             wg.set_offset(1);
-            $("#generator_offset_switch").css("backgroundColor", "white");
+            wg.set_power(true);
             wg.set_type("square_wave");
             this._vaild = false;
             let loop = this._loop;
