@@ -168,10 +168,10 @@ class Oscillator{
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(is_find_begin == false && wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(is_find_begin == false && wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
@@ -203,10 +203,10 @@ class Oscillator{
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(is_find_begin == false && wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(is_find_begin == false && wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
@@ -226,20 +226,14 @@ class Oscillator{
                     this._datapoints0[i] = wg.voltage((i + this._time_offset) * this._time_mul + this._begin, 1, omega, phase0, amplitude0);
                     this._datapoints1[i] = wg.voltage((i + this._time_offset) * this._time_mul + this._begin, 1, omega, phase1, amplitude1);
                 } 
-                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
-                    this._datapoints0[i] += wg.offset;
-                }
-                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
-                    this._datapoints1[i] += wg.offset;
-                }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
                 this._datapoints1[j] *= wg.amplitude;
-                if(wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+                if(is_find_begin == false && wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
                     this._datapoints0[j] += wg.offset;
                 }
-                if(wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+                if(is_find_begin == false && wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
                     this._datapoints1[j] += wg.offset;
                 }
             }
