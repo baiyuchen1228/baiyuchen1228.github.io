@@ -185,11 +185,20 @@ function drawDashedLine2() {
         if (mode) {
             if ($("#dashline").length > 0) {
                 $("#dashline").remove();
-                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
-            else {
-                document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
+            if ($("#vertical_dashline").length > 0) {
+                $("#vertical_dashline").remove();
             }
+            if ($("#horizental_dashline").length > 0) {
+                $("#horizental_dashline").remove();
+            }
+            document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
+            let offsetX = 550;
+            let offsetY = 300;
+            tmpx = x2 - offsetX;
+            tmpy = y2 - offsetY;
+            document.getElementById('svgline').appendChild(parseSVG('<line id=vertical_dashline x1=' + tmpx + ' y1=' + 0 + ' x2=' + tmpx + ' y2=' + 280 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:10px;" stroke-opacity="0.3"></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line id=horizental_dashline x1=' + 0 + ' y1=' + tmpy + ' x2=' + 400 + ' y2=' + tmpy + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:10px;" stroke-opacity="0.3"></line>'));
         }   
     }
     return draw;
@@ -212,6 +221,8 @@ function deleteRow(arr, row) {
 
 $("#container").mouseup(function (e) {
     $("#dashline").remove();
+    $("#vertical_dashline").remove();
+    $("#horizental_dashline").remove();
     document.onmousemove = null;
     if (drawAlligator == 1) {
         var AlligatorFinal = e;
