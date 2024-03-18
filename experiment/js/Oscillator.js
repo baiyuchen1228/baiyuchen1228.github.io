@@ -285,6 +285,12 @@ class Oscillator{
         }else{
             arrow_pos += this._vertical_offset[1];
         }
+        if(this._reference == "CH1" && wg.offset_on && this.vertical_AC_GND_DC[0] == "DC"){
+            arrow_pos += wg.offset;
+        }
+        else if(this._reference == "CH2" && wg.offset_on && this.vertical_AC_GND_DC[1] == "DC"){
+            arrow_pos += wg.offset;
+        }
         arrow_pos = arrow_pos * (-28) + 50;
         $("#level_show").css("top", arrow_pos.toString() + "px");
         
