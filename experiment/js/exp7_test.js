@@ -1930,6 +1930,14 @@ function findPersistNode(){
 let id;
 function start(){
     console.log("Starting");
+
+    // check id input
+    id = parseInt($("#id1")[0].value,10);
+    if(isNaN(id)){
+        alert("學號輸入錯誤。\nStudent Id number error.");
+        return;
+    }
+
     osi.set_SWP(1);
     startbool = true;
     let date = new Date();
@@ -1942,7 +1950,8 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    id = parseInt($("#id1")[0].value,10);
+    
+    
     let x1 = 205;
     let y1 = 125;
     let x2 = 205;

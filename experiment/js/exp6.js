@@ -147,6 +147,13 @@ document.getElementById("powersupply13").onclick = function () {
 
 
 var intervalID;
+
+$(document).mouseup(function(){
+    // remove old interval
+    clearInterval(intervalID);
+    intervalID = NaN;
+});
+
 $(powersupply5).mousedown(function (){
     if(!startbool) return;
     intervalID = setInterval(function (){
@@ -2118,6 +2125,14 @@ window.onbeforeunload = () => {
 
 function start(){
     console.log("Starting");
+
+    // check id input
+    let id = parseInt($("#id1")[0].value,10);
+    if(isNaN(id)){
+        alert("學號輸入錯誤。\nStudent Id number error.");
+        return;
+    }
+
     startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');

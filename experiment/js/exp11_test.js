@@ -1940,6 +1940,14 @@ let faradlist = [1e-6,1.1e-6,1.2e-6,1.3e-6]
 let henrylist = [0.02,0.01,0.02,0.01]
 function start(){
     console.log("Starting");
+    
+    // check id input
+    id = parseInt($("#id1")[0].value,10);
+    if(isNaN(id)){
+        alert("學號輸入錯誤。\nStudent Id number error.");
+        return;
+    }
+    
     osi.set_SWP(1);
     startbool = true;
     let date = new Date();
@@ -1952,7 +1960,7 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    id = parseInt($("#id1")[0].value,10);
+    
 
     
     let x1 = 205;

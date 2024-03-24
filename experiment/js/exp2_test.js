@@ -1923,6 +1923,15 @@ function findPersistNode(){
 
 function start(){
     console.log("Starting");
+    
+    // check id input
+    let id = parseInt($("#id1")[0].value,10);
+    if(isNaN(id)){
+        alert("學號輸入錯誤。\nStudent Id number error.");
+        return;
+    }
+    
+    
     osi.set_SWP(0.04 * (getRandomInteger(10) - 5) + 1);
     startbool = true;
     let date = new Date();
@@ -1935,7 +1944,6 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    let id = parseInt($("#id1")[0].value,10);
     wg.set_AMPL_base((id % 6) + 1);
     wg.evaluate_AMPL();
     wg.generator_type('square');
