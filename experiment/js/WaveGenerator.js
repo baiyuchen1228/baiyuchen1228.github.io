@@ -198,10 +198,10 @@ class WaveGenerator{
         this.evaluate_AMPL();
     }
     evaluate_frequency(){
-        this._frequency = this._frequency_base.toFixed(1) * pow(10, this._frequency_pow.toFixed(0));
-        $("#generator_frequency").text(this._frequency_base.toFixed(1));
+        this._frequency = this._frequency_base.toFixed(2) * pow(10, this._frequency_pow.toFixed(0));
+        $("#generator_frequency").text(this._frequency_base.toFixed(2));
         $("#generator_frequency_menu").text("10^"+this._frequency_pow.toFixed(0));
-        this.set_frequency(this._frequency_base.toFixed(1) * pow(10, this._frequency_pow.toFixed(0)));
+        this.set_frequency(this._frequency_base.toFixed(2) * pow(10, this._frequency_pow.toFixed(0)));
         check();
     }
     clear_frequency(){

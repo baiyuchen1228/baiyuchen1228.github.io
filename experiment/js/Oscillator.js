@@ -273,11 +273,11 @@ class Oscillator{
 
     draw(){
         document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
-        document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
-        document.getElementById("demo_amplitude1").value = wg.amplitude;
-        document.getElementById("demo_wave_type1").value = wg.type;
-        document.getElementById("demo_wave_offset1").value = wg.offset;
-        document.getElementById("demo_wave_inv1").value = wg.inv;
+        // document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
+        // document.getElementById("demo_amplitude1").value = wg.amplitude;
+        // document.getElementById("demo_wave_type1").value = wg.type;
+        // document.getElementById("demo_wave_offset1").value = wg.offset;
+        // document.getElementById("demo_wave_inv1").value = wg.inv;
         
         let arrow_pos = this._level;
         if(this._reference == "CH1"){
