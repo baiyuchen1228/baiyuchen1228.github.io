@@ -213,14 +213,14 @@ class WaveGenerator{
         $("#generator_frequency1").css("backgroundColor", "white");
         $("#generator_frequency0").css("backgroundColor", "white");
     }
-    minus_frequency(){
+    minus_frequency(val = 0.1){
         if(this._frequency_base < 0.2)return;
-        this._frequency_base -= 0.1;
+        this._frequency_base -= val;
         this.evaluate_frequency();
     }
-    add_frequency(){
+    add_frequency(val = 0.1){
         if(this._frequency_base > 2)return;
-        this._frequency_base += 0.1;
+        this._frequency_base += val;
         this.evaluate_frequency();
     }
     frequency_pow(pw){
