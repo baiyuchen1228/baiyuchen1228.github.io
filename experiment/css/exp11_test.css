@@ -166,12 +166,12 @@ div#oscilloscope{
 }
 #minus_horizonal_position{
     top: 75px;
-    left: 330px;
+    left: 360px;
     width: 30px;
 }
 #add_horizonal_position{
     top: 75px;
-    left: 360px;
+    left: 330px;
     width: 30px;
 }
 #horizonal_SWP_text{
