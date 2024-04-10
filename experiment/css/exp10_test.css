@@ -527,13 +527,13 @@ div#oscilloscopeScreen{
     top: 120px;
     left: 30px;
     width: 40px;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 #add_generator_frequency{
     top: 120px;
     left: 70px;
     width: 40px;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 #generator_frequency{
     height: 20px;
@@ -541,8 +541,8 @@ div#oscilloscopeScreen{
     background-color: #000000;
     top: 80px;
     left: 50px;
-    color: #000000;
-    visibility: hidden;
+    /* color: #000000; */
+    /* visibility: hidden; */
 }
 #generator_frequency_menu{
     height: 15px;
