@@ -2023,7 +2023,7 @@ var student_pre_test_ans;
 function checkEqual(a, b){
     if(isNaN(a) || isNaN(b))    return false;
     // console.log(abs(a-b),b*0.1);
-    return abs(a - b) < b * 0.1;
+    return abs(a - b) <= b * 0.1;
 }
 
 function checkAns(){
