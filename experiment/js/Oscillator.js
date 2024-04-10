@@ -395,7 +395,7 @@ class Oscillator{
         }
         const labels = [];
         for(let i=0;i<(this._WAVE_DATA_COUNT);i++){
-            labels[i] = i+1;
+            labels[i] = '';
         }
         const data = {
             labels:labels,
@@ -423,7 +423,17 @@ class Oscillator{
               plugins: {
                 legend: {
                     display: false //要不要顯示 lable
-                  }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let index = context.dataIndex;
+                            let time = osi._time_mul * (index + 1) * 3;
+                            let point_lable = time.toFixed(6).toString() +", " + context.dataset.data[index].toFixed(6).toString();
+                            return point_lable;
+                        }
+                    }
+                }
               },
               elements: {
                 point:{
