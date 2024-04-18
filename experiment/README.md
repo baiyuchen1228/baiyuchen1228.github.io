@@ -11,15 +11,11 @@ Add the following field to the package.json section:
 
 Next we add a 'lint-staged' field to the package.json, for example:
 ```
-  "dependencies": {
-    // ...
-  },
-+ "lint-staged": {
-+   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-+     "prettier --write"
-+   ]
-+ },
-  "scripts": {
+ "lint-staged": {
+   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+     "prettier --write"
+   ]
+ }
 ```
 
 ./node_modules/.bin/prettier -c /
