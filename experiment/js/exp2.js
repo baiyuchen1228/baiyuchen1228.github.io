@@ -213,7 +213,7 @@ function drawDashedLine2() {
             else {
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
-        }   
+        }
     }
     return draw;
 }
@@ -231,6 +231,152 @@ function deleteRow(arr, row) {
     arr = arr.slice(0); // make copy
     arr.splice(row, 1);
     return arr;
+}
+
+function derectDelete(element) {
+	if (deletemode == 1) {
+		var toDelete = element;
+		if (toDelete.id[0] == "w") {
+			toDelete = document.getElementById("wire" + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+		} else if (toDelete.id[0] == "r") {
+			toDelete = document.getElementById("resistance" + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+		} else if (toDelete.id[0] == "i") {
+			toDelete = document.getElementById("inductance" + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+		} else if (toDelete.id[0] == "c") {
+			toDelete = document.getElementById("capacitance" + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+		} else if (toDelete.id[0] == "a") {
+			toDelete = document.getElementById("alligator" + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+		} else if (toDelete.id[0] == "L") {
+			toDelete = document.getElementById("LEd" + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+		}
+		console.log("delete"+ toDelete.x1.animVal.value + " " + toDelete.y1.animVal.value);
+        x1 = approx_x(parseInt(toDelete.x1.animVal.value));
+        y1 = approx_x(parseInt(toDelete.y1.animVal.value));
+        x2 = approx_x(parseInt(toDelete.x2.animVal.value));
+        y2 = approx_x(parseInt(toDelete.y2.animVal.value));
+		console.log(x1 + " " + y1 + " " + x2 + " " + y2);
+        var id;
+        Things = $("line");
+        for (var i = Things.length - 1; i >= 0; i--) {
+            if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
+                    }
+                }
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
+                    }
+                }
+                pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+                pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+                if (Things[i].id[0] == "w") {
+                    $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+
+                if (Things[i].id[0] == "r") {
+                    $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                    resistanceOn = 1;
+                    $this = $("#addResistance");
+                    $this.css('background-color', 'white');
+                }
+                if (Things[i].id[0] == "i") {
+                    $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                    inductanceOn = 1;
+                    $this = $("#addInductance");
+                    $this.css('background-color', 'white');
+                }
+                if (Things[i].id[0] == "c") {
+                    $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                    capacitanceOn = 1;
+                    $this = $("#addCapacitance");
+                    $this.css('background-color', 'white');
+                }
+                if (Things[i].id[0] == "L") {
+
+                    $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+
+                }
+                check();
+                return;
+            }
+            if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
+                    }
+                }
+                for (let j = 0; j < pointarray.length; j++) {
+                    if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+                        // pointarray = deleteRow(pointarray, j);
+                        pointarray[j] = [0,0];
+                    }
+                }
+                //console.log(Things[i].id[0]);
+                pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+                pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+                if (Things[i].id[0] == "w") {
+                    $("#wireCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#wireCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+
+                if (Things[i].id[0] == "r") {
+                    resistanceOn = 1;
+                    $("#resistanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#resistanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+					resistanceOn = 1;
+                    $this = $("#addResistance");
+                    $this.css('background-color', 'white');
+                }
+                if (Things[i].id[0] == "i") {
+                    inductanceOn = 1;
+                    $("#inductanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#inductanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+					inductanceOn = 1;
+                    $this = $("#addInductance");
+                    $this.css('background-color', 'white');
+                }
+                if (Things[i].id[0] == "c") {
+                    capacitanceOn = 1;
+                    $("#capacitanceCircle1_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceCircle2_" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#capacitanceBox" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+                }
+                if (Things[i].id[0] == "L") {
+                    //  console.log("#LEdcircle"+Things[i].id[Things[i].id.length -1]);
+                    $("#LEdcircle" + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+                    $("#" + Things[i].id).remove();
+					capacitanceOn = 1;
+                    $this = $("#addCapacitance");
+                    $this.css('background-color', 'white');
+                }
+                check();
+                return;
+            }
+        }
+    }
 }
 
 $("#container").mouseup(function (e) {
@@ -266,15 +412,15 @@ $("#container").mouseup(function (e) {
             return;
         }
         if (wireNo < 10) {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
             linestack.push("wire0"+wireNo);
         }
         else {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
             linestack.push("wire"+wireNo);
         }
         pointarray.push([x1, y1]);
@@ -331,17 +477,17 @@ $("#container").mouseup(function (e) {
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
         if (resistanceNo < 10) {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'Ohms</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ohms + 'Ohms</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1" onclick="derectDelete(this)"><title>' + ohms + 'Ohms</title></polygon>'));
             linestack.push("resistance0"+resistanceNo);
         }
         else {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'Ohms</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ohms + 'Ohms</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; ;stroke-width:1"  onclick="derectDelete(this)"><title>' + ohms + 'Ohms</title></polygon>'));
             linestack.push("resistance"+resistanceNo);
         }
         pointarray.push([x1, y1]);
@@ -399,17 +545,17 @@ $("#container").mouseup(function (e) {
         var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
         var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
         if (inductanceNo < 10) {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + henry + 'Henry</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + henry + 'Henry</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; ;stroke-width:1"  onclick="derectDelete(this)"><title>' + henry + 'Henry</title></polygon>'));
             linestack.push("inductance0"+inductanceNo);
         }
         else {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; stroke-width:1"><title>' + henry + 'Henry</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + henry + 'Henry</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; ;stroke-width:1"  onclick="derectDelete(this)"><title>' + henry + 'Henry</title></polygon>'));
             linestack.push("inductance"+inductanceNo);
         }
         pointarray.push([x1, y1]);
@@ -470,15 +616,15 @@ $("#container").mouseup(function (e) {
         if (capacitanceNo < 10) {
             document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; ;stroke-width:1"  onclick="derectDelete(this)"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
             linestack.push("capacitance0"+capacitanceNo);
         }
         else {
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
-            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; stroke-width:1"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ufarad * 1e6 + 'uFarad</title></line>'));
+            document.getElementById('svgline').appendChild(parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; ;stroke-width:1"  onclick="derectDelete(this)"><title>' + ufarad * 1e6 + 'uFarad</title></polygon>'));
             linestack.push("capacitance"+capacitanceNo);
         }
         pointarray.push([x1, y1]);
@@ -526,8 +672,8 @@ $("#container").mouseup(function (e) {
             return;
         }
         if (alligatorNo < 10) {
-            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
             if((x1 == 1020 || x1 == 1350) && y1 == 530){
                 linestack.push("aalligator0"+alligatorNo);
@@ -537,8 +683,8 @@ $("#container").mouseup(function (e) {
             }
         }
         else {
-            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
-            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+            document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
             document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
             if((x1 == 1020 || x1 == 1350) && y1 == 530){
                 linestack.push("aalligator"+alligatorNo);
@@ -825,9 +971,9 @@ $(document).ready(function () {
     context.stroke(); // Outline the path
 
 
-    
+
     // setting wave generator
-    
+
     wg.generator_type('sin');
     wg.frequency_pow(3);
     readybool = true;
@@ -1174,7 +1320,7 @@ function getResistance() {
 
 function getCapacitances(omega) {
 
-    
+
 
     //find all resistance in the html
     var capacitances = $("line[id^='capacitance']");
@@ -1318,7 +1464,7 @@ class GuassionElimination {
 
     Gaussian_Jordan_elimination() {
         let single = [];
-        
+
         for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
             if (math.isZero(this.M[i][i])) {
                 for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
@@ -1333,7 +1479,7 @@ class GuassionElimination {
                 single.push(i);
                 continue;
             }
-            
+
             this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));//把開頭變成1
             if(test){this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));}//把開頭變成1
             for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
@@ -1353,7 +1499,7 @@ class GuassionElimination {
 
         //after guassian elimination
         //console.log("Guassian Elimination")
-    
+
         //檢查是不是無解
         if(debug){
             for(let i=this.n;i<this.m;i++){
@@ -1449,7 +1595,7 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         edge_list.push(tmp);
         graph[3].push(tmp);
         graph[5].push(tmp);
-    } 
+    }
 
 
     //加電壓計
@@ -1481,7 +1627,7 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         graph[5].push(e);
         return { graph: graph, voltage_edgeid: e.id};
     }
-    
+
 }
 
 function getFullGraphVoltageVoltage(meter_idx, omega, checkUser) {
@@ -1588,7 +1734,7 @@ function equationVoltageVoltage(meter_idx, omega) {
     for (let i = 0; i < equation_cnt; i++) {
         equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
-    
+
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     return { FullGraph: FG, ans: x };
@@ -1645,7 +1791,7 @@ function testGuassion(){
             equations[equation_cnt][j] = 0;
             equations[equation_cnt][j] = math.complex(equations[equation_cnt][j]);
         }
-        
+
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
             if (edge.node1 == i) {
@@ -1657,7 +1803,7 @@ function testGuassion(){
         }
         equation_cnt++;
     }
-    
+
     for (let i = 4; i < MaxNodeNum; i++) {
         for (let j = 0; j < edge_cnt; j++) {
             vis_edge[j] = 0;
@@ -1760,7 +1906,7 @@ function checkResitanceBurn(x){
 
 function checkCircuit(omega) {
     let res_meter = {voltage1:0, voltage2:0}
-    
+
     let FGx = equationVoltageVoltage(0, omega);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
@@ -1790,7 +1936,7 @@ function checkCircuit(omega) {
     //     return {meter:ERR, power1:ERR, power2:ERR};
     // }
     document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
-    // show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
+    // show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) +
     //        "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
     return res_meter;
 
@@ -1903,14 +2049,14 @@ window.onbeforeunload = () => {
 
 function start(){
     console.log("Starting");
-    
+
     // check id input
     let id = parseInt($("#id1")[0].value,10);
     if(isNaN(id)){
         alert("學號輸入錯誤。\nStudent Id number error.");
         return;
     }
-    
+
     osi.set_SWP(0.04 * (getRandomInteger(10) - 5) + 1);
     startbool = true;
     let date = new Date();
