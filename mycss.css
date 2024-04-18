@@ -1,3 +1,9 @@
-body {background-color: powderblue;}
-h1   {color: rgb(63, 37, 37);}
-p    {color: black;}
+body {
+	background-color: powderblue;
+}
+h1 {
+	color: rgb(63, 37, 37);
+}
+p {
+	color: black;
+}

@@ -1,753 +1,750 @@
 body {
-    background-color: #FFF5EB;
-    padding: 0 10% 10% 10%;
+	background-color: #fff5eb;
+	padding: 0 10% 10% 10%;
 }
 h1 {
-    text-indent: 1em;
-    background-color:#EBDABF; 
-    padding: 5px 10px; 
-    color: #000000; 
-    font-size: 18px;
-    border-radius: 9px;
+	text-indent: 1em;
+	background-color: #ebdabf;
+	padding: 5px 10px;
+	color: #000000;
+	font-size: 18px;
+	border-radius: 9px;
 }
 h2 {
-    text-indent: 1em;
-    background-color:#EBDABF; 
-    padding: 5px 10px;
-    color: #000000; 
-    font-size: 16px;
-    border-radius: 9px;
+	text-indent: 1em;
+	background-color: #ebdabf;
+	padding: 5px 10px;
+	color: #000000;
+	font-size: 16px;
+	border-radius: 9px;
 }
-#svgline2{
-    z-index: 1;
-    pointer-events: none;
+#svgline2 {
+	z-index: 1;
+	pointer-events: none;
 }
-.main-menu { 
-    color:#000000; 
-    background-color:#EBDABF; 
-    padding:5px 15px; 
-    margin:0px; 
-    cursor:pointer; 
-    display:inline-block; 
+.main-menu {
+	color: #000000;
+	background-color: #ebdabf;
+	padding: 5px 15px;
+	margin: 0px;
+	cursor: pointer;
+	display: inline-block;
 } /* 主選單的樣式 */
-.main-menu:hover { 
-    background-color:#EBDABF; 
+.main-menu:hover {
+	background-color: #ebdabf;
 }
-.sub-menu { 
-    color:#e7dc8f;
-    background-color:#CCCCCC; 
-    margin:5px -5px; 
-    padding:0px; 
-    list-style-type:none; 
-    position:absolute; 
-    z-index: 2;
+.sub-menu {
+	color: #e7dc8f;
+	background-color: #cccccc;
+	margin: 5px -5px;
+	padding: 0px;
+	list-style-type: none;
+	position: absolute;
+	z-index: 2;
 } /* 下拉清單的樣式 */
 .sub-menu li {
-    padding: 3px 5px;
-    text-align:left; 
+	padding: 3px 5px;
+	text-align: left;
 } /* 下拉清單每一列的樣式 */
-.sub-menu li:hover { 
-    color:#000000; 
-    background-color:#e7dc8f; 
+.sub-menu li:hover {
+	color: #000000;
+	background-color: #e7dc8f;
 }
-.sub-menu a { 
-    text-align:left; 
-    display:block; 
-    text-decoration:none; 
-    color:#000000; 
+.sub-menu a {
+	text-align: left;
+	display: block;
+	text-decoration: none;
+	color: #000000;
 }
-.sub-menu a:hover { 
-    color:#000000; 
-    background-color:#e7dc8f; 
-    text-decoration:none; 
+.sub-menu a:hover {
+	color: #000000;
+	background-color: #e7dc8f;
+	text-decoration: none;
 }
-div#generator{
-    position: absolute;
-    left: 30px;
-    top: 60px;
-    height: 190px;
-    width: 520px;
-    border: 5px solid black;
-    background-size: 520px ;
-    background-repeat: no-repeat;
+div#generator {
+	position: absolute;
+	left: 30px;
+	top: 60px;
+	height: 190px;
+	width: 520px;
+	border: 5px solid black;
+	background-size: 520px;
+	background-repeat: no-repeat;
 }
-.generator_bg0{
-    background-image:url('../../images/waveform_generator.jpg');
+.generator_bg0 {
+	background-image: url('../../images/waveform_generator.jpg');
 }
-.generator_bg1{
-    background-image:url('../../images/waveform_generator1.jpg');
-}
-
-div#oscilloscope{
-    position: absolute;
-    left: 630px;
-    top: 150px;
-    height: 360px;
-    width: 800px;
-    border: 5px solid black;
-    background-size: 800px ;
-    background-repeat: no-repeat;
-}
-.oscilloscope-text{
-    float: left;
-    position: absolute;
-    color: white;
-    text-align: center;
-    top: 50px;
-}
-.oscilloscope-button{
-    position:absolute;
-    float: left;
-    color: #000000;
-    height: 20px;
-    top: 80px;
-    text-indent: 0px;
-    font-size: 10px;
-    width: 20px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-#oscilloscope_inten_text{
-    height: 15px;
-    width: 30px;
-    background-color: #000000;
-    top: 245px;
-    left: 20px;
-    font-size: x-small;
-}
-#minus_oscilloscope_inten{
-    top: 270px;
-    left: 5px;
-    width: 30px;
-}
-#add_oscilloscope_inten{
-    top: 270px;
-    left: 35px;
-    width: 30px;
-}
-#oscilloscope_focus_text{
-    height: 15px;
-    width: 30px;
-    background-color: #000000;
-    top: 245px;
-    left: 90px;
-    font-size: x-small;
-}
-#minus_oscilloscope_focus{
-    top: 270px;
-    left: 75px;
-    width: 30px;
-}
-#add_oscilloscope_focus{
-    top: 270px;
-    left: 105px;
-    width: 30px;
-}
-#oscilloscope_power_text{
-    height: 15px;
-    width: 30px;
-    background-color: #000000;
-    top: 245px;
-    left: 270px;
-    font-size: x-small;
-}
-#oscilloscope_power{
-    top: 270px;
-    left: 275px;
-    width: 20px;
-}
-#horizonal_position_text{
-    height: 15px;
-    width: 40px;
-    background-color: #000000;
-    top: 45px;
-    left: 345px;
-    font-size: x-small;
-}
-#minus_horizonal_position{
-    top: 75px;
-    left: 360px;
-    width: 30px;
-}
-#add_horizonal_position{
-    top: 75px;
-    left: 330px;
-    width: 30px;
-}
-#horizonal_SWP_text{
-    height: 15px;
-    width: 60px;
-    background-color: #000000;
-    top: 45px;
-    left: 405px;
-    font-size: x-small;
-}
-#minus_horizonal_SWP{
-    top: 75px;
-    left: 410px;
-    width: 30px;
-}
-#add_horizonal_SWP{
-    top: 75px;
-    left: 440px;
-    width: 30px;
-}
-#horizonal_time_text{
-    height: 15px;
-    width: 60px;
-    background-color: #000000;
-    top: 20px;
-    left: 485px;
-    font-size: x-small;
-}
-#horizonal_time{
-    height: 15px;
-    width: 60px;
-    background-color: #000000;
-    top: 30px;
-    left: 485px;
-    font-size: x-small;
-}
-#minus_horizonal_time{
-    top: 75px;
-    left: 490px;
-    width: 30px;
-}
-#add_horizonal_time{
-    top: 75px;
-    left: 520px;
-    width: 30px;
-}
-#minus_horizonal_mag{
-    top: 100px;
-    left: 376px;
-    width: 40px;
-}
-#trigger_level_text{
-    height: 15px;
-    width: 40px;
-    background-color: #000000;
-    top: 45px;
-    left: 575px;
-    font-size: x-small;
-}
-#minus_trigger_level{
-    top: 75px;
-    left: 570px;
-    width: 30px;
-}
-#add_trigger_level{
-    top: 75px;
-    left: 600px;
-    width: 30px;
-}
-#trigger_alt{
-    top: 15px;
-    left: 570px;
-    width: 40px;
-}
-#trigger_ch1{
-    top: 7px;
-    left: 690px;
-    width: 40px;
-    background-color: green;
-}
-#trigger_ch2{
-    top: 25px;
-    left: 690px;
-    width: 40px;
-}
-#trigger_line{
-    top: 43px;
-    left: 690px;
-    width: 40px;
-}
-#trigger_ext{
-    top: 60px;
-    left: 690px;
-    width: 40px;
-}
-#trigger_slope{
-    top: 103px;
-    left: 590px;
-    width: 68px;
-}
-#vertical_v_text1{
-    height: 15px;
-    width: 70px;
-    background-color: #000000;
-    top: 120px;
-    left: 350px;
-    font-size: x-small;
-}
-#vertical_v1{
-    height: 15px;
-    width: 70px;
-    background-color: #000000;
-    top: 130px;
-    left: 350px;
-    font-size: x-small;
-}
-#minus_vertical_v_outer1{
-    top: 160px;
-    left: 350px;
-    width: 30px;
-}
-#add_vertical_v_outer1{
-    top: 160px;
-    left: 380px;
-    width: 30px;
-}
-#minus_vertical_v_inner1{
-    top: 180px;
-    left: 350px;
-    width: 30px;
-    background-color: #727272;
-}
-#add_vertical_v_inner1{
-    top: 180px;
-    left: 380px;
-    width: 30px;
-    background-color: #727272;
-}
-#vertical_position_text1{
-    height: 15px;
-    width: 60px;
-    background-color: #000000;
-    top: 150px;
-    left: 420px;
-    font-size: x-small;
-}
-#minus_vertical_position1{
-    top: 180px;
-    left: 420px;
-    width: 30px;
-}
-#add_vertical_position1{
-    top: 180px;
-    left: 450px;
-    width: 30px;
-}
-#vertical_ch1_input{
-    top: 270px;
-    left: 350px;
-    width: 20px;
-}
-#vertical_AC1{
-    top: 230px;
-    left: 410px;
-    width: 40px;
-    background-color: green;
-}
-#vertical_GND1{
-    top: 250px;
-    left: 410px;
-    width: 40px;
-}
-#vertical_DC1{
-    top: 270px;
-    left: 410px;
-    width: 40px;
+.generator_bg1 {
+	background-image: url('../../images/waveform_generator1.jpg');
 }
 
-#vertical_mode_ch1{
-    top: 200px;
-    left: 500px;
-    width: 50px;
-    background-color: green;
+div#oscilloscope {
+	position: absolute;
+	left: 630px;
+	top: 150px;
+	height: 360px;
+	width: 800px;
+	border: 5px solid black;
+	background-size: 800px;
+	background-repeat: no-repeat;
 }
-#vertical_mode_ch2{
-    top: 220px;
-    left: 500px;
-    width: 50px;
+.oscilloscope-text {
+	float: left;
+	position: absolute;
+	color: white;
+	text-align: center;
+	top: 50px;
 }
-#vertical_mode_dual{
-    top: 240px;
-    left: 500px;
-    width: 50px;
+.oscilloscope-button {
+	position: absolute;
+	float: left;
+	color: #000000;
+	height: 20px;
+	top: 80px;
+	text-indent: 0px;
+	font-size: 10px;
+	width: 20px;
+	border-radius: 15px;
+	cursor: pointer;
 }
-#vertical_mode_add{
-    top: 260px;
-    left: 500px;
-    width: 50px;
+#oscilloscope_inten_text {
+	height: 15px;
+	width: 30px;
+	background-color: #000000;
+	top: 245px;
+	left: 20px;
+	font-size: x-small;
 }
-
-#vertical_v_text2{
-    height: 15px;
-    width: 70px;
-    background-color: #000000;
-    top: 120px;
-    left: 630px;
-    font-size: x-small;
+#minus_oscilloscope_inten {
+	top: 270px;
+	left: 5px;
+	width: 30px;
 }
-#vertical_v2{
-    height: 15px;
-    width: 70px;
-    background-color: #000000;
-    top: 130px;
-    left: 630px;
-    font-size: x-small;
+#add_oscilloscope_inten {
+	top: 270px;
+	left: 35px;
+	width: 30px;
 }
-#minus_vertical_v_outer2{
-    top: 160px;
-    left: 630px;
-    width: 30px;
+#oscilloscope_focus_text {
+	height: 15px;
+	width: 30px;
+	background-color: #000000;
+	top: 245px;
+	left: 90px;
+	font-size: x-small;
 }
-#add_vertical_v_outer2{
-    top: 160px;
-    left: 660px;
-    width: 30px;
+#minus_oscilloscope_focus {
+	top: 270px;
+	left: 75px;
+	width: 30px;
 }
-#minus_vertical_v_inner2{
-    top: 180px;
-    left: 630px;
-    width: 30px;
-    background-color: #727272;
+#add_oscilloscope_focus {
+	top: 270px;
+	left: 105px;
+	width: 30px;
 }
-#add_vertical_v_inner2{
-    top: 180px;
-    left: 660px;
-    width: 30px;
-    background-color: #727272;
+#oscilloscope_power_text {
+	height: 15px;
+	width: 30px;
+	background-color: #000000;
+	top: 245px;
+	left: 270px;
+	font-size: x-small;
 }
-#vertical_position_text2{
-    height: 15px;
-    width: 60px;
-    background-color: #000000;
-    top: 150px;
-    left: 560px;
-    font-size: x-small;
+#oscilloscope_power {
+	top: 270px;
+	left: 275px;
+	width: 20px;
 }
-#minus_vertical_position2{
-    top: 180px;
-    left: 560px;
-    width: 30px;
+#horizonal_position_text {
+	height: 15px;
+	width: 40px;
+	background-color: #000000;
+	top: 45px;
+	left: 345px;
+	font-size: x-small;
 }
-#add_vertical_position2{
-    top: 180px;
-    left: 590px;
-    width: 30px;
+#minus_horizonal_position {
+	top: 75px;
+	left: 360px;
+	width: 30px;
 }
-#vertical_ch2_input{
-    top: 270px;
-    left: 680px;
-    width: 20px;
+#add_horizonal_position {
+	top: 75px;
+	left: 330px;
+	width: 30px;
 }
-#vertical_AC2{
-    top: 230px;
-    left: 600px;
-    width: 40px;
-    background-color: green;
+#horizonal_SWP_text {
+	height: 15px;
+	width: 60px;
+	background-color: #000000;
+	top: 45px;
+	left: 405px;
+	font-size: x-small;
 }
-#vertical_GND2{
-    top: 250px;
-    left: 600px;
-    width: 40px;
+#minus_horizonal_SWP {
+	top: 75px;
+	left: 410px;
+	width: 30px;
 }
-#vertical_DC2{
-    top: 270px;
-    left: 600px;
-    width: 40px;
+#add_horizonal_SWP {
+	top: 75px;
+	left: 440px;
+	width: 30px;
 }
-#vertical_drawline1{
-    top: 290px;
-    left: 320px;
-    width: 30px;
+#horizonal_time_text {
+	height: 15px;
+	width: 60px;
+	background-color: #000000;
+	top: 20px;
+	left: 485px;
+	font-size: x-small;
 }
-#vertical_drawline2{
-    top: 290px;
-    left: 370px;
-    width: 30px;
+#horizonal_time {
+	height: 15px;
+	width: 60px;
+	background-color: #000000;
+	top: 30px;
+	left: 485px;
+	font-size: x-small;
 }
-#vertical_drawline3{
-    top: 290px;
-    left: 650px;
-    width: 30px;
+#minus_horizonal_time {
+	top: 75px;
+	left: 490px;
+	width: 30px;
 }
-#vertical_drawline4{
-    top: 290px;
-    left: 690px;
-    width: 30px;
+#add_horizonal_time {
+	top: 75px;
+	left: 520px;
+	width: 30px;
 }
-#oscillosocope_init{
-    top: 285px;
-    left:-38px;
-    width: 30px;
+#minus_horizonal_mag {
+	top: 100px;
+	left: 376px;
+	width: 40px;
 }
-#level_show{
-    color: orange;
-    font-size: 36px;
-    font-weight: 900;
-    left: -34px;
-    top: 50px;
-    /*one block is 28px*/
+#trigger_level_text {
+	height: 15px;
+	width: 40px;
+	background-color: #000000;
+	top: 45px;
+	left: 575px;
+	font-size: x-small;
 }
-
-
-
-div#oscilloscopeScreen{
-    position: absolute;
-    left: 50px;
-    top: 45px;
-    width: 280px;
-    height: 224px;
-    background-image:url('../../images/oscilloscope_screen.jpg');
+#minus_trigger_level {
+	top: 75px;
+	left: 570px;
+	width: 30px;
 }
-.generator-text{
-    float: left;
-    position: absolute;
-    color: white;
-    text-align: center;
-    top: 50px;
+#add_trigger_level {
+	top: 75px;
+	left: 600px;
+	width: 30px;
 }
-.generator-button{
-    position:absolute;
-    float: left;
-    color: #000000;
-    height: 20px;
-    top: 80px;
-    text-indent: 0px;
-    font-size: 10px;
-    width: 20px;
-    border-radius: 15px;
-    cursor: pointer;
+#trigger_alt {
+	top: 15px;
+	left: 570px;
+	width: 40px;
 }
-.demo_wave{
-    padding: 5px;
-    background-color : PaleGreen;
-    position: absolute;
-    width : 350px;
-    height : 250px;
-    left : 1200px;
-    top : 800px;
-    z-index: 1;
-    visibility: hidden;
+#trigger_ch1 {
+	top: 7px;
+	left: 690px;
+	width: 40px;
+	background-color: green;
 }
-#minus_generator_frequency{
-    top: 120px;
-    left: 30px;
-    width: 40px;
-    visibility: hidden;
+#trigger_ch2 {
+	top: 25px;
+	left: 690px;
+	width: 40px;
 }
-#add_generator_frequency{
-    top: 120px;
-    left: 70px;
-    width: 40px;
-    visibility: hidden;
+#trigger_line {
+	top: 43px;
+	left: 690px;
+	width: 40px;
 }
-#generator_frequency{
-    height: 20px;
-    width: 40px;
-    background-color: #000000;
-    top: 80px;
-    left: 50px;
-    color: #000000;
-    visibility: hidden;
+#trigger_ext {
+	top: 60px;
+	left: 690px;
+	width: 40px;
 }
-#generator_frequency_menu{
-    height: 15px;
-    width: 160px;
-    background-color: #000000;
-    top: 20px;
-    left: 140px;
-    font-size: x-small;
+#trigger_slope {
+	top: 103px;
+	left: 590px;
+	width: 68px;
 }
-#generator_power{
-    top: 52px;
-    left: 122px;
+#vertical_v_text1 {
+	height: 15px;
+	width: 70px;
+	background-color: #000000;
+	top: 120px;
+	left: 350px;
+	font-size: x-small;
 }
-#generator_frequency6{
-    top: 52px;
-    left: 145px;
+#vertical_v1 {
+	height: 15px;
+	width: 70px;
+	background-color: #000000;
+	top: 130px;
+	left: 350px;
+	font-size: x-small;
 }
-#generator_frequency5{
-    top: 52px;
-    left: 168px;
+#minus_vertical_v_outer1 {
+	top: 160px;
+	left: 350px;
+	width: 30px;
 }
-#generator_frequency4{
-    top: 52px;
-    left: 191px;
+#add_vertical_v_outer1 {
+	top: 160px;
+	left: 380px;
+	width: 30px;
 }
-#generator_frequency3{
-    top: 52px;
-    left: 214px;
+#minus_vertical_v_inner1 {
+	top: 180px;
+	left: 350px;
+	width: 30px;
+	background-color: #727272;
 }
-#generator_frequency2{
-    top: 52px;
-    left: 237px;
+#add_vertical_v_inner1 {
+	top: 180px;
+	left: 380px;
+	width: 30px;
+	background-color: #727272;
 }
-#generator_frequency1{
-    top: 52px;
-    left: 260px;
+#vertical_position_text1 {
+	height: 15px;
+	width: 60px;
+	background-color: #000000;
+	top: 150px;
+	left: 420px;
+	font-size: x-small;
 }
-#generator_frequency0{
-    top: 52px;
-    left: 283px;
+#minus_vertical_position1 {
+	top: 180px;
+	left: 420px;
+	width: 30px;
 }
-#generator_inv_text{
-    height: 15px;
-    width: 20px;
-    background-color: #000000;
-    top: 20px;
-    left: 320px;
-    font-size: x-small;
+#add_vertical_position1 {
+	top: 180px;
+	left: 450px;
+	width: 30px;
 }
-#generator_inv{
-    top: 52px;
-    left: 320px;
+#vertical_ch1_input {
+	top: 270px;
+	left: 350px;
+	width: 20px;
 }
-#generator_wave_text{
-    height: 15px;
-    width: 60px;
-    background-color: #000000;
-    top: 20px;
-    left: 345px;
-    font-size: x-small;
+#vertical_AC1 {
+	top: 230px;
+	left: 410px;
+	width: 40px;
+	background-color: green;
 }
-#generator_square{
-    top: 52px;
-    left: 343px;
+#vertical_GND1 {
+	top: 250px;
+	left: 410px;
+	width: 40px;
 }
-#generator_triangle{
-    top: 52px;
-    left: 366px;
-}
-#generator_sin{
-    top: 52px;
-    left: 389px;
-}
-#generator_AMPL1_text{
-    height: 15px;
-    width: 30px;
-    background-color: #000000;
-    top: 20px;
-    left: 410px;
-    font-size: x-small;
-}
-#generator_AMPL1{
-    top: 52px;
-    left: 422px;
-}
-#generator_duty_text{
-    height: 15px;
-    width: 40px;
-    background-color: #000000;
-    top: 90px;
-    left: 140px;
-    font-size: x-small;
-}
-#minus_generator_duty{
-    top: 140px;
-    left: 120px;
-    width: 30px;
-}
-#add_generator_duty{
-    top: 140px;
-    left: 150px;
-    width: 30px;
-}
-#generator_offset_text{
-    height: 15px;
-    width: 50px;
-    background-color: #000000;
-    top: 90px;
-    left: 190px;
-    font-size: x-small;
-}
-#generator_offset_switch{
-    top: 120px;
-    left: 205px;
-}
-#minus_generator_offset{
-    top: 140px;
-    left: 185px;
-    width: 30px;
-}
-#add_generator_offset{
-    top: 140px;
-    left: 215px;
-    width: 30px;
-}
-#generator_AMPL2{
-    height: 15px;
-    width: 40px;
-    background-color: #000000;
-    top: 90px;
-    left: 255px;
-    font-size: x-small;
-}
-#generator_AMPL_switch{
-    top: 120px;
-    left: 265px;
-}
-#minus_generator_AMPL{
-    top: 140px;
-    left: 245px;
-    width: 30px;
-}
-#add_generator_AMPL{
-    top: 140px;
-    left: 275px;
-    width: 30px;
-}
-#generator_drawline1{
-    top: 170px;
-    left: 380px;
-    width: 30px;
-}
-#generator_drawline2{
-    top: 170px;
-    left: 430px;
-    width: 30px;
+#vertical_DC1 {
+	top: 270px;
+	left: 410px;
+	width: 40px;
 }
 
-#generator_output50{
-    height: 15px;
-    width: 40px;
-    background-color: #000000;
-    top: 90px;
-    left: 405px;
-    font-size: x-small;
+#vertical_mode_ch1 {
+	top: 200px;
+	left: 500px;
+	width: 50px;
+	background-color: green;
 }
-#generator_output_switch{
-    top: 125px;
-    left: 417px;
+#vertical_mode_ch2 {
+	top: 220px;
+	left: 500px;
+	width: 50px;
 }
-div#oscilloscope{
-    position: absolute;
-    left: 630px;
-    top: 30px;
-    height: 360px;
-    width: 800px;
-    border: 5px solid black;
-    background-size: 800px ;
-    background-repeat: no-repeat;
+#vertical_mode_dual {
+	top: 240px;
+	left: 500px;
+	width: 50px;
 }
-
-.oscilloscope-bg00{
-    background-image:url('../../images/oscilloscope.jpg');
-}
-.oscilloscope-bg01{
-    background-image:url('../../images/oscilloscope01.jpg');
-}
-.oscilloscope-bg10{
-    background-image:url('../../images/oscilloscope10.jpg');
-}
-.oscilloscope-bg11{
-    background-image:url('../../images/oscilloscope11.jpg');
-}
-div#oscilloscopeScreen{
-    position: absolute;
-    left: 50px;
-    top: 45px;
-    width: 280px;
-    height: 225px;
-    background-color: #CCCCCC;
+#vertical_mode_add {
+	top: 260px;
+	left: 500px;
+	width: 50px;
 }
 
-.buttonInactive
-{
-    background-color: white;
+#vertical_v_text2 {
+	height: 15px;
+	width: 70px;
+	background-color: #000000;
+	top: 120px;
+	left: 630px;
+	font-size: x-small;
+}
+#vertical_v2 {
+	height: 15px;
+	width: 70px;
+	background-color: #000000;
+	top: 130px;
+	left: 630px;
+	font-size: x-small;
+}
+#minus_vertical_v_outer2 {
+	top: 160px;
+	left: 630px;
+	width: 30px;
+}
+#add_vertical_v_outer2 {
+	top: 160px;
+	left: 660px;
+	width: 30px;
+}
+#minus_vertical_v_inner2 {
+	top: 180px;
+	left: 630px;
+	width: 30px;
+	background-color: #727272;
+}
+#add_vertical_v_inner2 {
+	top: 180px;
+	left: 660px;
+	width: 30px;
+	background-color: #727272;
+}
+#vertical_position_text2 {
+	height: 15px;
+	width: 60px;
+	background-color: #000000;
+	top: 150px;
+	left: 560px;
+	font-size: x-small;
+}
+#minus_vertical_position2 {
+	top: 180px;
+	left: 560px;
+	width: 30px;
+}
+#add_vertical_position2 {
+	top: 180px;
+	left: 590px;
+	width: 30px;
+}
+#vertical_ch2_input {
+	top: 270px;
+	left: 680px;
+	width: 20px;
+}
+#vertical_AC2 {
+	top: 230px;
+	left: 600px;
+	width: 40px;
+	background-color: green;
+}
+#vertical_GND2 {
+	top: 250px;
+	left: 600px;
+	width: 40px;
+}
+#vertical_DC2 {
+	top: 270px;
+	left: 600px;
+	width: 40px;
+}
+#vertical_drawline1 {
+	top: 290px;
+	left: 320px;
+	width: 30px;
+}
+#vertical_drawline2 {
+	top: 290px;
+	left: 370px;
+	width: 30px;
+}
+#vertical_drawline3 {
+	top: 290px;
+	left: 650px;
+	width: 30px;
+}
+#vertical_drawline4 {
+	top: 290px;
+	left: 690px;
+	width: 30px;
+}
+#oscillosocope_init {
+	top: 285px;
+	left: -38px;
+	width: 30px;
+}
+#level_show {
+	color: orange;
+	font-size: 36px;
+	font-weight: 900;
+	left: -34px;
+	top: 50px;
+	/*one block is 28px*/
+}
+
+div#oscilloscopeScreen {
+	position: absolute;
+	left: 50px;
+	top: 45px;
+	width: 280px;
+	height: 224px;
+	background-image: url('../../images/oscilloscope_screen.jpg');
+}
+.generator-text {
+	float: left;
+	position: absolute;
+	color: white;
+	text-align: center;
+	top: 50px;
+}
+.generator-button {
+	position: absolute;
+	float: left;
+	color: #000000;
+	height: 20px;
+	top: 80px;
+	text-indent: 0px;
+	font-size: 10px;
+	width: 20px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+.demo_wave {
+	padding: 5px;
+	background-color: PaleGreen;
+	position: absolute;
+	width: 350px;
+	height: 250px;
+	left: 1200px;
+	top: 800px;
+	z-index: 1;
+	visibility: hidden;
+}
+#minus_generator_frequency {
+	top: 120px;
+	left: 30px;
+	width: 40px;
+	visibility: hidden;
+}
+#add_generator_frequency {
+	top: 120px;
+	left: 70px;
+	width: 40px;
+	visibility: hidden;
+}
+#generator_frequency {
+	height: 20px;
+	width: 40px;
+	background-color: #000000;
+	top: 80px;
+	left: 50px;
+	color: #000000;
+	visibility: hidden;
+}
+#generator_frequency_menu {
+	height: 15px;
+	width: 160px;
+	background-color: #000000;
+	top: 20px;
+	left: 140px;
+	font-size: x-small;
+}
+#generator_power {
+	top: 52px;
+	left: 122px;
+}
+#generator_frequency6 {
+	top: 52px;
+	left: 145px;
+}
+#generator_frequency5 {
+	top: 52px;
+	left: 168px;
+}
+#generator_frequency4 {
+	top: 52px;
+	left: 191px;
+}
+#generator_frequency3 {
+	top: 52px;
+	left: 214px;
+}
+#generator_frequency2 {
+	top: 52px;
+	left: 237px;
+}
+#generator_frequency1 {
+	top: 52px;
+	left: 260px;
+}
+#generator_frequency0 {
+	top: 52px;
+	left: 283px;
+}
+#generator_inv_text {
+	height: 15px;
+	width: 20px;
+	background-color: #000000;
+	top: 20px;
+	left: 320px;
+	font-size: x-small;
+}
+#generator_inv {
+	top: 52px;
+	left: 320px;
+}
+#generator_wave_text {
+	height: 15px;
+	width: 60px;
+	background-color: #000000;
+	top: 20px;
+	left: 345px;
+	font-size: x-small;
+}
+#generator_square {
+	top: 52px;
+	left: 343px;
+}
+#generator_triangle {
+	top: 52px;
+	left: 366px;
+}
+#generator_sin {
+	top: 52px;
+	left: 389px;
+}
+#generator_AMPL1_text {
+	height: 15px;
+	width: 30px;
+	background-color: #000000;
+	top: 20px;
+	left: 410px;
+	font-size: x-small;
+}
+#generator_AMPL1 {
+	top: 52px;
+	left: 422px;
+}
+#generator_duty_text {
+	height: 15px;
+	width: 40px;
+	background-color: #000000;
+	top: 90px;
+	left: 140px;
+	font-size: x-small;
+}
+#minus_generator_duty {
+	top: 140px;
+	left: 120px;
+	width: 30px;
+}
+#add_generator_duty {
+	top: 140px;
+	left: 150px;
+	width: 30px;
+}
+#generator_offset_text {
+	height: 15px;
+	width: 50px;
+	background-color: #000000;
+	top: 90px;
+	left: 190px;
+	font-size: x-small;
+}
+#generator_offset_switch {
+	top: 120px;
+	left: 205px;
+}
+#minus_generator_offset {
+	top: 140px;
+	left: 185px;
+	width: 30px;
+}
+#add_generator_offset {
+	top: 140px;
+	left: 215px;
+	width: 30px;
+}
+#generator_AMPL2 {
+	height: 15px;
+	width: 40px;
+	background-color: #000000;
+	top: 90px;
+	left: 255px;
+	font-size: x-small;
+}
+#generator_AMPL_switch {
+	top: 120px;
+	left: 265px;
+}
+#minus_generator_AMPL {
+	top: 140px;
+	left: 245px;
+	width: 30px;
+}
+#add_generator_AMPL {
+	top: 140px;
+	left: 275px;
+	width: 30px;
+}
+#generator_drawline1 {
+	top: 170px;
+	left: 380px;
+	width: 30px;
+}
+#generator_drawline2 {
+	top: 170px;
+	left: 430px;
+	width: 30px;
+}
+
+#generator_output50 {
+	height: 15px;
+	width: 40px;
+	background-color: #000000;
+	top: 90px;
+	left: 405px;
+	font-size: x-small;
+}
+#generator_output_switch {
+	top: 125px;
+	left: 417px;
+}
+div#oscilloscope {
+	position: absolute;
+	left: 630px;
+	top: 30px;
+	height: 360px;
+	width: 800px;
+	border: 5px solid black;
+	background-size: 800px;
+	background-repeat: no-repeat;
+}
+
+.oscilloscope-bg00 {
+	background-image: url('../../images/oscilloscope.jpg');
+}
+.oscilloscope-bg01 {
+	background-image: url('../../images/oscilloscope01.jpg');
+}
+.oscilloscope-bg10 {
+	background-image: url('../../images/oscilloscope10.jpg');
+}
+.oscilloscope-bg11 {
+	background-image: url('../../images/oscilloscope11.jpg');
+}
+div#oscilloscopeScreen {
+	position: absolute;
+	left: 50px;
+	top: 45px;
+	width: 280px;
+	height: 225px;
+	background-color: #cccccc;
+}
+
+.buttonInactive {
+	background-color: white;
 }
 /* #addInductance{
     background-color: #CCCCCC;
@@ -755,66 +752,66 @@ div#oscilloscopeScreen{
 #addCapacitance{
     background-color: #CCCCCC;
 } */
-#demo_wave1{
-    position: absolute;
-    left: 1200px;
-    /* top: 150px; */
+#demo_wave1 {
+	position: absolute;
+	left: 1200px;
+	/* top: 150px; */
 }
-#demo_wave2{
-    position: absolute;
-    left: 1500px;
-    /* top: 150px; */
-}
-
-#error_message{
-    padding: 5px;
-    background-color : PaleGreen;
-    position: absolute;
-    width : 350px;
-    height : 250px;
-    left : 600px;
-    top : 600px;
-    z-index: 1;
-}
-#form1{
-    padding: 5px;
-    background-color : PaleGreen;
-    position: absolute;
-    width : 350px;
-    height : 250px;
-    left : 900px;
-    top : 600px;
-    z-index: 1;
-}
-#form2{
-    padding: 5px;
-    background-color : PaleGreen;
-    position: absolute;
-    width : 350px;
-    height : 250px;
-    left : 1200px;
-    top : 600px;
-    z-index: 1;
-}
-#submitbuttom{
-    width: 30px;
-    border-radius: 5px;
-    background-color: #e7dc8f;
-}
-#submitAnswerbuttom{
-    width: 30px;
-    border-radius: 5px;
-    background-color: #e7dc8f;
-}
-#checkCircuitbutton{
-    width: 60px;
-    border-radius: 5px;
-    background-color: #e7dc8f;
+#demo_wave2 {
+	position: absolute;
+	left: 1500px;
+	/* top: 150px; */
 }
 
-#camera{
-    position: absolute;
-    width: 200px;
-    left: 1330px;
-    top: 30px;
+#error_message {
+	padding: 5px;
+	background-color: PaleGreen;
+	position: absolute;
+	width: 350px;
+	height: 250px;
+	left: 600px;
+	top: 600px;
+	z-index: 1;
+}
+#form1 {
+	padding: 5px;
+	background-color: PaleGreen;
+	position: absolute;
+	width: 350px;
+	height: 250px;
+	left: 900px;
+	top: 600px;
+	z-index: 1;
+}
+#form2 {
+	padding: 5px;
+	background-color: PaleGreen;
+	position: absolute;
+	width: 350px;
+	height: 250px;
+	left: 1200px;
+	top: 600px;
+	z-index: 1;
+}
+#submitbuttom {
+	width: 30px;
+	border-radius: 5px;
+	background-color: #e7dc8f;
+}
+#submitAnswerbuttom {
+	width: 30px;
+	border-radius: 5px;
+	background-color: #e7dc8f;
+}
+#checkCircuitbutton {
+	width: 60px;
+	border-radius: 5px;
+	background-color: #e7dc8f;
+}
+
+#camera {
+	position: absolute;
+	width: 200px;
+	left: 1330px;
+	top: 30px;
 }

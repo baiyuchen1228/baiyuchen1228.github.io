@@ -1,25 +1,21 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
+	<head>
+		<title>網頁安全課程-靜態網站-在 tag 中直接撰寫</title>
+	</head>
 
-<head>
-    <title>網頁安全課程-靜態網站-在 tag 中直接撰寫</title>
-</head>
+	<body style="background-color: powderblue">
+		<h1 style="color: rgb(63, 37, 37)">在 tag 中直接撰寫</h1>
+		<p>本頁面示範在 tag 中直接撰寫 css 與 js 的方式</p>
+		<p>可使用檢視原始碼查看內容</p>
+		<p>css 改變顏色，js 則會在需要點選按鈕</p>
+		<button style="color: rgb(60, 118, 144)" onclick="Myclick()">點擊我</button>
+		<a href="index.html">回首頁</a>
 
-<body style="background-color: powderblue;">
-
-    <h1 style="color: rgb(63, 37, 37);">在 tag 中直接撰寫</h1>
-    <p>本頁面示範在 tag 中直接撰寫 css 與 js 的方式</p>
-    <p>可使用檢視原始碼查看內容</p>
-    <p>css 改變顏色，js 則會在需要點選按鈕</p>
-    <button style="color: rgb(60, 118, 144);" onclick="Myclick()">點擊我</button>
-    <a href="index.html">回首頁</a>
-
-    <script>
-        function Myclick() {
-            alert("嘗試執行 JavaScript");
-        }
-    </script>
-</body>
-
+		<script>
+			function Myclick() {
+				alert('嘗試執行 JavaScript');
+			}
+		</script>
+	</body>
 </html>

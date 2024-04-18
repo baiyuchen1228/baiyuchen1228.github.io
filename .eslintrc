@@ -1,0 +1,12 @@
+{
+	"extends": "standard-base",
+	"env": {
+		"browser": true
+	},
+	"rules":{
+		"indent": ["error", 4],
+		"no-console": "off",
+		"no-undef": "off",
+		"linebreak-style" : "off"
+	}
+}

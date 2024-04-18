@@ -1,130 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>實驗三：等電位實驗</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/exp3.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery-ui.js"></script>
+		<script src="js/jquery.bgiframe.js"></script>
+		<link rel="stylesheet" href="css/jquery-ui.css" />
+		<script src="js/menu.js"></script>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>實驗三：等電位實驗</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/exp3.css">
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <script src="js/jquery.bgiframe.js"></script>
-    <link rel="stylesheet" href="css/jquery-ui.css" />
-    <script src="js/menu.js"></script>
-</head>
+	<body>
+		<svg
+			id="svgline2"
+			xmlns="http://www.w3.org/2000/svg"
+			version="1.1"
+			width="1500px"
+			height="1000px"
+			style="left: 0px; top: 0px; position: absolute"
+		></svg>
+		<h1>
+			<a href="index.html" target="_self">國立中正大學普通物理實驗學習平台</a>
+			<span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )"
+				>實驗(Click) <span style="font-size: 9px">&#9660;</span>
+				<ul id="SubMenu1" class="sub-menu" style="display: none">
+					<li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
+					<li><a href="exp5.html" target="_self">實驗五：歐姆定律實驗</a></li>
+					<li><a href="exp6.html" target="_self">實驗六：克希荷夫</a></li>
+					<li><a href="exp2.html" target="_self">實驗二：示波器與波形產生器教學</a></li>
+					<li><a href="exp7.html" target="_self">實驗七：RC直流電路</a></li>
+					<li><a href="exp10.html" target="_self">實驗十：RLC直流電路</a></li>
+					<li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
+				</ul>
+			</span>
+			<span class="main-menu" id="menu2" onclick="switchMenu( this, 'SubMenu2' )"
+				>測驗(Click) <span style="font-size: 9px">&#9660;</span>
+				<ul id="SubMenu2" class="sub-menu" style="display: none">
+					<li><a href="exp3_test.html" target="_self">測驗三：等電位實驗</a></li>
+					<li><a href="exp5_test.html" target="_self">測驗五：歐姆定律測驗</a></li>
+					<li><a href="exp6_test.html" target="_self">測驗六：克希荷夫</a></li>
+					<li><a href="exp2_test.html" target="_self">測驗二：示波器與波形產生器教學</a></li>
+					<li><a href="exp7_test.html" target="_self">測驗七：RC直流電路</a></li>
+					<li><a href="exp10_test.html" target="_self">測驗十：RLC直流電路</a></li>
+					<li><a href="exp11_test.html" target="_self">測驗十一：RLC交流電路</a></li>
+				</ul>
+			</span>
+		</h1>
+		<h2>我的課程 / 普通物理實驗 / 實驗三：等電位實驗</h2>
+		<p id="horizontalIndex" style="position: absolute; left: 614px; top: 544px; z-index: 1; float: left; font-size: 13px">
+			0&ensp;&ensp;1&ensp;&ensp;2&ensp;&ensp;3&ensp;&ensp;4&ensp;&ensp;5&ensp;&ensp;6&ensp;&ensp;7&ensp;&ensp;8&ensp;&ensp;9&ensp;&ensp;10&ensp;&ensp;11
+		</p>
+		<p id="verticalIndex_0" style="position: absolute; left: 595px; top: 308px; z-index: 1; float: left; font-size: 13px">11</p>
+		<p id="verticalIndex_1" style="position: absolute; left: 595px; top: 328px; z-index: 1; float: left; font-size: 13px">10</p>
+		<p id="verticalIndex_2" style="position: absolute; left: 600px; top: 348px; z-index: 1; float: left; font-size: 13px">9</p>
+		<p id="verticalIndex_3" style="position: absolute; left: 600px; top: 368px; z-index: 1; float: left; font-size: 13px">8</p>
+		<p id="verticalIndex_4" style="position: absolute; left: 600px; top: 388px; z-index: 1; float: left; font-size: 13px">7</p>
+		<p id="verticalIndex_5" style="position: absolute; left: 600px; top: 408px; z-index: 1; float: left; font-size: 13px">6</p>
+		<p id="verticalIndex_6" style="position: absolute; left: 600px; top: 428px; z-index: 1; float: left; font-size: 13px">5</p>
+		<p id="verticalIndex_7" style="position: absolute; left: 600px; top: 448px; z-index: 1; float: left; font-size: 13px">4</p>
+		<p id="verticalIndex_8" style="position: absolute; left: 600px; top: 468px; z-index: 1; float: left; font-size: 13px">3</p>
+		<p id="verticalIndex_9" style="position: absolute; left: 600px; top: 488px; z-index: 1; float: left; font-size: 13px">2</p>
+		<p id="verticalIndex_10" style="position: absolute; left: 600px; top: 508px; z-index: 1; float: left; font-size: 13px">1</p>
+		<p id="verticalIndex_11" style="position: absolute; left: 600px; top: 528px; z-index: 1; float: left; font-size: 13px">0</p>
+		<p id="negtext" style="position: absolute; left: 885px; top: 378px; z-index: 1; float: left; font-size: 30px">+</p>
+		<p id="postext" style="position: absolute; left: 555px; top: 378px; z-index: 1; float: left; font-size: 30px">-</p>
 
-<body>
-    <svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px"
-        style="left: 0px; top: 0px; position:absolute;"></svg>
-        <h1>
-            <a href="index.html" target="_self">國立中正大學普通物理實驗學習平台</a>
-            <span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )">實驗(Click) <span
-                    style="font-size:9px;">&#9660;</span>
-                <ul id="SubMenu1" class="sub-menu" style="display:none;">
-                    <li><a href="exp3.html" target="_self">實驗三：等電位實驗</a></li>
-                    <li><a href="exp5.html" target="_self">實驗五：歐姆定律實驗</a></li>
-                    <li><a href="exp6.html" target="_self">實驗六：克希荷夫</a></li>
-                    <li><a href="exp2.html" target="_self">實驗二：示波器與波形產生器教學</a></li>
-                    <li><a href="exp7.html" target="_self">實驗七：RC直流電路</a></li>
-                    <li><a href="exp10.html" target="_self">實驗十：RLC直流電路</a></li>
-                    <li><a href="exp11.html" target="_self">實驗十一：RLC交流電路</a></li>
-                </ul>
-            </span>
-            <span class="main-menu" id="menu2" onclick="switchMenu( this, 'SubMenu2' )">測驗(Click) <span
-                style="font-size:9px;">&#9660;</span>
-                <ul id="SubMenu2" class="sub-menu" style="display:none;">
-                    <li><a href="exp3_test.html" target="_self">測驗三：等電位實驗</a></li>
-                    <li><a href="exp5_test.html" target="_self">測驗五：歐姆定律測驗</a></li>
-                    <li><a href="exp6_test.html" target="_self">測驗六：克希荷夫</a></li>
-                    <li><a href="exp2_test.html" target="_self">測驗二：示波器與波形產生器教學</a></li>
-                    <li><a href="exp7_test.html" target="_self">測驗七：RC直流電路</a></li>
-                    <li><a href="exp10_test.html" target="_self">測驗十：RLC直流電路</a></li>
-                    <li><a href="exp11_test.html" target="_self">測驗十一：RLC交流電路</a></li>
-                </ul>
-            </span>
-        </h1>
-    <h2>
-        我的課程 / 普通物理實驗 / 實驗三：等電位實驗
-    </h2>
-    <p id = "horizontalIndex" style="position: absolute; left: 614px; top: 544px; z-index: 1; float: left; font-size: 13px;" >0&ensp;&ensp;1&ensp;&ensp;2&ensp;&ensp;3&ensp;&ensp;4&ensp;&ensp;5&ensp;&ensp;6&ensp;&ensp;7&ensp;&ensp;8&ensp;&ensp;9&ensp;&ensp;10&ensp;&ensp;11</p>
-    <p id = "verticalIndex_0" style="position: absolute; left: 595px; top: 308px; z-index: 1; float: left; font-size: 13px;" >11</p>
-    <p id = "verticalIndex_1" style="position: absolute; left: 595px; top: 328px; z-index: 1; float: left; font-size: 13px;" >10</p>
-    <p id = "verticalIndex_2" style="position: absolute; left: 600px; top: 348px; z-index: 1; float: left; font-size: 13px;" >9</p>
-    <p id = "verticalIndex_3" style="position: absolute; left: 600px; top: 368px; z-index: 1; float: left; font-size: 13px;" >8</p>
-    <p id = "verticalIndex_4" style="position: absolute; left: 600px; top: 388px; z-index: 1; float: left; font-size: 13px;" >7</p>
-    <p id = "verticalIndex_5" style="position: absolute; left: 600px; top: 408px; z-index: 1; float: left; font-size: 13px;" >6</p>
-    <p id = "verticalIndex_6" style="position: absolute; left: 600px; top: 428px; z-index: 1; float: left; font-size: 13px;" >5</p>
-    <p id = "verticalIndex_7" style="position: absolute; left: 600px; top: 448px; z-index: 1; float: left; font-size: 13px;" >4</p>
-    <p id = "verticalIndex_8" style="position: absolute; left: 600px; top: 468px; z-index: 1; float: left; font-size: 13px;" >3</p>
-    <p id = "verticalIndex_9" style="position: absolute; left: 600px; top: 488px; z-index: 1; float: left; font-size: 13px;" >2</p>
-    <p id = "verticalIndex_10" style="position: absolute; left: 600px; top: 508px; z-index: 1; float: left; font-size: 13px;" >1</p>
-    <p id = "verticalIndex_11" style="position: absolute; left: 600px; top: 528px; z-index: 1; float: left; font-size: 13px;" >0</p>
-    <p id = "negtext" style="position: absolute; left: 885px; top: 378px; z-index: 1; float: left; font-size: 30px;" >+</p>
-    <p id = "postext" style="position: absolute; left: 555px; top: 378px; z-index: 1; float: left; font-size: 30px;" >-</p>
-
-
-    <div id="container" style="position: absolute; left: 0px; top: 150px; z-index: -1; height: 600px;">
-        <div id="powersupply">
-            <p id="powersupply1" class="powersupply-text"></p>
-            <p id="powersupply2" class="powersupply-text"></p>
-            <p id="powersupply3" class="powersupply-text"></p>
-            <p id="powersupply4" class="powersupply-text"></p>
-            <button type="button" id="powersupply5" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply6" class="powersupply-button">－</button>
-            <button type="button" id="powersupply7" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply8" class="powersupply-button">－</button>
-            <button type="button" id="powersupply9" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply10" class="powersupply-button">－</button>
-            <button type="button" id="powersupply11" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply12" class="powersupply-button">－</button>
-            <button type="button" id="powersupply13" class="powersupply-button">output</button>
-            <button type="button" id="powersupply14" class="powersupply-button">power</button>
-            <button type="button" id="powersupply15" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply16" class="powersupply-button">－</button>
-            <button type="button" id="powersupply17" class="powersupply-button">＋</button>
-            <button type="button" id="powersupply18" class="powersupply-button">－</button>
-        </div>
-        <div id="multimeter1" class="multimeter-1-bg0">
-            <p id="multimeter1_3" class="multimeter-title"></p>
-            <p id="multimeter1_7" class="multimeter-title">狀態:關機</p>
-            <button type="button" id="multimeter1_1" class="multimeter-button-1">－＞</button>
-            <button type="button" id="multimeter1_2" class="multimeter-button-1">＜－</button>
-            <button type="button" id="multimeter1_4" class="multimeter-button-1">＋</button>
-            <button type="button" id="multimeter1_5" class="multimeter-button-1">－</button>
-            <button type="button" id="multimeter1_6" class="multimeter-button-1">＋</button>
-        </div>
-        <canvas id="myCanvas" width="350" height="270"
-            style="position: relative; left: 550px; top: 150px; z-index: 0; float: left;border-style:solid;"></canvas>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="350px" height="270px"
-            style="left: 550px; top: 150px; z-index:0; position:absolute;" id="svgline"></svg>
-
-    </div>
-    <button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add
-        Alligator Clip(鱷魚夾)</button>
-    <button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
-    <button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
-    <button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
-    <div id="power_choice_hint">
-        電源結構<br>
-        <button type="button" class="buttonInactive" id="zeroRed" href="#" onclick="zeroRed()" style="background-color: rosybrown;">兩圓點</button>
-        <button type="button" class="buttonInactive" id="oneRed" href="#" onclick="oneRed()">一圓點一直線</button>
-        <button type="button" class="buttonInactive" id="twoRed" href="#" onclick="twoRed()">兩直線</button>
-    </div>
-    <a href="exp3_menu.html" target="_blank">使用手冊</a>
-    <div id = "error_message">
-        小提示，卡關了可以偷看，但僅供參考
-        <p id="error_message_content"></p>
-    </div>
-    <form id="form1">
-        時間:<a id="time1"></a><br>
-        姓名:<input class="input" value="" id="name1"></input><a id="name2"></a><br>
-        學號:<input class="input" value="" id="id1"></input><a id="id2"></a><br>
-        系級:<input class="input" value="" id="class1"></input><a id="class2"></a><br>
-        <input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()"></input><br>
-    </form>
-    <script type="text/javascript" src="js\exp3.js"></script>
-</body>
-
+		<div id="container" style="position: absolute; left: 0px; top: 150px; z-index: -1; height: 600px">
+			<div id="powersupply">
+				<p id="powersupply1" class="powersupply-text"></p>
+				<p id="powersupply2" class="powersupply-text"></p>
+				<p id="powersupply3" class="powersupply-text"></p>
+				<p id="powersupply4" class="powersupply-text"></p>
+				<button type="button" id="powersupply5" class="powersupply-button">＋</button>
+				<button type="button" id="powersupply6" class="powersupply-button">－</button>
+				<button type="button" id="powersupply7" class="powersupply-button">＋</button>
+				<button type="button" id="powersupply8" class="powersupply-button">－</button>
+				<button type="button" id="powersupply9" class="powersupply-button">＋</button>
+				<button type="button" id="powersupply10" class="powersupply-button">－</button>
+				<button type="button" id="powersupply11" class="powersupply-button">＋</button>
+				<button type="button" id="powersupply12" class="powersupply-button">－</button>
+				<button type="button" id="powersupply13" class="powersupply-button">output</button>
+				<button type="button" id="powersupply14" class="powersupply-button">power</button>
+				<button type="button" id="powersupply15" class="powersupply-button">＋</button>
+				<button type="button" id="powersupply16" class="powersupply-button">－</button>
+				<button type="button" id="powersupply17" class="powersupply-button">＋</button>
+				<button type="button" id="powersupply18" class="powersupply-button">－</button>
+			</div>
+			<div id="multimeter1" class="multimeter-1-bg0">
+				<p id="multimeter1_3" class="multimeter-title"></p>
+				<p id="multimeter1_7" class="multimeter-title">狀態:關機</p>
+				<button type="button" id="multimeter1_1" class="multimeter-button-1">－＞</button>
+				<button type="button" id="multimeter1_2" class="multimeter-button-1">＜－</button>
+				<button type="button" id="multimeter1_4" class="multimeter-button-1">＋</button>
+				<button type="button" id="multimeter1_5" class="multimeter-button-1">－</button>
+				<button type="button" id="multimeter1_6" class="multimeter-button-1">＋</button>
+			</div>
+			<canvas
+				id="myCanvas"
+				width="350"
+				height="270"
+				style="position: relative; left: 550px; top: 150px; z-index: 0; float: left; border-style: solid"
+			></canvas>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				version="1.1"
+				width="350px"
+				height="270px"
+				style="left: 550px; top: 150px; z-index: 0; position: absolute"
+				id="svgline"
+			></svg>
+		</div>
+		<button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add Alligator Clip(鱷魚夾)</button>
+		<button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
+		<button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
+		<button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
+		<div id="power_choice_hint">
+			電源結構<br />
+			<button type="button" class="buttonInactive" id="zeroRed" href="#" onclick="zeroRed()" style="background-color: rosybrown">兩圓點</button>
+			<button type="button" class="buttonInactive" id="oneRed" href="#" onclick="oneRed()">一圓點一直線</button>
+			<button type="button" class="buttonInactive" id="twoRed" href="#" onclick="twoRed()">兩直線</button>
+		</div>
+		<a href="exp3_menu.html" target="_blank">使用手冊</a>
+		<div id="error_message">
+			小提示，卡關了可以偷看，但僅供參考
+			<p id="error_message_content"></p>
+		</div>
+		<form id="form1">
+			時間:<a id="time1"></a><br />
+			姓名:<input class="input" value="" id="name1" /><a id="name2"></a><br />
+			學號:<input class="input" value="" id="id1" /><a id="id2"></a><br />
+			系級:<input class="input" value="" id="class1" /><a id="class2"></a><br />
+			<input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()" /><br />
+		</form>
+		<script type="text/javascript" src="js\exp3.js"></script>
+	</body>
 </html>

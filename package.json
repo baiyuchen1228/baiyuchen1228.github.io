@@ -1,8 +1,7 @@
 {
 	"dependencies": {
 		"husky": "^9.0.11",
-		"lint-staged": "^15.2.2",
-		"prettier": "^3.2.5"
+		"lint-staged": "^15.2.2"
 	},
 	"husky": {
 		"hooks": {
@@ -14,8 +13,12 @@
 			"prettier --write"
 		]
 	},
+	"pre-commit": [
+		"lint"
+	],
 	"scripts": {
-		"lint": "eslint ./"
+		"lint": "eslint --fix experiment/js/*.js",
+		"prettier": "prettier --write ."
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.0.2",
@@ -26,6 +29,8 @@
 		"eslint-plugin-n": "^16.6.2",
 		"eslint-plugin-promise": "^6.1.1",
 		"eslint-plugin-vue": "^9.25.0",
-		"globals": "^15.0.0"
+		"globals": "^15.0.0",
+		"pre-commit": "^1.2.2",
+		"prettier": "3.2.5"
 	}
 }
