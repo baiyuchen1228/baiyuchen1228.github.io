@@ -214,7 +214,7 @@ function drawDashedLine2() {
             else {
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
-        }   
+        }
     }
     return draw;
 }
@@ -1181,7 +1181,7 @@ function getResistance() {
 
 function getCapacitances(omega) {
 
-    
+
 
     //find all resistance in the html
     var capacitances = $("line[id^='capacitance']");
@@ -1325,7 +1325,7 @@ class GuassionElimination {
 
     Gaussian_Jordan_elimination() {
         let single = [];
-        
+
         for (let i = 0; i < this.n; i++) {//Gaussian 下三角是0，且對角線是1
             if (math.isZero(this.M[i][i])) {
                 for (let j = i + 1; j < this.m; j++) {// go down to find the not zero value
@@ -1340,7 +1340,7 @@ class GuassionElimination {
                 single.push(i);
                 continue;
             }
-            
+
             this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));//把開頭變成1
             if(test){this.multiple(i, math.complex(1.0, 0).div(this.M[i][i]));}//把開頭變成1
             for (let j = i + 1; j < this.m; j++) {// elmination 往下把同column中所有非0的值消成0
@@ -1360,7 +1360,7 @@ class GuassionElimination {
 
         //after guassian elimination
         //console.log("Guassian Elimination")
-    
+
         //檢查是不是無解
         if(debug){
             for(let i=this.n;i<this.m;i++){
@@ -1456,7 +1456,7 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         edge_list.push(tmp);
         graph[3].push(tmp);
         graph[5].push(tmp);
-    } 
+    }
 
 
     //加電壓計
@@ -1488,7 +1488,7 @@ function getFullGraph(graph, meter_idx, omega, checkUser) {
         graph[5].push(e);
         return { graph: graph, voltage_edgeid: e.id};
     }
-    
+
 }
 
 function getFullGraphVoltageVoltage(meter_idx, omega, checkUser) {
@@ -1595,7 +1595,7 @@ function equationVoltageVoltage(meter_idx, omega) {
     for (let i = 0; i < equation_cnt; i++) {
         equations[i][edge_cnt].mul(math.complex(-1, 0));
     }
-    
+
     let gua = new GuassionElimination(equation_cnt, edge_cnt, equations);
     let x = gua.Gaussian_Jordan_elimination();
     return { FullGraph: FG, ans: x };
@@ -1652,7 +1652,7 @@ function testGuassion(){
             equations[equation_cnt][j] = 0;
             equations[equation_cnt][j] = math.complex(equations[equation_cnt][j]);
         }
-        
+
         for (let j = 0; j < graph[i].length; j++) {
             let edge = graph[i][j];
             if (edge.node1 == i) {
@@ -1664,7 +1664,7 @@ function testGuassion(){
         }
         equation_cnt++;
     }
-    
+
     for (let i = 4; i < MaxNodeNum; i++) {
         for (let j = 0; j < edge_cnt; j++) {
             vis_edge[j] = 0;
@@ -1767,7 +1767,7 @@ function checkResitanceBurn(x){
 
 function checkCircuit(omega) {
     let res_meter = {voltage1:0, voltage2:0}
-    
+
     let FGx = equationVoltageVoltage(0, omega);
     let FG = FGx.FullGraph;
     let x = FGx.ans;
@@ -1797,7 +1797,7 @@ function checkCircuit(omega) {
     //     return {meter:ERR, power1:ERR, power2:ERR};
     // }
     document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
-    // show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) + 
+    // show_error("voltage left : " + String(res_meter.voltage1.re.toFixed(5)) + ", " + String(res_meter.voltage1.im.toFixed(5)) +
     //        "<br>voltage right : " + String(res_meter.voltage2.re.toFixed(5)) + ", " + String(res_meter.voltage2.im.toFixed(5)));
     return res_meter;
 
@@ -1950,8 +1950,8 @@ function start(){
     $("#id1").css("display", "none");
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
-    
-    
+
+
     let x1 = 205;
     let y1 = 125;
     let x2 = 205;

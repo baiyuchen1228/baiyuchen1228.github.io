@@ -1,22 +1,22 @@
 class WaveGenerator{
     constructor(){
-        
+
         this._power = false;
 
         this._AMPL_base = 1;
         this._AMPL_pow = 0;
         this._AMPL_switch_on = false;
         this._AMPL_20db_on = false;
-        
+
         this._frequency_base = 1;
         this._frequency_pow = 3;
-        
+
         this._inv = 1;
         this._offset = 0;
         this._cycle = 100000;
         this._type = "";
         this._offset_on = false;
-        
+
         this._frequency = 1000; // 修改時要同時改 base 和 pow
         this._amplitude = 1; // 修改時要同時改 base 和 pow
     }

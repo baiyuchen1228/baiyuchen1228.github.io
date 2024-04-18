@@ -62,4 +62,3 @@ for i in range(14):
         else:
             print(ans[i][j][0],end=',')
     print()
-        

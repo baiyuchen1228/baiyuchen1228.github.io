@@ -196,7 +196,7 @@ function drawDashedLine2() {
             tmpy = y2 - offsetY;
             document.getElementById('svgline').appendChild(parseSVG('<line id=vertical_dashline x1=' + tmpx + ' y1=' + 0 + ' x2=' + tmpx + ' y2=' + 280 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:10px;" stroke-opacity="0.3"></line>'));
             document.getElementById('svgline').appendChild(parseSVG('<line id=horizental_dashline x1=' + 0 + ' y1=' + tmpy + ' x2=' + 400 + ' y2=' + tmpy + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:10px;" stroke-opacity="0.3"></line>'));
-        }   
+        }
     }
     return draw;
 }
@@ -235,7 +235,7 @@ $("#container").mouseup(function (e) {
             alert('(請先點按鈕)please click button first');
             return;
         }
-        
+
         if (x2 < 617 || x2 > 837 || y2 < 327 || y2 > 547) {
             if(((x2 == 577 && y2 == 427) || (x2 == 877 && y2 == 427)));
             else{
@@ -243,7 +243,7 @@ $("#container").mouseup(function (e) {
                 return;
             }
         }
-        
+
         if (findNodeNum(x1, y1) == 1 || findNodeNum(x1, y1) == 0) {
             if(x2 == 877 || x2 == 577) {}else {
                 alert('正負極只能接在左右兩個點');
@@ -603,14 +603,14 @@ function check() {
     }
     let res = checkCircuit();
     let va = res.meter;
-    
+
     // 電阻燒壞檢查
     // if(res.voltage * res.current > 0.125){
     //     alert("電阻燒掉了(resistance over 0.125w)");
     //     $("#multimeter1_3").text("ERR");
     //     return;
     // }
-    
+
     vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
     cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : 0.00.toFixed(2)
     vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
@@ -686,14 +686,14 @@ window.onbeforeunload = () => {
 
 function start(){
     console.log("Starting");
-    
+
     // check id input
     let id = parseInt($("#id1")[0].value,10);
     if(isNaN(id)){
         alert("學號輸入錯誤。\nStudent Id number error.");
         return;
     }
-    
+
     startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
@@ -706,7 +706,7 @@ function start(){
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
     $("#powersupply13").css("background-color", "Lightgreen");
-    
+
     power = 1;
     powersupplyOutputStatus = 1;
     id %= 100;
@@ -732,7 +732,7 @@ function checkAns(){
     let answer1 = (voltage1 * p2p[4][9]);
     let answer2 = (voltage1 * p2p[6][9]);
     let answer3 = (voltage1 * p2p[8][9]);
-    
+
     if(panel == 'oneRed'){
         answer1 = (voltage1 * p2l[4][9]);
         answer2 = (voltage1 * p2l[6][9]);
@@ -743,7 +743,7 @@ function checkAns(){
         answer2 = (voltage1 * l2l[6][9]);
         answer3 = (voltage1 * l2l[8][9]);
     }
-    
+
     let done = true;
     if(isNaN(ans1) || isNaN(ans2) || isNaN(ans3)){
         done = false;
@@ -840,13 +840,13 @@ function zeroRed(){
     $("#zeroRed").css('background-color', 'rosybrown');
     $("#oneRed").css('background-color', 'white');
     $("#twoRed").css('background-color', 'white');
-    
+
     updateLine("#FFF5EB", 25);
     updateLine("#FFF5EB", 325);
     updateCircle("silver", 25);
     updateCircle("silver", 325);
     updateRectangle();
-    
+
 }
 
 function oneRed(){
@@ -854,7 +854,7 @@ function oneRed(){
     $("#zeroRed").css('background-color', 'white');
     $("#oneRed").css('background-color', 'rosybrown');
     $("#twoRed").css('background-color', 'white');
-    
+
     updateLine("#FFF5EB", 25);
     updateCircle("#FFF5EB", 325);
 
@@ -869,7 +869,7 @@ function twoRed(){
     $("#zeroRed").css('background-color', 'white');
     $("#oneRed").css('background-color', 'white');
     $("#twoRed").css('background-color', 'rosybrown');
-    
+
     updateCircle("#FFF5EB", 25);
     updateCircle("#FFF5EB", 325);
     updateLine("silver", 25);

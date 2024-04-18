@@ -20,7 +20,7 @@ class Oscillator{
         this._SWP = 1;
         this._begin = -1; // slope, level 下波的起始位置
     }
-    
+
     set_SWP(val){
         this._SWP = val;
     }
@@ -92,7 +92,7 @@ class Oscillator{
         let loop = this._loop;
         if(type == "square_wave"){
             for (let i = 0; i < loop; i++){
-                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000; //調參 
+                let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000; //調參
                 this._phasor[i] = checkCircuit(omega);
             }
         }else if(type == "sin_wave"){
@@ -108,7 +108,7 @@ class Oscillator{
     get_data(){
         // this._begin == -1 --> 以週期為時間間隔依據
         // others --> 以 time_mul 為時間間隔依據
-        
+
         let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 3;
         if(this._init == 0 && this._vaild == false){
             this.get_res();
@@ -147,7 +147,7 @@ class Oscillator{
                 this._datapoints0[j] = 0;
                 this._datapoints1[j] = 0;
             }
-            
+
             for (let i = 0; i < loop; i++){
                 let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
                 let res = this._phasor[i];
@@ -182,7 +182,7 @@ class Oscillator{
                 this._datapoints0[j] = 0;
                 this._datapoints1[j] = 0;
             }
-            
+
             for (let i = 0; i < loop; i++){
                 let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
                 let res = this._phasor[i];
@@ -225,7 +225,7 @@ class Oscillator{
                 }else{
                     this._datapoints0[i] = wg.voltage((i + this._time_offset) * this._time_mul + this._begin, 1, omega, phase0, amplitude0);
                     this._datapoints1[i] = wg.voltage((i + this._time_offset) * this._time_mul + this._begin, 1, omega, phase1, amplitude1);
-                } 
+                }
             }
             for(let j=0;j<(WAVE_DATA_COUNT);j++){
                 this._datapoints0[j] *= wg.amplitude;
@@ -238,9 +238,9 @@ class Oscillator{
                 }
             }
         }
-        
+
         // 確定使用者真的有接對
-        
+
         if(this._init == 0){
             let conn = checkConnected();
             if(conn.voltage1 == 0){
@@ -259,7 +259,7 @@ class Oscillator{
         wg = tmp_wg;
 
     }
-    
+
     power_control(){
         if(this._power == 0){
             this._power = 1;
@@ -273,12 +273,12 @@ class Oscillator{
 
     draw(){
         document.querySelector("#error_message_content").innerHTML = ""; //初始化 show_error
-        // document.getElementById("demo_frequency1").value = wg.frequency * 1000;         
+        // document.getElementById("demo_frequency1").value = wg.frequency * 1000;
         // document.getElementById("demo_amplitude1").value = wg.amplitude;
         // document.getElementById("demo_wave_type1").value = wg.type;
         // document.getElementById("demo_wave_offset1").value = wg.offset;
         // document.getElementById("demo_wave_inv1").value = wg.inv;
-        
+
         let arrow_pos = this._level;
         if(this._reference == "CH1"){
             arrow_pos += this._vertical_offset[0];
@@ -293,7 +293,7 @@ class Oscillator{
         }
         arrow_pos = arrow_pos * (-28) + 50;
         $("#level_show").css("top", arrow_pos.toString() + "px");
-        
+
         this._begin = -1;
         this.get_data();    // 找一個週期下的波圖
         let datapoints0 = [];
@@ -338,7 +338,7 @@ class Oscillator{
             show_error("trigger level is out of range!");
         }else{
             this.get_data(); // 找示波器要畫出來的資料
-            
+
             for(let i=0;i < (this._WAVE_DATA_COUNT);i++){
                 if(this._show_mode != 'CH2'){
                     datapoints0[i] = this._datapoints0[i] / this._vertical_v[0];
@@ -388,7 +388,7 @@ class Oscillator{
         this.drawChart(datapoints0, datapoints1);
     }
     drawChart(datapoints0, datapoints1){
-        
+
         let chartStatus = Chart.getChart("oscilloscopeScreenCanvas"); // <canvas> id
         if (chartStatus != undefined) {
             chartStatus.destroy();

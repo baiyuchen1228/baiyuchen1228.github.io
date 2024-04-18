@@ -452,7 +452,7 @@ function drawDashedLine2() {
             else {
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
-        }   
+        }
     }
     return draw;
 }
@@ -953,14 +953,14 @@ $(document).ready(function () {
     current_x = 0;
     context.lineWidth = 3;
     context.strokeStyle = "red";
-    context.beginPath(); 
+    context.beginPath();
     context.moveTo(35, 0); // Set the path origin
     context.lineTo(35, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
     context.stroke(); // Outline the path
 
     context.strokeStyle = "black";
-    context.beginPath(); 
+    context.beginPath();
     context.moveTo(75, 0); // Set the path origin
     context.lineTo(75, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -978,7 +978,7 @@ $(document).ready(function () {
 
     context.lineWidth = 3;
     context.strokeStyle = "blue";
-    context.beginPath(); 
+    context.beginPath();
     context.moveTo(175, 0); // Set the path origin
     context.lineTo(175, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -998,7 +998,7 @@ $(document).ready(function () {
     current_x = 0;
     context.lineWidth = 3;
     context.strokeStyle = "black";
-    context.beginPath(); 
+    context.beginPath();
     context.moveTo(275, 0); // Set the path origin
     context.lineTo(275, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1026,7 +1026,7 @@ $(document).ready(function () {
 
     context.lineWidth = 3;
     context.strokeStyle = "red";
-    context.beginPath(); 
+    context.beginPath();
     context.moveTo(315, 0); // Set the path origin
     context.lineTo(315, 50 * 11 - 5); // Set the path destination
     context.closePath(); // Close the path
@@ -1342,7 +1342,7 @@ function getAlligator() {
             node2: findNodeNum(alligator.x2.baseVal.value - offsetX, alligator.y2.baseVal.value - offsetY)
         };
     });
-    
+
     return alligatorOut;
 }
 
@@ -1483,7 +1483,7 @@ class GuassionElimination {
         }
 
         //after guassian elimination
-        
+
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
             if(this.M[i][this.n] > 1e-10){
@@ -1804,7 +1804,7 @@ function check() {
     }
     let res = checkCircuit();
     let va = res.meter;
-    
+
     // 電阻燒壞檢查
     // if(res.voltage * res.current > 0.125){
     //     alert("電阻燒掉了(resistance over 0.125w)");
@@ -1812,7 +1812,7 @@ function check() {
     //     $("#multimeter2_3").text("ERR");
     //     return;
     // }
-    
+
     vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
     cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
     vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
@@ -1981,14 +1981,14 @@ function findPersistNode(){
 
 function start(){
     console.log("Starting");
-    
+
     // check id input
     let id = parseInt($("#id1")[0].value,10);
     if(isNaN(id)){
         alert("學號輸入錯誤。\nStudent Id number error.");
         return;
     }
-    
+
     startbool = true;
     let date = new Date();
     let time = String(date.getFullYear()) + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') + ' ' + String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0') + ':' + String(date.getSeconds()).padStart(2, '0');
@@ -2001,7 +2001,7 @@ function start(){
     $("#class1").css("display", "none");
     $("#submitbuttom").css("display", "none");
     show_error("請別刪除已經存在的元件");
-    
+
     id %= 100;
     power = 1;
     let ohms = (id / 4) * 13 + 50;
@@ -2034,7 +2034,7 @@ function checkAns(){
     let done = true;
     done = done && checkEqual(abs(ans1), abs(student_pre_test_ans.right.voltage.toFixed(2)));
     done = done && checkEqual(abs(ans2), abs(student_pre_test_ans.left.voltage.toFixed(2)));
-    done = done && checkEqual(abs(ans3), student_pre_test_ans.down.current.toFixed(5)); 
+    done = done && checkEqual(abs(ans3), student_pre_test_ans.down.current.toFixed(5));
     if(done){
         $("#anstext1").text($("#ans1")[0].value);
         $("#anstext2").text($("#ans2")[0].value);

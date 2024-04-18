@@ -664,7 +664,7 @@ function drawDashedLine2() {
             else {
                 document.getElementById('svgline2').appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
             }
-        }   
+        }
     }
     return draw;
 }
@@ -1687,8 +1687,8 @@ class GuassionElimination {
         }
 
         //after guassian elimination
-        
-        
+
+
         //檢查是不是無解
         for(let i=this.n;i<this.m;i++){
             if(this.M[i][this.n] > 1e-10){
@@ -1812,7 +1812,7 @@ let path = [];
 //challenge : v0 不能給變數當電流，但連接時要當有連到
 function find_loop(goal, node, graph, loop_length) {
     if (loop_length != 0 && goal == node) {
-        
+
         equations[equation_cnt] = [];
         for (let j = 0; j <= edge_cnt; j++) {
             equations[equation_cnt][j] = 0;
@@ -1970,7 +1970,7 @@ function check() {
     }
     let res = checkCircuit();
     let va = res.meter;
-    
+
     // 電阻燒壞檢查
     // if(res.voltage * res.current > 0.125){
     //     alert("電阻燒掉了(resistance over 0.125w)");
@@ -1978,7 +1978,7 @@ function check() {
     //     $("#multimeter2_3").text("ERR");
     //     return;
     // }
-    
+
     vol1.innerHTML = res.power1.voltage == "ERR" ? res.power1.voltage : res.power1.voltage.toFixed(2)
     cur1.innerHTML = res.power1.current == "ERR" ? res.power1.current : res.power1.current.toFixed(2)
     vol2.innerHTML = res.power2.voltage == "ERR" ? res.power2.voltage : res.power2.voltage.toFixed(2)
