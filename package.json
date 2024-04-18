@@ -4,7 +4,7 @@
 		"lint-staged": "^15.2.2",
 		"prettier": "^3.2.5"
 	},
-    "husky": {
+	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"
 		}
@@ -13,5 +13,19 @@
 		"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
 			"prettier --write"
 		]
+	},
+	"scripts": {
+		"lint": "eslint ./"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3.0.2",
+		"@eslint/js": "^9.0.0",
+		"eslint": "^8.57.0",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-n": "^16.6.2",
+		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-vue": "^9.25.0",
+		"globals": "^15.0.0"
 	}
 }
