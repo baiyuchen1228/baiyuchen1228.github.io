@@ -6,7 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Transcript</title>
 	</head>
-	<body bgcolor="#333333">
-		<embed src="Transcript.pdf" type="application/pdf" width="100%" height="700px" />
-	</body>
+	<style>
+		/* 使用CSS設置容器的寬度和高度 */
+		.pdf-container {
+			width: 100%;
+			height: 99vh; /* 使用100vh設置高度，以符合瀏覽器視窗的高度 */
+		}
+		/* 全黑背景 */
+		body {
+			background-color: black;
+		}
+	</style>
+
+	<div class="pdf-container">
+		<embed src="Transcript.pdf" type="application/pdf" width="100%" height="100%" />
+	</div>
 </html>
