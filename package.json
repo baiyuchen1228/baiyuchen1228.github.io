@@ -17,6 +17,7 @@
 		"lint"
 	],
 	"scripts": {
+		"check": "prettier --check .",
 		"lint": "eslint --fix experiment/js/*.js",
 		"prettier": "prettier --write ."
 	},

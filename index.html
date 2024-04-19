@@ -1,37 +1,90 @@
 <!doctype html>
-<html>
+<html lang="en">
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bard Pai's Personal Website</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f2f2f2;
+				margin: 0;
+				padding: 0;
+			}
 
-		<title>網頁安全課程-靜態網站</title>
+			header {
+				background-color: #333;
+				color: #fff;
+				padding: 20px;
+				text-align: center;
+			}
+
+			nav {
+				text-align: center;
+				padding: 10px;
+			}
+
+			nav a {
+				color: #333;
+				text-decoration: none;
+				margin: 0 10px;
+			}
+
+			section {
+				padding: 20px;
+				max-width: 800px;
+				margin: 0 auto;
+			}
+
+			footer {
+				background-color: #333;
+				color: #fff;
+				text-align: center;
+				padding: 10px;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+			}
+		</style>
 	</head>
+	<body>
+		<header>
+			<h1>Bard Pai</h1>
+			<p>Software Engineer</p>
+		</header>
 
-	<body style="background-color: powderblue">
-		<h1>靜態網站製作</h1>
-		<h2>任務</h2>
-		<p>可利用 GitHub page 完成靜態網站(包含 HTML、CSS、JavaScript)</p>
-		<ul>
-			<li>引入檔案</li>
-			<li>放入 HTML</li>
-			<li>在 tag 中直接撰寫</li>
-		</ul>
-		<h2>參考連結</h2>
-		<ul>
-			<li>https://www.w3schools.com/html/html_css.asp</li>
-			<li>https://www.w3schools.com/html/html_scripts.asp</li>
-			<li>https://www.w3schools.com/tags/ref_eventattributes.asp</li>
-		</ul>
-		<h2>解答</h2>
-		<ul>
-			<li><a href="external.html">引入檔案</a></li>
-			<li><a href="internal.html">放入 HTML</a></li>
-			<li><a href="inline.html">在 tag 中直接撰寫</a></li>
-			<li><a href="./WebRTC_Practice/public/index.html">WebRTC</a></li>
-			<li><a href="canvas.html">canvas</a></li>
-			<li><a href="./experiment/exp7.html">普物實驗</a></li>
-			<li><a href="./CV/Yu-Chen,Pai.pdf">CV</a></li>
-			<li><a href="./CV/Transcript.pdf">Transcript</a></li>
-		</ul>
-		<p>最後更新時間:2023/2/18 00:17</p>
+		<nav>
+			<a href="#about">About</a>
+			<a href="#projects">Projects</a>
+			<a href="#contact">Contact</a>
+			<a href="./CV/Transcript.html">Transcript</a>
+			<a href="./CV/cv.html">Resume</a>
+		</nav>
+
+		<section id="about">
+			<h2>About Me</h2>
+			<p>
+				I am a passionate software engineer with a strong background in web development. I love learning new technologies and solving complex
+				problems.
+			</p>
+		</section>
+
+		<section id="projects">
+			<h2>Projects</h2>
+			<ul>
+				<li><a href="./experiment/index.html">物理實驗模擬網站</a></li>
+				<li><a href="./WebRTC_Practice/public/index.html">WebRTC</a></li>
+			</ul>
+		</section>
+
+		<section id="contact">
+			<h2>Contact Me</h2>
+			<p>Email: baiyuchen1228@gmail.com</p>
+			<p>Phone: (+886) 966766975</p>
+		</section>
+
+		<footer>
+			<p>&copy; 2024 Bard Pai</p>
+		</footer>
 	</body>
 </html>
