@@ -147,7 +147,7 @@ h2 {
 	padding: 5px 15px;
 	margin: 0px;
 	cursor: pointer;
-	display: inline-block;
+	display: inline;
 } /* 主選單的樣式 */
 .main-menu:hover {
 	background-color: #ebdabf;

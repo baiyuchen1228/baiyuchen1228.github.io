@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="description" content="Bard Pai's Personal Website">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Bard Pai's Personal Website</title>
 		<style>
@@ -21,13 +22,14 @@
 
 			nav {
 				text-align: center;
-				padding: 10px;
+				padding:10px 10px;
 			}
 
 			nav a {
 				color: #333;
 				text-decoration: none;
-				margin: 0 10px;
+				margin: 10px 10px;
+				padding: 15px;
 			}
 
 			section {
@@ -45,6 +47,9 @@
 				bottom: 0;
 				width: 100%;
 			}
+			a:-webkit-any-link {
+				text-decoration: none;
+			}
 		</style>
 	</head>
 	<body>
@@ -54,7 +59,7 @@
 		</header>
 
 		<nav>
-			<a href="#about">About</a>
+			<a href="#about" >About</a>
 			<a href="#projects">Projects</a>
 			<a href="#contact">Contact</a>
 			<a href="./CV/Transcript.html">Transcript</a>
@@ -72,8 +77,8 @@
 		<section id="projects">
 			<h2>Projects</h2>
 			<ul>
-				<li><a href="./experiment/index.html">物理實驗模擬網站</a></li>
-				<li><a href="./WebRTC_Practice/public/index.html">WebRTC</a></li>
+				<li style="padding: 10px 0;"><a href="./experiment/index.html" style="flex-wrap: wrap;display: flex;height: 34px;width: 20%;align-content: center;">物理實驗模擬網站</a></li>
+				<li style="padding: 10px 0;"><a href="./WebRTC_Practice/public/index.html" style="flex-wrap: wrap;display: flex;height: 34px;width: 20%;align-content: center;">WebRTC</a></li>
 			</ul>
 		</section>
 
