@@ -258,12 +258,10 @@ function deleteRow(arr, row) {
 	return arr;
 }
 
-function derectDelete(event) {
-	alarm(event);
-	console.log(event.target.id);
+function derectDelete(element) {
+	console.log(element);
 	if (deletemode == 1) {
-		// var toDelete = element;
-		var toDelete = event.target;
+		var toDelete = element;
 		if (toDelete.id[0] == 'w') {
 			toDelete = document.getElementById('wire' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
 		} else if (toDelete.id[0] == 'r') {
@@ -433,11 +431,11 @@ $('#container').mouseup(function (e) {
 		}
 		if (wireNo < 10) {
 			var circle1 = parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>');
-			circle1.addEventListener('click', (e) => derectDelete(e));
+			circle1.onclick = derectDelete;
 			var circle2 = parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>');
-			circle2.addEventListener('click', (e) => derectDelete(e));
+			circle2.onclick = derectDelete;
 			var line = parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>');
-			line.addEventListener('click', (e) => derectDelete(e));
+			line.onclick = derectDelete;
 			document.getElementById('svgline').appendChild(circle1);
 			document.getElementById('svgline').appendChild(circle2);
 			document.getElementById('svgline').appendChild(line);
