@@ -160,20 +160,8 @@ class Oscillator {
 						this._datapoints0[j] += wg.voltage(j * timeslot, 2 * i + 1, omega, phase0, amplitude0);
 						this._datapoints1[j] += wg.voltage(j * timeslot, 2 * i + 1, omega, phase1, amplitude1);
 					} else {
-						this._datapoints0[j] += wg.voltage(
-							(j + this._time_offset) * this._time_mul + this._begin,
-							2 * i + 1,
-							omega,
-							phase0,
-							amplitude0
-						);
-						this._datapoints1[j] += wg.voltage(
-							(j + this._time_offset) * this._time_mul + this._begin,
-							2 * i + 1,
-							omega,
-							phase1,
-							amplitude1
-						);
+						this._datapoints0[j] += wg.voltage((j + this._time_offset) * this._time_mul + this._begin, 2 * i + 1, omega, phase0, amplitude0);
+						this._datapoints1[j] += wg.voltage((j + this._time_offset) * this._time_mul + this._begin, 2 * i + 1, omega, phase1, amplitude1);
 					}
 				}
 			}
@@ -206,20 +194,8 @@ class Oscillator {
 						this._datapoints0[j] += wg.voltage(j * timeslot, pow(-1, i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
 						this._datapoints1[j] += wg.voltage(j * timeslot, pow(-1, i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
 					} else {
-						this._datapoints0[j] += wg.voltage(
-							(j + this._time_offset) * this._time_mul + this._begin,
-							pow(-1, i) * (2 * i + 1) * (2 * i + 1),
-							omega,
-							phase0,
-							amplitude0
-						);
-						this._datapoints1[j] += wg.voltage(
-							(j + this._time_offset) * this._time_mul + this._begin,
-							pow(-1, i) * (2 * i + 1) * (2 * i + 1),
-							omega,
-							phase1,
-							amplitude1
-						);
+						this._datapoints0[j] += wg.voltage((j + this._time_offset) * this._time_mul + this._begin, pow(-1, i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
+						this._datapoints1[j] += wg.voltage((j + this._time_offset) * this._time_mul + this._begin, pow(-1, i) * (2 * i + 1) * (2 * i + 1), omega, phase1, amplitude1);
 					}
 				}
 			}

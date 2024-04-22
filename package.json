@@ -17,9 +17,9 @@
 		"lint"
 	],
 	"scripts": {
-		"check": "prettier --check .",
+		"c": "prettier --check .",
 		"lint": "eslint --fix experiment/js/*.js",
-		"prettier": "prettier --write ."
+		"w": "prettier --write ."
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.0.2",

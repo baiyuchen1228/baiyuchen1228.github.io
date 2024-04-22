@@ -205,41 +205,9 @@ function drawDashedLine() {
 		if (mode) {
 			if ($('#dashline').length > 0) {
 				$('#dashline').remove();
-				document
-					.getElementById('svgline')
-					.appendChild(
-						parseSVG(
-							'<line id=dashline x1=' +
-								x1 +
-								' y1=' +
-								y1 +
-								' x2=' +
-								x2 +
-								' y2=' +
-								y2 +
-								' " style="stroke:' +
-								colorlist[colorNo] +
-								'; stroke-width:5px;" stroke-dasharray="5"></line>'
-						)
-					);
+				document.getElementById('svgline').appendChild(parseSVG('<line id=dashline x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + '; stroke-width:5px;" stroke-dasharray="5"></line>'));
 			} else {
-				document
-					.getElementById('svgline')
-					.appendChild(
-						parseSVG(
-							'<line id=dashline x1=' +
-								x1 +
-								' y1=' +
-								y1 +
-								' x2=' +
-								x2 +
-								' y2=' +
-								y2 +
-								' " style="stroke:' +
-								colorlist[colorNo] +
-								'; stroke-width:5px;" stroke-dasharray="5"></line>'
-						)
-					);
+				document.getElementById('svgline').appendChild(parseSVG('<line id=dashline x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + '; stroke-width:5px;" stroke-dasharray="5"></line>'));
 			}
 		}
 	}
@@ -260,39 +228,11 @@ function drawDashedLine2() {
 				$('#dashline').remove();
 				document
 					.getElementById('svgline2')
-					.appendChild(
-						parseSVG(
-							'<line id=dashline x1=' +
-								AlligatorX1 +
-								' y1=' +
-								AlligatorY1 +
-								' x2=' +
-								x2 +
-								' y2=' +
-								y2 +
-								' " style="stroke:' +
-								colorlist[colorNo] +
-								' ;stroke-width:5px;" stroke-dasharray="5"></line>'
-						)
-					);
+					.appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
 			} else {
 				document
 					.getElementById('svgline2')
-					.appendChild(
-						parseSVG(
-							'<line id=dashline x1=' +
-								AlligatorX1 +
-								' y1=' +
-								AlligatorY1 +
-								' x2=' +
-								x2 +
-								' y2=' +
-								y2 +
-								' " style="stroke:' +
-								colorlist[colorNo] +
-								' ;stroke-width:5px;" stroke-dasharray="5"></line>'
-						)
-					);
+					.appendChild(parseSVG('<line id=dashline x1=' + AlligatorX1 + ' y1=' + AlligatorY1 + ' x2=' + x2 + ' y2=' + y2 + ' " style="stroke:' + colorlist[colorNo] + ' ;stroke-width:5px;" stroke-dasharray="5"></line>'));
 			}
 		}
 	}
@@ -485,112 +425,24 @@ $('#container').mouseup(function (e) {
 		if (wireNo < 10) {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=wireCircle1_0' +
-							wireNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=wireCircle2_0' +
-							wireNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<line id=wire0' +
-							wireNo +
-							' x1=' +
-							x1 +
-							' y1=' +
-							y1 +
-							' x2=' +
-							x2 +
-							' y2=' +
-							y2 +
-							' style="stroke:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			linestack.push('wire0' + wireNo);
 		} else {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=wireCircle1_' +
-							wireNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=wireCircle2_' +
-							wireNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<line id=wire' +
-							wireNo +
-							' x1=' +
-							x1 +
-							' y1=' +
-							y1 +
-							' x2=' +
-							x2 +
-							' y2=' +
-							y2 +
-							' style="stroke:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			linestack.push('wire' + wireNo);
 		}
 		pointarray.push([x1, y1]);
@@ -649,38 +501,10 @@ $('#container').mouseup(function (e) {
 		if (resistanceNo < 10) {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=resistanceCircle1_0' +
-							resistanceNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=resistanceCircle2_0' +
-							resistanceNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
 				.appendChild(
@@ -735,38 +559,10 @@ $('#container').mouseup(function (e) {
 		} else {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=resistanceCircle1_' +
-							resistanceNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=resistanceCircle2_' +
-							resistanceNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
 				.appendChild(
@@ -876,38 +672,10 @@ $('#container').mouseup(function (e) {
 		if (inductanceNo < 10) {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=inductanceCircle1_0' +
-							inductanceNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=inductanceCircle2_0' +
-							inductanceNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
 				.appendChild(
@@ -962,38 +730,10 @@ $('#container').mouseup(function (e) {
 		} else {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=inductanceCircle1_' +
-							inductanceNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=inductanceCircle2_' +
-							inductanceNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
 				.appendChild(
@@ -1104,38 +844,10 @@ $('#container').mouseup(function (e) {
 		if (capacitanceNo < 10) {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=capacitanceCircle1_0' +
-							capacitanceNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=capacitanceCircle2_0' +
-							capacitanceNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
 				.appendChild(
@@ -1190,38 +902,10 @@ $('#container').mouseup(function (e) {
 		} else {
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=capacitanceCircle1_' +
-							capacitanceNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<circle id=capacitanceCircle2_' +
-							capacitanceNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline')
 				.appendChild(
@@ -1320,57 +1004,11 @@ $('#container').mouseup(function (e) {
 		if (alligatorNo < 10) {
 			document
 				.getElementById('svgline2')
-				.appendChild(
-					parseSVG(
-						'<circle id=alligatorCircle1_0' +
-							alligatorNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline2')
-				.appendChild(
-					parseSVG(
-						'<circle id=alligatorCircle2_0' +
-							alligatorNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
-			document
-				.getElementById('svgline2')
-				.appendChild(
-					parseSVG(
-						'<line id=alligator0' +
-							alligatorNo +
-							' x1=' +
-							x1 +
-							' y1=' +
-							y1 +
-							' x2=' +
-							x2 +
-							' y2=' +
-							y2 +
-							' style="stroke:' +
-							colorlist[colorNo] +
-							';stroke-width:5px;"/>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+			document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
 			if ((x1 == 1020 || x1 == 1350) && y1 == 530) {
 				linestack.push('aalligator0' + alligatorNo);
 			} else {
@@ -1379,57 +1017,11 @@ $('#container').mouseup(function (e) {
 		} else {
 			document
 				.getElementById('svgline2')
-				.appendChild(
-					parseSVG(
-						'<circle id=alligatorCircle1_' +
-							alligatorNo +
-							' cx=' +
-							x1 +
-							' cy=' +
-							y1 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
 			document
 				.getElementById('svgline2')
-				.appendChild(
-					parseSVG(
-						'<circle id=alligatorCircle2_' +
-							alligatorNo +
-							' cx=' +
-							x2 +
-							' cy=' +
-							y2 +
-							' r=' +
-							5 +
-							' style="fill:' +
-							colorlist[colorNo] +
-							';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'
-					)
-				);
-			document
-				.getElementById('svgline2')
-				.appendChild(
-					parseSVG(
-						'<line id=alligator' +
-							alligatorNo +
-							' x1=' +
-							x1 +
-							' y1=' +
-							y1 +
-							' x2=' +
-							x2 +
-							' y2=' +
-							y2 +
-							' style="stroke:' +
-							colorlist[colorNo] +
-							';stroke-width:5px;"/>'
-					)
-				);
+				.appendChild(parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+			document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
 			if ((x1 == 1020 || x1 == 1350) && y1 == 530) {
 				linestack.push('aalligator' + alligatorNo);
 			} else {

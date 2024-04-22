@@ -17,14 +17,7 @@
 
 	<body>
 		<video autoplay id="camera"></video>
-		<svg
-			id="svgline2"
-			xmlns="http://www.w3.org/2000/svg"
-			version="1.1"
-			width="1500px"
-			height="1000px"
-			style="left: 0px; top: 0px; position: absolute"
-		></svg>
+		<svg id="svgline2" xmlns="http://www.w3.org/2000/svg" version="1.1" width="1500px" height="1000px" style="left: 0px; top: 0px; position: absolute"></svg>
 		<h1>
 			<a href="index.html" target="_self">國立中正大學普通物理實驗學習平台</a>
 			<span class="main-menu" id="menu1" onclick="switchMenu( this, 'SubMenu1' )"
@@ -101,20 +94,8 @@
 				<button type="button" id="multimeter1_5" class="multimeter-button-1">－</button>
 				<button type="button" id="multimeter1_6" class="multimeter-button-1">＋</button>
 			</div>
-			<canvas
-				id="myCanvas"
-				width="350"
-				height="270"
-				style="position: relative; left: 550px; top: 150px; z-index: 0; float: left; border-style: solid"
-			></canvas>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				version="1.1"
-				width="350px"
-				height="270px"
-				style="left: 550px; top: 150px; z-index: 0; position: absolute"
-				id="svgline"
-			></svg>
+			<canvas id="myCanvas" width="350" height="270" style="position: relative; left: 550px; top: 150px; z-index: 0; float: left; border-style: solid"></canvas>
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="350px" height="270px" style="left: 550px; top: 150px; z-index: 0; position: absolute" id="svgline"></svg>
 		</div>
 
 		<button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add Alligator Clip(鱷魚夾)</button>
@@ -123,9 +104,7 @@
 		<button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
 		<div id="power_choice_hint">
 			電源結構<br />
-			<button type="button" class="buttonInactive" id="zeroRed" href="#" disabled onclick="zeroRed()" style="background-color: rosybrown">
-				兩圓點
-			</button>
+			<button type="button" class="buttonInactive" id="zeroRed" href="#" disabled onclick="zeroRed()" style="background-color: rosybrown">兩圓點</button>
 			<button type="button" class="buttonInactive" id="oneRed" href="#" disabled onclick="oneRed()">一圓點一直線</button>
 			<button type="button" class="buttonInactive" id="twoRed" href="#" disabled onclick="twoRed()">兩直線</button>
 		</div>
