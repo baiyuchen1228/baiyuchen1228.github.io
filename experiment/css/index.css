@@ -1,122 +1,3 @@
-/* Font */
-@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
-
-/* Design */
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
-
-html {
-	background-color: #ecf9ff;
-}
-
-body {
-	color: #272727;
-	font-family: 'Quicksand', serif;
-	font-style: normal;
-	font-weight: 400;
-	letter-spacing: 0;
-	padding: 1rem;
-}
-
-.main {
-	max-width: 1200px;
-	margin: 0 auto;
-}
-
-img {
-	height: auto;
-	max-width: 100%;
-	vertical-align: middle;
-}
-
-.btn {
-	color: #ffffff;
-	padding: 0.8rem;
-	font-size: 14px;
-	text-transform: uppercase;
-	border-radius: 4px;
-	font-weight: 400;
-	display: block;
-	width: 100%;
-	cursor: pointer;
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	background: transparent;
-	text-align: center;
-	margin-top: auto; /* 將 content 推到底部 */
-}
-
-.btn:hover {
-	background-color: rgba(255, 255, 255, 0.12);
-}
-
-.cards {
-	display: flex;
-	flex-wrap: wrap;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.cards_item {
-	display: flex;
-	padding: 1rem;
-}
-
-@media (min-width: 40rem) {
-	.cards_item {
-		width: 50%;
-	}
-}
-
-@media (min-width: 56rem) {
-	.cards_item {
-		width: 33.3333%;
-	}
-}
-
-.card {
-	background-color: white;
-	border-radius: 0.25rem;
-	box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-	display: flex;
-	flex-direction: column;
-}
-
-.card_content {
-	padding: 1rem;
-	background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
-	margin-top: auto; /* 將 content 推到底部 */
-	height: 100%; /* 固定高度 */
-	width: 100%; /* 填滿寬度 */
-	display: flex;
-	flex-direction: column;
-}
-
-.card_title {
-	color: #ffffff;
-	font-size: 1.1rem;
-	font-weight: 700;
-	letter-spacing: 1px;
-	text-transform: capitalize;
-	margin: 0px;
-}
-
-.card_text {
-	color: #ffffff;
-	font-size: 0.875rem;
-	line-height: 1.5;
-	margin-bottom: 1.25rem;
-	font-weight: 400;
-}
-.made_by {
-	font-weight: 400;
-	font-size: 13px;
-	margin-top: 35px;
-	text-align: center;
-}
 body {
 	background-color: #fff5eb;
 	padding: 0 10% 10% 10%;
@@ -127,7 +8,8 @@ h1 {
 	padding: 5px 10px;
 	color: #000000;
 	font-size: 18px;
-	border-radius: 9px;
+	border-radius: 20px;
+	border: 10px solid #fff5eb;
 }
 h2 {
 	text-indent: 1em;
@@ -180,728 +62,86 @@ h2 {
 	background-color: #e7dc8f;
 	text-decoration: none;
 }
-div#generator {
-	position: absolute;
-	left: 30px;
-	top: 60px;
-	height: 190px;
-	width: 520px;
-	border: 5px solid black;
-	background-size: 520px;
-	background-repeat: no-repeat;
-}
-.generator_bg0 {
-	background-image: url('../../images/waveform_generator.jpg');
-}
-.generator_bg1 {
-	background-image: url('../../images/waveform_generator1.jpg');
-}
-
-div#oscilloscope {
-	position: absolute;
-	left: 630px;
-	top: 150px;
-	height: 360px;
-	width: 800px;
-	border: 5px solid black;
-	background-size: 800px;
-	background-repeat: no-repeat;
-}
-.oscilloscope-text {
-	float: left;
-	position: absolute;
-	color: white;
-	text-align: center;
-	top: 50px;
-}
-.oscilloscope-button {
-	position: absolute;
-	float: left;
-	color: #000000;
-	height: 20px;
-	top: 80px;
-	text-indent: 0px;
-	font-size: 10px;
-	width: 20px;
-	border-radius: 15px;
-	cursor: pointer;
-}
-#oscilloscope_inten_text {
-	height: 15px;
-	width: 30px;
-	background-color: #000000;
-	top: 245px;
-	left: 20px;
-	font-size: x-small;
-}
-#minus_oscilloscope_inten {
-	top: 270px;
-	left: 5px;
-	width: 30px;
-}
-#add_oscilloscope_inten {
-	top: 270px;
-	left: 35px;
-	width: 30px;
-}
-#oscilloscope_focus_text {
-	height: 15px;
-	width: 30px;
-	background-color: #000000;
-	top: 245px;
-	left: 90px;
-	font-size: x-small;
-}
-#minus_oscilloscope_focus {
-	top: 270px;
-	left: 75px;
-	width: 30px;
-}
-#add_oscilloscope_focus {
-	top: 270px;
-	left: 105px;
-	width: 30px;
-}
-#oscilloscope_power_text {
-	height: 15px;
-	width: 30px;
-	background-color: #000000;
-	top: 245px;
-	left: 270px;
-	font-size: x-small;
-}
-#oscilloscope_power {
-	top: 270px;
-	left: 275px;
-	width: 20px;
-}
-#horizonal_position_text {
-	height: 15px;
-	width: 40px;
-	background-color: #000000;
-	top: 45px;
-	left: 345px;
-	font-size: x-small;
-}
-#minus_horizonal_position {
-	top: 75px;
-	left: 360px;
-	width: 30px;
-}
-#add_horizonal_position {
-	top: 75px;
-	left: 330px;
-	width: 30px;
-}
-#horizonal_SWP_text {
-	height: 15px;
-	width: 60px;
-	background-color: #000000;
-	top: 45px;
-	left: 405px;
-	font-size: x-small;
-}
-#minus_horizonal_SWP {
-	top: 75px;
-	left: 410px;
-	width: 30px;
-}
-#add_horizonal_SWP {
-	top: 75px;
-	left: 440px;
-	width: 30px;
-}
-#horizonal_time_text {
-	height: 15px;
-	width: 60px;
-	background-color: #000000;
-	top: 20px;
-	left: 485px;
-	font-size: x-small;
-}
-#horizonal_time {
-	height: 15px;
-	width: 60px;
-	background-color: #000000;
-	top: 30px;
-	left: 485px;
-	font-size: x-small;
-}
-#minus_horizonal_time {
-	top: 75px;
-	left: 490px;
-	width: 30px;
-}
-#add_horizonal_time {
-	top: 75px;
-	left: 520px;
-	width: 30px;
-}
-#minus_horizonal_mag {
-	top: 100px;
-	left: 376px;
-	width: 40px;
-}
-#trigger_level_text {
-	height: 15px;
-	width: 40px;
-	background-color: #000000;
-	top: 45px;
-	left: 575px;
-	font-size: x-small;
-}
-#minus_trigger_level {
-	top: 75px;
-	left: 570px;
-	width: 30px;
-}
-#add_trigger_level {
-	top: 75px;
-	left: 600px;
-	width: 30px;
-}
-#trigger_alt {
-	top: 15px;
-	left: 570px;
-	width: 40px;
-}
-#trigger_ch1 {
-	top: 7px;
-	left: 690px;
-	width: 40px;
-	background-color: green;
-}
-#trigger_ch2 {
-	top: 25px;
-	left: 690px;
-	width: 40px;
-}
-#trigger_line {
-	top: 43px;
-	left: 690px;
-	width: 40px;
-}
-#trigger_ext {
-	top: 60px;
-	left: 690px;
-	width: 40px;
-}
-#trigger_slope {
-	top: 103px;
-	left: 590px;
-	width: 68px;
-}
-#vertical_v_text1 {
-	height: 15px;
-	width: 70px;
-	background-color: #000000;
-	top: 120px;
-	left: 350px;
-	font-size: x-small;
-}
-#vertical_v1 {
-	height: 15px;
-	width: 70px;
-	background-color: #000000;
-	top: 130px;
-	left: 350px;
-	font-size: x-small;
-}
-#minus_vertical_v_outer1 {
-	top: 160px;
-	left: 350px;
-	width: 30px;
-}
-#add_vertical_v_outer1 {
-	top: 160px;
-	left: 380px;
-	width: 30px;
-}
-#minus_vertical_v_inner1 {
-	top: 180px;
-	left: 350px;
-	width: 30px;
-	background-color: #727272;
-}
-#add_vertical_v_inner1 {
-	top: 180px;
-	left: 380px;
-	width: 30px;
-	background-color: #727272;
-}
-#vertical_position_text1 {
-	height: 15px;
-	width: 60px;
-	background-color: #000000;
-	top: 150px;
-	left: 420px;
-	font-size: x-small;
-}
-#minus_vertical_position1 {
-	top: 180px;
-	left: 420px;
-	width: 30px;
-}
-#add_vertical_position1 {
-	top: 180px;
-	left: 450px;
-	width: 30px;
-}
-#vertical_ch1_input {
-	top: 270px;
-	left: 350px;
-	width: 20px;
-}
-#vertical_AC1 {
-	top: 230px;
-	left: 410px;
-	width: 40px;
-	background-color: green;
-}
-#vertical_GND1 {
-	top: 250px;
-	left: 410px;
-	width: 40px;
-}
-#vertical_DC1 {
-	top: 270px;
-	left: 410px;
-	width: 40px;
-}
-
-#vertical_mode_ch1 {
-	top: 200px;
-	left: 500px;
-	width: 50px;
-	background-color: green;
-}
-#vertical_mode_ch2 {
-	top: 220px;
-	left: 500px;
-	width: 50px;
-}
-#vertical_mode_dual {
-	top: 240px;
-	left: 500px;
-	width: 50px;
-}
-#vertical_mode_add {
-	top: 260px;
-	left: 500px;
-	width: 50px;
-}
-
-#vertical_v_text2 {
-	height: 15px;
-	width: 70px;
-	background-color: #000000;
-	top: 120px;
-	left: 630px;
-	font-size: x-small;
-}
-#vertical_v2 {
-	height: 15px;
-	width: 70px;
-	background-color: #000000;
-	top: 130px;
-	left: 630px;
-	font-size: x-small;
-}
-#minus_vertical_v_outer2 {
-	top: 160px;
-	left: 630px;
-	width: 30px;
-}
-#add_vertical_v_outer2 {
-	top: 160px;
-	left: 660px;
-	width: 30px;
-}
-#minus_vertical_v_inner2 {
-	top: 180px;
-	left: 630px;
-	width: 30px;
-	background-color: #727272;
-}
-#add_vertical_v_inner2 {
-	top: 180px;
-	left: 660px;
-	width: 30px;
-	background-color: #727272;
-}
-#vertical_position_text2 {
-	height: 15px;
-	width: 60px;
-	background-color: #000000;
-	top: 150px;
-	left: 560px;
-	font-size: x-small;
-}
-#minus_vertical_position2 {
-	top: 180px;
-	left: 560px;
-	width: 30px;
-}
-#add_vertical_position2 {
-	top: 180px;
-	left: 590px;
-	width: 30px;
-}
-#vertical_ch2_input {
-	top: 270px;
-	left: 680px;
-	width: 20px;
-}
-#vertical_AC2 {
-	top: 230px;
-	left: 600px;
-	width: 40px;
-	background-color: green;
-}
-#vertical_GND2 {
-	top: 250px;
-	left: 600px;
-	width: 40px;
-}
-#vertical_DC2 {
-	top: 270px;
-	left: 600px;
-	width: 40px;
-}
-#vertical_drawline1 {
-	top: 290px;
-	left: 320px;
-	width: 30px;
-}
-#vertical_drawline2 {
-	top: 290px;
-	left: 370px;
-	width: 30px;
-}
-#vertical_drawline3 {
-	top: 290px;
-	left: 650px;
-	width: 30px;
-}
-#vertical_drawline4 {
-	top: 290px;
-	left: 690px;
-	width: 30px;
-}
-#oscillosocope_init {
-	top: 285px;
-	left: -38px;
-	width: 30px;
-}
-#level_show {
-	color: orange;
-	font-size: 36px;
-	font-weight: 900;
-	left: -34px;
-	top: 50px;
-	/*one block is 28px*/
-}
-
-div#oscilloscopeScreen {
-	position: absolute;
-	left: 50px;
-	top: 45px;
-	width: 280px;
-	height: 224px;
-	background-image: url('../../images/oscilloscope_screen.jpg');
-}
-.generator-text {
-	float: left;
-	position: absolute;
-	color: white;
-	text-align: center;
-	top: 50px;
-}
-.generator-button {
-	position: absolute;
-	float: left;
-	color: #000000;
-	height: 20px;
-	top: 80px;
-	text-indent: 0px;
-	font-size: 10px;
-	width: 20px;
-	border-radius: 15px;
-	cursor: pointer;
-}
-.demo_wave {
-	padding: 5px;
-	background-color: PaleGreen;
-	position: absolute;
-	width: 350px;
-	height: 250px;
-	left: 1200px;
-	top: 800px;
-	z-index: 1;
-	visibility: hidden;
-}
-#minus_generator_frequency {
-	top: 120px;
-	left: 30px;
-	width: 40px;
-}
-#add_generator_frequency {
-	top: 120px;
-	left: 70px;
-	width: 40px;
-}
-#generator_frequency {
-	height: 20px;
-	width: 40px;
-	background-color: #000000;
-	top: 80px;
-	left: 50px;
-}
-#generator_frequency_menu {
-	height: 15px;
-	width: 160px;
-	background-color: #000000;
-	top: 20px;
-	left: 140px;
-	font-size: x-small;
-}
-#generator_power {
-	top: 52px;
-	left: 122px;
-}
-#generator_frequency6 {
-	top: 52px;
-	left: 145px;
-}
-#generator_frequency5 {
-	top: 52px;
-	left: 168px;
-}
-#generator_frequency4 {
-	top: 52px;
-	left: 191px;
-}
-#generator_frequency3 {
-	top: 52px;
-	left: 214px;
-}
-#generator_frequency2 {
-	top: 52px;
-	left: 237px;
-}
-#generator_frequency1 {
-	top: 52px;
-	left: 260px;
-}
-#generator_frequency0 {
-	top: 52px;
-	left: 283px;
-}
-#generator_inv_text {
-	height: 15px;
-	width: 20px;
-	background-color: #000000;
-	top: 20px;
-	left: 320px;
-	font-size: x-small;
-}
-#generator_inv {
-	top: 52px;
-	left: 320px;
-}
-#generator_wave_text {
-	height: 15px;
-	width: 60px;
-	background-color: #000000;
-	top: 20px;
-	left: 345px;
-	font-size: x-small;
-}
-#generator_square {
-	top: 52px;
-	left: 343px;
-}
-#generator_triangle {
-	top: 52px;
-	left: 366px;
-}
-#generator_sin {
-	top: 52px;
-	left: 389px;
-}
-#generator_AMPL1_text {
-	height: 15px;
-	width: 30px;
-	background-color: #000000;
-	top: 20px;
-	left: 410px;
-	font-size: x-small;
-}
-#generator_AMPL1 {
-	top: 52px;
-	left: 422px;
-}
-#generator_duty_text {
-	height: 15px;
-	width: 40px;
-	background-color: #000000;
-	top: 90px;
-	left: 140px;
-	font-size: x-small;
-}
-#minus_generator_duty {
-	top: 140px;
-	left: 120px;
-	width: 30px;
-}
-#add_generator_duty {
-	top: 140px;
-	left: 150px;
-	width: 30px;
-}
-#generator_offset_text {
-	height: 15px;
-	width: 50px;
-	background-color: #000000;
-	top: 90px;
-	left: 190px;
-	font-size: x-small;
-}
-#generator_offset_switch {
-	top: 120px;
-	left: 205px;
-}
-#minus_generator_offset {
-	top: 140px;
-	left: 185px;
-	width: 30px;
-}
-#add_generator_offset {
-	top: 140px;
-	left: 215px;
-	width: 30px;
-}
-#generator_AMPL2 {
-	height: 15px;
-	width: 40px;
-	background-color: #000000;
-	top: 90px;
-	left: 255px;
-	font-size: x-small;
-}
-#generator_AMPL_switch {
-	top: 120px;
-	left: 265px;
-}
-#minus_generator_AMPL {
-	top: 140px;
-	left: 245px;
-	width: 30px;
-}
-#add_generator_AMPL {
-	top: 140px;
-	left: 275px;
-	width: 30px;
-}
-#generator_drawline1 {
-	top: 170px;
-	left: 380px;
-	width: 30px;
-}
-#generator_drawline2 {
-	top: 170px;
-	left: 430px;
-	width: 30px;
-}
-
-#generator_output50 {
-	height: 15px;
-	width: 40px;
-	background-color: #000000;
-	top: 90px;
-	left: 405px;
-	font-size: x-small;
-}
-#generator_output_switch {
-	top: 125px;
-	left: 417px;
-}
-div#oscilloscope {
-	position: absolute;
-	left: 630px;
-	top: 30px;
-	height: 360px;
-	width: 800px;
-	border: 5px solid black;
-	background-size: 800px;
-	background-repeat: no-repeat;
-}
-
-div#oscilloscopeScreen {
-	position: absolute;
-	left: 50px;
-	top: 45px;
-	width: 280px;
-	height: 225px;
-	background-color: #cccccc;
-}
-
-.buttonInactive {
-	background-color: white;
-}
-/* #addInductance{
-    background-color: #CCCCCC;
-}
-#addCapacitance{
-    background-color: #CCCCCC;
-} */
-#form1 {
-	position: relative;
-	left: 800px;
-	/* top: 100px; */
-}
-#demo_wave1 {
-	position: absolute;
-	left: 1200px;
-	/* top: 150px; */
-}
-#demo_wave2 {
-	position: absolute;
-	left: 1500px;
-	/* top: 150px; */
-}
-
-#error_message {
-	padding: 5px;
-	background-color: PaleGreen;
-	position: absolute;
-	width: 350px;
-	height: 250px;
-	left: 600px;
-	top: 800px;
-	z-index: 1;
-}
-#form1 {
-	padding: 5px;
-	background-color: PaleGreen;
-	position: absolute;
-	width: 350px;
-	height: 250px;
-	left: 900px;
-	top: 800px;
-	z-index: 1;
-}
-#submitbuttom {
-	width: 30px;
-	border-radius: 5px;
-	background-color: #e7dc8f;
-}
-#checkCircuitbutton {
-	width: 60px;
-	border-radius: 5px;
-	background-color: #e7dc8f;
-}
 
 /* #camera{
     width: ;
 } */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.background {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 2rem;
+}
+.articles {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    max-width: 150rem;
+    gap: 1.5rem;
+}
+
+.articles article {
+    max-width: 20rem;
+    cursor: pointer;
+    position: relative;
+    display: block;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.articles article a {
+    display: inline-flex;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+
+.articles article h2 {
+	text-indent: 0em;
+	background-color: #ffffff;
+	padding: 0px;
+	color: #000000;
+    margin: 0 0 1rem 0;
+    font-size: 1.6rem;
+    color: var(--secondary);
+    transition: color 0.3s ease-out;
+}
+
+
+.articles article img {
+    max-width: 100%;
+    transform-origin: center;
+    transition: transform 0.4s ease-in-out;
+}
+
+.article-preview {
+    padding: 1.5rem;
+    background: white;
+	height: 100%;
+}
+
+.articles figure {
+    width: 100%;
+    height: 13rem;
+    overflow: hidden;
+}
+
+.articles figure img {
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.articles article:hover img {
+    transform: scale(1.5);
+}
+
