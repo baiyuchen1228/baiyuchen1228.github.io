@@ -7,7 +7,7 @@ body {
 }
 
 header {
-	background-color: #2C2C2C;
+	background-color: #2c2c2c;
 	color: #fff;
 	padding: 20px;
 	text-align: center;
@@ -19,7 +19,7 @@ nav {
 }
 
 nav a {
-	color: #2C2C2C;
+	color: #2c2c2c;
 	text-decoration: none;
 	margin: 10px 10px;
 	padding: 15px;
@@ -32,7 +32,7 @@ section {
 }
 
 footer {
-	background-color: #2C2C2C;
+	background-color: #2c2c2c;
 	color: #fff;
 	text-align: center;
 	padding: 10px;
@@ -42,7 +42,7 @@ footer {
 }
 a:-webkit-any-link {
 	text-decoration: none;
-	color: #0A66C2;
+	color: #0a66c2;
 }
 /* .background {
     background-color: var(--background);
@@ -51,63 +51,63 @@ a:-webkit-any-link {
     height: 100vh;
 } */
 :root {
-    --background: #2C2C2C;
-    --primary-color: white;
-    --secondary-color: #2C2C2C;
+	--background: #2c2c2c;
+	--primary-color: white;
+	--secondary-color: #2c2c2c;
 }
 
 .social-media-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    list-style: none;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+	list-style: none;
 	padding: 0px;
 }
 
 .social-media-buttons li {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    display: grid;
-    background-color: var(--primary-color);
-    place-items: center;
-    transition: all 0.3s;
-    border: 1px solid var(--primary-color);
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	display: grid;
+	background-color: var(--primary-color);
+	place-items: center;
+	transition: all 0.3s;
+	border: 1px solid var(--primary-color);
 }
 
 .social-media-buttons li a {
-    display: grid;
-    place-items: center;
-    width: 100%;
-    height: 100%;
-    color: var(--secondary-color);
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	color: var(--secondary-color);
 }
 
 .social-media-buttons li:hover {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 8px;
+	background-color: var(--secondary-color);
+	border: 1px solid var(--primary-color);
+	border-radius: 8px;
 }
 
 .social-media-buttons li a svg {
-    height: 1.5rem;
-    width: 1.5rem;
-    stroke: var(--secondary-color);
-    stroke-width: 1.75;
-    transition: 0.8s;
+	height: 1.5rem;
+	width: 1.5rem;
+	stroke: var(--secondary-color);
+	stroke-width: 1.75;
+	transition: 0.8s;
 }
 
 .social-media-buttons li:hover svg {
-    stroke: var(--primary-color);
-    transform: rotateY(360deg);
-    stroke-width: 1.75;
+	stroke: var(--primary-color);
+	transform: rotateY(360deg);
+	stroke-width: 1.75;
 }
 
 #button {
 	display: inline-block;
-	background-color: #0A66C2;
+	background-color: #0a66c2;
 	width: 50px;
 	height: 50px;
 	text-align: center;
@@ -115,14 +115,16 @@ a:-webkit-any-link {
 	position: fixed;
 	bottom: 10rem;
 	right: 30px;
-	transition: background-color .3s,
-	opacity .5s, visibility .5s;
+	transition:
+		background-color 0.3s,
+		opacity 0.5s,
+		visibility 0.5s;
 	opacity: 0;
 	visibility: hidden;
 	z-index: 1000;
 }
 #button::after {
-	content: "\f077";
+	content: '\f077';
 	font-family: FontAwesome;
 	font-weight: normal;
 	font-style: normal;
@@ -132,7 +134,7 @@ a:-webkit-any-link {
 }
 #button:hover {
 	cursor: pointer;
-	background-color: #2C2C2C;
+	background-color: #2c2c2c;
 }
 #button:active {
 	background-color: #555;
