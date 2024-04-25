@@ -226,7 +226,7 @@ function deleteRow(arr, row) {
 	return arr;
 }
 
-function derectDelete(element) {
+function directDelete(element) {
 	if (deletemode == 1) {
 		var toDelete = element;
 		if (toDelete.id[0] == 'w') {
@@ -450,17 +450,17 @@ $('#container').mouseup(function (e) {
 			return;
 		}
 		if (alligatorNo < 10) {
-			let circle1 = parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
-			let circle2 = parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
-			let line = parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
+			let circle1 = parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', directDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', directDelete);
+			let line = parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', directDelete);
 			document.getElementById('svgline2').appendChild(circle1);
 			document.getElementById('svgline2').appendChild(circle2);
 			document.getElementById('svgline2').appendChild(line);
 			linestack.push('alligator0' + alligatorNo);
 		} else {
-			let circle1 = parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
-			let circle2 = parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
-			let line = parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
+			let circle1 = parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', directDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', directDelete);
+			let line = parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', directDelete);
 			document.getElementById('svgline2').appendChild(circle1);
 			document.getElementById('svgline2').appendChild(circle2);
 			document.getElementById('svgline2').appendChild(line);
