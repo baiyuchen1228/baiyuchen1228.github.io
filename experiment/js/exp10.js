@@ -208,11 +208,16 @@ function drawDashedLine2() {
 	return draw;
 }
 
-function parseSVG(s) {
+function parseSVG(s, onclickFunc = null) {
 	var div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
 	div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + s + '</svg>';
 	var frag = document.createDocumentFragment();
-	while (div.firstChild.firstChild) frag.appendChild(div.firstChild.firstChild);
+	while (div.firstChild.firstChild) {
+		if (onclickFunc) {
+			div.firstChild.firstChild.onclick = onclickFunc;
+		}
+		frag.appendChild(div.firstChild.firstChild);
+	}
 	return frag;
 }
 
@@ -225,17 +230,17 @@ function derectDelete(element) {
 	if (deletemode == 1) {
 		var toDelete = element;
 		if (toDelete.id[0] == 'w') {
-			toDelete = document.getElementById('wire' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('wire' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'r') {
-			toDelete = document.getElementById('resistance' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('resistance' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'i') {
-			toDelete = document.getElementById('inductance' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('inductance' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'c') {
-			toDelete = document.getElementById('capacitance' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('capacitance' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'a') {
-			toDelete = document.getElementById('alligator' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('alligator' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'L') {
-			toDelete = document.getElementById('LEd' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('LEd' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		}
 
 		x1 = approx_x(parseInt(toDelete.x1.animVal.value));
@@ -428,14 +433,20 @@ $('#container').mouseup(function (e) {
 			return;
 		}
 		if (wireNo < 10) {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+			var circle1 = parseSVG('<circle id=wireCircle1_0' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			var circle2 = parseSVG('<circle id=wireCircle2_0' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			var line = parseSVG('<line id=wire0' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
 			linestack.push('wire0' + wireNo);
 		} else {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
+			let circle1 = parseSVG('<circle id=wireCircle1_' + wireNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=wireCircle2_' + wireNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=wire' + wireNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
 			linestack.push('wire' + wireNo);
 		}
 		pointarray.push([x1, y1]);
@@ -492,72 +503,24 @@ $('#container').mouseup(function (e) {
 		var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
 		var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
 		if (resistanceNo < 10) {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ohms + 'Ohms</title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<polygon id=resistanceBox0' +
-							resistanceNo +
-							' points="' +
-							rectX1 +
-							',' +
-							rectY1 +
-							' ' +
-							rectX2 +
-							',' +
-							rectY2 +
-							' ' +
-							rectX3 +
-							',' +
-							rectY3 +
-							' ' +
-							rectX4 +
-							',' +
-							rectY4 +
-							'" style="fill:blue; stroke:lime; stroke-width:1" onclick="derectDelete(this)"><title>' +
-							ohms +
-							'Ohms</title></polygon>'
-					)
-				);
+			let circle1 = parseSVG('<circle id=resistanceCircle1_0' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=resistanceCircle2_0' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line dataohm="' + ohms + '"id=resistance0' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'Ohms</title></line>', derectDelete);
+			let box = parseSVG('<polygon id=resistanceBox0' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
+			document.getElementById('svgline').appendChild(box);
 			linestack.push('resistance0' + resistanceNo);
 		} else {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ohms + 'Ohms</title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<polygon id=resistanceBox' +
-							resistanceNo +
-							' points="' +
-							rectX1 +
-							',' +
-							rectY1 +
-							' ' +
-							rectX2 +
-							',' +
-							rectY2 +
-							' ' +
-							rectX3 +
-							',' +
-							rectY3 +
-							' ' +
-							rectX4 +
-							',' +
-							rectY4 +
-							'" style="fill:blue; stroke:lime; stroke-width:1" onclick="derectDelete(this)"><title>' +
-							ohms +
-							'Ohms</title></polygon>'
-					)
-				);
+			let circle1 = parseSVG('<circle id=resistanceCircle1_' + resistanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=resistanceCircle2_' + resistanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line dataohm="' + ohms + '"id=resistance' + resistanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ohms + 'Ohms</title></line>', derectDelete);
+			let box = parseSVG('<polygon id=resistanceBox' + resistanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:blue; stroke:lime; stroke-width:1"><title>' + ohms + 'Ohms</title></polygon>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
+			document.getElementById('svgline').appendChild(box);
 			linestack.push('resistance' + resistanceNo);
 		}
 		pointarray.push([x1, y1]);
@@ -615,72 +578,24 @@ $('#container').mouseup(function (e) {
 		var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
 		var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
 		if (inductanceNo < 10) {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + henry + 'Henry</title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<polygon id=inductanceBox0' +
-							inductanceNo +
-							' points="' +
-							rectX1 +
-							',' +
-							rectY1 +
-							' ' +
-							rectX2 +
-							',' +
-							rectY2 +
-							' ' +
-							rectX3 +
-							',' +
-							rectY3 +
-							' ' +
-							rectX4 +
-							',' +
-							rectY4 +
-							'" style="fill:rgb(255,215,0); stroke:black; stroke-width:1" onclick="derectDelete(this)"><title>' +
-							henry +
-							'Henry</title></polygon>'
-					)
-				);
+			let circle1 = parseSVG('<circle id=inductanceCircle1_0' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=inductanceCircle2_0' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line datahenry="' + henry + '"id=inductance0' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>', derectDelete);
+			let box = parseSVG('<polygon id=inductanceBox0' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; ;stroke-width:1" ><title>' + henry + 'Henry</title></polygon>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
+			document.getElementById('svgline').appendChild(box);
 			linestack.push('inductance0' + inductanceNo);
 		} else {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(parseSVG('<line datahenry="' + henry + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + henry + 'Henry</title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<polygon id=inductanceBox' +
-							inductanceNo +
-							' points="' +
-							rectX1 +
-							',' +
-							rectY1 +
-							' ' +
-							rectX2 +
-							',' +
-							rectY2 +
-							' ' +
-							rectX3 +
-							',' +
-							rectY3 +
-							' ' +
-							rectX4 +
-							',' +
-							rectY4 +
-							'" style="fill:rgb(255,215,0); stroke:black; stroke-width:1" onclick="derectDelete(this)"><title>' +
-							henry +
-							'Henry</title></polygon>'
-					)
-				);
+			let circle1 = parseSVG('<circle id=inductanceCircle1_' + inductanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=inductanceCircle2_' + inductanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line datahenry="' + henry + '"id=inductance' + inductanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + henry + 'Henry</title></line>', derectDelete);
+			let box = parseSVG('<polygon id=inductanceBox' + inductanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,215,0); stroke:black; ;stroke-width:1" ><title>' + henry + 'Henry</title></polygon>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
+			document.getElementById('svgline').appendChild(box);
 			linestack.push('inductance' + inductanceNo);
 		}
 		pointarray.push([x1, y1]);
@@ -739,76 +654,24 @@ $('#container').mouseup(function (e) {
 		var rectX4 = centerX - 10 * Math.cos(slope) - 5 * Math.sin(slope);
 		var rectY4 = centerY - 10 * Math.sin(slope) + 5 * Math.cos(slope);
 		if (capacitanceNo < 10) {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ufarad * 1e6 + 'uFarad</title></line>')
-				);
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<polygon id=capacitanceBox0' +
-							capacitanceNo +
-							' points="' +
-							rectX1 +
-							',' +
-							rectY1 +
-							' ' +
-							rectX2 +
-							',' +
-							rectY2 +
-							' ' +
-							rectX3 +
-							',' +
-							rectY3 +
-							' ' +
-							rectX4 +
-							',' +
-							rectY4 +
-							'" style="fill:rgb(255,0,0); stroke:black; stroke-width:1" onclick="derectDelete(this)"><title>' +
-							ufarad * 1e6 +
-							'uFarad</title></polygon>'
-					)
-				);
+			let circle1 = parseSVG('<circle id=capacitanceCircle1_0' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=capacitanceCircle2_0' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line dataufarad="' + ufarad + '"id=capacitance0' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>', derectDelete);
+			let box = parseSVG('<polygon id=capacitanceBox0' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; ;stroke-width:1" ><title>' + ufarad * 1e6 + 'uFarad</title></polygon>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
+			document.getElementById('svgline').appendChild(box);
 			linestack.push('capacitance0' + capacitanceNo);
 		} else {
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline').appendChild(parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title>' + ufarad * 1e6 + 'uFarad</title></line>')
-				);
-			document
-				.getElementById('svgline')
-				.appendChild(
-					parseSVG(
-						'<polygon id=capacitanceBox' +
-							capacitanceNo +
-							' points="' +
-							rectX1 +
-							',' +
-							rectY1 +
-							' ' +
-							rectX2 +
-							',' +
-							rectY2 +
-							' ' +
-							rectX3 +
-							',' +
-							rectY3 +
-							' ' +
-							rectX4 +
-							',' +
-							rectY4 +
-							'" style="fill:rgb(255,0,0); stroke:black; stroke-width:1" onclick="derectDelete(this)"><title>' +
-							ufarad * 1e6 +
-							'uFarad</title></polygon>'
-					)
-				);
+			let circle1 = parseSVG('<circle id=capacitanceCircle1_' + capacitanceNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=capacitanceCircle2_' + capacitanceNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
+			let line = parseSVG('<line dataufarad="' + ufarad + '"id=capacitance' + capacitanceNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:2"><title>' + ufarad * 1e6 + 'uFarad</title></line>', derectDelete);
+			let box = parseSVG('<polygon id=capacitanceBox' + capacitanceNo + ' points="' + rectX1 + ',' + rectY1 + ' ' + rectX2 + ',' + rectY2 + ' ' + rectX3 + ',' + rectY3 + ' ' + rectX4 + ',' + rectY4 + '" style="fill:rgb(255,0,0); stroke:black; ;stroke-width:1" ><title>' + ufarad * 1e6 + 'uFarad</title></polygon>', derectDelete);
+			document.getElementById('svgline').appendChild(circle1);
+			document.getElementById('svgline').appendChild(circle2);
+			document.getElementById('svgline').appendChild(line);
+			document.getElementById('svgline').appendChild(box);
 			linestack.push('capacitance' + capacitanceNo);
 		}
 		pointarray.push([x1, y1]);
@@ -855,18 +718,24 @@ $('#container').mouseup(function (e) {
 			return;
 		}
 		if (alligatorNo < 10) {
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
+			let circle1 = parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
+			document.getElementById('svgline2').appendChild(circle1);
+			document.getElementById('svgline2').appendChild(circle2);
+			document.getElementById('svgline2').appendChild(line);
 			if ((x1 == 1020 || x1 == 1350) && y1 == 530) {
 				linestack.push('aalligator0' + alligatorNo);
 			} else {
 				linestack.push('alligator0' + alligatorNo);
 			}
 		} else {
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
+			let circle1 = parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
+			document.getElementById('svgline2').appendChild(circle1);
+			document.getElementById('svgline2').appendChild(circle2);
+			document.getElementById('svgline2').appendChild(line);
 			if ((x1 == 1020 || x1 == 1350) && y1 == 530) {
 				linestack.push('aalligator' + alligatorNo);
 			} else {
