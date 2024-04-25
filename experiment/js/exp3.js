@@ -497,11 +497,16 @@ function drawDashedLine2() {
 	return draw;
 }
 
-function parseSVG(s) {
+function parseSVG(s, onclickFunc = null) {
 	var div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
 	div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + s + '</svg>';
 	var frag = document.createDocumentFragment();
-	while (div.firstChild.firstChild) frag.appendChild(div.firstChild.firstChild);
+	while (div.firstChild.firstChild) {
+		if (onclickFunc) {
+			div.firstChild.firstChild.onclick = onclickFunc;
+		}
+		frag.appendChild(div.firstChild.firstChild);
+	}
 	return frag;
 }
 
@@ -515,17 +520,17 @@ function derectDelete(element) {
 	if (deletemode == 1) {
 		var toDelete = element;
 		if (toDelete.id[0] == 'w') {
-			toDelete = document.getElementById('wire' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('wire' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'r') {
-			toDelete = document.getElementById('resistance' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('resistance' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'i') {
-			toDelete = document.getElementById('inductance' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('inductance' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'c') {
-			toDelete = document.getElementById('capacitance' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('capacitance' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'a') {
-			toDelete = document.getElementById('alligator' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('alligator' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'L') {
-			toDelete = document.getElementById('LEd' + element.id[element.id.length - 2] + element.id[element.id.length - 1]);
+			toDelete = document.getElementById('LEd' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		}
 
 		x1 = approx_x(parseInt(toDelete.x1.animVal.value));
@@ -736,14 +741,20 @@ $('#container').mouseup(function (e) {
 			return;
 		}
 		if (alligatorNo < 10) {
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
+			let circle1 = parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
+			document.getElementById('svgline2').appendChild(circle1);
+			document.getElementById('svgline2').appendChild(circle2);
+			document.getElementById('svgline2').appendChild(line);
 			linestack.push('alligator0' + alligatorNo);
 		} else {
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2" onclick="derectDelete(this)"><title></title></line>'));
-			document.getElementById('svgline2').appendChild(parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>'));
+			let circle1 = parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
+			document.getElementById('svgline2').appendChild(circle1);
+			document.getElementById('svgline2').appendChild(circle2);
+			document.getElementById('svgline2').appendChild(line);
 			linestack.push('alligator' + alligatorNo);
 		}
 		pointarray.push([x1, y1]);
