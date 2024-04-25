@@ -368,6 +368,42 @@ function derectDelete(element) {
 				return;
 			}
 		}
+
+		// delete alligator
+		x1 = parseInt(toDelete.x1.animVal.value);
+		y1 = parseInt(toDelete.y1.animVal.value);
+		x2 = parseInt(toDelete.x2.animVal.value);
+		y2 = parseInt(toDelete.y2.animVal.value);
+		if (osi._init == 1 && x1 == 1020 && y1 == 530) {
+			osi.set_init(0);
+		}
+		if (osi._init == 2 && x1 == 1350 && y1 == 530) {
+			osi.set_init(0);
+		}
+		for (var i = Things.length - 1; i >= 0; i--) {
+			if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+				for (let j = 0; j < pointarray.length; j++) {
+					if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+						pointarray[j] = [0, 0];
+					}
+				}
+				for (let j = 0; j < pointarray.length; j++) {
+					if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+						pointarray[j] = [0, 0];
+					}
+				}
+				pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+				pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+				if (Things[i].id[0] == 'a') {
+					$('#alligatorCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+					$('#alligatorCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+					$('#' + Things[i].id).remove();
+					delALLalligator = null;
+				}
+				check();
+				return;
+			}
+		}
 	}
 }
 
@@ -728,7 +764,6 @@ $('#container').mouseup(function (e) {
 			// alert('(請先點按鈕)please click button first');
 			return;
 		}
-		// console.log(x2,y2);
 		if (y2 < 445 || y2 > 765 || x2 < 145 || x2 > 405) {
 			if (x2 == 665 && y2 == 525 && (x1 == 1020 || x1 == 1350) && y1 == 530) {
 				if (x1 == 1020) {
@@ -747,17 +782,17 @@ $('#container').mouseup(function (e) {
 			return;
 		}
 		if (alligatorNo < 10) {
-			let circle1 = parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
-			let circle2 = parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
-			let line = parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>', derectDelete);
+			let circle1 = parseSVG('<circle id=alligatorCircle1_0' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_0' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=alligator0' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
 			document.getElementById('svgline2').appendChild(circle1);
 			document.getElementById('svgline2').appendChild(circle2);
 			document.getElementById('svgline2').appendChild(line);
 			linestack.push('alligator0' + alligatorNo);
 		} else {
-			let circle1 = parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
-			let circle2 = parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2"><title></title></line>', derectDelete);
-			let line = parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px;"/>', derectDelete);
+			let circle1 = parseSVG('<circle id=alligatorCircle1_' + alligatorNo + ' cx=' + x1 + ' cy=' + y1 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let circle2 = parseSVG('<circle id=alligatorCircle2_' + alligatorNo + ' cx=' + x2 + ' cy=' + y2 + ' r=' + 5 + ' style="fill:' + colorlist[colorNo] + ';stroke-width:2 pointer-events: all;"><title></title></line>', derectDelete);
+			let line = parseSVG('<line id=alligator' + alligatorNo + ' x1=' + x1 + ' y1=' + y1 + ' x2=' + x2 + ' y2=' + y2 + ' style="stroke:' + colorlist[colorNo] + ';stroke-width:5px; pointer-events: all;"/>', derectDelete);
 			document.getElementById('svgline2').appendChild(circle1);
 			document.getElementById('svgline2').appendChild(circle2);
 			document.getElementById('svgline2').appendChild(line);
@@ -778,10 +813,8 @@ $('#container').mouseup(function (e) {
 		// turnOffMode();
 	}
 	if (deletemode == 1) {
-		//console.log(delIni);
 
 		var delFin = e;
-		//console.log(delFin);
 		x1 = approx_x(delIni.pageX);
 		y1 = approx_x(delIni.pageY);
 		x2 = approx_x(delFin.pageX);
@@ -927,7 +960,6 @@ $('#container').mouseup(function (e) {
 			}
 		}
 	}
-	//console.log(pointarray);
 	check();
 });
 $(document).ready(function () {
