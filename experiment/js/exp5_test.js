@@ -577,7 +577,7 @@ function approx_x(x) {
 
 function directDelete(element) {
 	if (deletemode == 1) {
-		var toDelete = element;
+		var toDelete = element.target;
 		if (toDelete.id[0] == 'w') {
 			toDelete = document.getElementById('wire' + toDelete.id[toDelete.id.length - 2] + toDelete.id[toDelete.id.length - 1]);
 		} else if (toDelete.id[0] == 'r') {
