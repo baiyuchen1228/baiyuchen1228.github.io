@@ -19,7 +19,7 @@
 		<a id="button"></a>
 
 		<nav>
-			<a href="#about">About</a>
+			<a href="#about" class="active">About</a>
 			<a href="#projects">Projects</a>
 			<a href="#contact">Contact</a>
 			<a href="./CV/Transcript.html">Transcript</a>
@@ -41,19 +41,32 @@
 
 		<section id="projects">
 			<h2>Projects</h2>
-			<ul>
-				<li style="padding: 10px 0">
-					<a href="./experiment/index.html" style="flex-wrap: wrap; display: flex; height: 34px; width: 20%; align-content: center">物理實驗模擬網站</a> Physics Simulation Experiments Website | Skills: Frontend<br />
-					• Designed a website to display physics experiments by HTML, CSS and JavaScript<br />
-					• Used by 300+ students yearly
-				</li>
-				<li style="padding: 10px 0"><a href="./WebRTC_Practice/public/index.html" style="flex-wrap: wrap; display: flex; height: 34px; width: 20%; align-content: center">WebRTC</a></li>
-				<li style="padding: 10px 0">
-					<a href="https://www.youtube.com/watch?v=rEnkRiYlOn0&t=17s" style="flex-wrap: wrap; display: flex; height: 34px; width: 20%; align-content: center">Microprocessor</a> Infrared Transmission with Hamming code | Skills: Embedded system<br />
-					• Achieved 100% accuracy for transmitting 10K+ characters/s within planned time by C, MCU
-				</li>
-			</ul>
+			<div class="carousel-container">
+				<button id="prev">Previous</button>
+				<div class="carousel">
+					<div class="carousel-item">
+						<h3>物理實驗模擬網站</h3>
+						<a href="./experiment/index.html">Physics Simulation Experiments Website</a>
+						<p>Skills: Frontend</p>
+						<p>• Designed a website to display physics experiments by HTML, CSS and JavaScript<br>
+							• Used by 300+ students yearly</p>
+					</div>
+					<div class="carousel-item">
+						<h3>WebRTC</h3>
+						<a href="./WebRTC_Practice/public/index.html">WebRTC Practice</a>
+					</div>
+					<div class="carousel-item">
+						<h3>Microprocessor</h3>
+						<a href="https://www.youtube.com/watch?v=rEnkRiYlOn0&t=17s">Infrared Transmission with Hamming code</a>
+						<p>Skills: Embedded system</p>
+						<p>• Achieved 100% accuracy for transmitting 10K+ characters/s within planned time by C, MCU</p>
+					</div>
+				</div>
+				<button id="next">Next</button>
+			</div>
 		</section>
+
+
 
 		<section id="contact">
 			<h2>Contact Me</h2>
@@ -92,6 +105,43 @@
 		</footer>
 	</body>
 	<script>
+		// project carousel
+		document.addEventListener("DOMContentLoaded", function() {
+			const items = document.querySelectorAll('.carousel-item');
+			let currentIndex = 0;
+
+			function showItem(index) {
+				items[currentIndex].classList.remove('active');
+				currentIndex = index;
+				items[currentIndex].classList.add('active');
+			}
+
+			document.getElementById('prev').addEventListener('click', function() {
+				showItem((currentIndex - 1 + items.length) % items.length);
+			});
+
+			document.getElementById('next').addEventListener('click', function() {
+				showItem((currentIndex + 1) % items.length);
+			});
+
+			// Initialize the first item as active
+			items[currentIndex].classList.add('active');
+		});
+
+
+		// top button
+		document.addEventListener("DOMContentLoaded", function() {
+			const links = document.querySelectorAll("nav a");
+
+			links.forEach(link => {
+				link.addEventListener("click", function() {
+					links.forEach(l => l.classList.remove("active"));
+					this.classList.add("active");
+				});
+			});
+		});
+
+
 		const btn = document.getElementById('button');
 
 		window.addEventListener('scroll', function () {
