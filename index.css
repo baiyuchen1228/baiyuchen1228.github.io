@@ -124,7 +124,7 @@ a:-webkit-any-link {
 
 #button {
 	display: inline-block;
-	background-color: #0a66c2;
+	background-color: #666;
 	width: 50px;
 	height: 50px;
 	text-align: center;
@@ -196,7 +196,7 @@ a:-webkit-any-link {
     display: block;
 }
 
-button {
+#projects button {
     background-color: #666; /* 更柔和的顏色 */
     color: #fff;
     border: none;
@@ -207,10 +207,9 @@ button {
     transform: translateY(-50%);
     border-radius: 5px;
     font-size: 16px;
-    transition: background-color 0.3s; /* 過渡效果 */
 }
 
-button:hover {
+#projects button:hover {
     background-color: #777; /* 懸停時顏色 */
 }
 
