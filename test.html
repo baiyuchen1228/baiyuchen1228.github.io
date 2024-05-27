@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashing Red Border</title>
+    <style>
+        /* 初始設置窗口樣式 */
+        #popup {
+            width: 300px;
+            height: 200px;
+            background-color: white;
+            border: 5px solid transparent;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* 初始隱藏 */
+        }
+
+        /* 閃爍紅框的樣式 */
+        .flashing-border {
+            animation: flash 1s infinite;
+        }
+
+        @keyframes flash {
+            0% { border-color: red; }
+            50% { border-color: transparent; }
+            100% { border-color: red; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="popup">This is a popup window.</div>
+
+<script>
+    function showPopup() {
+        const popup = document.getElementById('popup');
+        popup.style.display = 'block';
+        popup.classList.add('flashing-border');
+
+        // 停止閃爍效果，3秒後移除flashing-border類
+        // setTimeout(() => {
+        //     popup.classList.remove('flashing-border');
+        // }, 3000);
+    }
+
+    // 測試彈出視窗
+    document.addEventListener('DOMContentLoaded', (event) => {
+        showPopup();
+    });
+</script>
+
+</body>
+</html>
