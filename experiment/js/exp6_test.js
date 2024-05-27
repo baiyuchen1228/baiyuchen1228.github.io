@@ -45,54 +45,54 @@ var current1 = 0,
 
 /* disable power button
 document.getElementById("powersupply14").onclick = function () {
-    if (drawResistance == 1) {
-        $this = $("#addResistance");
-        $this.css('background-color', 'white');
-        drawResistance = 0;
-    }
-    else if (deletemode == 1) {
-        $this = $("#del");
-        $this.css('background-color', 'white');
-        deletemode = 0;
-        delALLalligator = null;
-    }
-    else if (drawWire == 1) {
-        $this = $("#addWire");
-        $this.css('background-color', 'white');
-        drawWire = 0;
-    }
-    else if (drawInductance == 1) {
-        $this = $("#addInductance");
-        $this.css('background-color', 'white');
-        drawInductance = 0;
-    }
-    else if (drawCapacitance == 1) {
-        $this = $("#addCapacitance");
-        $this.css('background-color', 'white');
-        drawCapacitance = 0;
-    }
-    else if (drawAlligator == 1) {
-        $this = $("#addAlligator");
-        $this.css('background-color', 'white');
-        drawAlligator = 0;
-    }
-    if (power == 0) {
-        cur1.innerHTML = current1.toFixed(2);
-        cur2.innerHTML = current2.toFixed(2);
-        vol1.innerHTML = voltage1.toFixed(2);
-        vol2.innerHTML = voltage2.toFixed(2);
-        power = 1;
-    } else {
-        current1 = current2 = 0;
-        voltage1 = voltage2 = 0;
-        cur1.innerHTML = "";
-        cur2.innerHTML = "";
-        vol1.innerHTML = "";
-        vol2.innerHTML = "";
-        power = 0;
-        powersupplyOutputStatus = 0;
-        $("#powersupply13").css("background-color", "White");
-    }
+	if (drawResistance == 1) {
+		$this = $("#addResistance");
+		$this.css('background-color', 'white');
+		drawResistance = 0;
+	}
+	else if (deletemode == 1) {
+		$this = $("#del");
+		$this.css('background-color', 'white');
+		deletemode = 0;
+		delALLalligator = null;
+	}
+	else if (drawWire == 1) {
+		$this = $("#addWire");
+		$this.css('background-color', 'white');
+		drawWire = 0;
+	}
+	else if (drawInductance == 1) {
+		$this = $("#addInductance");
+		$this.css('background-color', 'white');
+		drawInductance = 0;
+	}
+	else if (drawCapacitance == 1) {
+		$this = $("#addCapacitance");
+		$this.css('background-color', 'white');
+		drawCapacitance = 0;
+	}
+	else if (drawAlligator == 1) {
+		$this = $("#addAlligator");
+		$this.css('background-color', 'white');
+		drawAlligator = 0;
+	}
+	if (power == 0) {
+		cur1.innerHTML = current1.toFixed(2);
+		cur2.innerHTML = current2.toFixed(2);
+		vol1.innerHTML = voltage1.toFixed(2);
+		vol2.innerHTML = voltage2.toFixed(2);
+		power = 1;
+	} else {
+		current1 = current2 = 0;
+		voltage1 = voltage2 = 0;
+		cur1.innerHTML = "";
+		cur2.innerHTML = "";
+		vol1.innerHTML = "";
+		vol2.innerHTML = "";
+		power = 0;
+		powersupplyOutputStatus = 0;
+		$("#powersupply13").css("background-color", "White");
+	}
 }
 */
 
@@ -381,116 +381,120 @@ function directDelete(element) {
 		y2 = approx_x(parseInt(toDelete.y2.animVal.value));
 
 		Things = $('line');
-		for (var i = Things.length - 1; i >= 0; i--) {
-			if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
-				for (let j = 0; j < pointarray.length; j++) {
-					if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-						pointarray[j] = [0, 0];
-					}
-				}
-				for (let j = 0; j < pointarray.length; j++) {
-					if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-						pointarray[j] = [0, 0];
-					}
-				}
-				pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
-				pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
-				if (Things[i].id[0] == 'w') {
-					$('#wireCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#wireCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-				}
 
-				if (Things[i].id[0] == 'r') {
-					$('#resistanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#resistanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#resistanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-					resistanceOn = 1;
-					$this = $('#addResistance');
-					$this.css('background-color', 'white');
-				}
-				if (Things[i].id[0] == 'i') {
-					$('#inductanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#inductanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#inductanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-					inductanceOn = 1;
-					$this = $('#addInductance');
-					$this.css('background-color', 'white');
-				}
-				if (Things[i].id[0] == 'c') {
-					$('#capacitanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#capacitanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#capacitanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-					capacitanceOn = 1;
-					$this = $('#addCapacitance');
-					$this.css('background-color', 'white');
-				}
-				if (Things[i].id[0] == 'L') {
-					$('#LEdcircle' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-				}
-				check();
-				return;
-			}
-			if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
-				for (let j = 0; j < pointarray.length; j++) {
-					if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
-						pointarray[j] = [0, 0];
-					}
-				}
-				for (let j = 0; j < pointarray.length; j++) {
-					if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
-						pointarray[j] = [0, 0];
-					}
-				}
+		if (toDelete.id[0] != 'a') {
 
-				pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
-				pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
-				if (Things[i].id[0] == 'w') {
-					$('#wireCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#wireCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-				}
+			for (var i = Things.length - 1; i >= 0; i--) {
+				if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
+					for (let j = 0; j < pointarray.length; j++) {
+						if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+							pointarray[j] = [0, 0];
+						}
+					}
+					for (let j = 0; j < pointarray.length; j++) {
+						if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+							pointarray[j] = [0, 0];
+						}
+					}
+					pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+					pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+					if (Things[i].id[0] == 'w') {
+						$('#wireCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#wireCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+					}
 
-				if (Things[i].id[0] == 'r') {
-					resistanceOn = 1;
-					$('#resistanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#resistanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#resistanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-					resistanceOn = 1;
-					$this = $('#addResistance');
-					$this.css('background-color', 'white');
+					if (Things[i].id[0] == 'r') {
+						$('#resistanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#resistanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#resistanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+						resistanceOn = 1;
+						$this = $('#addResistance');
+						$this.css('background-color', 'white');
+					}
+					if (Things[i].id[0] == 'i') {
+						$('#inductanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#inductanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#inductanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+						inductanceOn = 1;
+						$this = $('#addInductance');
+						$this.css('background-color', 'white');
+					}
+					if (Things[i].id[0] == 'c') {
+						$('#capacitanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#capacitanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#capacitanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+						capacitanceOn = 1;
+						$this = $('#addCapacitance');
+						$this.css('background-color', 'white');
+					}
+					if (Things[i].id[0] == 'L') {
+						$('#LEdcircle' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+					}
+					check();
+					return;
 				}
-				if (Things[i].id[0] == 'i') {
-					inductanceOn = 1;
-					$('#inductanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#inductanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#inductanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-					inductanceOn = 1;
-					$this = $('#addInductance');
-					$this.css('background-color', 'white');
+				if (Things[i].x2.baseVal.value == x1 && Things[i].y2.baseVal.value == y1) {
+					for (let j = 0; j < pointarray.length; j++) {
+						if (Things[i].x1.baseVal.value == pointarray[j][0] && Things[i].y1.baseVal.value == pointarray[j][1]) {
+							pointarray[j] = [0, 0];
+						}
+					}
+					for (let j = 0; j < pointarray.length; j++) {
+						if (Things[i].x2.baseVal.value == pointarray[j][0] && Things[i].y2.baseVal.value == pointarray[j][1]) {
+							pointarray[j] = [0, 0];
+						}
+					}
+
+					pointarray.splice(jQuery.inArray([Things[i].x1.baseVal.value, Things[i].y1.baseVal.value], pointarray), 1);
+					pointarray.splice(jQuery.inArray([Things[i].x2.baseVal.value, Things[i].y2.baseVal.value], pointarray), 1);
+					if (Things[i].id[0] == 'w') {
+						$('#wireCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#wireCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+					}
+
+					if (Things[i].id[0] == 'r') {
+						resistanceOn = 1;
+						$('#resistanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#resistanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#resistanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+						resistanceOn = 1;
+						$this = $('#addResistance');
+						$this.css('background-color', 'white');
+					}
+					if (Things[i].id[0] == 'i') {
+						inductanceOn = 1;
+						$('#inductanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#inductanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#inductanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+						inductanceOn = 1;
+						$this = $('#addInductance');
+						$this.css('background-color', 'white');
+					}
+					if (Things[i].id[0] == 'c') {
+						capacitanceOn = 1;
+						$('#capacitanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#capacitanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#capacitanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+					}
+					if (Things[i].id[0] == 'L') {
+						$('#LEdcircle' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
+						$('#' + Things[i].id).remove();
+						capacitanceOn = 1;
+						$this = $('#addCapacitance');
+						$this.css('background-color', 'white');
+					}
+					check();
+					return;
 				}
-				if (Things[i].id[0] == 'c') {
-					capacitanceOn = 1;
-					$('#capacitanceCircle1_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#capacitanceCircle2_' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#capacitanceBox' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-				}
-				if (Things[i].id[0] == 'L') {
-					$('#LEdcircle' + Things[i].id[Things[i].id.length - 2] + Things[i].id[Things[i].id.length - 1]).remove();
-					$('#' + Things[i].id).remove();
-					capacitanceOn = 1;
-					$this = $('#addCapacitance');
-					$this.css('background-color', 'white');
-				}
-				check();
-				return;
 			}
 		}
 
@@ -499,12 +503,7 @@ function directDelete(element) {
 		y1 = parseInt(toDelete.y1.animVal.value);
 		x2 = parseInt(toDelete.x2.animVal.value);
 		y2 = parseInt(toDelete.y2.animVal.value);
-		if (osi._init == 1 && x1 == 1020 && y1 == 530) {
-			osi.set_init(0);
-		}
-		if (osi._init == 2 && x1 == 1350 && y1 == 530) {
-			osi.set_init(0);
-		}
+
 		for (var i = Things.length - 1; i >= 0; i--) {
 			if (Things[i].x1.baseVal.value == x1 && Things[i].y1.baseVal.value == y1) {
 				for (let j = 0; j < pointarray.length; j++) {
