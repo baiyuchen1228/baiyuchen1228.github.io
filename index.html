@@ -10,6 +10,8 @@
 		<link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet" />
 	</head>
 	<body>
+		<div id="particles-js"></div>
+		<script type="module" src="./index.js"></script>
 		<header>
 			<h1>Bard Pai</h1>
 			<p>Software Engineer</p>
@@ -99,6 +101,7 @@
 			</div>
 			<p>&copy; 2024 Bard Pai</p>
 		</footer>
+
 	</body>
 	<script>
 		// project carousel
@@ -128,8 +131,7 @@
 		// top button
 		document.addEventListener("DOMContentLoaded", function() {
 			const links = document.querySelectorAll("nav a");
-
-			links.forEach(link => {
+		links.forEach(link => {
 				link.addEventListener("click", function() {
 					links.forEach(l => l.classList.remove("active"));
 					this.classList.add("active");
