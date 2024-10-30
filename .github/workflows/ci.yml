@@ -27,7 +27,7 @@ jobs:
           npm install -g htmlhint stylelint eslint
 
       - name: Run HTML Validation
-        run: htmlhint --rules id-unique=false '**/*.html'
+        run: htmlhint  '**/*.html'
 
       - name: Run CSS Validation
         run: stylelint '**/*.css'
