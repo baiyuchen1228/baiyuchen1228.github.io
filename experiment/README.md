@@ -29,5 +29,7 @@ ref: https://create-react-app.dev/docs/setting-up-your-editor/
 # include library
 
 jquery-ui [github](https://github.com/jquery/jquery-ui)
+
 chart [github](https://github.com/chartjs/Chart.js)
+
 mathjs [unpkg](https://www.unpkg.com/browse/mathjs@13.2.1/)
