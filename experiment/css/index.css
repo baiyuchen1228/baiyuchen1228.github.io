@@ -1,44 +1,49 @@
 body {
 	background-color: #fff5eb;
-	padding: 0 10% 10% 10%;
+	padding: 0 10% 10%;
 }
+
 h1 {
 	text-indent: 1em;
 	background-color: #ebdabf;
 	padding: 5px 10px;
-	color: #000000;
+	color: #000;
 	font-size: 18px;
 	border-radius: 20px;
 	border: 10px solid #fff5eb;
 }
+
 h2 {
 	text-indent: 1em;
 	background-color: #ebdabf;
 	padding: 5px 10px;
-	color: #000000;
+	color: #000;
 	font-size: 16px;
 	border-radius: 9px;
 }
+
 #svgline2 {
 	z-index: 1;
 	pointer-events: none;
 }
+
 .main-menu {
-	color: #000000;
+	color: #000;
 	background-color: #ebdabf;
 	padding: 5px 15px;
-	margin: 0px;
+	margin: 0;
 	cursor: pointer;
 	display: inline;
 } /* 主選單的樣式 */
 .main-menu:hover {
 	background-color: #ebdabf;
 }
+
 .sub-menu {
 	color: #e7dc8f;
-	background-color: #cccccc;
+	background-color: #ccc;
 	margin: 5px -5px;
-	padding: 0px;
+	padding: 0;
 	list-style-type: none;
 	position: absolute;
 	z-index: 2;
@@ -48,17 +53,19 @@ h2 {
 	text-align: left;
 } /* 下拉清單每一列的樣式 */
 .sub-menu li:hover {
-	color: #000000;
+	color: #000;
 	background-color: #e7dc8f;
 }
+
 .sub-menu a {
 	text-align: left;
 	display: block;
 	text-decoration: none;
-	color: #000000;
+	color: #000;
 }
+
 .sub-menu a:hover {
-	color: #000000;
+	color: #000;
 	background-color: #e7dc8f;
 	text-decoration: none;
 }
@@ -71,6 +78,7 @@ h2 {
 	padding: 0;
 	box-sizing: border-box;
 }
+
 .background {
 	width: 100%;
 	display: flex;
@@ -78,6 +86,7 @@ h2 {
 	align-items: start;
 	padding: 2rem;
 }
+
 .articles {
 	display: flex;
 	flex-wrap: wrap;
@@ -104,11 +113,10 @@ h2 {
 }
 
 .articles article h2 {
-	text-indent: 0em;
-	background-color: #ffffff;
-	padding: 0px;
-	color: #000000;
-	margin: 0 0 1rem 0;
+	text-indent: 0;
+	background-color: #fff;
+	padding: 0;
+	margin: 0 0 1rem;
 	font-size: 1.6rem;
 	color: var(--secondary);
 	transition: color 0.3s ease-out;

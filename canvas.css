@@ -1,39 +1,43 @@
 body {
 	background-color: #fff5eb;
-	padding: 0 10% 10% 10%;
+	padding: 0 10% 10%;
 }
+
 h1 {
 	text-indent: 1em;
 	background-color: #ebdabf;
 	padding: 5px 10px;
-	color: #000000;
+	color: #000;
 	font-size: 18px;
 	border-radius: 9px;
 }
+
 h2 {
 	text-indent: 1em;
 	background-color: #ebdabf;
 	padding: 5px 10px;
-	color: #000000;
+	color: #000;
 	font-size: 16px;
 	border-radius: 9px;
 }
+
 .main-menu {
-	color: #000000;
+	color: #000;
 	background-color: #ebdabf;
 	padding: 5px 15px;
-	margin: 0px;
+	margin: 0;
 	cursor: pointer;
 	display: inline-block;
 } /* 主選單的樣式 */
 .main-menu:hover {
 	background-color: #ebdabf;
 }
+
 .sub-menu {
 	color: #e7dc8f;
-	background-color: #cccccc;
+	background-color: #ccc;
 	margin: 5px -5px;
-	padding: 0px;
+	padding: 0;
 	list-style-type: none;
 	position: absolute;
 } /* 下拉清單的樣式 */
@@ -42,20 +46,23 @@ h2 {
 	text-align: left;
 } /* 下拉清單每一列的樣式 */
 .sub-menu li:hover {
-	color: #000000;
+	color: #000;
 	background-color: #e7dc8f;
 }
+
 .sub-menu a {
 	text-align: left;
 	display: block;
 	text-decoration: none;
-	color: #000000;
+	color: #000;
 }
+
 .sub-menu a:hover {
-	color: #000000;
+	color: #000;
 	background-color: #e7dc8f;
 	text-decoration: none;
 }
+
 /* div#toolbox{
     display: flex;
     flex-direction: column;
@@ -80,28 +87,34 @@ div#powersupply {
 	background-repeat: no-repeat;
 	height: 300px;
 }
+
 .powersupply-text {
 	float: left;
 	position: absolute;
 	color: white;
 	top: 50px;
 }
+
 #powersupply1 {
 	left: 70px;
 }
+
 #powersupply2 {
 	left: 150px;
 }
+
 #powersupply3 {
 	left: 230px;
 }
+
 #powersupply4 {
 	left: 310px;
 }
+
 .powersupply-button {
 	float: left;
 	position: absolute;
-	color: #000000;
+	color: #000;
 	top: 170px;
 	font-size: 1px;
 	text-indent: -4px;
@@ -109,27 +122,35 @@ div#powersupply {
 	border-radius: 10px;
 	cursor: pointer;
 }
+
 #powersupply5 {
 	left: 70px;
 }
+
 #powersupply6 {
 	left: 95px;
 }
+
 #powersupply7 {
 	left: 145px;
 }
+
 #powersupply8 {
 	left: 170px;
 }
+
 #powersupply9 {
 	left: 250px;
 }
+
 #powersupply10 {
 	left: 275px;
 }
+
 #powersupply11 {
 	left: 320px;
 }
+
 #powersupply12 {
 	left: 345px;
 }
