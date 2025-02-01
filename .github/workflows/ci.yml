@@ -49,7 +49,7 @@ jobs:
       - name: Create and Push Fix Branch
         id: create_and_push_fix_branch
         run: |
-          BRANCH_NAME="fix-lint-issues-${{ github.actor_id }}"
+          BRANCH_NAME="fix-lint-issues-${{ github.actor }}"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           if git ls-remote --exit-code --heads origin $BRANCH_NAME; then
             git push origin --delete $BRANCH_NAME
@@ -68,6 +68,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'fix: auto-fix lint issues'
+          base: origin
           branch: ${{ env.BRANCH_NAME }}
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           delete-branch: true
