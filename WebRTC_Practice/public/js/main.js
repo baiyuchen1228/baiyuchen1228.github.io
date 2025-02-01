@@ -47,7 +47,7 @@ function connection() {
 	// for peer to peer communicate
 	socket.on('offer', handleSDPOffer); // SDP offer
 	socket.on('answer', handleSDPAnswer); // SDP answer
-	socket.on('icecandidate', handleNewIceCandidate); //ICE
+	socket.on('icecandidate', handleNewIceCandidate); // ICE
 	return socket;
 }
 function closeDataChannels(channel) {
@@ -73,7 +73,8 @@ function closing() {
 	// Disconnect all our event listeners; we don't want stray events
 	// to interfere with the hangup while it's ongoing.
 	console.log('Closing connection call');
-	if (!peer) return;
+	if (!peer)
+		return;
 
 	// 1. 移除事件監聽
 	peer.onicecandidate = null;
@@ -134,35 +135,35 @@ async function handleNegotiationNeeded() {
 }
 
 function handleSignalingStateChange() {
-	console.log('*** WebRTC signaling 狀態改變: ' + peer.signalingState);
+	console.log(`*** WebRTC signaling 狀態改變: ${peer.signalingState}`);
 }
 
 function handleConnectionStateChange() {
-	console.log('*** WebRTC connectionState 狀態改變: ' + peer.connectionState);
+	console.log(`*** WebRTC connectionState 狀態改變: ${peer.connectionState}`);
 
 	switch (peer.connectionState) {
-	case 'closed':
-	case 'failed':
-	case 'disconnected':
-		closing();
-		break;
+		case 'closed':
+		case 'failed':
+		case 'disconnected':
+			closing();
+			break;
 	}
 }
 
 function handleICEConnectionStateChange() {
-	console.log('*** ICE agent連線狀態改變: ' + peer.iceConnectionState);
+	console.log(`*** ICE agent連線狀態改變: ${peer.iceConnectionState}`);
 
 	switch (peer.iceConnectionState) {
-	case 'closed':
-	case 'failed':
-	case 'disconnected':
-		closing();
-		break;
+		case 'closed':
+		case 'failed':
+		case 'disconnected':
+			closing();
+			break;
 	}
 }
 
 function handleICEGatheringStateChange() {
-	console.log('*** ICE gathering state changed to: ' + peer.iceGatheringState);
+	console.log(`*** ICE gathering state changed to: ${peer.iceGatheringState}`);
 }
 
 // 傳送 icecandidate
@@ -195,15 +196,15 @@ async function addStreamProcess() {
 	try {
 		await getUserStream();
 	} catch (error) {
-		errMsg = 'getUserStream error ===> ' + error.toString();
+		errMsg = `getUserStream error ===> ${error.toString()}`;
 		throw new Error(errMsg);
 	}
 
 	try {
 		// RTCPeerConnection.addTrack => 加入MediaStreamTrack
-		cacheStream.getTracks().forEach((track) => peer.addTrack(track, cacheStream));
+		cacheStream.getTracks().forEach(track => peer.addTrack(track, cacheStream));
 	} catch (error) {
-		errMsg = 'Peer addTransceiver error ===> ' + error.toString();
+		errMsg = `Peer addTransceiver error ===> ${error.toString()}`;
 		throw new Error(errMsg);
 	}
 }
@@ -249,12 +250,12 @@ async function createAnswer() {
 		console.log('signaling answer ...');
 		sendSDPBySignaling('answer', answer);
 	} catch (error) {
-		errMsg = 'Create Answer error ===> ' + error.toString();
+		errMsg = `Create Answer error ===> ${error.toString()}`;
 		throw new Error(errMsg);
 	}
 }
 
-//接收 ICE candidate
+// 接收 ICE candidate
 async function handleNewIceCandidate(candidate) {
 	console.log(`*** 加入新取得的 ICE candidate: ${JSON.stringify(candidate)}`);
 	try {

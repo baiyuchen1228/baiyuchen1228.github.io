@@ -1,45 +1,45 @@
 body {
-	background-color: #fff5eb;
 	padding: 0 10% 10%;
+	background-color: #fff5eb;
 }
 
 h1 {
+	padding: 5px 10px;
+	font-size: 18px;
+	color: #000;
 	text-indent: 1em;
 	background-color: #ebdabf;
-	padding: 5px 10px;
-	color: #000;
-	font-size: 18px;
 	border-radius: 9px;
 }
 
 h2 {
+	padding: 5px 10px;
+	font-size: 16px;
+	color: #000;
 	text-indent: 1em;
 	background-color: #ebdabf;
-	padding: 5px 10px;
-	color: #000;
-	font-size: 16px;
 	border-radius: 9px;
 }
 
 .main-menu {
-	color: #000;
-	background-color: #ebdabf;
+	display: inline-block;
 	padding: 5px 15px;
 	margin: 0;
+	color: #000;
 	cursor: pointer;
-	display: inline-block;
+	background-color: #ebdabf;
 } /* 主選單的樣式 */
 .main-menu:hover {
 	background-color: #ebdabf;
 }
 
 .sub-menu {
-	color: #e7dc8f;
-	background-color: #ccc;
-	margin: 5px -5px;
-	padding: 0;
-	list-style-type: none;
 	position: absolute;
+	padding: 0;
+	margin: 5px -5px;
+	color: #e7dc8f;
+	list-style-type: none;
+	background-color: #ccc;
 } /* 下拉清單的樣式 */
 .sub-menu li {
 	padding: 3px 5px;
@@ -51,16 +51,16 @@ h2 {
 }
 
 .sub-menu a {
-	text-align: left;
 	display: block;
-	text-decoration: none;
 	color: #000;
+	text-align: left;
+	text-decoration: none;
 }
 
 .sub-menu a:hover {
 	color: #000;
-	background-color: #e7dc8f;
 	text-decoration: none;
+	background-color: #e7dc8f;
 }
 
 /* div#toolbox{
@@ -78,21 +78,21 @@ h2 {
 } */
 div#powersupply {
 	position: absolute;
-	left: 1100px;
 	top: 300px;
+	left: 1100px;
 	width: 400px;
+	height: 300px;
 	border: 3px solid #73ad21;
 	background-image: url('images/powersupply.jpg');
 	background-size: 400px;
 	background-repeat: no-repeat;
-	height: 300px;
 }
 
 .powersupply-text {
-	float: left;
 	position: absolute;
-	color: white;
+	float: left;
 	top: 50px;
+	color: white;
 }
 
 #powersupply1 {
@@ -112,15 +112,15 @@ div#powersupply {
 }
 
 .powersupply-button {
-	float: left;
 	position: absolute;
-	color: #000;
+	float: left;
 	top: 170px;
-	font-size: 1px;
-	text-indent: -4px;
 	width: 20px;
-	border-radius: 10px;
+	font-size: 1px;
+	color: #000;
+	text-indent: -4px;
 	cursor: pointer;
+	border-radius: 10px;
 }
 
 #powersupply5 {

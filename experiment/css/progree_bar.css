@@ -1,8 +1,8 @@
 #myBar {
 	width: 0%;
 	height: 5px;
-	background-color: #04aa6d;
-	text-align: center; /* To center it horizontally (if you want) */
-	line-height: 5px; /* To center it vertically */
 	color: white;
+	text-align: center; /* To center it horizontally (if you want) */
+	background-color: #04aa6d;
+	line-height: 5px; /* To center it vertically */
 }

@@ -8,7 +8,7 @@ class Oscillator {
 		this._time_mul = 2 / 300;
 		this._time_offset = 0;
 		this._WAVE_DATA_COUNT = 1000;
-		this._vertical_AC_GND_DC = ['AC', 'AC']; //AC, GND, DC
+		this._vertical_AC_GND_DC = ['AC', 'AC']; // AC, GND, DC
 		this._vaild = false;
 		this._phasor = [];
 		this._loop = 100; // 傅立葉轉換做的項數
@@ -24,98 +24,121 @@ class Oscillator {
 	set_SWP(val) {
 		this._SWP = val;
 	}
+
 	set_init(val) {
 		this._init = val;
 	}
+
 	set_slope(val) {
 		this._slope = val;
 	}
+
 	set_level(val) {
 		this._level = val;
 	}
+
 	set_refernece(val) {
 		this._reference = val;
 	}
+
 	set_show_mode(val) {
 		this._show_mode = val;
 	}
+
 	set_vertical_v(i, val) {
 		this._vertical_v[i] = val;
 	}
+
 	set_vertical_offset(i, val) {
 		this._vertical_offset[i] = val;
 	}
+
 	set_time_mul(val) {
 		this._time_mul = val;
 	}
+
 	set_time_offset(val) {
 		this._time_offset = val;
 	}
+
 	set_vertical_AC_GND_DC(i, val) {
 		this._vertical_AC_GND_DC[i] = val;
 	}
+
 	get init() {
 		return this._init;
 	}
+
 	get slope() {
 		return this._slope;
 	}
+
 	get level() {
 		return this._level;
 	}
+
 	get reference() {
 		return this._reference;
 	}
+
 	get show_mode() {
 		return this._show_mode;
 	}
+
 	get vertical_v() {
 		return this._vertical_v;
 	}
+
 	get vertical_offset() {
 		return this._vertical_offset;
 	}
+
 	get time_mul() {
 		return this._time_mul;
 	}
+
 	get time_offset() {
 		return this._time_offset;
 	}
+
 	get vertical_AC_GND_DC() {
 		return this._vertical_AC_GND_DC;
 	}
+
 	get SWP() {
 		return this._SWP;
 	}
+
 	get_res() {
-		let type = wg.type;
-		let loop = this._loop;
+		const type = wg.type;
+		const loop = this._loop;
 		if (type == 'square_wave') {
 			for (let i = 0; i < loop; i++) {
-				let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000; //調參
+				const omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000; // 調參
 				this._phasor[i] = checkCircuit(omega);
 			}
 		} else if (type == 'sin_wave') {
-			let omega = 2 * math.PI * wg.frequency * 1000;
+			const omega = 2 * math.PI * wg.frequency * 1000;
 			this._phasor[0] = checkCircuit(omega);
 		} else if (type == 'triangle_wave') {
 			for (let i = 0; i < loop; i++) {
-				let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
+				const omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000;
 				this._phasor[i] = checkCircuit(omega);
 			}
 		}
 	}
+
 	get_data() {
 		// this._begin == -1 --> 以週期為時間間隔依據
 		// others --> 以 time_mul 為時間間隔依據
 
-		let WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 3;
+		const WAVE_DATA_COUNT = this._WAVE_DATA_COUNT * 3;
 		if (this._init == 0 && this._vaild == false) {
 			this.get_res();
 			this._vaild = true;
 		}
 
-		let tmp_wg = wg;
+		const tmp_wg = wg;
 		if (this._init != 0) {
 			// 校正(SWP)用
 			wg = new WaveGenerator();
@@ -126,15 +149,16 @@ class Oscillator {
 			wg.set_power(true);
 			wg.set_type('square_wave');
 			this._vaild = false;
-			let loop = this._loop;
+			const loop = this._loop;
 			for (let i = 0; i < loop; i++) {
-				if (this._init == 1) this._phasor[i] = { voltage1: math.complex(1, 0), voltage2: math.complex(0, 0) };
+				if (this._init == 1)
+					this._phasor[i] = { voltage1: math.complex(1, 0), voltage2: math.complex(0, 0) };
 				else this._phasor[i] = { voltage1: math.complex(0, 0), voltage2: math.complex(1, 0) };
 			}
 		}
-		let type = wg.type;
+		const type = wg.type;
 		let is_find_begin = false;
-		let timeslot = 0.4 / wg.frequency / this._WAVE_DATA_COUNT; // 用週期去切格子(0.4 為調參結果，原則上只要經過的週期大致上為 1 即可)
+		const timeslot = 0.4 / wg.frequency / this._WAVE_DATA_COUNT; // 用週期去切格子(0.4 為調參結果，原則上只要經過的週期大致上為 1 即可)
 		if (this._begin == -1) {
 			is_find_begin = true;
 		} else {
@@ -142,19 +166,19 @@ class Oscillator {
 			this._begin -= this._time_offset;
 		}
 		if (type == 'square_wave') {
-			let loop = this._loop;
+			const loop = this._loop;
 			for (let j = 0; j < WAVE_DATA_COUNT; j++) {
 				this._datapoints0[j] = 0;
 				this._datapoints1[j] = 0;
 			}
 
 			for (let i = 0; i < loop; i++) {
-				let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
-				let res = this._phasor[i];
-				let phase0 = wg.calculate_phase(res, 0);
-				let amplitude0 = wg.calculate_amplitude(res, 0);
-				let phase1 = wg.calculate_phase(res, 1);
-				let amplitude1 = wg.calculate_amplitude(res, 1);
+				const omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
+				const res = this._phasor[i];
+				const phase0 = wg.calculate_phase(res, 0);
+				const amplitude0 = wg.calculate_amplitude(res, 0);
+				const phase1 = wg.calculate_phase(res, 1);
+				const amplitude1 = wg.calculate_amplitude(res, 1);
 				for (let j = 0; j < WAVE_DATA_COUNT; j++) {
 					if (is_find_begin) {
 						this._datapoints0[j] += wg.voltage(j * timeslot, 2 * i + 1, omega, phase0, amplitude0);
@@ -176,19 +200,19 @@ class Oscillator {
 				}
 			}
 		} else if (type == 'triangle_wave') {
-			let loop = this._loop;
+			const loop = this._loop;
 			for (let j = 0; j < WAVE_DATA_COUNT; j++) {
 				this._datapoints0[j] = 0;
 				this._datapoints1[j] = 0;
 			}
 
 			for (let i = 0; i < loop; i++) {
-				let omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
-				let res = this._phasor[i];
-				let phase0 = wg.calculate_phase(res, 0);
-				let amplitude0 = wg.calculate_amplitude(res, 0);
-				let phase1 = wg.calculate_phase(res, 1);
-				let amplitude1 = wg.calculate_amplitude(res, 1);
+				const omega = (2 * i + 1) * 2 * math.PI * wg.frequency * 1000 * this._SWP;
+				const res = this._phasor[i];
+				const phase0 = wg.calculate_phase(res, 0);
+				const amplitude0 = wg.calculate_amplitude(res, 0);
+				const phase1 = wg.calculate_phase(res, 1);
+				const amplitude1 = wg.calculate_amplitude(res, 1);
 				for (let j = 0; j < WAVE_DATA_COUNT; j++) {
 					if (is_find_begin) {
 						this._datapoints0[j] += wg.voltage(j * timeslot, pow(-1, i) * (2 * i + 1) * (2 * i + 1), omega, phase0, amplitude0);
@@ -210,12 +234,12 @@ class Oscillator {
 				}
 			}
 		} else if (type == 'sin_wave') {
-			let omega = 2 * math.PI * wg.frequency * 1000 * this._SWP;
-			let res = this._phasor[0];
-			let phase0 = wg.calculate_phase(res, 0);
-			let amplitude0 = wg.calculate_amplitude(res, 0);
-			let phase1 = wg.calculate_phase(res, 1);
-			let amplitude1 = wg.calculate_amplitude(res, 1);
+			const omega = 2 * math.PI * wg.frequency * 1000 * this._SWP;
+			const res = this._phasor[0];
+			const phase0 = wg.calculate_phase(res, 0);
+			const amplitude0 = wg.calculate_amplitude(res, 0);
+			const phase1 = wg.calculate_phase(res, 1);
+			const amplitude1 = wg.calculate_amplitude(res, 1);
 			for (let i = 0; i < WAVE_DATA_COUNT; i++) {
 				if (is_find_begin) {
 					this._datapoints0[i] = wg.voltage(i * timeslot, 1, omega, phase0, amplitude0);
@@ -240,7 +264,7 @@ class Oscillator {
 		// 確定使用者真的有接對
 
 		if (this._init == 0) {
-			let conn = checkConnected();
+			const conn = checkConnected();
 			if (conn.voltage1 == 0) {
 				for (let j = 0; j < WAVE_DATA_COUNT; j++) {
 					this._datapoints0[j] = 0;
@@ -269,7 +293,7 @@ class Oscillator {
 	}
 
 	draw() {
-		document.querySelector('#error_message_content').innerHTML = ''; //初始化 show_error
+		document.querySelector('#error_message_content').innerHTML = ''; // 初始化 show_error
 		// document.getElementById("demo_frequency1").value = wg.frequency * 1000;
 		// document.getElementById("demo_amplitude1").value = wg.amplitude;
 		// document.getElementById("demo_wave_type1").value = wg.type;
@@ -288,12 +312,12 @@ class Oscillator {
 			arrow_pos += wg.offset;
 		}
 		arrow_pos = arrow_pos * -28 + 50;
-		$('#level_show').css('top', arrow_pos.toString() + 'px');
+		$('#level_show').css('top', `${arrow_pos.toString()}px`);
 
 		this._begin = -1;
 		this.get_data(); // 找一個週期下的波圖
-		let datapoints0 = [];
-		let datapoints1 = [];
+		const datapoints0 = [];
+		const datapoints1 = [];
 
 		// 開找符合條件的 begin
 		this._begin = 1;
@@ -339,14 +363,14 @@ class Oscillator {
 					datapoints0[i] = this._datapoints0[i] / this._vertical_v[0];
 					datapoints0[i] += this._vertical_offset[0];
 				} else {
-					datapoints0[i] = NaN;
+					datapoints0[i] = Number.NaN;
 				}
 
 				if (this._show_mode != 'CH1') {
 					datapoints1[i] = this._datapoints1[i] / this._vertical_v[1];
 					datapoints1[i] += this._vertical_offset[1];
 				} else {
-					datapoints1[i] = NaN;
+					datapoints1[i] = Number.NaN;
 				}
 			}
 		}
@@ -358,7 +382,7 @@ class Oscillator {
 			}
 		} else if (this._show_mode == 'CH2') {
 			for (let i = 0; i < this._WAVE_DATA_COUNT; i++) {
-				datapoints0[i] = NaN;
+				datapoints0[i] = Number.NaN;
 			}
 		}
 
@@ -369,21 +393,22 @@ class Oscillator {
 			}
 		} else if (this._show_mode == 'CH1') {
 			for (let i = 0; i < this._WAVE_DATA_COUNT; i++) {
-				datapoints1[i] = NaN;
+				datapoints1[i] = Number.NaN;
 			}
 		}
 
 		if (this._power == 0) {
 			show_error('示波器的 power 沒有打開');
 			for (let i = 0; i < this._WAVE_DATA_COUNT; i++) {
-				datapoints0[i] = NaN;
-				datapoints1[i] = NaN;
+				datapoints0[i] = Number.NaN;
+				datapoints1[i] = Number.NaN;
 			}
 		}
 		this.drawChart(datapoints0, datapoints1);
 	}
+
 	drawChart(datapoints0, datapoints1) {
-		let chartStatus = Chart.getChart('oscilloscopeScreenCanvas'); // <canvas> id
+		const chartStatus = Chart.getChart('oscilloscopeScreenCanvas'); // <canvas> id
 		if (chartStatus != undefined) {
 			chartStatus.destroy();
 		}
@@ -392,38 +417,38 @@ class Oscillator {
 			labels[i] = '';
 		}
 		const data = {
-			labels: labels,
+			labels,
 			datasets: [
 				{
 					data: datapoints1,
 					borderColor: 'rgb(255, 255, 0)',
-					//backgroundColor: 'rgb(255, 255, 0)',
+					// backgroundColor: 'rgb(255, 255, 0)',
 					tension: 0.4,
 				},
 				{
 					data: datapoints0,
 					borderColor: 'rgb(0, 255, 0)',
-					//backgroundColor: 'rgb(255, 255, 0)',
+					// backgroundColor: 'rgb(255, 255, 0)',
 					tension: 0.4,
 				},
 			],
 		};
 		const config = {
 			type: 'line',
-			data: data,
+			data,
 			options: {
 				responsive: true,
 				aspectRatio: 1.25,
 				plugins: {
 					legend: {
-						display: false, //要不要顯示 lable
+						display: false, // 要不要顯示 lable
 					},
 					tooltip: {
 						callbacks: {
-							label: function (context) {
-								let index = context.dataIndex;
-								let time = osi._time_mul * (index + 1) * 3;
-								let point_lable = time.toFixed(6).toString() + ', ' + context.dataset.data[index].toFixed(6).toString();
+							label(context) {
+								const index = context.dataIndex;
+								const time = osi._time_mul * (index + 1) * 3;
+								const point_lable = `${time.toFixed(6).toString()}, ${context.dataset.data[index].toFixed(6).toString()}`;
 								return point_lable;
 							},
 						},
@@ -439,7 +464,7 @@ class Oscillator {
 				},
 				scales: {
 					x: {
-						display: false, //要不要顯示 x
+						display: false, // 要不要顯示 x
 						ticks: {
 							color: 'black', // not 'fontColor:' anymore
 							// fontSize: 18,
@@ -464,7 +489,7 @@ class Oscillator {
 				},
 			},
 		};
-		var canvas = $('#oscilloscopeScreenCanvas');
-		var myChart = new Chart(canvas, config);
+		const canvas = $('#oscilloscopeScreenCanvas');
+		const myChart = new Chart(canvas, config);
 	}
 }
