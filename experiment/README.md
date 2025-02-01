@@ -4,8 +4,7 @@
 pnpm install
 ```
 
-Now, we can ensure every file is formatted correctly by adding a few lines to the package.json in the project root.
-Add the following field to the package.json section:
+Now, we can ensure every file is formatted correctly and added
 
 check JavaScript:
 ```bash
@@ -17,7 +16,7 @@ fix JavaScript:
 pnpm lint:fix
 ```
 
-check and fix css:
+check and fix CSS:
 ```bash
 pnpm lint:css
 ```
