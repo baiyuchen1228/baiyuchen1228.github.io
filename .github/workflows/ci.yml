@@ -48,22 +48,22 @@ jobs:
 
       - name: Create and Push Fix Branch
         run: |
-          git checkout -b fix-lint-issues
+          BRANCH_NAME="fix-lint-issues-$(date +%s)"
+          git checkout -b $BRANCH_NAME
           git add .
           if git diff-index --quiet HEAD --; then
             echo "No changes to commit"
           else
             git commit -m 'fix: auto-fix lint issues'
-            git pull --rebase origin fix-lint-issues
-            git push origin fix-lint-issues
-          fi
+            git pull --rebase origin $BRANCH_NAME || git pull --rebase origin main
+            git push origin $BRANCH_NAME
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'fix: auto-fix lint issues'
-          branch: fix-lint-issues
+          branch: ${{ steps.create_and_push_fix_branch.outputs.BRANCH_NAME }}
           base: main
           title: 'Auto-fix lint issues'
           body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
