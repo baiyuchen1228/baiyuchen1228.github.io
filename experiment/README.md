@@ -22,6 +22,7 @@ pnpm lint:css
 ```
 
 ref: [stylelint](https://github.com/stylelint/stylelint) - A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.
+
 [eslint-config](https://github.com/antfu/eslint-config) - An ESLint configuration preset that helps you maintain consistent code quality.
 
 # include library
