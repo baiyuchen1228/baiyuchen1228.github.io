@@ -19,12 +19,12 @@ jobs:
       
       - uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
       
       - name: Install linting dependencies
         run: |
-          npm install -g htmlhint stylelint stylelint-config-standard eslint @eslint/js
+          npm install htmlhint stylelint stylelint-config-standard eslint @eslint/js
 
       - name: Run HTML Validation
         run: htmlhint  '**/*.html'
@@ -41,11 +41,11 @@ jobs:
         run: stylelint --fix '**/*.css' 
 
       - name: Run JavaScript Linting
-        run: eslint '**/*.js'
+        run: npx eslint '**/*.js'
         continue-on-error: false
 
       - name: Fix JavaScript Issues
-        run: eslint --fix '**/*.js'
+        run: npx eslint --fix '**/*.js'
 
       - name: Commit and Push Fixes
         run: |
