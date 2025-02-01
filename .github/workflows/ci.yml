@@ -49,8 +49,11 @@ jobs:
       - name: Create and Push Fix Branch
         id: create_and_push_fix_branch
         run: |
-          BRANCH_NAME="fix-lint-issues-$(date +'%Y%m%d-%H%M%S')"
+          BRANCH_NAME="fix-lint-issues-${{ github.actor_id }}"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          if git ls-remote --exit-code --heads origin $BRANCH_NAME; then
+            git push origin --delete $BRANCH_NAME
+          fi
           git checkout -b $BRANCH_NAME
           git add .
           if git diff-index --quiet HEAD --; then
@@ -61,14 +64,20 @@ jobs:
           fi
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'fix: auto-fix lint issues'
           branch: ${{ env.BRANCH_NAME }}
-          base: main
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          delete-branch: true
           title: 'Auto-fix lint issues'
           body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
+          labels: |
+            format
+            automated pr
+          assignees: baiyuchen1228
+          reviewers: baiyuchen1228
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
