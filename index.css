@@ -16,7 +16,7 @@ nav {
     background-color: #2c2c2c;
     text-align: center;
     padding: 10px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
     z-index: 1000;
 }
 
@@ -57,10 +57,12 @@ footer {
 	bottom: 0;
 	width: 100%;
 }
-a:-webkit-any-link {
+
+a:any-link {
 	text-decoration: none;
 	color: #0a66c2;
 }
+
 /* .background {
     background-color: var(--background);
     display: grid;
@@ -79,7 +81,7 @@ a:-webkit-any-link {
 	flex-wrap: wrap;
 	gap: 1rem;
 	list-style: none;
-	padding: 0px;
+	padding: 0;
 }
 
 .social-media-buttons li {
@@ -140,22 +142,27 @@ a:-webkit-any-link {
 	visibility: hidden;
 	z-index: 1000;
 }
+
 #button::after {
 	content: '\f077';
-	font-family: FontAwesome;
+
+	/* font-family: FontAwesome; */
 	font-weight: normal;
 	font-style: normal;
 	font-size: 2em;
 	line-height: 50px;
 	color: #fff;
 }
+
 #button:hover {
 	cursor: pointer;
 	background-color: #2c2c2c;
 }
+
 #button:active {
 	background-color: #555;
 }
+
 #button.show {
 	opacity: 1;
 	visibility: visible;
@@ -165,7 +172,6 @@ a:-webkit-any-link {
     position: relative;
     text-align: center;
     padding: 20px;
-	width: 80%;
     margin: auto;
     width: 800px; /* 固定視窗大小 */
     height: 400px; /* 固定視窗大小 */
@@ -187,7 +193,7 @@ a:-webkit-any-link {
     padding: 20px;
     border: 1px solid #ddd; /* 外框 */
     border-radius: 10px; /* 圓角 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影 */
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%); /* 陰影 */
     background-color: #fff;
     margin: 10px 0;
 }

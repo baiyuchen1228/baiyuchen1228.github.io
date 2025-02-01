@@ -24,6 +24,9 @@ Next, we add a 'lint-staged' field to the package.json, for example:
 ./node_modules/.bin/prettier -c /
 ./node_modules/.bin/prettier -w /
 
+npx htmlhint "**/*.html"
+npx stylelint '**/*.css' --fix
+
 ref: https://create-react-app.dev/docs/setting-up-your-editor/
 
 # include library

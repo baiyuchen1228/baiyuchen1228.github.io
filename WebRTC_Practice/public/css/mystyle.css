@@ -2,9 +2,11 @@
 	display: flex;
 	justify-content: center;
 }
+
 section {
 	padding: 10px;
 }
+
 section + section {
 	margin-left: 20px;
 	border-left: 2px solid black;
