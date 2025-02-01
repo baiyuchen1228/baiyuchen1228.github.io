@@ -24,7 +24,7 @@ jobs:
       
       - name: Install linting dependencies
         run: |
-          npm install -g htmlhint stylelint eslint
+          npm install -g htmlhint stylelint stylelint-config-standard eslint
 
       - name: Run HTML Validation
         run: htmlhint  '**/*.html'
@@ -34,11 +34,11 @@ jobs:
         run: echo "HTMLHint does not support auto-fixing"
 
       - name: Run CSS Validation
-        run: stylelint '**/*.css' -c "./.stylelintrc.json"
+        run: stylelint '**/*.css' 
         continue-on-error: false
 
       - name: Fix CSS Issues
-        run: stylelint --fix '**/*.css' -c "./.stylelintrc.json"
+        run: stylelint --fix '**/*.css' 
 
       - name: Run JavaScript Linting
         run: eslint '**/*.js'
