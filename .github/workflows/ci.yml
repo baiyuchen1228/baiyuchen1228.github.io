@@ -48,7 +48,7 @@ jobs:
 
       - name: Create and Push Fix Branch
         run: |
-          BRANCH_NAME="fix-lint-issues-$(date +%s)"
+          BRANCH_NAME="fix-lint-issues-$(date +'%Y%m%d-%H%M%S')"
           git checkout -b $BRANCH_NAME
           git add .
           if git diff-index --quiet HEAD --; then
@@ -57,6 +57,7 @@ jobs:
             git commit -m 'fix: auto-fix lint issues'
             git pull --rebase origin $BRANCH_NAME || git pull --rebase origin main
             git push origin $BRANCH_NAME
+          fi
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
