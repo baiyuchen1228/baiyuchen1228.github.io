@@ -24,7 +24,7 @@ jobs:
       
       - name: Install linting dependencies
         run: |
-          npm install -g htmlhint stylelint stylelint-config-standard eslint globals
+          npm install -g htmlhint stylelint stylelint-config-standard eslint
 
       - name: Run HTML Validation
         run: htmlhint  '**/*.html'
