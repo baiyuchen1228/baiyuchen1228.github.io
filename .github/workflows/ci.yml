@@ -50,9 +50,13 @@ jobs:
         run: |
           git checkout -b fix-lint-issues
           git add .
-          git commit -m 'fix: auto-fix lint issues'
-          git pull --rebase origin fix-lint-issues
-          git push origin fix-lint-issues
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+          else
+            git commit -m 'fix: auto-fix lint issues'
+            git pull --rebase origin fix-lint-issues
+            git push origin fix-lint-issues
+          fi
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
