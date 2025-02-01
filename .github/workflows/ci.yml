@@ -31,7 +31,7 @@ jobs:
         continue-on-error: false
 
       - name: Fix HTML Issues
-        run: htmlhint --fix '**/*.html'
+        run: echo "HTMLHint does not support auto-fixing"
 
       - name: Run CSS Validation
         run: stylelint '**/*.css'
