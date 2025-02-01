@@ -9,7 +9,32 @@ const meter_2_mode = [0, 1, 2, 3, 4, 5];
 const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V'];
 const meter_2_Mode = ['Hz', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A'];
 
-const colorlist = ['Red', 'DarkRed', 'FireBrick', 'LightCoral', 'OrangeRed', 'Chocolate', 'Black', 'Indigo', 'Navy', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod'];
+const colorlist = ['Red',
+	'DarkRed',
+	'FireBrick',
+	'LightCoral',
+	'OrangeRed',
+	'Chocolate',
+	'Black',
+	'Indigo',
+	'Navy',
+	'Black',
+	'DeepSkyBlue',
+	'Brown',
+	'DarkRed',
+	'Blue',
+	'Magenta',
+	'Cyan',
+	'Lime',
+	'Orange',
+	'Purple',
+	'SkyBlue',
+	'Indigo',
+	'Fuchsia',
+	'DarkCyan',
+	'Olive',
+	'SeaGreen',
+	'Goldenrod'];
 var colorNo = 11;
 
 var delALLalligator = null;
@@ -1225,12 +1250,7 @@ function findNodeNum(x, y) {
 	//multimeter 點還沒做
 	//node 0~19 保留做特殊用途
 	let alligatorNodeList = [
-		{ x: 430, y: 400 },
-		{ x: 480, y: 400 },
-		{ x: 1020, y: 530 },
-		{ x: 1070, y: 530 },
-		{ x: 1350, y: 530 },
-		{ x: 1390, y: 530 },
+		{ x: 430, y: 400 }, { x: 480, y: 400 }, { x: 1020, y: 530 }, { x: 1070, y: 530 }, { x: 1350, y: 530 }, { x: 1390, y: 530 },
 	]; //length : 10
 
 	//check buttom node
@@ -2193,7 +2213,15 @@ function generator_drawline2() {
 		delALLalligator = [480, 400];
 	}
 }
-v_outer_dis = [5, 2, 1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01];
+v_outer_dis = [5,
+	2,
+	1,
+	0.5,
+	0.2,
+	0.1,
+	0.05,
+	0.02,
+	0.01];
 v_outer_ind_1 = 2;
 v_outer_ind_2 = 2;
 function minus_vertical_v_outer1() {
@@ -2254,7 +2282,26 @@ function add_vertical_position2() {
 	osi.draw();
 }
 
-time_mul_des = [500, 200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01, 0.005, 0.002, 0.001, 0.0005, 0.0002];
+time_mul_des = [500,
+	200,
+	100,
+	50,
+	20,
+	10,
+	5,
+	2,
+	1,
+	0.5,
+	0.2,
+	0.1,
+	0.05,
+	0.02,
+	0.01,
+	0.005,
+	0.002,
+	0.001,
+	0.0005,
+	0.0002];
 time_mul_ind = 7;
 
 function minus_horizonal_time() {
@@ -2510,9 +2557,6 @@ function add_horizonal_SWP() {
 	osi.draw();
 }
 
-function handleMediaStreamError(error) {
-	console.log('navigator.getUserMedia error: ', error);
-}
 
 function getRandomInteger(max) {
 	return Math.floor(Math.random() * max);

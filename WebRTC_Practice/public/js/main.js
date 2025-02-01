@@ -141,11 +141,11 @@ function handleConnectionStateChange() {
 	console.log('*** WebRTC connectionState 狀態改變: ' + peer.connectionState);
 
 	switch (peer.connectionState) {
-		case 'closed':
-		case 'failed':
-		case 'disconnected':
-			closing();
-			break;
+	case 'closed':
+	case 'failed':
+	case 'disconnected':
+		closing();
+		break;
 	}
 }
 
@@ -153,11 +153,11 @@ function handleICEConnectionStateChange() {
 	console.log('*** ICE agent連線狀態改變: ' + peer.iceConnectionState);
 
 	switch (peer.iceConnectionState) {
-		case 'closed':
-		case 'failed':
-		case 'disconnected':
-			closing();
-			break;
+	case 'closed':
+	case 'failed':
+	case 'disconnected':
+		closing();
+		break;
 	}
 }
 

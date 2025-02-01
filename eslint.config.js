@@ -1,17 +1,12 @@
-import js from "@eslint/js";
 export default [
-    {
-        extends: js.configs.recommended,
-        files: ["**/*.js"],
-        env: {
-            browser: true
-        },
-        rules: {
-            indent: ["error", 4],
-            "no-console": "off",
-            "no-undef": "off",
-            "linebreak-style": "off",
-            "array-element-newline": ["error", { multiline: true, minItems: 5 }]
-        }
-    }
+	{
+		files: ["**/*.js"],
+		ignores: ["experiment/module/*"],
+		rules: {
+			indent: ["error", "tab"],
+			"no-console": "off",
+			"no-undef": "off",
+			"array-element-newline": ["error", { multiline: true, minItems: 7 }]
+		}
+	}
 ];

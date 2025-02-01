@@ -9,7 +9,32 @@ const meter_2_mode = [0, 1, 2, 3, 4, 5];
 const meter_1_Mode = ['關機', '600直流V', '200直流V', '20直流V', '2直流V'];
 const meter_2_Mode = ['Hz', '200u直流A', '2m直流A', '20m直流A', '200m直流A', '10直流A'];
 
-const colorlist = ['Red', 'DarkRed', 'FireBrick', 'LightCoral', 'OrangeRed', 'Chocolate', 'Black', 'Indigo', 'Navy', 'Black', 'DeepSkyBlue', 'Brown', 'DarkRed', 'Blue', 'Magenta', 'Cyan', 'Lime', 'Orange', 'Purple', 'SkyBlue', 'Indigo', 'Fuchsia', 'DarkCyan', 'Olive', 'SeaGreen', 'Goldenrod'];
+const colorlist = ['Red',
+	'DarkRed',
+	'FireBrick',
+	'LightCoral',
+	'OrangeRed',
+	'Chocolate',
+	'Black',
+	'Indigo',
+	'Navy',
+	'Black',
+	'DeepSkyBlue',
+	'Brown',
+	'DarkRed',
+	'Blue',
+	'Magenta',
+	'Cyan',
+	'Lime',
+	'Orange',
+	'Purple',
+	'SkyBlue',
+	'Indigo',
+	'Fuchsia',
+	'DarkCyan',
+	'Olive',
+	'SeaGreen',
+	'Goldenrod'];
 var colorNo = 11;
 
 var delALLalligator = null;

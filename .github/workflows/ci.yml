@@ -41,11 +41,11 @@ jobs:
         run: npx stylelint --fix '**/*.css' 
 
       - name: Run JavaScript Linting
-        run: npx eslint '**/*.js'
+        run: npx eslint .
         continue-on-error: false
 
       - name: Fix JavaScript Issues
-        run: npx eslint --fix '**/*.js'
+        run: npx eslint --fix .
 
       - name: Commit and Push Fixes
         run: |
