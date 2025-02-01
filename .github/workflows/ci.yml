@@ -69,19 +69,19 @@ jobs:
                   git add .
                   if git diff-index --quiet HEAD --; then
                     echo "No changes to commit"
-                    echo "::set-output name=CHANGES::false"
+                    echo "CHANGES=false" >> $GITHUB_ENV
                   else
                     git commit -m 'fix: auto-fix lint issues'
                     git pull --rebase origin $BRANCH_NAME || git pull --rebase origin main
                     git push origin $BRANCH_NAME
-                    echo "::set-output name=CHANGES::true"
+                    echo "CHANGES=true" >> $GITHUB_ENV
                   fi
 
             - name: Create Pull Request
-              if: steps.create_and_push_fix_branch.outputs.CHANGES == 'true'
+              if: env.CHANGES == 'true'
               uses: peter-evans/create-pull-request@v7
               with:
-                  base: origin
+                  base: ${{ github.ref_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
                   commit-message: 'fix: auto-fix lint issues'
                   branch: ${{ env.BRANCH_NAME }}
