@@ -7,27 +7,23 @@ pnpm install
 Now, we can ensure every file is formatted correctly by adding a few lines to the package.json in the project root.
 Add the following field to the package.json section:
 
-```
-Add the following field to the package.json section:
-```
-
-Next, we add a 'lint-staged' field to the package.json, for example:
-
-```
- "lint-staged": {
-   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-     "prettier --write"
-   ]
- }
+check JavaScript:
+```bash
+pnpm lint
 ```
 
-./node_modules/.bin/prettier -c /
-./node_modules/.bin/prettier -w /
+fix JavaScript:
+```bash
+pnpm lint:fix
+```
 
-npx htmlhint "**/*.html"
-npx stylelint '**/*.css' --fix
+check and fix css:
+```bash
+pnpm lint:css
+```
 
-ref: https://create-react-app.dev/docs/setting-up-your-editor/
+ref: [stylelint](https://github.com/stylelint/stylelint) - A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.
+[eslint-config](https://github.com/antfu/eslint-config) - An ESLint configuration preset that helps you maintain consistent code quality.
 
 # include library
 
