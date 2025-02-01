@@ -17,5 +17,10 @@
 		"eslint-plugin-jsdoc": "^39.6.4",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^6.1.1"
+	},
+	"dependencies": {
+		"htmlhint": "^1.1.4",
+		"stylelint": "^16.14.1",
+		"stylelint-config-standard": "^37.0.0"
 	}
 }
