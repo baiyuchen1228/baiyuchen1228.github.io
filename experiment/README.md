@@ -1,7 +1,7 @@
 # Formatting Code Automatically
 
 ```
-npm install --save husky lint-staged prettier
+pnpm install
 ```
 
 Now, we can ensure every file is formatted correctly by adding a few lines to the package.json in the project root.

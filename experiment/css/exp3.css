@@ -1,7 +1,7 @@
 body {
-	background-color: #fff5eb;
-	padding: 0 10% 10%;
 	height: 10px;
+	padding: 0 10% 10%;
+	background-color: #fff5eb;
 }
 
 h1 {
@@ -28,25 +28,25 @@ h2 {
 }
 
 .main-menu {
-	color: #000;
-	background-color: #ebdabf;
+	display: inline-block;
 	padding: 5px 15px;
 	margin: 0;
+	color: #000;
+	background-color: #ebdabf;
 	cursor: pointer;
-	display: inline-block;
 } /* 主選單的樣式 */
 .main-menu:hover {
 	background-color: #ebdabf;
 }
 
 .sub-menu {
-	color: #e7dc8f;
-	background-color: #ccc;
-	margin: 5px -5px;
-	padding: 0;
-	list-style-type: none;
 	position: absolute;
 	z-index: 2;
+	padding: 0;
+	margin: 5px -5px;
+	color: #e7dc8f;
+	background-color: #ccc;
+	list-style-type: none;
 } /* 下拉清單的樣式 */
 .sub-menu li {
 	padding: 3px 5px;
@@ -58,10 +58,10 @@ h2 {
 }
 
 .sub-menu a {
-	text-align: left;
 	display: block;
-	text-decoration: none;
 	color: #000;
+	text-align: left;
+	text-decoration: none;
 }
 
 .sub-menu a:hover {
@@ -72,24 +72,24 @@ h2 {
 
 div#multimeter1 {
 	position: absolute;
-	left: 40px;
 	top: 150px;
+	left: 40px;
 	width: 200px;
+	height: 350px;
 	border: 5px solid black;
 	background-size: 200px;
 	background-repeat: no-repeat;
-	height: 350px;
 }
 
 div#multimeter2 {
 	position: absolute;
-	left: 300px;
 	top: 10px;
+	left: 300px;
 	width: 200px;
+	height: 350px;
 	border: 5px solid black;
 	background-size: 200px;
 	background-repeat: no-repeat;
-	height: 350px;
 }
 
 .multimeter-1-bg0 {
@@ -138,21 +138,21 @@ div#multimeter2 {
 
 div#powersupply {
 	position: absolute;
-	left: 1090px;
 	top: 150px;
+	left: 1090px;
 	width: 400px;
+	height: 300px;
 	border: 5px solid black;
 	background-image: url('../../images/powersupply.jpg');
 	background-size: 400px;
 	background-repeat: no-repeat;
-	height: 300px;
 }
 
 .powersupply-text {
-	float: left;
 	position: absolute;
-	color: white;
+	float: left;
 	top: 50px;
+	color: white;
 }
 
 #powersupply1 {
@@ -172,15 +172,15 @@ div#powersupply {
 }
 
 .powersupply-button {
-	float: left;
 	position: absolute;
-	color: #000;
-	height: 20px;
+	float: left;
 	top: 170px;
+	width: 20px;
+	height: 20px;
+	color: #000;
+	border-radius: 10px;
 	font-size: 10px;
 	text-indent: -4px;
-	width: 20px;
-	border-radius: 10px;
 	cursor: pointer;
 }
 
@@ -251,44 +251,44 @@ div#powersupply {
 .multimeter-button-1 {
 	position: absolute;
 	float: left;
-	color: #000;
-	height: 20px;
 	top: 80px;
+	width: 40px;
+	height: 20px;
+	color: #000;
+	border-radius: 15px;
 	text-indent: 0;
 	font-size: 10px;
-	width: 40px;
-	border-radius: 15px;
 	cursor: pointer;
 }
 
 .multimeter-button-2 {
 	position: absolute;
 	float: left;
-	color: #000;
-	height: 20px;
 	top: 100px;
+	width: 40px;
+	height: 20px;
+	color: #000;
+	border-radius: 15px;
 	text-indent: 0;
 	font-size: 10px;
-	width: 40px;
-	border-radius: 15px;
 	cursor: pointer;
 }
 
 .multimeter-title {
-	float: left;
 	position: absolute;
-	color: black;
+	float: left;
 	top: 10px;
 	left: 80px;
+	color: black;
 	font-size: 30px;
 }
 
 #multimeter1_7 {
-	background-color: #fff5eb;
-	color: black;
-	left: 60px;
-	font-size: 15px;
 	top: 5px;
+	left: 60px;
+	color: black;
+	background-color: #fff5eb;
+	font-size: 15px;
 }
 
 #multimeter1_1 {
@@ -324,11 +324,11 @@ div#powersupply {
 }
 
 #multimeter2_7 {
-	background-color: #fff5eb;
-	color: black;
-	left: 60px;
-	font-size: 15px;
 	top: 15px;
+	left: 60px;
+	color: black;
+	background-color: #fff5eb;
+	font-size: 15px;
 }
 
 #multimeter2_1 {
@@ -378,9 +378,9 @@ div#powersupply {
 
 #power_choice_hint {
 	display: inline-block;
+	padding: 7px;
 	text-align: center;
 	border-style: solid;
-	padding: 7px;
 }
 
 .buttonInactive {
@@ -401,13 +401,13 @@ div#powersupply {
 }
 
 #error_message {
-	background-color: palegreen;
 	position: absolute;
+	top: 190px;
+	left: 550px;
+	z-index: 1;
 	width: 350px;
 	height: 100px;
-	left: 550px;
-	top: 190px;
-	z-index: 1;
+	background-color: palegreen;
 }
 
 #submitbuttom {
@@ -418,7 +418,7 @@ div#powersupply {
 
 #clear {
 	position: absolute;
-	background-color: rgb(255 145 145);
-	left: 1200px;
 	top: 700px;
+	left: 1200px;
+	background-color: rgb(255 145 145);
 }

@@ -11,18 +11,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v3
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          version: 10
+          
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-      - name: Install linting dependencies
-        run: |
-          npm install -g htmlhint stylelint stylelint-config-standard eslint @eslint/js
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run HTML Validation
         run: htmlhint '**/*.html'
@@ -72,7 +79,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'fix: auto-fix lint issues'
-          base: origin
           branch: ${{ env.BRANCH_NAME }}
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           delete-branch: true
