@@ -1,7 +1,8 @@
+import js from "@eslint/js";
 export default [
     {
+        extends: js.configs.recommended,
         files: ["**/*.js"],
-        extends: "standard",
         env: {
             browser: true
         },
