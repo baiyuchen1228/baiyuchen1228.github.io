@@ -62,6 +62,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'fix: auto-fix lint issues'
           branch: fix-lint-issues
+          base: main
           title: 'Auto-fix lint issues'
           body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
 
