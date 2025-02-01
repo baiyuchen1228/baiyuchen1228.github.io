@@ -1,59 +1,57 @@
-name: GitHub Pages CI/CD
+name: CI
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Tests
-        run: echo "Running tests..." 
-
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
-      
+
       - name: Install linting dependencies
         run: |
-          npm install htmlhint stylelint stylelint-config-standard eslint @eslint/js
+          npm install -g htmlhint stylelint stylelint-config-standard eslint @eslint/js
 
       - name: Run HTML Validation
-        run: npx htmlhint  '**/*.html'
+        run: htmlhint '**/*.html'
         continue-on-error: false
 
       - name: Fix HTML Issues
         run: echo "HTMLHint does not support auto-fixing"
 
       - name: Run CSS Validation
-        run: npx stylelint '**/*.css' 
+        run: stylelint '**/*.css'
         continue-on-error: false
 
       - name: Fix CSS Issues
-        run: npx stylelint --fix '**/*.css' 
+        run: stylelint --fix '**/*.css'
 
-      - name: Run JavaScript Linting
-        run: npx eslint .
-        continue-on-error: false
+      - name: Run ESLint
+        run: eslint '**/*.js'
 
-      - name: Fix JavaScript Issues
-        run: npx eslint --fix .
-
-      - name: Commit and Push Fixes
+      - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Create and Push Fix Branch
+        run: |
           git checkout -b fix-lint-issues
           git add .
           git commit -m 'fix: auto-fix lint issues'
+          git pull --rebase origin fix-lint-issues
           git push origin fix-lint-issues
 
       - name: Create Pull Request
