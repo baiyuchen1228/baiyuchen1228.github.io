@@ -34,11 +34,11 @@ jobs:
         run: echo "HTMLHint does not support auto-fixing"
 
       - name: Run CSS Validation
-        run: stylelint '**/*.css'
+        run: stylelint '**/*.css' --config-basedir ./
         continue-on-error: false
 
       - name: Fix CSS Issues
-        run: stylelint --fix '**/*.css'
+        run: stylelint --fix '**/*.css' --config-basedir ./
 
       - name: Run JavaScript Linting
         run: eslint '**/*.js'
