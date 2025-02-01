@@ -81,6 +81,7 @@ jobs:
               if: steps.create_and_push_fix_branch.outputs.CHANGES == 'true'
               uses: peter-evans/create-pull-request@v7
               with:
+                  base: origin
                   token: ${{ secrets.GITHUB_TOKEN }}
                   commit-message: 'fix: auto-fix lint issues'
                   branch: ${{ env.BRANCH_NAME }}
@@ -89,7 +90,7 @@ jobs:
                   title: 'Auto-fix lint issues'
                   body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
                   labels: |
-                      format
+                      lint
                       automated pr
                   assignees: baiyuchen1228
                   reviewers: baiyuchen1228
