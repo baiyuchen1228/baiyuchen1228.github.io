@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Bard Pai's Personal Website" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bard Pai's Personal Website</title>
+		<link rel="stylesheet" href="./index.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
+			<h1>Bard Pai</h1>
+			<p>Software Engineer</p>
+		</header>
+
+		<!-- Back to top button -->
+		<a id="button"></a>
+
+		<nav>
+			<a href="#about" class="active">About</a>
+			<a href="#projects">Projects</a>
+			<a href="#contact">Contact</a>
+			<a href="./CV/Transcript.html">Transcript</a>
+			<a href="./CV/cv.html">Resume</a>
+		</nav>
+
+		<section id="about">
+			<h2>About Me</h2>
+			<p>
+				Hi, I'm Bard Pai, a driven data enthusiast and backend engineer currently pursuing a Master's in Data Science and Engineering at National Yang Ming Chiao Tung University in Hsinchu City, Taiwan. With a Bachelor's in Communication Engineering from National Chung Cheng University, I've developed expertise in data structures, algorithms, and machine learning.<br /><br />
+
+				During my internship at Synology, I crafted over 10 camera APIs, enhancing the NAS surveillance system's control features. At National Academia Sinica, I contributed to boosting AlphaGo's win rate to 99% by integrating advanced algorithms.<br /><br />
+
+				Recognized for my problem-solving skills, I secured the Bronze Award at the ICPC 2021 Asia Taipei Regional Site and ranked 24th in the Collegiate Programming Examination. In machine learning, I achieved a 70% accuracy rate in the AI CUP for Orchid Species Identification and Classification Competition.<br /><br />
+
+				My projects range from network algorithm enhancement to physics simulation websites and embedded systems solutions. Proficient in Python, C, C++, and various tools like Git and PyTorch, I'm committed to driving innovation in data science and engineering. Let's connect on LinkedIn or check out my GitHub for more.
+			</p>
+		</section>
+
+		<section id="projects">
+			<h2>Projects</h2>
+			<div class="carousel-container">
+				<button id="prev">Previous</button>
+				<div class="carousel">
+					<div class="carousel-item">
+						<h3>物理實驗模擬網站</h3>
+						<a href="./experiment/index.html">Physics Simulation Experiments Website</a>
+						<p>Skills: Frontend</p>
+						<p>• Designed a website to display physics experiments by HTML, CSS and JavaScript<br>
+							• Used by 300+ students yearly</p>
+					</div>
+					<div class="carousel-item">
+						<h3>Microprocessor</h3>
+						<a href="https://www.youtube.com/watch?v=rEnkRiYlOn0&t=17s">Infrared Transmission with Hamming code</a>
+						<p>Skills: Embedded system</p>
+						<p>• Achieved 100% accuracy for transmitting 10K+ characters/s within planned time by C, MCU</p>
+					</div>
+				</div>
+				<button id="next">Next</button>
+			</div>
+		</section>
+
+
+
+		<section id="contact">
+			<h2>Contact Me</h2>
+			<p>Email: baiyuchen1228@gmail.com</p>
+			<p>Phone: (+886) 966766975</p>
+		</section>
+
+		<footer>
+			<div class="background">
+				<ul class="social-media-buttons">
+					<li>
+						<a href="https://github.com/baiyuchen1228" title="github">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path
+									d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+								/>
+							</svg>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.linkedin.com/in/baiyuchen1228/" title="Linkedin">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path
+									d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2
+										2v7h-4v-7a6 6 0 0 1 6-6z"
+								/>
+								<rect x="2" y="9" width="4" height="12" />
+								#
+								<circle cx="4" cy="4" r="2" />
+							</svg>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<p>&copy; 2024 Bard Pai</p>
+		</footer>
+	</body>
+	<script>
+		// project carousel
+		document.addEventListener("DOMContentLoaded", function() {
+			const items = document.querySelectorAll('.carousel-item');
+			let currentIndex = 0;
+
+			function showItem(index) {
+				items[currentIndex].classList.remove('active');
+				currentIndex = index;
+				items[currentIndex].classList.add('active');
+			}
+
+			document.getElementById('prev').addEventListener('click', function() {
+				showItem((currentIndex - 1 + items.length) % items.length);
+			});
+
+			document.getElementById('next').addEventListener('click', function() {
+				showItem((currentIndex + 1) % items.length);
+			});
+
+			// Initialize the first item as active
+			items[currentIndex].classList.add('active');
+		});
+
+
+		// top button
+		document.addEventListener("DOMContentLoaded", function() {
+			const links = document.querySelectorAll("nav a");
+
+			links.forEach(link => {
+				link.addEventListener("click", function() {
+					links.forEach(l => l.classList.remove("active"));
+					this.classList.add("active");
+				});
+			});
+		});
+
+
+		const btn = document.getElementById('button');
+
+		window.addEventListener('scroll', function () {
+			if (window.scrollY > 300) {
+				btn.classList.add('show');
+			} else {
+				btn.classList.remove('show');
+			}
+		});
+
+		btn.addEventListener('click', function (e) {
+			e.preventDefault();
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+	</script>
+</html>

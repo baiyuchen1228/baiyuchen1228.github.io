@@ -1,0 +1,152 @@
+body {
+	background-color: #fff5eb;
+	padding: 0 10% 10%;
+}
+
+h1 {
+	text-indent: 1em;
+	background-color: #ebdabf;
+	padding: 5px 10px;
+	color: #000;
+	font-size: 18px;
+	border-radius: 20px;
+	border: 10px solid #fff5eb;
+}
+
+h2 {
+	text-indent: 1em;
+	background-color: #ebdabf;
+	padding: 5px 10px;
+	color: #000;
+	font-size: 16px;
+	border-radius: 9px;
+}
+
+#svgline2 {
+	z-index: 1;
+	pointer-events: none;
+}
+
+.main-menu {
+	color: #000;
+	background-color: #ebdabf;
+	padding: 5px 15px;
+	margin: 0;
+	cursor: pointer;
+	display: inline;
+} /* 主選單的樣式 */
+.main-menu:hover {
+	background-color: #ebdabf;
+}
+
+.sub-menu {
+	color: #e7dc8f;
+	background-color: #ccc;
+	margin: 5px -5px;
+	padding: 0;
+	list-style-type: none;
+	position: absolute;
+	z-index: 2;
+} /* 下拉清單的樣式 */
+.sub-menu li {
+	padding: 3px 5px;
+	text-align: left;
+} /* 下拉清單每一列的樣式 */
+.sub-menu li:hover {
+	color: #000;
+	background-color: #e7dc8f;
+}
+
+.sub-menu a {
+	text-align: left;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+
+.articles article a {
+	display: inline-flex;
+	color: var(--primary);
+	text-decoration: none;
+}
+
+.sub-menu a:hover {
+	color: #000;
+	background-color: #e7dc8f;
+	text-decoration: none;
+}
+
+/* #camera{
+    width: ;
+} */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.background {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: start;
+	padding: 2rem;
+}
+
+.articles {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	justify-content: center;
+	max-width: 150rem;
+	gap: 1.5rem;
+}
+
+.articles article {
+	max-width: 20rem;
+	cursor: pointer;
+	position: relative;
+	display: block;
+	transition: all 0.4s ease-in-out;
+	overflow: hidden;
+	border-radius: 1rem;
+}
+
+.articles article h2 {
+	text-indent: 0;
+	background-color: #fff;
+	padding: 0;
+	margin: 0 0 1rem;
+	font-size: 1.6rem;
+	color: var(--secondary);
+	transition: color 0.3s ease-out;
+}
+
+.articles article img {
+	max-width: 100%;
+	transform-origin: center;
+	transition: transform 0.4s ease-in-out;
+}
+
+.article-preview {
+	padding: 1.5rem;
+	background: white;
+	height: 100%;
+}
+
+.articles figure {
+	width: 100%;
+	height: 13rem;
+	overflow: hidden;
+}
+
+.articles figure img {
+	height: 100%;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	object-fit: cover;
+}
+
+.articles article:hover img {
+	transform: scale(1.5);
+}

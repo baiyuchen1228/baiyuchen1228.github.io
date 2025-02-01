@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Video Chat With WebRTC</title>
+
+		<link rel="stylesheet" href="./css/mystyle.css" />
+		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script defer src="./js/main.js"></script>
+	</head>
+
+	<body>
+		<h1>Video Chat With WebRTC</h1>
+
+		<div id="container">
+			<section>
+				<h1>Local Tracker</h1>
+				<video id="localVideo" autoplay></video>
+			</section>
+			<section>
+				<h1>Remote Receiver</h1>
+				<video id="remoteVideo" autoplay></video>
+			</section>
+
+			<div class="box">
+				<button onclick="connection()">Connection</button>
+				<button onclick="calling()">Call</button>
+				<button onclick="closing()">Hang Up</button>
+			</div>
+		</div>
+	</body>
+</html>

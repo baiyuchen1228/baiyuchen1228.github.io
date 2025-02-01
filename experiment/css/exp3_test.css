@@ -1,0 +1,446 @@
+body {
+	background-color: #fff5eb;
+	padding: 0 10% 10%;
+	height: 10px;
+}
+
+h1 {
+	text-indent: 1em;
+	background-color: #ebdabf;
+	padding: 5px 10px;
+	color: #000;
+	font-size: 18px;
+	border-radius: 9px;
+}
+
+h2 {
+	text-indent: 1em;
+	background-color: #ebdabf;
+	padding: 5px 10px;
+	color: #000;
+	font-size: 16px;
+	border-radius: 9px;
+}
+
+#svgline2 {
+	z-index: 1;
+	pointer-events: none;
+}
+
+.main-menu {
+	color: #000;
+	background-color: #ebdabf;
+	padding: 5px 15px;
+	margin: 0;
+	cursor: pointer;
+	display: inline-block;
+} /* 主選單的樣式 */
+.main-menu:hover {
+	background-color: #ebdabf;
+}
+
+.sub-menu {
+	color: #e7dc8f;
+	background-color: #ccc;
+	margin: 5px -5px;
+	padding: 0;
+	list-style-type: none;
+	position: absolute;
+	z-index: 2;
+} /* 下拉清單的樣式 */
+.sub-menu li {
+	padding: 3px 5px;
+	text-align: left;
+} /* 下拉清單每一列的樣式 */
+.sub-menu li:hover {
+	color: #000;
+	background-color: #e7dc8f;
+}
+
+.sub-menu a {
+	text-align: left;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+
+.sub-menu a:hover {
+	color: #000;
+	background-color: #e7dc8f;
+	text-decoration: none;
+}
+
+div#multimeter1 {
+	position: absolute;
+	left: 40px;
+	top: 150px;
+	width: 200px;
+	border: 5px solid black;
+	background-size: 200px;
+	background-repeat: no-repeat;
+	height: 350px;
+}
+
+div#multimeter2 {
+	position: absolute;
+	left: 300px;
+	top: 10px;
+	width: 200px;
+	border: 5px solid black;
+	background-size: 200px;
+	background-repeat: no-repeat;
+	height: 350px;
+}
+
+.multimeter-1-bg0 {
+	background-image: url('../../images/multimeter/multimeter0.jpg');
+}
+
+.multimeter-1-bg1 {
+	background-image: url('../../images/multimeter/multimeter1.jpg');
+}
+
+.multimeter-1-bg2 {
+	background-image: url('../../images/multimeter/multimeter2.jpg');
+}
+
+.multimeter-1-bg3 {
+	background-image: url('../../images/multimeter/multimeter3.jpg');
+}
+
+.multimeter-1-bg4 {
+	background-image: url('../../images/multimeter/multimeter4.jpg');
+}
+
+.multimeter-2-bg0 {
+	background-image: url('../../images/multimeter2/multimeter0.jpg');
+}
+
+.multimeter-2-bg1 {
+	background-image: url('../../images/multimeter2/multimeter1.jpg');
+}
+
+.multimeter-2-bg2 {
+	background-image: url('../../images/multimeter2/multimeter2.jpg');
+}
+
+.multimeter-2-bg3 {
+	background-image: url('../../images/multimeter2/multimeter3.jpg');
+}
+
+.multimeter-2-bg4 {
+	background-image: url('../../images/multimeter2/multimeter4.jpg');
+}
+
+.multimeter-2-bg5 {
+	background-image: url('../../images/multimeter2/multimeter5.jpg');
+}
+
+div#powersupply {
+	position: absolute;
+	left: 1090px;
+	top: 150px;
+	width: 400px;
+	border: 5px solid black;
+	background-image: url('../../images/powersupply.jpg');
+	background-size: 400px;
+	background-repeat: no-repeat;
+	height: 300px;
+}
+
+.powersupply-text {
+	float: left;
+	position: absolute;
+	color: white;
+	top: 50px;
+}
+
+#powersupply1 {
+	left: 70px;
+}
+
+#powersupply2 {
+	left: 150px;
+}
+
+#powersupply3 {
+	left: 230px;
+}
+
+#powersupply4 {
+	left: 310px;
+}
+
+.powersupply-button {
+	float: left;
+	position: absolute;
+	color: #000;
+	height: 20px;
+	top: 170px;
+	font-size: 10px;
+	text-indent: -4px;
+	width: 20px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+#powersupply5 {
+	left: 95px;
+}
+
+#powersupply6 {
+	left: 70px;
+}
+
+#powersupply7 {
+	left: 170px;
+}
+
+#powersupply8 {
+	left: 145px;
+}
+
+#powersupply9 {
+	left: 275px;
+}
+
+#powersupply10 {
+	left: 250px;
+}
+
+#powersupply11 {
+	left: 345px;
+}
+
+#powersupply12 {
+	left: 320px;
+}
+
+#powersupply13 {
+	top: 150px;
+	left: 15px;
+	width: 50px;
+	cursor: not-allowed;
+}
+
+#powersupply14 {
+	top: 230px;
+	left: 15px;
+	width: 50px;
+}
+
+#powersupply15 {
+	top: 230px;
+	left: 180px;
+}
+
+#powersupply16 {
+	top: 230px;
+	left: 145px;
+}
+
+#powersupply17 {
+	top: 230px;
+	left: 280px;
+}
+
+#powersupply18 {
+	top: 230px;
+	left: 245px;
+}
+
+.multimeter-button-1 {
+	position: absolute;
+	float: left;
+	color: #000;
+	height: 20px;
+	top: 80px;
+	text-indent: 0;
+	font-size: 10px;
+	width: 40px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+.multimeter-button-2 {
+	position: absolute;
+	float: left;
+	color: #000;
+	height: 20px;
+	top: 100px;
+	text-indent: 0;
+	font-size: 10px;
+	width: 40px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+.multimeter-title {
+	float: left;
+	position: absolute;
+	color: black;
+	top: 10px;
+	left: 80px;
+	font-size: 30px;
+}
+
+#multimeter1_7 {
+	background-color: #fff5eb;
+	color: black;
+	left: 60px;
+	font-size: 15px;
+	top: 5px;
+}
+
+#multimeter1_1 {
+	left: 100px;
+}
+
+#multimeter1_2 {
+	left: 50px;
+}
+
+#multimeter1_4 {
+	top: 250px;
+	left: 30px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+}
+
+#multimeter1_5 {
+	top: 250px;
+	left: 90px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+}
+
+#multimeter1_6 {
+	top: 250px;
+	left: 150px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+}
+
+#multimeter2_7 {
+	background-color: #fff5eb;
+	color: black;
+	left: 60px;
+	font-size: 15px;
+	top: 15px;
+}
+
+#multimeter2_1 {
+	left: 100px;
+}
+
+#multimeter2_2 {
+	left: 50px;
+}
+
+#multimeter2_3 {
+	top: 30px;
+}
+
+#multimeter2_4 {
+	top: 305px;
+	left: 40px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+}
+
+#multimeter2_5 {
+	top: 305px;
+	left: 90px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+}
+
+#multimeter2_6 {
+	top: 305px;
+	left: 140px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+}
+
+#multimeter2_8 {
+	top: 135px;
+	left: 50px;
+	font-size: 1px;
+	text-indent: -4px;
+	width: 20px;
+	background-color: #ccc;
+}
+
+#power_choice_hint {
+	display: inline-block;
+	text-align: center;
+	border-style: solid;
+	padding: 7px;
+}
+
+.buttonInactive {
+	background-color: white;
+}
+
+#addInductance {
+	background-color: #ccc;
+}
+
+#addCapacitance {
+	background-color: #ccc;
+}
+
+#form1 {
+	position: relative;
+	width: 300px;
+	left: 800px;
+}
+
+#form2 {
+	position: relative;
+	width: 300px;
+	top: -115px;
+	left: 0;
+}
+
+#error_message {
+	background-color: palegreen;
+	position: absolute;
+	width: 350px;
+	height: 100px;
+	left: 550px;
+	top: 190px;
+	z-index: 1;
+}
+
+#submitbuttom {
+	width: 30px;
+	border-radius: 5px;
+	background-color: #e7dc8f;
+}
+
+#submitAnswerbuttom {
+	width: 30px;
+	border-radius: 5px;
+	background-color: #e7dc8f;
+}
+
+#clear {
+	position: absolute;
+	background-color: rgb(255 145 145);
+	left: 1200px;
+	top: 700px;
+}
+
+#camera {
+	position: absolute;
+	width: 200px;
+	left: 1200px;
+	top: 110px;
+}

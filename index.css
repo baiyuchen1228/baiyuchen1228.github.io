@@ -1,0 +1,228 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f2f2f2;
+	margin: 0;
+	padding: 0;
+    padding-top: 30px;
+	height: 80rem;
+}
+
+/* 固定頂部導航欄 */
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #2c2c2c;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+    z-index: 1000;
+}
+
+/* 突顯當前頁面 */
+nav a {
+	background-color: #2c2c2c;
+    color: #2c2c2c;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 0 15px;
+}
+
+nav a.active {
+    color: #fff;
+    background-color: #2c2c2c;
+}
+
+header {
+    background-color: #2c2c2c;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+section {
+	padding: 20px;
+	max-width: 800px;
+	margin: 0 auto;
+	min-height: 300px;
+}
+
+footer {
+	background-color: #2c2c2c;
+	color: #fff;
+	text-align: center;
+	padding: 10px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+a:any-link {
+	text-decoration: none;
+	color: #0a66c2;
+}
+
+/* .background {
+    background-color: var(--background);
+    display: grid;
+    place-items: center;
+    height: 100vh;
+} */
+:root {
+	--background: #2c2c2c;
+	--primary-color: white;
+	--secondary-color: #2c2c2c;
+}
+
+.social-media-buttons {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+	list-style: none;
+	padding: 0;
+}
+
+.social-media-buttons li {
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	display: grid;
+	background-color: var(--primary-color);
+	place-items: center;
+	transition: all 0.3s;
+	border: 1px solid var(--primary-color);
+}
+
+.social-media-buttons li a {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	color: var(--secondary-color);
+}
+
+.social-media-buttons li:hover {
+	background-color: var(--secondary-color);
+	border: 1px solid var(--primary-color);
+	border-radius: 8px;
+}
+
+.social-media-buttons li a svg {
+	height: 1.5rem;
+	width: 1.5rem;
+	stroke: var(--secondary-color);
+	stroke-width: 1.75;
+	transition: 0.8s;
+}
+
+.social-media-buttons li:hover svg {
+	stroke: var(--primary-color);
+	transform: rotateY(360deg);
+	stroke-width: 1.75;
+}
+
+#button {
+	display: inline-block;
+	background-color: #666;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	border-radius: 5px;
+	position: fixed;
+	bottom: 10rem;
+	right: 30px;
+	transition:
+		background-color 0.3s,
+		opacity 0.5s,
+		visibility 0.5s;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 1000;
+}
+
+#button::after {
+	content: '\f077';
+
+	/* font-family: FontAwesome; */
+	font-weight: normal;
+	font-style: normal;
+	font-size: 2em;
+	line-height: 50px;
+	color: #fff;
+}
+
+#button:hover {
+	cursor: pointer;
+	background-color: #2c2c2c;
+}
+
+#button:active {
+	background-color: #555;
+}
+
+#button.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+#projects {
+    position: relative;
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+    width: 800px; /* 固定視窗大小 */
+    height: 400px; /* 固定視窗大小 */
+}
+
+.carousel-container {
+    position: relative;
+
+}
+
+.carousel {
+    overflow: hidden;
+}
+
+.carousel-item {
+    display: none;
+    text-align: center;
+    height: 200px; /* 固定視窗大小 */
+    padding: 20px;
+    border: 1px solid #ddd; /* 外框 */
+    border-radius: 10px; /* 圓角 */
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%); /* 陰影 */
+    background-color: #fff;
+    margin: 10px 0;
+}
+
+.carousel-item.active {
+    display: block;
+}
+
+#projects button {
+    background-color: #666; /* 更柔和的顏色 */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#projects button:hover {
+    background-color: #777; /* 懸停時顏色 */
+}
+
+#prev {
+    left: 10px;
+}
+
+#next {
+    right: 10px;
+}
