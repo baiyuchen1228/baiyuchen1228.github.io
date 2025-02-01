@@ -27,14 +27,16 @@ export default antfu(
 		rules: {
 			'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
 			'no-unused-vars': 'off',
-			'unused-imports/no-unused-vars': 'off', // should be 'error'
-			'eqeqeq': 'off', // should be 'error'
 			'no-console': 'off',
 			'no-undef': 'off',
 			'object-curly-newline': 'off',
-			'no-alert': 'off', // should be 'error'
 			'block-scoped-var': 'off',
 			'unicorn/prefer-number-properties': 'off',
+
+			// These should be fixed in the future
+			'unused-imports/no-unused-vars': 'off', // should be 'error'
+			'no-alert': 'off', // should be 'error'
+			'eqeqeq': 'off', // should be 'error'
 			'no-var': 'off', // should be 'error'
 			'vars-on-top': 'off', // should be 'error'
 			'no-redeclare': 'off', // should be 'error'
