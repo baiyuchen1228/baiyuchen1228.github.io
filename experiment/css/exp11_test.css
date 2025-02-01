@@ -563,8 +563,9 @@ div#oscilloscopeScreen {
 	left: 50px;
 	top: 45px;
 	width: 280px;
-	height: 224px;
 	background-image: url('../../images/oscilloscope_screen.jpg');
+	height: 225px;
+	background-color: #ccc;
 }
 
 .generator-text {
@@ -834,15 +835,6 @@ div#oscilloscopeScreen {
 
 .oscilloscope-bg11 {
 	background-image: url('../../images/oscilloscope11.jpg');
-}
-
-div#oscilloscopeScreen {
-	position: absolute;
-	left: 50px;
-	top: 45px;
-	width: 280px;
-	height: 225px;
-	background-color: #ccc;
 }
 
 .buttonInactive {

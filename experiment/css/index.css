@@ -64,6 +64,12 @@ h2 {
 	color: #000;
 }
 
+.articles article a {
+	display: inline-flex;
+	color: var(--primary);
+	text-decoration: none;
+}
+
 .sub-menu a:hover {
 	color: #000;
 	background-color: #e7dc8f;
@@ -104,12 +110,6 @@ h2 {
 	transition: all 0.4s ease-in-out;
 	overflow: hidden;
 	border-radius: 1rem;
-}
-
-.articles article a {
-	display: inline-flex;
-	color: var(--primary);
-	text-decoration: none;
 }
 
 .articles article h2 {

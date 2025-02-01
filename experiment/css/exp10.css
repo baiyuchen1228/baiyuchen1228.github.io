@@ -563,8 +563,9 @@ div#oscilloscopeScreen {
 	left: 50px;
 	top: 45px;
 	width: 280px;
-	height: 224px;
 	background-image: url('../../images/oscilloscope_screen.jpg');
+	height: 225px;
+	background-color: #ccc;
 }
 
 .generator-text {
@@ -836,14 +837,6 @@ div#oscilloscopeScreen {
 	background-image: url('../../images/oscilloscope11.jpg');
 }
 
-div#oscilloscopeScreen {
-	position: absolute;
-	left: 50px;
-	top: 45px;
-	width: 280px;
-	height: 225px;
-	background-color: #ccc;
-}
 
 .buttonInactive {
 	background-color: white;
@@ -856,10 +849,15 @@ div#oscilloscopeScreen {
     background-color: #CCCCCC;
 } */
 #form1 {
-	position: relative;
-	left: 800px;
-
 	/* top: 100px; */
+	padding: 5px;
+	background-color: palegreen;
+	position: absolute;
+	width: 350px;
+	height: 250px;
+	left: 900px;
+	top: 800px;
+	z-index: 1;
 }
 
 #demo_wave1 {
@@ -883,17 +881,6 @@ div#oscilloscopeScreen {
 	width: 350px;
 	height: 250px;
 	left: 600px;
-	top: 800px;
-	z-index: 1;
-}
-
-#form1 {
-	padding: 5px;
-	background-color: palegreen;
-	position: absolute;
-	width: 350px;
-	height: 250px;
-	left: 900px;
 	top: 800px;
 	z-index: 1;
 }

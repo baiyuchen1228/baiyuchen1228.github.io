@@ -28,12 +28,42 @@ jobs:
 
       - name: Run HTML Validation
         run: htmlhint  '**/*.html'
+        continue-on-error: false
+
+      - name: Fix HTML Issues
+        run: htmlhint --fix '**/*.html'
 
       - name: Run CSS Validation
         run: stylelint '**/*.css'
+        continue-on-error: false
+
+      - name: Fix CSS Issues
+        run: stylelint --fix '**/*.css'
 
       - name: Run JavaScript Linting
         run: eslint '**/*.js'
+        continue-on-error: false
+
+      - name: Fix JavaScript Issues
+        run: eslint --fix '**/*.js'
+
+      - name: Commit and Push Fixes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b fix-lint-issues
+          git add .
+          git commit -m 'fix: auto-fix lint issues'
+          git push origin fix-lint-issues
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'fix: auto-fix lint issues'
+          branch: fix-lint-issues
+          title: 'Auto-fix lint issues'
+          body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
