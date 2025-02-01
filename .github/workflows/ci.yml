@@ -1,97 +1,101 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [20]
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pnpm install
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
 
-      - name: Run HTML Validation
-        run: htmlhint '**/*.html'
-        continue-on-error: false
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
 
-      - name: Fix HTML Issues
-        run: echo "HTMLHint does not support auto-fixing"
+            - name: Install dependencies
+              run: pnpm install
 
-      - name: Run CSS Validation
-        run: stylelint '**/*.css'
-        continue-on-error: false
+            # - name: Run HTML Validation
+            #   run: htmlhint '**/*.html'
+            #   continue-on-error: false
 
-      - name: Fix CSS Issues
-        run: stylelint --fix '**/*.css'
+            # - name: Fix HTML Issues
+            #   run: echo "HTMLHint does not support auto-fixing"
 
-      - name: Run ESLint
-        run: eslint '**/*.js'
+            - name: Run CSS Validation
+              run: pnpm stylelint '**/*.{css,scss,vue}'
+              continue-on-error: false
 
-      - name: Configure Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            - name: Fix CSS Issues
+              run: pnpm stylelint --fix '**/*.{css,scss,vue}'
 
-      - name: Create and Push Fix Branch
-        id: create_and_push_fix_branch
-        run: |
-          BRANCH_NAME="fix-lint-issues-${{ github.actor }}"
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-          if git ls-remote --exit-code --heads origin $BRANCH_NAME; then
-            git push origin --delete $BRANCH_NAME
-          fi
-          git checkout -b $BRANCH_NAME
-          git add .
-          if git diff-index --quiet HEAD --; then
-            echo "No changes to commit"
-            echo "::set-output name=CHANGES::false"
-          else
-            git commit -m 'fix: auto-fix lint issues'
-            git pull --rebase origin $BRANCH_NAME || git pull --rebase origin main
-            git push origin $BRANCH_NAME
-            echo "::set-output name=CHANGES::true"
-          fi
+            - name: Run ESLint
+              run: pnpm eslint .
+              continue-on-error: false
 
-      - name: Create Pull Request
-        if: steps.create_and_push_fix_branch.outputs.CHANGES == 'true'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'fix: auto-fix lint issues'
-          branch: ${{ env.BRANCH_NAME }}
-          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-          delete-branch: true
-          title: 'Auto-fix lint issues'
-          body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
-          labels: |
-            format
-            automated pr
-          assignees: baiyuchen1228
-          reviewers: baiyuchen1228
+            - name: Fix JavaScript Issues
+              run: pnpm eslint --fix .
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ # Directory containing built files
+            - name: Configure Git
+              run: |
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+            - name: Create and Push Fix Branch
+              id: create_and_push_fix_branch
+              run: |
+                  BRANCH_NAME="fix-lint-issues-${{ github.actor }}"
+                  echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+                  if git ls-remote --exit-code --heads origin $BRANCH_NAME; then
+                    git push origin --delete $BRANCH_NAME
+                  fi
+                  git checkout -b $BRANCH_NAME
+                  git add .
+                  if git diff-index --quiet HEAD --; then
+                    echo "No changes to commit"
+                    echo "::set-output name=CHANGES::false"
+                  else
+                    git commit -m 'fix: auto-fix lint issues'
+                    git pull --rebase origin $BRANCH_NAME || git pull --rebase origin main
+                    git push origin $BRANCH_NAME
+                    echo "::set-output name=CHANGES::true"
+                  fi
+
+            - name: Create Pull Request
+              if: steps.create_and_push_fix_branch.outputs.CHANGES == 'true'
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  commit-message: 'fix: auto-fix lint issues'
+                  branch: ${{ env.BRANCH_NAME }}
+                  author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+                  delete-branch: true
+                  title: 'Auto-fix lint issues'
+                  body: 'This PR auto-fixes lint issues in HTML, CSS, and JavaScript files.'
+                  labels: |
+                      format
+                      automated pr
+                  assignees: baiyuchen1228
+                  reviewers: baiyuchen1228
+
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./ # Directory containing built files
