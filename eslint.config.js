@@ -22,7 +22,7 @@ export default antfu(
 		// Disable jsonc and yaml support
 		jsonc: false,
 		yaml: false,
-		ignores: ['experiment/module/*'],
+		ignores: ['experiment/module/*', 'README.md', 'experiment/README.md', 'experiment/css/jquery-ui.css'],
 
 		rules: {
 			'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
