@@ -66,9 +66,11 @@ exp11/
 目前已建立：
 
 - `tests/wave-generator.characterization.test.mjs`
+- `tests/wave-generator-module-compat.test.mjs`
 - `tests/menu.characterization.test.mjs`
 - `tests/progress-bar.characterization.test.mjs`
 - `tests/oscillator.characterization.test.mjs`
+- `tests/oscillator-module-compat.test.mjs`
 - `tests/experiments-wiring.characterization.test.mjs`
 - `tests/duplication-groups.characterization.test.mjs`
 
