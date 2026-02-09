@@ -226,6 +226,7 @@ globalThis.__rlcState = {
 	get vertical_ch1_input_on() { return vertical_ch1_input_on; },
 	get vertical_ch2_input_on() { return vertical_ch2_input_on; },
 	set edge_list(v) { edge_list = v; },
+	get wg() { return wg; },
 	get Edge() { return Edge; }
 };
 `;
@@ -678,5 +679,82 @@ describe('rlc-ac utilities characterization', () => {
 		expect(fullGraphStub).toHaveBeenCalledTimes(2);
 		expect(fullGraphStub).toHaveBeenNthCalledWith(1, 0, 1, true);
 		expect(fullGraphStub).toHaveBeenNthCalledWith(2, 1, 1, true);
+	});
+
+	it('getFullGraphVoltageVoltage builds filtered graph and marks voltmeter edge id', () => {
+		ctx.getWires = () => [{ node1: 20, node2: 21 }];
+		ctx.getAlligator = () => [
+			{ node1: 4, node2: 30 }, // filtered out when meter_idx = 0
+			{ node1: 2, node2: 31 },
+		];
+		ctx.getResistance = () => [{ node1: 21, node2: 22, val: createComplex(10, 0) }];
+		ctx.getCapacitances = () => [{ node1: 22, node2: 23, val: createComplex(0, -1) }];
+		ctx.getInductances = () => [{ node1: 23, node2: 24, val: createComplex(0, 1) }];
+
+		const out = ctx.getFullGraphVoltageVoltage(0, 10, true);
+		expect(out.voltage_edgeid).toBe(6);
+		expect(out.graph[4]).toEqual([]);
+		expect(out.graph[2].some((e) => e.type === 'voltmeter' && e.go_next(2) === 3)).toBe(true);
+		expect(out.graph[20].some((e) => e.type === 'wire' && e.go_next(20) === 21)).toBe(true);
+		expect(out.graph[2].some((e) => e.type === 'wire' && e.go_next(2) === 31)).toBe(true);
+	});
+
+	it('getFullGraphVoltageVoltage adds legacy short wires when checkUser is false', () => {
+		ctx.getWires = () => [];
+		ctx.getAlligator = () => [{ node1: 4, node2: 33 }];
+		ctx.getResistance = () => [];
+		ctx.getCapacitances = () => [];
+		ctx.getInductances = () => [];
+
+		const out = ctx.getFullGraphVoltageVoltage(1, 10, false);
+		expect(out.graph[3].some((e) => e.type === 'wire' && e.go_next(3) === 5)).toBe(true);
+		expect(out.graph[1].some((e) => e.type === 'wire' && e.go_next(1) === 5)).toBe(true);
+		expect(out.graph[4].some((e) => e.type === 'wire' && e.go_next(4) === 33)).toBe(true);
+		expect(out.graph[4].some((e) => e.type === 'voltmeter' && e.go_next(4) === 5)).toBe(true);
+	});
+
+	it('checkCircuit computes meter voltages from solved edge currents when power is on', () => {
+		ctx.__rlcState.wg.power = true;
+		ctx.__rlcState.edge_list = [
+			{},
+			{},
+			{ ohm: createComplex(5, 0) },
+			{ ohm: createComplex(7, 0) },
+		];
+		const eqSpy = vi.fn((meterIdx) => {
+			if (meterIdx === 0) {
+				return {
+					FullGraph: { voltage_edgeid: 2 },
+					ans: [createComplex(0, 0), createComplex(0, 0), createComplex(2, 0)],
+				};
+			}
+			return {
+				FullGraph: { voltage_edgeid: 3 },
+				ans: [createComplex(0, 0), createComplex(0, 0), createComplex(0, 0), createComplex(3, 0)],
+			};
+		});
+		ctx.equationVoltageVoltage = eqSpy;
+
+		const res = ctx.checkCircuit(99);
+		expect(res.voltage1).toMatchObject({ re: 10, im: 0 });
+		expect(res.voltage2).toMatchObject({ re: 21, im: 0 });
+		expect(eqSpy).toHaveBeenNthCalledWith(1, 0, 99);
+		expect(eqSpy).toHaveBeenNthCalledWith(2, 1, 99);
+	});
+
+	it('checkCircuit returns zero voltages and reports power-off error', () => {
+		ctx.__rlcState.wg.power = false;
+		ctx.__rlcState.edge_list = [{ ohm: createComplex(1, 0) }];
+		ctx.equationVoltageVoltage = () => ({
+			FullGraph: { voltage_edgeid: 0 },
+			ans: [createComplex(9, 0)],
+		});
+		const showSpy = vi.fn();
+		ctx.show_error = showSpy;
+
+		const res = ctx.checkCircuit(1);
+		expect(res.voltage1).toMatchObject({ re: 0, im: 0 });
+		expect(res.voltage2).toMatchObject({ re: 0, im: 0 });
+		expect(showSpy).toHaveBeenCalledWith('波型產生器的 power 沒有打開');
 	});
 });
