@@ -79,15 +79,48 @@ h2 {
 	text-decoration: none;
 }
 
+.read-more-link {
+	align-items: center;
+	gap: 0.25rem;
+	font-weight: 600;
+	color: #1f5fbf;
+	border-bottom: 1px solid transparent;
+	transition: color 160ms ease, border-color 160ms ease;
+}
+
+.read-more-link::after {
+	content: "→";
+	font-size: 0.9em;
+	line-height: 1;
+	transition: transform 160ms ease;
+}
+
+.read-more-link:hover {
+	color: #174995;
+	border-bottom-color: #174995;
+}
+
+.read-more-link:hover::after {
+	transform: translateX(2px);
+}
+
 .sub-menu a:hover {
 	color: #000;
 	background-color: #e7dc8f;
 	text-decoration: none;
 }
 .sub-menu a:focus-visible,
-.articles article a:focus-visible {
+.articles article a:focus-visible,
+.read-more-link:focus-visible {
 	outline: 2px solid #8a6b3f;
 	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.read-more-link,
+	.read-more-link::after {
+		transition: none;
+	}
 }
 
 /* #camera{
