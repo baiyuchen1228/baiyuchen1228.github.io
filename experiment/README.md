@@ -58,3 +58,18 @@ exp11/
 
 - `module/`: 第三方函式庫
 - `images/`: 圖片資源
+
+# Characterization tests
+
+重構前先用行為鎖定測試（characterization tests）固定既有 JS 行為。
+
+目前已建立：
+
+- `tests/wave-generator.characterization.test.mjs`
+
+安裝與執行（在 `experiment/` 目錄）：
+
+```bash
+npm install
+npm test
+```
