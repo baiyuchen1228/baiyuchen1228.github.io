@@ -2,153 +2,191 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Bard Pai's Personal Website" />
+		<meta name="description" content="Bard Pai's personal website" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Bard Pai's Personal Website</title>
+		<title>Bard Pai | Software Engineer</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="./index.css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-		<link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet" />
 	</head>
 	<body>
-		<header>
-			<h1>Bard Pai</h1>
-			<p>Software Engineer</p>
+		<div class="noise-overlay" aria-hidden="true"></div>
+		<header class="site-header" id="top">
+			<nav class="main-nav" aria-label="Main navigation">
+				<a class="brand" href="#top">Bard Pai</a>
+				<div class="nav-links">
+					<a href="#about" class="active">About</a>
+					<a href="#projects">Projects</a>
+					<a href="#contact">Contact</a>
+					<a href="./CV/Transcript.html">Transcript</a>
+					<a href="./CV/cv.html">Resume</a>
+				</div>
+			</nav>
+
+			<section class="hero reveal" id="hero">
+				<p class="eyebrow">Software Engineer</p>
+				<h1>
+					Building reliable products with
+					<span>algorithms, systems, and frontend craft.</span>
+				</h1>
+				<p class="hero-copy">
+					I'm Bard Pai, currently pursuing an M.S. in Data Science &amp; Engineering at National Yang Ming Chiao Tung University.
+					I focus on practical software that performs well in production.
+				</p>
+				<div class="hero-actions">
+					<a class="btn btn-primary" href="#projects">View Projects</a>
+					<a class="btn btn-secondary" href="https://github.com/baiyuchen1228" target="_blank" rel="noopener noreferrer">GitHub</a>
+				</div>
+				<ul class="hero-metrics" aria-label="Highlights">
+					<li><strong>10+</strong> camera APIs delivered</li>
+					<li><strong>99%</strong> AlphaGo-variant win rate</li>
+					<li><strong>300+</strong> students served yearly</li>
+				</ul>
+			</section>
 		</header>
 
-		<!-- Back to top button -->
-		<a id="button"></a>
-
-		<nav>
-			<a href="#about" class="active">About</a>
-			<a href="#projects">Projects</a>
-			<a href="#contact">Contact</a>
-			<a href="./CV/Transcript.html">Transcript</a>
-			<a href="./CV/cv.html">Resume</a>
-		</nav>
-
-		<section id="about">
-			<h2>About Me</h2>
-			<p>
-				I'm <strong>Bard Pai</strong>, a software engineer pursuing an M.S. in Data Science & Engineering at <strong>National Yang Ming Chiao Tung University</strong>, Taiwan. Backed by a B.S. in Communication Engineering from National Chung Cheng University, I am researching approximation algorithms.
-			  </p>
-			  
-			  <p>
-				I've worked as a full-stack engineer at Synology, building 10+ camera APIs in <strong>C++</strong> and a Vue-based control UI for the NAS surveillance suite, and helped Academia Sinica push an AlphaGo variant to a 99% win rate to get Computer Olympiad Gomoku 4th. Awards include an <strong>ICPC 2021 Asia Taipei Bronze medal</strong>, 24th place out of 2,300+ in the Collegiate Programming Exam, and 70 % accuracy in the AI CUP Orchid Identification challenge. From network-algorithm tuning to embedded-system projects, I work mainly with Python, C/C++, Vue, and Git—feel free to connect on <a href="https://www.linkedin.com/in/baiyuchen1228/" target="_blank">LinkedIn</a> or explore my <a href="https://github.com/baiyuchen1228" target="_blank">GitHub</a>.
-			  </p>
-		</section>
-
-		<section id="projects">
-			<h2>Projects</h2>
-			<div class="carousel-container">
-				<button id="prev">Previous</button>
-				<div class="carousel">
-					<div class="carousel-item">
-						<h3>Website for education</h3>
-						<a href="./experiment/index.html" target="_blank">Physics Simulation Experiments Website</a>
-						<p>Skills: Frontend</p>
-						<p>• Designed a website to display physics experiments by HTML, CSS and JavaScript<br>
-							• Used by 300+ students yearly</p>
+		<main>
+			<section id="about" class="content-section reveal">
+				<div class="section-heading">
+					<p>About</p>
+					<h2>Technical depth with execution speed</h2>
+				</div>
+				<div class="about-grid">
+					<div class="about-copy">
+						<p>
+							I earned a B.S. in Communication Engineering from National Chung Cheng University and now research approximation algorithms.
+							At Synology, I built backend APIs in C++ and developed a Vue-based NAS surveillance control UI.
+						</p>
+						<p>
+							I also contributed to a Computer Olympiad Gomoku team at Academia Sinica that reached 4th place with a 99% win rate strategy,
+							and I received an ICPC 2021 Asia Taipei bronze medal.
+						</p>
 					</div>
-					<div class="carousel-item">
-						<h3>Microprocessor</h3>
-						<a href="https://www.youtube.com/watch?v=rEnkRiYlOn0&t=17s" target="_blank">Infrared Transmission with Hamming code</a>
-						<p>Skills: Embedded system</p>
-						<p>• Achieved 100% accuracy for transmitting 10K+ characters/s within planned time by C, MCU</p>
+					<div class="about-cards">
+						<article>
+							<h3>Core Stack</h3>
+							<p>Python, C/C++, TypeScript, Vue, Git</p>
+						</article>
+						<article>
+							<h3>Focus Areas</h3>
+							<p>Algorithm design, system performance, product engineering</p>
+						</article>
+						<article>
+							<h3>Recent Achievement</h3>
+							<p>24th place of 2,300+ in the Collegiate Programming Exam</p>
+						</article>
 					</div>
 				</div>
-				<button id="next">Next</button>
-			</div>
-		</section>
+			</section>
 
+			<section id="projects" class="content-section reveal">
+				<div class="section-heading">
+					<p>Projects</p>
+					<h2>Selected work</h2>
+				</div>
+				<div class="project-grid">
+					<article class="project-card">
+						<h3>Physics Simulation Experiments Website</h3>
+						<p class="project-tags">Frontend, Education</p>
+						<p>Designed and shipped an interactive physics experiment platform used by 300+ students each year.</p>
+						<a href="./experiment/index.html" target="_blank" rel="noopener noreferrer">Open project</a>
+					</article>
+					<article class="project-card">
+						<h3>Infrared Transmission with Hamming Code</h3>
+						<p class="project-tags">Embedded Systems, C, MCU</p>
+						<p>Achieved 100% transmission accuracy for 10K+ characters per second within planned timeline.</p>
+						<a href="https://www.youtube.com/watch?v=rEnkRiYlOn0&t=17s" target="_blank" rel="noopener noreferrer">Watch demo</a>
+					</article>
+					<article class="project-card">
+						<h3>Open Source and Competitive Programming</h3>
+						<p class="project-tags">Algorithms, Engineering</p>
+						<p>Explore additional repositories, coding practice, and project experiments across systems and web development.</p>
+						<a href="https://github.com/baiyuchen1228" target="_blank" rel="noopener noreferrer">Visit GitHub</a>
+					</article>
+				</div>
+			</section>
 
-
-		<section id="contact">
-			<h2>Contact Me</h2>
-			<p>Email: baiyuchen1228@gmail.com</p>
-			<p>Phone: (+886) 966766975</p>
-		</section>
-
-		<footer>
-			<div class="background">
-				<ul class="social-media-buttons">
-					<li>
-						<a href="https://github.com/baiyuchen1228" title="github">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-								<path
-									d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-								/>
+			<section id="contact" class="content-section reveal">
+				<div class="section-heading">
+					<p>Contact</p>
+					<h2>Let's connect</h2>
+				</div>
+				<div class="contact-panel">
+					<p><span>Email</span> <a href="mailto:baiyuchen1228@gmail.com">baiyuchen1228@gmail.com</a></p>
+					<p><span>Phone</span> (+886) 966766975</p>
+					<div class="social-media-buttons">
+						<a href="https://github.com/baiyuchen1228" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.38-1.33-1.75-1.33-1.75-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.48 11.48 0 0 1 12 5.8c1.02.01 2.05.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12Z" />
 							</svg>
 						</a>
-					</li>
-					<li>
-						<a href="https://www.linkedin.com/in/baiyuchen1228/" title="Linkedin">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path
-									d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2
-										2v7h-4v-7a6 6 0 0 1 6-6z"
-								/>
-								<rect x="2" y="9" width="4" height="12" />
-								#
-								<circle cx="4" cy="4" r="2" />
+						<a href="https://www.linkedin.com/in/baiyuchen1228/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5Zm.02 6.5H2V22h3V10ZM9 10H6v12h3v-6.4c0-3.56 4-3.85 4 0V22h3v-7.5c0-5.84-6-5.63-7-2.76V10Z" />
 							</svg>
 						</a>
-					</li>
-				</ul>
-			</div>
-			<p>&copy; 2024 Bard Pai</p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<p>&copy; <span id="year"></span> Bard Pai. All rights reserved.</p>
 		</footer>
+
+		<button id="backToTop" aria-label="Back to top">Top</button>
+
+		<script>
+			document.getElementById('year').textContent = String(new Date().getFullYear());
+
+			const backToTop = document.getElementById('backToTop');
+			window.addEventListener('scroll', function () {
+				if (window.scrollY > 360) {
+					backToTop.classList.add('show');
+				} else {
+					backToTop.classList.remove('show');
+				}
+			});
+
+			backToTop.addEventListener('click', function () {
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+
+			const sections = document.querySelectorAll('main section[id]');
+			const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (!entry.isIntersecting) {
+							return;
+						}
+						navLinks.forEach((link) => {
+							link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+						});
+					});
+				},
+				{ threshold: 0.35 }
+			);
+			sections.forEach((section) => observer.observe(section));
+
+			const revealItems = document.querySelectorAll('.reveal');
+			const revealObserver = new IntersectionObserver(
+				(entries, obs) => {
+					entries.forEach((entry) => {
+						if (!entry.isIntersecting) {
+							return;
+						}
+						entry.target.classList.add('revealed');
+						obs.unobserve(entry.target);
+					});
+				},
+				{ threshold: 0.2 }
+			);
+			revealItems.forEach((item, idx) => {
+				item.style.transitionDelay = (idx * 70).toString() + 'ms';
+				revealObserver.observe(item);
+			});
+		</script>
 	</body>
-	<script>
-		// project carousel
-		document.addEventListener("DOMContentLoaded", function() {
-			const items = document.querySelectorAll('.carousel-item');
-			let currentIndex = 0;
-
-			function showItem(index) {
-				items[currentIndex].classList.remove('active');
-				currentIndex = index;
-				items[currentIndex].classList.add('active');
-			}
-
-			document.getElementById('prev').addEventListener('click', function() {
-				showItem((currentIndex - 1 + items.length) % items.length);
-			});
-
-			document.getElementById('next').addEventListener('click', function() {
-				showItem((currentIndex + 1) % items.length);
-			});
-
-			// Initialize the first item as active
-			items[currentIndex].classList.add('active');
-		});
-
-
-		// top button
-		document.addEventListener("DOMContentLoaded", function() {
-			const links = document.querySelectorAll("nav a");
-
-			links.forEach(link => {
-				link.addEventListener("click", function() {
-					links.forEach(l => l.classList.remove("active"));
-					this.classList.add("active");
-				});
-			});
-		});
-
-
-		const btn = document.getElementById('button');
-
-		window.addEventListener('scroll', function () {
-			if (window.scrollY > 300) {
-				btn.classList.add('show');
-			} else {
-				btn.classList.remove('show');
-			}
-		});
-
-		btn.addEventListener('click', function (e) {
-			e.preventDefault();
-			window.scrollTo({ top: 0, behavior: 'smooth' });
-		});
-	</script>
 </html>
