@@ -4,3 +4,6 @@
 /experiment/node_modules/
 /experiment/.npm-cache/
 /experiment/coverage/
+
+# AI
+*/.codex/
