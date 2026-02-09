@@ -61,10 +61,44 @@
 		return true;
 	}
 
+	function setErrorMessage(selector, message, append = false) {
+		const node = global.document.querySelector(selector);
+		if (!node) {
+			return;
+		}
+		if (append) {
+			node.innerHTML = `${node.innerHTML}<br>${message}`;
+			return;
+		}
+		node.innerHTML = message;
+	}
+
+	function pow(a, x) {
+		let tmp = 1;
+		if (x > 0) {
+			for (let i = 0; i < x; i += 1) {
+				tmp *= a;
+			}
+		} else {
+			x *= -1;
+			for (let i = 0; i < x; i += 1) {
+				tmp /= a;
+			}
+		}
+		return tmp;
+	}
+
+	function randomInt(max) {
+		return Math.floor(Math.random() * max);
+	}
+
 	global.RlcBootstrap = {
 		handleKeyPress,
 		runReload,
 		makeBeforeUnloadHandler,
 		runStart,
+		setErrorMessage,
+		pow,
+		randomInt,
 	};
 }(globalThis));

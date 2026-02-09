@@ -2032,23 +2032,11 @@ function start() {
 }
 
 function show_error(s) {
-	tmp = document.querySelector('#error_message_content').innerHTML;
-	document.querySelector('#error_message_content').innerHTML = `${tmp}<br>${s}`;
+	RlcBootstrap.setErrorMessage('#error_message_content', s, true);
 }
 
 function pow(a, x) {
-	let tmp = 1;
-	if (x > 0) {
-		for (let i = 0; i < x; i++) {
-			tmp *= a;
-		}
-	} else {
-		x *= -1;
-		for (let i = 0; i < x; i++) {
-			tmp /= a;
-		}
-	}
-	return tmp;
+	return RlcBootstrap.pow(a, x);
 }
 
 // unused function
@@ -2432,5 +2420,5 @@ function handleMediaStreamError(error) {
 }
 
 function getRandomInteger(max) {
-	return Math.floor(Math.random() * max);
+	return RlcBootstrap.randomInt(max);
 }

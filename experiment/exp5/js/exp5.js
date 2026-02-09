@@ -2312,5 +2312,5 @@ function start() {
 	});
 }
 function show_error(s) {
-	document.querySelector('#error_message_content').innerHTML = s;
+	RlcBootstrap.setErrorMessage('#error_message_content', s);
 }
