@@ -125,6 +125,13 @@ function createJqMock() {
 }
 
 function createDocumentMock() {
+	const nodes = new Map();
+	const getNode = (selector) => {
+		if (!nodes.has(selector)) {
+			nodes.set(selector, { innerHTML: '' });
+		}
+		return nodes.get(selector);
+	};
 	const node = {
 		style: {},
 		appendChild() {},
@@ -132,8 +139,8 @@ function createDocumentMock() {
 	};
 	return {
 		onmousemove: null,
-		querySelector() {
-			return { innerHTML: '' };
+		querySelector(selector) {
+			return getNode(selector);
 		},
 		getElementById() {
 			return node;
@@ -153,11 +160,24 @@ function createDocumentMock() {
 
 function loadRlcAc() {
 	const $ = createJqMock();
+	const valueStore = new Map();
+	$.setValue = (selector, value) => {
+		valueStore.set(selector, value);
+	};
+	const wrapped$ = (selector) => {
+		const out = $(selector);
+		if (out && typeof out === 'object' && 'selector' in out && typeof selector === 'string') {
+			out[0] = { value: valueStore.get(selector) ?? '' };
+		}
+		return out;
+	};
+	Object.assign(wrapped$, $);
+
 	const context = {
 		document: createDocumentMock(),
 		window: {},
 		jQuery: { inArray: () => -1 },
-		$: $,
+		$: wrapped$,
 		Chart: { getChart: () => undefined },
 		WaveGenerator: class {},
 		math: {
@@ -177,6 +197,7 @@ function loadRlcAc() {
 			set_vertical_v(ch, value) { this.lastVerticalV = [ch, value]; }
 			set_refernece(value) { this.reference = value; }
 			set_level(v) { this.level = v; }
+			set_SWP(v) { this._SWP = v; }
 			set_vertical_offset(ch, value) {
 				this.vertical_offset[ch] = value;
 			}
@@ -185,10 +206,17 @@ function loadRlcAc() {
 			set_vertical_AC_GND_DC(ch, mode) { this.verticalMode = [ch, mode]; }
 			set_show_mode(mode) { this.showMode = mode; }
 			set_slope(value) { this.slope = value; }
-			set_init() { this.init = !this.init; }
+			set_init(value) {
+				if (typeof value === 'number') {
+					this.init = value !== 0;
+					return;
+				}
+				this.init = !this.init;
+			}
 			draw() { this.drawCount += 1; }
 		},
 		navigator: {},
+		confirm: () => true,
 		alert: () => {},
 		check: () => {},
 	};
@@ -207,8 +235,11 @@ globalThis.__rlcState = {
 	get AlligatorY1() { return AlligatorY1; },
 	get colorNo() { return colorNo; },
 	set resistanceOn(v) { resistanceOn = v; },
+	get resistanceOn() { return resistanceOn; },
 	set inductanceOn(v) { inductanceOn = v; },
+	get inductanceOn() { return inductanceOn; },
 	set capacitanceOn(v) { capacitanceOn = v; },
+	get capacitanceOn() { return capacitanceOn; },
 	get drawResistance() { return drawResistance; },
 	set drawResistance(v) { drawResistance = v; },
 	get drawWire() { return drawWire; },
@@ -229,15 +260,17 @@ globalThis.__rlcState = {
 	set edge_list(v) { edge_list = v; },
 	get wg() { return wg; },
 	set startbool(v) { startbool = v; },
+	get startbool() { return startbool; },
 	get linestack() { return linestack; },
 	set linestack(v) { linestack = v; },
 	get pointarray() { return pointarray; },
 	set pointarray(v) { pointarray = v; },
+	get mediaStreamConstraints() { return mediaStreamConstraints; },
 	get Edge() { return Edge; }
 };
 `;
 	const ctx = loadLegacyScript(scriptPath, context, postlude);
-	return { ctx, $ };
+	return { ctx, $: wrapped$ };
 }
 
 describe('rlc-ac utilities characterization', () => {
@@ -381,6 +414,13 @@ describe('rlc-ac utilities characterization', () => {
 		expect(ctx.__rlcState.osi.reference).toBe('CH2');
 	});
 
+	it('vertical_ch1_input uses bg00->bg10 path when ch2 input is off', () => {
+		ctx.vertical_ch1_input();
+		expect(ctx.__rlcState.vertical_ch1_input_on).toBe(1);
+		expect($.calls.some((c) => c.fn === 'removeClass' && c.value === 'oscilloscope-bg00')).toBe(true);
+		expect($.calls.some((c) => c.fn === 'addClass' && c.value === 'oscilloscope-bg10')).toBe(true);
+	});
+
 	it('oscilloscope init and SWP controls enforce boundaries and snapping', () => {
 		ctx.oscillosocope_init();
 		expect(ctx.__rlcState.osi.init).toBe(true);
@@ -474,6 +514,13 @@ describe('rlc-ac utilities characterization', () => {
 		expect(ctx.__rlcState.osi.time_offset).toBe(-20);
 		ctx.add_horizonal_position();
 		expect(ctx.__rlcState.osi.time_offset).toBe(0);
+	});
+
+	it('vertical_ch2_input uses bg00->bg01 path when ch1 input is still off', () => {
+		ctx.vertical_ch2_input();
+		expect(ctx.__rlcState.vertical_ch2_input_on).toBe(1);
+		expect($.calls.some((c) => c.fn === 'removeClass' && c.value === 'oscilloscope-bg00')).toBe(true);
+		expect($.calls.some((c) => c.fn === 'addClass' && c.value === 'oscilloscope-bg01')).toBe(true);
 	});
 
 	it('placeholder trigger helpers still call alert with legacy messages', () => {
@@ -799,5 +846,144 @@ describe('rlc-ac utilities characterization', () => {
 		ctx.handleMediaStreamError(err);
 		expect(logSpy).toHaveBeenCalledWith('navigator.getUserMedia error: ', err);
 		logSpy.mockRestore();
+	});
+
+	it('vertical drawline 2/3 helpers update anchors and delete targets', () => {
+		ctx.drawDashedLine2 = () => 'mousemove-handler';
+		ctx.__rlcState.drawAlligator = 1;
+		ctx.__rlcState.deletemode = 1;
+
+		ctx.vertical_drawline2();
+		expect(ctx.__rlcState.colorNo).toBe(6);
+		expect(ctx.__rlcState.AlligatorX1).toBe(1070);
+		expect(ctx.__rlcState.AlligatorY1).toBe(530);
+		expect(ctx.document.onmousemove).toBe('mousemove-handler');
+		expect(ctx.__rlcState.delALLalligator).toEqual([1070, 530]);
+
+		ctx.vertical_drawline3();
+		expect(ctx.__rlcState.colorNo).toBe(0);
+		expect(ctx.__rlcState.AlligatorX1).toBe(1350);
+		expect(ctx.__rlcState.AlligatorY1).toBe(530);
+		expect(ctx.__rlcState.delALLalligator).toEqual([1350, 530]);
+	});
+
+	it('vertical_drawline1 sets first oscilloscope anchor and delete target', () => {
+		ctx.drawDashedLine2 = () => 'mousemove-handler';
+		ctx.__rlcState.drawAlligator = 1;
+		ctx.__rlcState.deletemode = 1;
+		ctx.vertical_drawline1();
+		expect(ctx.__rlcState.colorNo).toBe(0);
+		expect(ctx.__rlcState.AlligatorX1).toBe(1020);
+		expect(ctx.__rlcState.AlligatorY1).toBe(530);
+		expect(ctx.document.onmousemove).toBe('mousemove-handler');
+		expect(ctx.__rlcState.delALLalligator).toEqual([1020, 530]);
+	});
+
+	it('minus_horizonal_SWP decreases value when above threshold', () => {
+		ctx.__rlcState.osi._SWP = 1;
+		const beforeDraw = ctx.__rlcState.osi.drawCount;
+		ctx.minus_horizonal_SWP();
+		expect(ctx.__rlcState.osi._SWP).toBeCloseTo(0.96, 12);
+		expect(ctx.__rlcState.osi.drawCount).toBe(beforeDraw + 1);
+	});
+
+	it('minus_horizonal_SWP returns early when below threshold', () => {
+		ctx.__rlcState.osi._SWP = 0.79;
+		const beforeDraw = ctx.__rlcState.osi.drawCount;
+		ctx.minus_horizonal_SWP();
+		expect(ctx.__rlcState.osi._SWP).toBe(0.79);
+		expect(ctx.__rlcState.osi.drawCount).toBe(beforeDraw);
+	});
+
+	it('minus_horizonal_SWP guard also holds at very small values', () => {
+		ctx.__rlcState.osi._SWP = 0;
+		const beforeDraw = ctx.__rlcState.osi.drawCount;
+		ctx.minus_horizonal_SWP();
+		expect(ctx.__rlcState.osi._SWP).toBe(0);
+		expect(ctx.__rlcState.osi.drawCount).toBe(beforeDraw);
+	});
+
+	it('undo handles resistance/inductance/capacitance/alligator variants', () => {
+		const runUndo = (stackValue) => {
+			ctx.__rlcState.pointarray = [[1, 1], [2, 2]];
+			ctx.__rlcState.linestack = [stackValue];
+			ctx.undo();
+			expect(ctx.__rlcState.linestack).toEqual([]);
+			expect(ctx.__rlcState.pointarray).toEqual([]);
+		};
+
+		runUndo('resistance01');
+		expect(ctx.__rlcState.resistanceOn).toBe(1);
+
+		runUndo('inductance01');
+		expect(ctx.__rlcState.inductanceOn).toBe(1);
+
+		runUndo('capacitance01');
+		expect(ctx.__rlcState.capacitanceOn).toBe(1);
+
+		runUndo('aa01');
+		expect(ctx.__rlcState.osi.init).toBe(false);
+		expect(ctx.__rlcState.delALLalligator).toBe(null);
+	});
+
+	it('KeyPress routes keyboard shortcuts to legacy actions', () => {
+		const undoSpy = vi.fn();
+		ctx.undo = undoSpy;
+		ctx.KeyPress({ keyCode: 90, ctrlKey: true });
+		expect(undoSpy).toHaveBeenCalledTimes(1);
+
+		ctx.KeyPress({ keyCode: 65, ctrlKey: false });
+		expect(ctx.__rlcState.drawAlligator).toBe(1);
+
+		ctx.KeyPress({ keyCode: 68, ctrlKey: false });
+		expect(ctx.__rlcState.deletemode).toBe(1);
+	});
+
+	it('reload aborts when confirm is false and calls undo 100 times when true', () => {
+		const undoSpy = vi.fn();
+		ctx.undo = undoSpy;
+		ctx.confirm = () => false;
+		ctx.reload();
+		expect(undoSpy).toHaveBeenCalledTimes(0);
+
+		ctx.confirm = () => true;
+		ctx.reload();
+		expect(undoSpy).toHaveBeenCalledTimes(100);
+	});
+
+	it('onbeforeunload delegates to confirm prompt', () => {
+		const confirmSpy = vi.fn(() => true);
+		ctx.confirm = confirmSpy;
+		expect(ctx.window.onbeforeunload()).toBe(true);
+		expect(confirmSpy).toHaveBeenCalledWith('確定要離開?');
+	});
+
+	it('start validates id and on success initializes state/UI then calls check', () => {
+		const alertSpy = vi.fn();
+		ctx.alert = alertSpy;
+		$.setValue('#id1', 'oops');
+		ctx.start();
+		expect(alertSpy).toHaveBeenCalledTimes(1);
+		expect(ctx.__rlcState.startbool).toBe(false);
+
+		ctx.alert = () => {};
+		ctx.getRandomInteger = () => 5;
+		const checkSpy = vi.fn();
+		ctx.check = checkSpy;
+		$.setValue('#id1', '12345678');
+		$.setValue('#name1', 'Alice');
+		$.setValue('#class1', 'EE-1');
+		ctx.start();
+		expect(ctx.__rlcState.startbool).toBe(true);
+		expect(ctx.__rlcState.osi._SWP).toBeCloseTo(1, 12);
+		expect(checkSpy).toHaveBeenCalledTimes(1);
+		expect($.calls.some((c) => c.fn === 'css' && c.prop === 'display' && c.value === 'none')).toBe(true);
+		expect($.calls.some((c) => c.fn === 'text' && typeof c.value === 'string' && c.value.includes('/'))).toBe(true);
+	});
+
+	it('show_error appends message content into error container', () => {
+		ctx.document.querySelector('#error_message_content').innerHTML = 'old';
+		ctx.show_error('new-msg');
+		expect(ctx.document.querySelector('#error_message_content').innerHTML).toBe('old<br>new-msg');
 	});
 });
