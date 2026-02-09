@@ -1,6 +1,8 @@
 body {
 	background-color: #fff5eb;
 	padding: 0 10% 10%;
+	line-height: 1.5;
+	font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
 }
 
 h1 {
@@ -28,7 +30,7 @@ h2 {
 }
 
 .main-menu {
-	display: inline;
+	display: inline-block;
 	padding: 5px 15px;
 	margin: 0;
 	color: #000;
@@ -37,6 +39,11 @@ h2 {
 } /* 主選單的樣式 */
 .main-menu:hover {
 	background-color: #ebdabf;
+}
+.main-menu:focus-visible {
+	outline: 2px solid #8a6b3f;
+	outline-offset: 2px;
+	border-radius: 6px;
 }
 
 .sub-menu {
@@ -47,6 +54,8 @@ h2 {
 	color: #e7dc8f;
 	background-color: #ccc;
 	list-style-type: none;
+	border-radius: 6px;
+	min-width: 14rem;
 } /* 下拉清單的樣式 */
 .sub-menu li {
 	padding: 3px 5px;
@@ -74,6 +83,11 @@ h2 {
 	color: #000;
 	background-color: #e7dc8f;
 	text-decoration: none;
+}
+.sub-menu a:focus-visible,
+.articles article a:focus-visible {
+	outline: 2px solid #8a6b3f;
+	outline-offset: 2px;
 }
 
 /* #camera{
@@ -149,4 +163,22 @@ h2 {
 
 .articles article:hover img {
 	transform: scale(1.5);
+}
+
+@media (max-width: 900px) {
+	body {
+		padding: 0 4% 6%;
+	}
+
+	h1 {
+		font-size: 17px;
+	}
+
+	.background {
+		padding: 1rem;
+	}
+
+	.articles article {
+		max-width: 100%;
+	}
 }

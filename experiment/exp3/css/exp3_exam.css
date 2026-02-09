@@ -38,6 +38,11 @@ h2 {
 .main-menu:hover {
 	background-color: #ebdabf;
 }
+.main-menu:focus-visible {
+	outline: 2px solid #8a6b3f;
+	outline-offset: 2px;
+	border-radius: 6px;
+}
 
 .sub-menu {
 	position: absolute;
@@ -47,6 +52,8 @@ h2 {
 	color: #e7dc8f;
 	background-color: #ccc;
 	list-style-type: none;
+	border-radius: 6px;
+	min-width: 14rem;
 } /* 下拉清單的樣式 */
 .sub-menu li {
 	padding: 3px 5px;
@@ -68,6 +75,10 @@ h2 {
 	color: #000;
 	background-color: #e7dc8f;
 	text-decoration: none;
+}
+.sub-menu a:focus-visible {
+	outline: 2px solid #8a6b3f;
+	outline-offset: 2px;
 }
 
 div#multimeter1 {
