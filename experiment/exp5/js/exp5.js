@@ -2289,51 +2289,27 @@ function undo() {
 	check();
 }
 function KeyPress(e) {
-	const evtobj = window.event ? event : e;
-	if (evtobj.keyCode == 90 && evtobj.ctrlKey)
-		undo();
-	if (evtobj.keyCode == 65)
-		toggleAlligatorButton();
-	if (evtobj.keyCode == 68)
-		toggleDelButton();
+	RlcBootstrap.handleKeyPress(e, { undo, toggleAlligatorButton, toggleDelButton });
 }
 
 document.onkeydown = KeyPress;
 
 function reload() {
-	if (!confirm('確定要清除全部嗎？\nAre you sure to reload？')) {
-		return;
-	}
-	for (let i = 0; i < 100; i++) {
-		undo();
-	}
+	RlcBootstrap.runReload({ confirmFn: confirm, undo, iterations: 100 });
 }
 
-window.onbeforeunload = () => {
-	return confirm('確定要離開?');
-};
+window.onbeforeunload = RlcBootstrap.makeBeforeUnloadHandler(confirm);
 
 function start() {
 	console.log('Starting');
-
-	// check id input
-	const id = Number.parseInt($('#id1')[0].value, 10);
-	if (isNaN(id)) {
-		alert('學號輸入錯誤。\nStudent Id number error.');
-		return;
-	}
-
-	startbool = true;
-	const date = new Date();
-	const time = `${String(date.getFullYear())}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
-	$('#time1').text(time);
-	$('#name2').text($('#name1')[0].value);
-	$('#id2').text($('#id1')[0].value);
-	$('#class2').text($('#class1')[0].value);
-	$('#name1').css('display', 'none');
-	$('#id1').css('display', 'none');
-	$('#class1').css('display', 'none');
-	$('#submitbuttom').css('display', 'none');
+	RlcBootstrap.runStart({
+		$,
+		alertFn: alert,
+		randomIntFn: getRandomInteger,
+		setStartBool: (value) => {
+			startbool = value;
+		},
+	});
 }
 function show_error(s) {
 	document.querySelector('#error_message_content').innerHTML = s;

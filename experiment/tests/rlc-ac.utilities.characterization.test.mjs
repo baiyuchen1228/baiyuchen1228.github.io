@@ -953,7 +953,7 @@ describe('rlc-ac utilities characterization', () => {
 
 	it('onbeforeunload delegates to confirm prompt', () => {
 		const confirmSpy = vi.fn(() => true);
-		ctx.confirm = confirmSpy;
+		ctx.window.onbeforeunload = ctx.RlcBootstrap.makeBeforeUnloadHandler(confirmSpy);
 		expect(ctx.window.onbeforeunload()).toBe(true);
 		expect(confirmSpy).toHaveBeenCalledWith('確定要離開?');
 	});

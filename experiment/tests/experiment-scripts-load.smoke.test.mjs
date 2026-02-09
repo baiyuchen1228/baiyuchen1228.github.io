@@ -141,6 +141,7 @@ function createContext() {
 		show_error: () => {},
 		check: () => {},
 		alert: () => {},
+		confirm: () => true,
 		prompt: () => '1',
 		navigator: { mediaDevices },
 		setInterval,
