@@ -69,6 +69,8 @@ exp11/
 - `tests/menu.characterization.test.mjs`
 - `tests/progress-bar.characterization.test.mjs`
 - `tests/oscillator.characterization.test.mjs`
+- `tests/experiments-wiring.characterization.test.mjs`
+- `tests/duplication-groups.characterization.test.mjs`
 
 安裝與執行（在 `experiment/` 目錄）：
 
