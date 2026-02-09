@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-export function loadLegacyScript(scriptPath, extraContext = {}) {
-	const source = readFileSync(scriptPath, 'utf8');
+export function loadLegacyScript(scriptPath, extraContext = {}, postlude = '') {
+	const source = `${readFileSync(scriptPath, 'utf8')}\n${postlude}`;
 	const context = {
 		console,
 		Math,
