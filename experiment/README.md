@@ -66,6 +66,9 @@ exp11/
 目前已建立：
 
 - `tests/wave-generator.characterization.test.mjs`
+- `tests/menu.characterization.test.mjs`
+- `tests/progress-bar.characterization.test.mjs`
+- `tests/oscillator.characterization.test.mjs`
 
 安裝與執行（在 `experiment/` 目錄）：
 
