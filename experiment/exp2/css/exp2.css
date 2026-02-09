@@ -21,6 +21,23 @@ h2 {
 	border-radius: 9px;
 }
 
+.page-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	text-indent: 0;
+	padding-left: 16px;
+}
+
+.page-heading__title {
+	flex: 1 1 auto;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 #svgline2 {
 	z-index: 1;
 	pointer-events: none;
@@ -45,7 +62,7 @@ h2 {
 
 .sub-menu {
 	position: absolute;
-	z-index: 2;
+	z-index: 20;
 	padding: 0;
 	margin: 5px -5px;
 	color: #e7dc8f;
@@ -860,11 +877,11 @@ div#oscilloscopeScreen {
 } */
 #form1 {
 	position: absolute;
-	top: 800px;
-	left: 900px;
+	top: 690px;
+	left: 960px;
 	z-index: 1;
-	width: 350px;
-	height: 250px;
+	width: 360px;
+	height: 220px;
 	padding: 5px;
 	background-color: palegreen;
 }
@@ -885,11 +902,11 @@ div#oscilloscopeScreen {
 
 #error_message {
 	position: absolute;
-	top: 800px;
-	left: 600px;
+	top: 690px;
+	left: 590px;
 	z-index: 1;
 	width: 350px;
-	height: 250px;
+	height: 220px;
 	padding: 5px;
 	background-color: palegreen;
 }
@@ -909,3 +926,160 @@ div#oscilloscopeScreen {
 /* #camera{
     width: ;
 } */
+
+/* UX polish layer: keep the original instrument layout, improve control clarity */
+body {
+	color: #1f1f1f;
+	overflow-x: auto;
+}
+
+.operation-toolbar {
+	position: absolute;
+	top: 112px;
+	left: 10%;
+	right: 10%;
+	z-index: 3;
+	margin: 0;
+	padding: 8px 10px;
+	background-color: #f2e2c8;
+	border: 1px solid #c3ab83;
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+}
+
+.operation-toolbar__actions {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 6px 10px;
+	align-items: center;
+}
+
+.operation-toolbar__group {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.operation-toolbar__group--primary {
+	min-width: 0;
+}
+
+.operation-toolbar__group--secondary {
+	justify-self: end;
+}
+
+.mode-status {
+	margin: 0;
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 10px;
+	border-radius: 999px;
+	font-weight: 600;
+	white-space: nowrap;
+	font-size: 13px;
+	color: #264653;
+	background-color: #dbe9d8;
+	border: 1px solid #8fb996;
+}
+
+.mode-status--active {
+	color: #7b2d12;
+	background-color: #ffe2c4;
+	border-color: #d88a4c;
+}
+
+.buttonInactive {
+	min-height: 30px;
+	padding: 3px 8px;
+	border: 1px solid #6d5e49;
+	border-radius: 6px;
+	font-size: 12px;
+	line-height: 1.2;
+	background-color: white;
+	cursor: pointer;
+	transition: filter 150ms ease;
+}
+
+.buttonInactive:hover {
+	filter: brightness(0.96);
+}
+
+.buttonInactive:focus-visible,
+#submitbuttom:focus-visible,
+#demo_submit_button:focus-visible,
+#checkCircuitbutton:focus-visible,
+.manual-link:focus-visible {
+	outline: 2px solid #8a6b3f;
+	outline-offset: 2px;
+}
+
+.manual-link {
+	display: inline-block;
+	padding: 4px 8px;
+	color: #003f91;
+	font-weight: 700;
+	text-decoration: underline;
+	white-space: nowrap;
+}
+
+#error_message,
+#form1 {
+	border-radius: 10px;
+	border: 1px solid #9bb37f;
+	background-color: #d9f3a7;
+	box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+}
+
+#error_message p {
+	margin-top: 8px;
+	line-height: 1.5;
+}
+
+#error_message_content {
+	display: block;
+	min-height: 132px;
+}
+
+#form1 {
+	padding: 10px 12px;
+}
+
+.form-row {
+	margin-bottom: 6px;
+	line-height: 1.5;
+}
+
+#form1 label {
+	display: inline-block;
+	min-width: 42px;
+}
+
+#form1 .input {
+	min-width: 160px;
+	padding: 3px 6px;
+	border: 1px solid #7b8a6a;
+	border-radius: 4px;
+}
+
+#submitbuttom,
+#demo_submit_button,
+#checkCircuitbutton {
+	width: auto;
+	min-width: 92px;
+	min-height: 30px;
+	padding: 4px 10px;
+	border: 1px solid #7b5f2f;
+	border-radius: 6px;
+	background-color: #d9b95f;
+	color: #2b2000;
+	font-weight: 700;
+	box-shadow: inset 0 1px 0 #f4e2ab;
+	cursor: pointer;
+}
+
+#submitbuttom:hover,
+#demo_submit_button:hover,
+#checkCircuitbutton:hover {
+	filter: brightness(0.95);
+}

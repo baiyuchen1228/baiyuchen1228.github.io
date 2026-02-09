@@ -1,5 +1,3 @@
-const VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
-
 let startbool = false;
 
 const meter1_mode = 0;

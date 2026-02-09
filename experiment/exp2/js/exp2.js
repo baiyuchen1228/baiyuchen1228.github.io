@@ -1,5 +1,3 @@
-const VisibleMenu = ''; // 記錄目前顯示的子選單的 ID
-
 let startbool = false;
 let readybool = false;
 
@@ -60,6 +58,35 @@ const meter2On = 0;
 let generator_duty = 0.5;
 let generator_output_on = false;
 
+function updateModeStatus() {
+	const modeStatusElement = document.querySelector('#modeStatus');
+	if (!modeStatusElement) {
+		return;
+	}
+
+	let modeLabel = '一般操作';
+	if (drawWire == 1) {
+		modeLabel = 'Add Wire(單芯線)';
+	} else if (drawResistance == 1) {
+		modeLabel = 'Add Resistor(電阻)';
+	} else if (drawInductance == 1) {
+		modeLabel = 'Add Inductor(電感)';
+	} else if (drawCapacitance == 1) {
+		modeLabel = 'Add Capacitance(電容)';
+	} else if (drawAlligator == 1) {
+		modeLabel = 'Add Alligator Clip(鱷魚夾)';
+	} else if (deletemode == 1) {
+		modeLabel = 'Delete Mode(刪除)';
+	}
+
+	modeStatusElement.textContent = `目前模式：${modeLabel}`;
+	if (modeLabel === '一般操作') {
+		modeStatusElement.classList.remove('mode-status--active');
+	} else {
+		modeStatusElement.classList.add('mode-status--active');
+	}
+}
+
 function turnOffMode() {
 	check();
 
@@ -109,6 +136,7 @@ function turnOffMode() {
 	$this.css('background-color', 'white');
 	drawAlligator = 0;
 	// }
+	updateModeStatus();
 }
 
 function approx_x(x) {
@@ -1005,6 +1033,7 @@ $(document).ready(() => {
 	wg.generator_type('sin');
 	wg.frequency_pow(3);
 	readybool = true;
+	updateModeStatus();
 });
 function toggleDelButton() {
 	if (drawInductance == 1) {
@@ -1037,6 +1066,7 @@ function toggleDelButton() {
 		$this.css('background-color', 'red');
 		deletemode = 1;
 	}
+	updateModeStatus();
 }
 
 function toggleCapacitanceButton() {
@@ -1072,6 +1102,7 @@ function toggleCapacitanceButton() {
 		$this.css('background-color', 'red');
 		drawCapacitance = 1;
 	}
+	updateModeStatus();
 }
 function toggleWireButton() {
 	if (drawInductance == 1) {
@@ -1104,6 +1135,7 @@ function toggleWireButton() {
 		$this.css('background-color', 'red');
 		drawWire = 1;
 	}
+	updateModeStatus();
 }
 
 function toggleResistanceButton() {
@@ -1139,6 +1171,7 @@ function toggleResistanceButton() {
 		$this.css('background-color', 'red');
 		drawResistance = 1;
 	}
+	updateModeStatus();
 }
 
 function toggleInductanceButton() {
@@ -1174,6 +1207,7 @@ function toggleInductanceButton() {
 		$this.css('background-color', 'red');
 		drawInductance = 1;
 	}
+	updateModeStatus();
 }
 function toggleAlligatorButton() {
 	if (drawResistance == 1) {
@@ -1208,6 +1242,7 @@ function toggleAlligatorButton() {
 		$this.css('background-color', 'red');
 		drawAlligator = 1;
 	}
+	updateModeStatus();
 }
 
 const MaxNodeNum = 100;

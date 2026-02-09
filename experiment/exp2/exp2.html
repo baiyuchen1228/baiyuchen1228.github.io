@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -45,7 +45,10 @@
 				</ul>
 			</span>
 		</h1>
-		<h2>我的課程 / 普通物理實驗 / 實驗二: 示波器與波形產生器教學</h2>
+		<h2 class="page-heading">
+			<span class="page-heading__title">我的課程 / 普通物理實驗 / 實驗二: 示波器與波形產生器教學</span>
+			<span class="mode-status" id="modeStatus" aria-live="polite">目前模式：一般操作</span>
+		</h2>
 		<div id="container" style="position: absolute; left: 0px; top: 150px; z-index: 0; height: 600px">
 			<canvas id="myCanvas" width="500" height="360" style="position: relative; left: 100px; top: 270px; z-index: 0; float: left"></canvas>
 			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="360px" style="left: 100px; top: 270px; z-index: 0; position: absolute" id="svgline"></svg>
@@ -160,27 +163,34 @@
 				<button id="generator_drawline2" type="button" class="generator-button" onmousedown="generator_drawline2()">－</button>
 			</div>
 		</div>
-		<button type="button" class="buttonInactive" id="addWire" href="#" onclick="toggleWireButton()">Add Wire(單芯線)</button>
-		<button type="button" class="buttonInactive" id="addResistance" href="#" onclick="toggleResistanceButton()">Add Resistor(電阻)</button>
-		<button type="button" class="buttonInactive" id="addInductance" href="#" onclick="toggleInductanceButton()">Add Inductor(電感)</button>
-		<button type="button" class="buttonInactive" id="addCapacitance" href="#" onclick="toggleCapacitanceButton()">Add Capacitance(電容)</button>
-		<button type="button" class="buttonInactive" id="addAlligator" href="#" onclick="toggleAlligatorButton()">Add Alligator Clip(鱷魚夾)</button>
-		<button type="button" class="buttonInactive" id="undo" href="#" onclick="undo()">Undo(返回上一步)</button>
-		<button type="button" class="buttonInactive" id="clear" href="#" onclick="reload()">Clear(清除全部)</button>
-		<button type="button" class="buttonInactive" id="del" href="#" onclick="toggleDelButton()">Delete Mode(刪除)</button>
-		<a href="exp2_menu.html">使用手冊</a>
-		<!-- target="_blank" -->
+		<div class="operation-toolbar" role="region" aria-label="實驗操作工具列">
+			<div class="operation-toolbar__actions">
+				<div class="operation-toolbar__group operation-toolbar__group--primary">
+					<button type="button" class="buttonInactive" id="addWire" onclick="toggleWireButton()">Add Wire(單芯線)</button>
+					<button type="button" class="buttonInactive" id="addResistance" onclick="toggleResistanceButton()">Add Resistor(電阻)</button>
+					<button type="button" class="buttonInactive" id="addInductance" onclick="toggleInductanceButton()">Add Inductor(電感)</button>
+					<button type="button" class="buttonInactive" id="addCapacitance" onclick="toggleCapacitanceButton()">Add Capacitance(電容)</button>
+					<button type="button" class="buttonInactive" id="addAlligator" onclick="toggleAlligatorButton()">Add Alligator Clip(鱷魚夾)</button>
+				</div>
+				<div class="operation-toolbar__group operation-toolbar__group--secondary">
+					<button type="button" class="buttonInactive" id="undo" onclick="undo()">Undo(返回上一步)</button>
+					<button type="button" class="buttonInactive" id="clear" onclick="reload()">Clear(清除全部)</button>
+					<button type="button" class="buttonInactive" id="del" onclick="toggleDelButton()">Delete Mode(刪除)</button>
+					<a class="manual-link" href="exp2_menu.html">使用手冊</a>
+				</div>
+			</div>
+		</div>
 
 		<div id="error_message">
 			小提示，卡關了可以偷看，但僅供參考
-			<p id="error_message_content"></p>
+			<p id="error_message_content" aria-live="polite"></p>
 		</div>
-		<form id="form1">
-			時間:<a id="time1"></a><br />
-			姓名:<input class="input" value="" id="name1" /><a id="name2"></a><br />
-			學號:<input class="input" value="" id="id1" /><a id="id2"></a><br />
-			系級:<input class="input" value="" id="class1" /><a id="class2"></a><br />
-			<input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="start()" /><br />
+		<form id="form1" aria-label="學生資訊">
+			<div class="form-row">時間:<span id="time1"></span></div>
+			<div class="form-row"><label for="name1">姓名:</label><input class="input" value="" id="name1" autocomplete="name" /><span id="name2"></span></div>
+			<div class="form-row"><label for="id1">學號:</label><input class="input" value="" id="id1" inputmode="numeric" /><span id="id2"></span></div>
+			<div class="form-row"><label for="class1">系級:</label><input class="input" value="" id="class1" /><span id="class2"></span></div>
+			<input type="button" id="submitbuttom" value="確認" onclick="start()" />
 		</form>
 		<form class="demo_wave" id="demo_wave1">
 			wave generator<br />
@@ -190,8 +200,8 @@
 			&emsp;反向:<input class="input" value="" id="demo_wave_inv1" /><br />
 			&emsp;偏移:<input class="input" value="" id="demo_wave_offset1" /><br />
 			類型有 sin_wave, square_wave, triangle_wave<br />
-			<input type="buttom" id="submitbuttom" value="確認" readonly="readonly" onclick="drawWave()" /><br />
-			<input type="buttom" id="checkCircuitbutton" value="檢查電路" readonly="readonly" onclick="check()" /><br />
+			<input type="button" id="demo_submit_button" value="確認" onclick="drawWave()" /><br />
+			<input type="button" id="checkCircuitbutton" value="檢查電路" onclick="check()" /><br />
 		</form>
 		<script type="text/javascript" src="../shared/js/WaveGenerator.js"></script>
 		<script type="text/javascript" src="../shared/js/Oscillator.js"></script>
