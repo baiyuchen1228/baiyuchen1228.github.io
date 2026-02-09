@@ -77,4 +77,5 @@ exp11/
 ```bash
 npm install
 npm test
+npm run test:coverage
 ```
