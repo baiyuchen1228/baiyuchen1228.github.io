@@ -166,6 +166,7 @@ function loadRlcAc() {
 		Oscillator: class {
 			constructor() {
 				this._SWP = 1;
+				this._vaild = true;
 				this.level = 0;
 				this.slope = 1;
 				this.init = false;
@@ -227,6 +228,11 @@ globalThis.__rlcState = {
 	get vertical_ch2_input_on() { return vertical_ch2_input_on; },
 	set edge_list(v) { edge_list = v; },
 	get wg() { return wg; },
+	set startbool(v) { startbool = v; },
+	get linestack() { return linestack; },
+	set linestack(v) { linestack = v; },
+	get pointarray() { return pointarray; },
+	set pointarray(v) { pointarray = v; },
 	get Edge() { return Edge; }
 };
 `;
@@ -756,5 +762,42 @@ describe('rlc-ac utilities characterization', () => {
 		expect(res.voltage1).toMatchObject({ re: 0, im: 0 });
 		expect(res.voltage2).toMatchObject({ re: 0, im: 0 });
 		expect(showSpy).toHaveBeenCalledWith('波型產生器的 power 沒有打開');
+	});
+
+	it('check enforces startbool gate and updates oscillator validity flag', () => {
+		const alertSpy = vi.fn();
+		ctx.alert = alertSpy;
+		ctx.__rlcState.startbool = false;
+		ctx.check();
+		expect(alertSpy).toHaveBeenCalledTimes(1);
+		expect(ctx.__rlcState.osi._vaild).toBe(true);
+
+		ctx.__rlcState.startbool = true;
+		const before = ctx.__rlcState.osi.drawCount;
+		ctx.check();
+		expect(ctx.__rlcState.osi._vaild).toBe(false);
+		expect(ctx.__rlcState.osi.drawCount).toBe(before + 1);
+	});
+
+	it('undo returns immediately on empty stack and removes latest wire entry', () => {
+		ctx.__rlcState.linestack = [];
+		ctx.__rlcState.pointarray = [];
+		ctx.undo();
+		expect(ctx.__rlcState.linestack).toEqual([]);
+
+		ctx.__rlcState.pointarray = [[1, 1], [2, 2]];
+		ctx.__rlcState.linestack = ['wire01'];
+		ctx.undo();
+		expect(ctx.__rlcState.linestack).toEqual([]);
+		expect(ctx.__rlcState.pointarray).toEqual([]);
+		expect($.calls.filter((c) => c.fn === 'remove').length).toBeGreaterThanOrEqual(3);
+	});
+
+	it('handleMediaStreamError logs error using legacy message', () => {
+		const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+		const err = new Error('camera denied');
+		ctx.handleMediaStreamError(err);
+		expect(logSpy).toHaveBeenCalledWith('navigator.getUserMedia error: ', err);
+		logSpy.mockRestore();
 	});
 });
