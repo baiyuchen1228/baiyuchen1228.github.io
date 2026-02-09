@@ -38,3 +38,23 @@ chart [github](https://github.com/chartjs/Chart.js)
 mathjs [unpkg](https://www.unpkg.com/browse/mathjs@13.2.1/)
 
 內含各種數學函式用於計算波型。
+
+# Project structure
+
+每個實驗已整理為根目錄下的獨立資料夾：
+
+```text
+exp2/
+exp3/
+exp5/
+exp6/
+exp7/
+exp10/
+exp11/
+```
+
+每個 `expX/` 內包含該實驗的頁面與其 `css/js`。
+共用第三方函式庫與圖片資源維持在根目錄：
+
+- `module/`: 第三方函式庫
+- `images/`: 圖片資源
