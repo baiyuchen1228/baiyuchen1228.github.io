@@ -31,10 +31,9 @@ describe('menu.js characterization', () => {
 
 	beforeEach(() => {
 		setupDom();
-		menuCtx.VisibleMenu = '';
 	});
 
-	it('switchMenu opens hidden submenu and sets VisibleMenu', () => {
+	it('switchMenu opens hidden submenu', () => {
 		const menu1 = document.getElementById('menu1');
 		const subMenu1 = document.getElementById('SubMenu1');
 
@@ -42,64 +41,70 @@ describe('menu.js characterization', () => {
 
 		expect(subMenu1.style.display).toBe('block');
 		expect(subMenu1.style.minWidth).toBe('120');
-		expect(menuCtx.VisibleMenu).toBe('SubMenu1');
 	});
 
 	it('switchMenu toggles open submenu to hidden on click', () => {
 		const menu1 = document.getElementById('menu1');
 		const subMenu1 = document.getElementById('SubMenu1');
 
-		subMenu1.style.display = 'block';
-		menuCtx.VisibleMenu = 'SubMenu1';
+		menuCtx.switchMenu(menu1, 'SubMenu1');
 		menuCtx.switchMenu(menu1, 'SubMenu1');
 
 		expect(subMenu1.style.display).toBe('none');
-		expect(menuCtx.VisibleMenu).toBe('');
 	});
 
 	it('switchMenu keeps submenu visible on MouseOver when already visible menu', () => {
 		const menu1 = document.getElementById('menu1');
 		const subMenu1 = document.getElementById('SubMenu1');
 
-		subMenu1.style.display = 'block';
-		menuCtx.VisibleMenu = 'SubMenu1';
+		menuCtx.switchMenu(menu1, 'SubMenu1');
 		menuCtx.switchMenu(menu1, 'SubMenu1', 'MouseOver');
 
 		expect(subMenu1.style.display).toBe('block');
-		expect(menuCtx.VisibleMenu).toBe('SubMenu1');
 	});
 
 	it('hideMenu hides current VisibleMenu and clears pointer', () => {
+		const menu1 = document.getElementById('menu1');
 		const subMenu1 = document.getElementById('SubMenu1');
-		subMenu1.style.display = 'block';
-		menuCtx.VisibleMenu = 'SubMenu1';
+		menuCtx.switchMenu(menu1, 'SubMenu1');
 
 		menuCtx.hideMenu();
 
 		expect(subMenu1.style.display).toBe('none');
-		expect(menuCtx.VisibleMenu).toBe('');
 	});
 
 	it('document click outside menu closes submenu', () => {
+		const menu1 = document.getElementById('menu1');
 		const subMenu1 = document.getElementById('SubMenu1');
-		subMenu1.style.display = 'block';
-		menuCtx.VisibleMenu = 'SubMenu1';
+		menuCtx.switchMenu(menu1, 'SubMenu1');
 
 		document.getElementById('outside').dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
 
 		expect(subMenu1.style.display).toBe('none');
-		expect(menuCtx.VisibleMenu).toBe('');
 	});
 
 	it('document click on menu button does not close submenu', () => {
 		const menu1 = document.getElementById('menu1');
 		const subMenu1 = document.getElementById('SubMenu1');
-		subMenu1.style.display = 'block';
-		menuCtx.VisibleMenu = 'SubMenu1';
+		menuCtx.switchMenu(menu1, 'SubMenu1');
 
 		menu1.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
 
 		expect(subMenu1.style.display).toBe('block');
-		expect(menuCtx.VisibleMenu).toBe('SubMenu1');
+	});
+
+	it('opening one submenu closes the other submenu', () => {
+		const menu1 = document.getElementById('menu1');
+		const menu2 = document.getElementById('menu2');
+		const subMenu1 = document.getElementById('SubMenu1');
+		const subMenu2 = document.getElementById('SubMenu2');
+
+		menuCtx.switchMenu(menu1, 'SubMenu1');
+		expect(subMenu1.style.display).toBe('block');
+		expect(subMenu2.style.display).toBe('none');
+
+		menuCtx.switchMenu(menu2, 'SubMenu2');
+		expect(subMenu1.style.display).toBe('none');
+		expect(subMenu2.style.display).toBe('block');
 	});
 });

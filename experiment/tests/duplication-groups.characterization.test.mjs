@@ -37,7 +37,9 @@ describe('duplication groups characterization', () => {
 		);
 	});
 
-	it('exp2.css and exp11.css are currently identical baseline', () => {
-		expectSameHash(['exp2/css/exp2.css', 'exp11/css/exp11.css'], 'exp2/exp11 css baseline');
+	it('exp2.css and exp11.css can diverge after targeted UX tweaks', () => {
+		const exp2Hash = hashFile('exp2/css/exp2.css');
+		const exp11Hash = hashFile('exp11/css/exp11.css');
+		expect(exp2Hash).not.toBe(exp11Hash);
 	});
 });
