@@ -8,17 +8,17 @@ const __dirname = path.dirname(__filename);
 
 const scripts = [
 	'../exp2/js/exp2.js',
-	'../exp2/js/exp2_test.js',
+	'../exp2/js/exp2_exam.js',
 	'../exp3/js/exp3.js',
-	'../exp3/js/exp3_test.js',
+	'../exp3/js/exp3_exam.js',
 	'../exp5/js/exp5.js',
-	'../exp5/js/exp5_test.js',
+	'../exp5/js/exp5_exam.js',
 	'../exp6/js/exp6.js',
-	'../exp6/js/exp6_test.js',
-	'../exp7/js/exp7_test.js',
+	'../exp6/js/exp6_exam.js',
+	'../exp7/js/exp7_exam.js',
 	'../exp10/js/exp10.js',
-	'../exp10/js/exp10_test.js',
-	'../exp11/js/exp11_test.js',
+	'../exp10/js/exp10_exam.js',
+	'../exp11/js/exp11_exam.js',
 ];
 
 function createJqMock() {

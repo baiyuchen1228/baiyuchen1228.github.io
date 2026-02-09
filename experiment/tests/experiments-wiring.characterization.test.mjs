@@ -31,10 +31,10 @@ function isLocalRef(ref) {
 }
 
 describe('experiment page wiring characterization', () => {
-	it('every exp has main and test html', () => {
+	it('every exp has main and exam html', () => {
 		for (const id of expIds) {
 			expect(existsSync(path.join(rootDir, `exp${id}`, `exp${id}.html`))).toBe(true);
-			expect(existsSync(path.join(rootDir, `exp${id}`, `exp${id}_test.html`))).toBe(true);
+			expect(existsSync(path.join(rootDir, `exp${id}`, `exp${id}_exam.html`))).toBe(true);
 		}
 	});
 
@@ -42,7 +42,7 @@ describe('experiment page wiring characterization', () => {
 		const htmlFiles = [];
 		for (const id of expIds) {
 			htmlFiles.push(path.join(rootDir, `exp${id}`, `exp${id}.html`));
-			htmlFiles.push(path.join(rootDir, `exp${id}`, `exp${id}_test.html`));
+			htmlFiles.push(path.join(rootDir, `exp${id}`, `exp${id}_exam.html`));
 		}
 
 		for (const htmlFile of htmlFiles) {
@@ -61,7 +61,7 @@ describe('experiment page wiring characterization', () => {
 			expect(mainHtml.includes('../shared/js/WaveGenerator.js')).toBe(true);
 			expect(mainHtml.includes('../shared/js/Oscillator.js')).toBe(true);
 
-			const testHtml = readFileSync(path.join(rootDir, `exp${id}`, `exp${id}_test.html`), 'utf8');
+			const testHtml = readFileSync(path.join(rootDir, `exp${id}`, `exp${id}_exam.html`), 'utf8');
 			expect(testHtml.includes('../shared/js/WaveGenerator.js')).toBe(true);
 			expect(testHtml.includes('../shared/js/Oscillator.js')).toBe(true);
 			expect(testHtml.includes('../shared/js/progress_bar.js')).toBe(true);
