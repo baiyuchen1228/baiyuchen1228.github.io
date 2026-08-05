@@ -1,3 +1,7 @@
 *.zip
 /node_modules/
 .vscode/settings.json
+.codex
+experiment/.npm-cache/
+experiment/node_modules/
+
