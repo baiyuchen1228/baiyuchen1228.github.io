@@ -65,7 +65,7 @@ jobs:
             - name: Create and Push Fix Branch
               id: create_and_push_fix_branch
               run: |
-                  BRANCH_NAME="fix-lint-issues-${{ github.actor }}"
+                  BRANCH_NAME="fix-lint-issues-${{ github.actor_id }}"
                   echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
                   if git ls-remote --exit-code --heads origin $BRANCH_NAME; then
                     git push origin --delete $BRANCH_NAME
