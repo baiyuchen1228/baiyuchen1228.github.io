@@ -13,12 +13,24 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@antfu/eslint-config": "^5.0.0",
-		"eslint": "^9.32.0",
-		"stylelint": "^16.23.0",
-		"stylelint-config-recommended": "^17.0.0",
-		"stylelint-config-standard-scss": "^15.0.1",
-		"stylelint-config-standard-vue": "^1.0.0",
-		"stylelint-order": "^7.0.0"
+		"@antfu/eslint-config": "^9.2.0",
+		"eslint": "^10.8.0",
+		"postcss-html": "^2.0.0",
+		"stylelint": "^17.14.1",
+		"stylelint-config-html": "^2.0.0",
+		"stylelint-config-recommended": "^18.0.0",
+		"stylelint-config-recommended-vue": "^2.0.0",
+		"stylelint-config-standard-scss": "^17.0.0",
+		"stylelint-config-standard-vue": "^2.0.0",
+		"stylelint-order": "^8.1.1"
+	},
+	"pnpm": {
+		"overrides": {
+			"brace-expansion@>=1 <1.1.18": "1.1.18",
+			"brace-expansion@>=2 <2.1.4": "2.1.4",
+			"fast-uri@>=3 <3.1.5": "3.1.5",
+			"js-yaml@>=4 <4.3.1": "4.3.1",
+			"postcss@>=8 <8.5.25": "8.5.25"
+		}
 	}
 }
